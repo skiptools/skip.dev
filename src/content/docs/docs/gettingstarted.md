@@ -1,0 +1,175 @@
+---
+title: Getting Started
+layout: docs
+permalink: /docs/gettingstarted/
+#tableOfContents: false
+---
+
+:::note[System Requirements]
+Skip requires a macOS 15+ development machine with [Xcode 16.4](https://developer.apple.com/xcode) or later installed.<br/>At least 32GB of memory is recommended for development with Skip.
+:::
+
+Skip is installed and updated using the popular Homebrew package management tool, which can be installed from [brew.sh](https://brew.sh). Once Homebrew has been setup, install Skip by running the Terminal command:
+
+```console title="Installing Skip"
+brew install skiptools/skip/skip
+```
+
+This will download and install the `skip` tool itself, along with the Android SDK and `gradle` build tool that is necessary for building and running the Android side of your apps. You can ensure that the basic development prerequisites are satisfied by running:
+
+```console title="Running the system checkup"
+skip checkup
+```
+
+```plaintext
+[✓] Skip version 1.6.35 (= 1.6.35)
+[✓] macOS version 15.7.2 (> 13.5.0)
+[✓] macOS architecture: ARM
+[✓] Swift version 6.2.3 (> 5.9.0)
+[✓] Swiftly version 1.0.1 (> 1.0.0)
+[✓] Xcode version 26.2 (> 15.0.0)
+[✓] Xcode tools SDKs: 5
+[✓] Homebrew version 5.0.9 (> 4.1.0)
+[✓] Gradle version 9.2.1 (> 8.6.0)
+[✓] Java version 25.0.1 (> 17.0.0)
+[✓] Android Debug Bridge version 1.0.41 (> 1.0.40)
+[✓] Resolve dependencies (10.43s)
+[✓] Build hello-skip (56.08s)
+[✓] Test Swift (15.43s)
+[✓] Test Kotlin (26.19s)
+[✓] Check project schemes (5.65s)
+[✓] Archive iOS ipa (13.13s)
+[✓] Assemble HelloSkip-debug.ipa 175 KB
+[✓] Verifying HelloSkip-debug.ipa: 175 KB
+[✓] Assembling Android apk (61.1s)
+[✓] Verify HelloSkip-debug.apk: 80 MB
+[✓] Check Skip Updates: 1.6.35
+[✓] Skip checkup succeeded in 190.21s</code>
+```
+
+If the installation or checkup fails, try running again with `skip checkup --verbose` to get more details, and check the [FAQ](/docs/faq/) for common solutions or reach out to the community on [Slack](/slack/) or the [Discussion Forums](https://community.skip.tools).
+
+Next, create a new Skip app project with:
+
+```console title="Creating a new Skip project"
+skip create
+```
+
+You will be guided through a series of questions about the app you want to create, including whether you want to use the Skip Lite or Skip Fuse mode.
+
+:::tip[Skip Lite or Skip Fuse?]{icon=right-arrow}
+Information about the different modes can be found in the [Native and Transpiled Modes](/docs/modes/) documentation. In this example, we create a Skip Fuse app, which uses the official [Swift SDK for Android](https://www.swift.org/documentation/articles/swift-sdk-for-android-getting-started.html).
+:::
+
+An example session for creating a `hello-skip/HelloSkip` project (which generates a project identical to the minimal [Skip Fuse sample app](https://github.com/skiptools/skipapp-howdy) or [Skip Lite sample app](https://github.com/skiptools/skipapp-hello)) might look like:
+
+```console title="skip create session"
+$ skip create
+
+Welcome to Skip!
+
+Select type of project to create:
+  1: App: mobile application for Android and iOS
+  2: Library: library project with one or more modules
+Enter selection (default: App) [1..2] 1
+
+Select the mode of the project:
+  1: Skip Fuse: natively compiled project
+  2: Skip Lite: transpiled project
+Enter selection [1..2] 1
+
+Enter the project-name for the App: hello-skip
+
+Enter the CamelCase name of the App module: HelloSkip
+
+Optionally enter additional module names: 
+
+Enter the app bundle identifier: com.example.HelloSkip
+
+Create a free open-source project? (y/n) [n]: n
+Initialize git repository for the project? (y/n) [n]: n
+Initialize a Fastlane configuration for the project? (y/n) [y]: y
+Pre-build the project? (y/n) [y]: y
+Install the Swift Android SDK? (y/n) [y]: y
+Open the Xcode project after initialization? (y/n) [y]: y
+
+[✓] Install Swift Android SDK (48.4s)
+[✓] Resolve dependencies (12.12s)
+[✓] Build hello-skip (53.35s)
+[✓] Check project schemes (6.12s)
+[✓] Archive iOS ipa (17.18s)
+[✓] Assemble HelloSkip-debug.ipa 1 MB
+[✓] Verifying HelloSkip-debug.ipa: 1 MB
+[✓] Assembling Android apk (78.91s)
+[✓] Verify HelloSkip-debug.apk: 80 MB
+[✓] Opening Xcode project (0.10s)
+[✓] Skip create succeeded in 168.63s
+```
+
+:::tip
+You can alternatively create a conventional Skip project using the non-interactive `skip init` command, as described in the [command line reference](/docs/skip-cli/#init).
+:::
+
+Once your app pre-builds and opens in Xcode, you are _almost_ ready to go. One more step is needed, which is to create and launch an Android emulator (which is the Android equivalent of the iPhone Simulator and is used for local app development). The `skip` tool has a command to quickly install and configure an Android emulator for your project:
+
+```console title="Creating a new Android emulator"
+skip android emulator create
+```
+
+```plaintext
+  [✓] Configure Android SDK Manager (1.55s)
+  [✓] Install platform-tools (0.77s)
+  [✓] Install emulator (0.75s)
+  [✓] Install platforms;android-34 (0.76s)
+  [✓] Install system-images;android-34;google_apis;arm64-v8a (0.75s)
+  [✓] Create emulator: emulator-34-medium_phone (0.76s)
+  [✓] Create Android emulator succeeded in 5.35s</code>
+```
+
+Once this command completes successfully, you will have an Android emulator installed, which you can launch and observe the logging output with:
+
+```console title="Launching the Android emulator"
+skip android emulator launch
+```
+
+:::tip
+You can alternatively install and launch an emulator using a graphical user interface by downloading and running [Android Studio](https://developer.android.com/studio) and opening the `Virtual Device Manager` from the ellipsis menu of the Welcome dialog. From there, `Create Device` (e.g., "Pixel 6") and then `Launch` the emulator.
+:::
+
+Now you should be ready to launch your new app! In Xcode, ensure the "HelloSkip App" scheme is selected along with a simulator destination (e.g., "iPhone 17"), and then Run the scheme.
+
+You may be prompted to "Trust and Enable" the Skip plugin, and then the project will build and launch simultaneously on both the iPhone Simulator and Android Emulator:
+
+<img alt="Screenshot of Skip running in both the iOS Simulator and Android Emulator" src="https://assets.skip.dev/intro/skip_xcode.png" style="width: 100%;" />
+
+## Next Steps
+
+Congratulations! You have created and launched you first dual-platform app. At this point, you should tinker with the project, making changes and re-launching the app to get a feel for how Skip compliments your normal edit-build-run cycle for app development.
+
+From here you should proceed to:
+
+- Join the [Skip Slack](/slack/) to connect with the Skip developer community.
+- Peruse the [Skip Sample Apps](/docs/samples/) to see common design pattern and examples of best practices for your app.
+- Browse the various [Skip Integration Frameworks](/docs/modules/) that are available to add to your project, which unlock additional capabilities for your dual-platform app
+- Read about the advantages of Skip over other cross-platform frameworks like Flutter and React Native in our [Comparison Guide](/compare/).
+- Consider whether [Skip Fuse or Skip Lite](/docs/modes/) is the best fit for your project needs.
+- Explore the different [Skip Project Types](/docs/project-types/) that can be created with Skip, including multi-module, bridged, and native framework or app projects.
+- Review the [Glossary of Terms](/docs/glossary/) to familiarize yourself with some of the new and unfamiliar terminology you may encounter while using Skip for Android app development.
+- If you have an existing app you want to bring into Skip, read the [Migration Guide](/docs/project-types/#existing_development).
+
+
+## Updating Skip {#updating}
+
+To update the `skip` command line tool to the latest version:
+
+```console
+skip upgrade
+```
+
+To update your Xcode project to use the latest version of the Skip plugin and libraries allowed by your `Package.swift` configuration, use the `File -> Packages -> Update to Latest Package Versions` Xcode menu option. When the Skip plugin is updated, you may be prompted to trust the new version with an Xcode warning and confirmation dialog.
+
+## Additional Resources {#resources}
+
+- Use `skip help` for a complete list of `skip` tool commands, and see the [command line reference](/docs/skip-cli/).
+- Check the general [help](/docs/help/) page for troubleshooting and contact information.
+- Continue browsing this [documentation](/docs/) to learn more about developing with Skip.

@@ -1,0 +1,325 @@
+---
+layout: docs
+title: Gradle Project Reference
+permalink: /docs/gradle/
+
+---
+
+Gradle is the build system for Android, and is the equivalent of SwiftPM for Darwin Swift development. When Skip builds your project, it bridges and/or transpiles your Swift code to Kotlin, and it also converts your `Package.swift` file into a `build.gradle.kts` file in the Skip plugin's output directory. This conversion happens transitively on all your project's Skip-enabled dependencies, including the [Skip Core Frameworks](/docs/faq/#skipstack) modules. This results in a local inter-connected network of Gradle projects containing the entirety of your project's source dependency tree.
+
+<!-- 
+![Project Diagram](https://assets.skip.dev/diagrams/skip-diagrams-project.svg)
+{: .diagram-vector }
+ -->
+ 
+The following sections detail Skip's use of Gradle, including how to build with Gradle from the command line.
+
+## Skip App Projects
+
+Consider a minimal Swift app project created by the commands:
+
+```console title="skip init command output"
+% brew install skiptools/skip/skip
+% skip init --show-tree --no-build --no-test --no-module-tests --free --icon-color '' --appid=skip.hello.App --version 1.0.0 hello-skip HelloSkip
+
+.
+├─ Android
+│  ├─ app
+│  │  ├─ build.gradle.kts
+│  │  ├─ proguard-rules.pro
+│  │  └─ src
+│  │     └─ main
+│  │        ├─ AndroidManifest.xml
+│  │        └─ kotlin
+│  │           └─ hello
+│  │              └─ skip
+│  │                 └─ Main.kt
+│  ├─ gradle
+│  │  └─ wrapper
+│  │     └─ gradle-wrapper.properties
+│  ├─ gradle.properties
+│  └─ settings.gradle.kts
+├─ Darwin
+│  ├─ Assets.xcassets
+│  │  ├─ AccentColor.colorset
+│  │  │  └─ Contents.json
+│  │  ├─ AppIcon.appiconset
+│  │  │  └─ Contents.json
+│  │  └─ Contents.json
+│  ├─ Entitlements.plist
+│  ├─ HelloSkip.xcconfig
+│  ├─ HelloSkip.xcodeproj
+│  │  └─ project.pbxproj
+│  └─ Sources
+│     └─ HelloSkipAppMain.swift
+├─ LICENSE.LGPL
+├─ Package.swift
+├─ README.md
+├─ Skip.env
+└─ Sources
+   └─ HelloSkip
+      ├─ ContentView.swift
+      ├─ HelloSkip.swift
+      ├─ HelloSkipApp.swift
+      ├─ Resources
+      │  └─ Localizable.xcstrings
+      └─ Skip
+         └─ skip.yml
+
+```
+
+Running `swift build` in the `hello-skip` folder builds the module and performs the Android translation. 
+
+This derived project hierarchy will look like:
+
+```console title="hello-skip swift build output"
+hello-skip % tree .build/plugins/outputs/hello-skip/HelloSkip/skipstone/
+
+.build/plugins/outputs/hello-skip/HelloSkip/skipstone/
+├── HelloSkip
+│   ├── build.gradle.kts
+│   ├── proguard-rules.pro
+│   └── src
+│       └── main
+│           ├── kotlin
+│           │   └── hello
+│           │       └── skip
+│           │           ├── ContentView.kt
+│           │           ├── HelloSkip.kt
+│           │           └── HelloSkipApp.kt
+│           └── resources
+│               └── hello
+│                   └── skip
+│                       └── Resources
+│                           ├── Localizable.xcstrings -> /private/tmp/hello-skip/Sources/HelloSkip/Resources/Localizable.xcstrings
+│                           └── resources.lst
+├── HelloSkip.skipcode.json
+├── SkipFoundation -> ../../../skip-foundation/SkipFoundation/skipstone/SkipFoundation
+├── SkipLib -> ../../../skip-lib/SkipLib/skipstone/SkipLib
+├── SkipModel -> ../../../skip-model/SkipModel/skipstone/SkipModel
+├── SkipUI -> ../../../skip-ui/SkipUI/skipstone/SkipUI
+├── SkipUnit -> ../../../skip-unit/SkipUnit/skipstone/SkipUnit
+├── gradle
+│   └── wrapper
+│       └── gradle-wrapper.properties
+├── gradle.properties
+└── settings.gradle.kts
+```
+
+The resulting Gradle project hierarchy contains not only the links to the plugin output for the current project, but also links to the project output for each dependent module. These dependencies are automatically created as a result of the Skip plugin being run on the dependent projects.
+
+---
+
+## Building Locally
+
+Gradle projects can be run manually, either from Android Studio or using the `gradle` command-line tool. Skip app projects created with `skip init` have a root `Android/` folder that contains a `settings.gradle.kts` file. This can be opened in Android Studio, or it can be run directly from the command line.
+
+:::note
+The Android build folder is configured by `settings.gradle.kts` to output to the root `.build/Android/` folder. This centralizes the location of the build artifacts and enables a single folder to be ignored in a `.gitignore` file (rather than the default Gradle folder name of `build/`).
+:::
+
+```console title="skip init command output"
+$ skip init --appid=com.xyz.HelloSkip hello-skip HelloSkip
+
+Initializing Skip library hello-skip
+[✓] Create project hello-skip (0.73s)
+[✓] Resolve dependencies (5.89s)
+[✓] Build hello-skip (15.2s)
+[✓] Created module HelloSkip in ~/Desktop/hello-skip/HelloSkip.xcodeproj
+
+$ cd hello-skip 
+
+$ swift build --build-tests
+
+Fetched https://source.skip.tools/skip.git (0.92s)
+…
+[294/294] Linking libHelloSkip.dylib
+Build complete! (23.13s)
+
+$ skip gradle -p .build/plugins/outputs/hello-skip/HelloSkip/skipstone/HelloSkip test
+
+GRADLE> > Task :HelloSkip:preBuild UP-TO-DATE
+…
+GRADLE> > Task :HelloSkip:testDebugUnitTest
+GRADLE> > Task :HelloSkip:test
+GRADLE> 
+GRADLE> BUILD SUCCESSFUL in 20s
+GRADLE> 204 actionable tasks: 204 executed
+note: Gradle SUCCESSFUL
+
+$ skip gradle -p Android/ assemble
+
+GRADLE> > Task :app:preBuild UP-TO-DATE
+GRADLE> > Task :app:preDebugBuild UP-TO-DATE
+GRADLE> > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+GRADLE> > Task :app:generateDebugBuildConfig
+GRADLE> > Task :HelloSkip:preBuild UP-TO-DATE
+…
+GRADLE> > Task :SkipUI:bundleReleaseAar
+GRADLE> > Task :HelloSkip:compileDebugJavaWithJavac NO-SOURCE
+…
+GRADLE> > Task :app:processReleaseJavaRes
+GRADLE> > Task :HelloSkip:extractDebugAnnotations
+GRADLE> > Task :HelloSkip:mergeDebugGeneratedProguardFiles
+GRADLE> > Task :HelloSkip:mergeDebugConsumerProguardFiles
+GRADLE> > Task :SkipUI:assembleRelease
+GRADLE> > Task :SkipUI:assemble
+GRADLE> > Task :HelloSkip:mergeDebugJavaResource
+GRADLE> > Task :app:compileDebugKotlin
+GRADLE> > Task :HelloSkip:syncDebugLibJars
+GRADLE> > Task :app:compileDebugJavaWithJavac
+GRADLE> > Task :app:mergeReleaseJavaResource
+GRADLE> > Task :app:dexBuilderDebug
+GRADLE> > Task :app:processDebugJavaRes
+GRADLE> > Task :app:mergeDebugGlobalSynthetics
+GRADLE> > Task :app:mergeProjectDexDebug
+GRADLE> > Task :app:mergeLibDexDebug
+GRADLE> > Task :HelloSkip:bundleDebugAar
+GRADLE> > Task :HelloSkip:assembleDebug
+GRADLE> > Task :HelloSkip:assemble
+GRADLE> > Task :app:mergeDebugJavaResource
+GRADLE> > Task :app:minifyReleaseWithR8
+GRADLE> > Task :app:shrinkReleaseRes
+GRADLE> > Task :app:packageRelease
+GRADLE> > Task :app:createReleaseApkListingFileRedirect
+GRADLE> > Task :app:assembleRelease
+GRADLE> > Task :app:assemble
+GRADLE> 
+GRADLE> BUILD SUCCESSFUL in 53s
+GRADLE> 403 actionable tasks: 403 executed
+```
+
+The `.apk` from the build will be placed in the `.build/Android/app/outputs/apk/` folder:
+
+```plaintext
+$ ls -lah .build/Android/app/outputs/apk/*/*.apk
+
+57M .build/Android/app/outputs/apk/debug/app-debug.apk
+13M .build/Android/app/outputs/apk/release/app-release-unsigned.apk
+
+```
+
+---
+
+## Skip Frameworks
+
+A valid Skip project must contain a `Skip/skip.yml` file in each Skip-enabled module. This file is a YAML document that describes the module's representation in the Android/Gradle world. During the build process, this file is combined with all the dependency project's `skip.yml` files and used to affect how the Gradle project is created. Use `skip.yml` to customize the Gradle build process, or to add dependencies on external Java or Kotlin libraries that you can then use directly from Skip code.
+
+Gradle projects use the files `settings.gradle.kts` and `build.gradle.kts` for configuration, much like a Swift Package Manager project uses `Package.swift`. These are kotlin-script files that can configure all aspects of the build process, from compilation arguments to output post-processing. More can be read on the topic at [https://docs.gradle.org/current/userguide/writing_build_scripts.html](https://docs.gradle.org/current/userguide/writing_build_scripts.html).
+
+Skip abstracts away the details of the Gradle project configuration for Framework projects by automatically deriving a valid Gradle project from the SwiftPM `Package.swift` dependencies combined with the contents of each project's `Skip/skip.yml` file. The Skip build plugin outputs a Gradle project folder hierarchy as part of its output process. 
+
+### Framework Build Outputs
+
+*Framework* projects differ from *app* projects in that while app projects surface the various Gradle app-level build files (`Android/settings.gradle.kts` and `Android/app/build.gradle.kts`), framework projects generate and maintain the build structures for the generated Android project. Skip considers the generated Gradle project, along with any generated Kotlin code, to be ephemeral. Cleaning the build may delete the files, and re-running the transpiler will override any changes. Unless you (manually) export or archive the Gradle project, it may be overwritten at any time.
+
+When building from the command-line using `swift build` or `skip test`, the gradle projects will be output to the `.build/plugins/outputs/` folder, each in its own package-named directory. When building from Xcode, the outputs are instead placed in `~/Library/Developer/Xcode/DerivedData/ProjectName-identifier/SourcePackages/plugins/`.
+
+The Skip plugin is run in a restrictive sandbox that limits the output folders that the plugin can write to. For this reason, each separate dependency is output to its own separate folder, and each depending project references it by making a symbolic link to the local output for that project. For example, the `HelloSkip` app's local dependencies on the `Skip Core` frameworks can be seen:
+
+```console title="Skip build output file layout"
+$ tree -L 5 .build/plugins/outputs
+
+.build/plugins/outputs
+├── hello-skip
+│   └── HelloSkip
+│       └── skipstone
+│           ├── HelloSkip
+│           │   ├── build.gradle.kts
+│           │   ├── proguard-rules.pro
+│           │   └── src
+│           ├── HelloSkip.skipcode.json
+│           ├── SkipFoundation -> ../../../skip-foundation/SkipFoundation/skipstone/SkipFoundation
+│           ├── SkipLib -> ../../../skip-lib/SkipLib/skipstone/SkipLib
+│           ├── SkipModel -> ../../../skip-model/SkipModel/skipstone/SkipModel
+│           ├── SkipUI -> ../../../skip-ui/SkipUI/skipstone/SkipUI
+│           ├── SkipUnit -> ../../../skip-unit/SkipUnit/skipstone/SkipUnit
+│           ├── gradle
+│           │   └── wrapper
+│           ├── gradle.properties
+│           └── settings.gradle.kts
+├── skip-foundation
+│   └── SkipFoundation
+│       └── skipstone
+│           ├── SkipFoundation
+│           │   ├── build.gradle.kts
+│           │   ├── proguard-rules.pro
+│           │   └── src
+│           ├── SkipFoundation.skipcode.json
+│           ├── SkipLib -> ../../../skip-lib/SkipLib/skipstone/SkipLib
+│           ├── SkipUnit -> ../../../skip-unit/SkipUnit/skipstone/SkipUnit
+│           ├── gradle
+│           │   └── wrapper
+│           ├── gradle.properties
+│           └── settings.gradle.kts
+├── skip-lib
+│   └── SkipLib
+│       └── skipstone
+│           ├── SkipLib
+│           │   ├── build.gradle.kts
+│           │   ├── proguard-rules.pro
+│           │   └── src
+│           ├── SkipLib.skipcode.json
+│           ├── SkipUnit -> ../../../skip-unit/SkipUnit/skipstone/SkipUnit
+│           ├── gradle
+│           │   └── wrapper
+│           ├── gradle.properties
+│           └── settings.gradle.kts
+├── skip-model
+│   └── SkipModel
+│       └── skipstone
+│           ├── SkipLib -> ../../../skip-lib/SkipLib/skipstone/SkipLib
+│           ├── SkipModel
+│           │   ├── build.gradle.kts
+│           │   ├── proguard-rules.pro
+│           │   └── src
+│           ├── SkipModel.skipcode.json
+│           ├── SkipUnit -> ../../../skip-unit/SkipUnit/skipstone/SkipUnit
+│           ├── gradle
+│           │   └── wrapper
+│           ├── gradle.properties
+│           └── settings.gradle.kts
+├── skip-ui
+│   └── SkipUI
+│       └── skipstone
+│           ├── SkipFoundation -> ../../../skip-foundation/SkipFoundation/skipstone/SkipFoundation
+│           ├── SkipLib -> ../../../skip-lib/SkipLib/skipstone/SkipLib
+│           ├── SkipModel -> ../../../skip-model/SkipModel/skipstone/SkipModel
+│           ├── SkipUI
+│           │   ├── build.gradle.kts
+│           │   ├── proguard-rules.pro
+│           │   └── src
+│           ├── SkipUI.skipcode.json
+│           ├── SkipUnit -> ../../../skip-unit/SkipUnit/skipstone/SkipUnit
+│           ├── gradle
+│           │   └── wrapper
+│           ├── gradle.properties
+│           └── settings.gradle.kts
+└── skip-unit
+    └── SkipUnit
+        └── skipstone
+            ├── SkipUnit
+            │   ├── build.gradle.kts
+            │   ├── proguard-rules.pro
+            │   └── src
+            ├── SkipUnit.skipcode.json
+            ├── gradle
+            │   └── wrapper
+            ├── gradle.properties
+            └── settings.gradle.kts
+```
+
+## Building an app project APK
+
+## Building a framework project AAR
+
+For more information on the published output format [Publishing a project as module](https://docs.gradle.org/current/userguide/publishing_setup.html) and Android Gradle Plugin [Upload your library](https://developer.android.com/build/publish-library/upload-library#local-repo).
+
+---
+
+## Gradle Dependencies
+
+Every Skip App project depends on the Skip Core Frameworks, which contain the five core modules for any application, and whose `skip.yml` files can serve as useful examples: [SkipUI](https://source.skip.tools/skip-ui/blob/main/Sources/SkipUI/Skip/skip.yml), [SkipModel](https://source.skip.tools/skip-model/blob/main/Sources/SkipModel/Skip/skip.yml), [SkipFoundation](https://source.skip.tools/skip-foundation/blob/main/Sources/SkipFoundation/Skip/skip.yml), [SkipLib](https://source.skip.tools/skip-lib/blob/main/Sources/SkipLib/Skip/skip.yml), and [SkipUnit](https://source.skip.tools/skip-unit/blob/main/Sources/SkipUnit/Skip/skip.yml). Each of these projects are automatically transpiled in turn, resulting in a web of project links that constitute a buildable Gradle project. As these are dependencies that are locally checked out, their transpiled output can be referenced from Gradle through the relative symbolic links that are created as part of a module's transpilation.
+
+Read the [Dependencies](/docs/dependencies) documentation to learn more about using `skip.yml` to add Java/Kotlin dependencies.
+

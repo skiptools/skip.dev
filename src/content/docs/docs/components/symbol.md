@@ -1,0 +1,132 @@
+---
+title: Symbol
+layout: docs
+permalink: /docs/components/symbol/
+component: Symbol
+---
+
+Skip support for [SwiftUI.Image Symbols](https://developer.apple.com/documentation/swiftui/image/init(systemname:)) on Android.
+Consult the SkipUI module for a [complete list of supported SwiftUI](/docs/modules/skip-ui/#supported-swiftui).
+
+The following example screens and source code is from SkipUI's
+[Showcase](/docs/samples/skipapp-showcase/) sample app
+[`SymbolPlayground.swift`](https://github.com/skiptools/skipapp-showcase/tree/main/Sources/Showcase/SymbolPlayground.swift)
+
+
+<div class="showcase-screenshot-container">
+<img alt="Android screenshot for Symbol component (light mode)" src="http://assets.skip.dev/showcase/Symbol-android-light_framed.png" />
+<img alt="iPhone screenshot for Symbol component (light mode)" src="http://assets.skip.dev/showcase/Symbol-iphone-light_framed.png" />
+<img alt="iPhone screenshot for Symbol component (dark mode)" src="http://assets.skip.dev/showcase/Symbol-iphone-dark_framed.png" />
+<img alt="Android screenshot for Symbol component (dark mode)" src="http://assets.skip.dev/showcase/Symbol-android-dark_framed.png" />
+</div>
+
+
+```swift
+import SwiftUI
+
+struct SymbolPlayground: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 16.0) {
+                symbolRow("person.crop.square")
+                symbolRow("person.crop.circle")
+                symbolRow("plus.circle.fill")
+                symbolRow("plus")
+                symbolRow("arrow.left")
+                symbolRow("arrowtriangle.down.fill")
+                symbolRow("arrow.forward")
+                symbolRow("wrench")
+                symbolRow("phone")
+                symbolRow("checkmark.circle")
+                symbolRow("checkmark")
+                symbolRow("xmark")
+                symbolRow("pencil")
+                symbolRow("calendar")
+                symbolRow("trash")
+                symbolRow("envelope")
+                symbolRow("arrow.forward.square")
+                symbolRow("face.smiling")
+                symbolRow("heart")
+                symbolRow("heart.fill")
+                symbolRow("house")
+                symbolRow("info.circle")
+                symbolRow("chevron.down")
+                symbolRow("chevron.left")
+                symbolRow("chevron.right")
+                symbolRow("chevron.up")
+                symbolRow("list.bullet")
+                symbolRow("location")
+                symbolRow("lock")
+                symbolRow("line.3.horizontal")
+                symbolRow("ellipsis")
+                symbolRow("bell")
+                symbolRow("person")
+                symbolRow("mappin.circle")
+                symbolRow("play")
+                symbolRow("arrow.clockwise.circle")
+                symbolRow("magnifyingglass")
+                symbolRow("paperplane")
+                symbolRow("gearshape")
+                symbolRow("square.and.arrow.up")
+                symbolRow("cart")
+                symbolRow("star")
+                symbolRow("hand.thumbsup")
+                symbolRow("exclamationmark.triangle")
+                symbolRow("person.crop.square.fill")
+                symbolRow("person.crop.circle.fill")
+                symbolRow("wrench.fill")
+                symbolRow("phone.fill")
+                symbolRow("checkmark.circle.fill")
+                symbolRow("trash.fill")
+                symbolRow("envelope.fill")
+                symbolRow("house.fill")
+                symbolRow("info.circle.fill")
+                symbolRow("location.fill")
+                symbolRow("lock.fill")
+                symbolRow("bell.fill")
+                symbolRow("person.fill")
+                symbolRow("mappin.circle.fill")
+                symbolRow("play.fill")
+                symbolRow("paperplane.fill")
+                symbolRow("gearshape.fill")
+                symbolRow("square.and.arrow.up.fill")
+                symbolRow("cart.fill")
+                symbolRow("star.fill")
+                symbolRow("hand.thumbsup.fill")
+                symbolRow("exclamationmark.triangle.fill")
+                HStack {
+                    Text(".foregroundStyle(.red)")
+                    Spacer()
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.red)
+                }
+                HStack {
+                    Text(".tint(.red)")
+                    Spacer()
+                    Image(systemName: "star.fill")
+                        .tint(.red)
+                }
+                HStack {
+                    Text(".font(.title)")
+                    Spacer()
+                    Image(systemName: "star.fill")
+                        .font(.title)
+                }
+            }
+            .padding()
+        }
+        .toolbar {
+            PlaygroundSourceLink(file: "SymbolPlayground.swift")
+        }
+    }
+
+    func symbolRow(_ systemName: String) -> some View {
+        HStack {
+            Text(systemName)
+            Spacer()
+            Image(systemName: systemName)
+        }
+    }
+}
+```
+
