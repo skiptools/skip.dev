@@ -63,6 +63,6 @@ open class MenuItem(val title: String, val action: () -> Unit)
 
 You can see this in action in the [Skip Showcase app's](https://github.com/skiptools/skipapp-showcase) menu playground:
 
-<img style="height: 400px;" alt="Nested dropdown menus in the Skip Showcase app" src="/assets/images/compose-nested-menus.gif" />
+<img style="height: 400px;" alt="Nested dropdown menus in the Skip Showcase app" src="https://assets.skip.dev/images/compose-nested-menus.gif" />
 
 We hope that you find this useful! If you have questions or suggestions for improvements, please reach out to us on Mastodon [@skiptools@mas.to](https://mas.to/@skiptools), via chat [skiptools.slack.com](https://skiptools.slack.com), or in our [discussion forums](http://community.skip.tools).

@@ -11,7 +11,7 @@ Swift and SwiftUI are Apple’s recommended technologies for app development, an
 
 Recent stories about [Swift on Windows](https://www.swift.org/blog/swift-everywhere-windows-interop/), [Swift on the Playdate](https://www.swift.org/blog/byte-sized-swift-tiny-games-playdate/), and a [SwiftUI-like library for Gnome](https://www.swift.org/blog/adwaita-swift/) highlight developers’ desire to take advantage of Swift and SwiftUI in other environments too, and advances in Swift tooling have facilitated the porting process. We’re excited to share how Skip combines several Swift platform technologies to bring Swift and SwiftUI development to Android.
 
-![Cross-platform development in Xcode](/assets/images/skip-marketing-preview.jpg)
+![Cross-platform development in Xcode](https://assets.skip.dev/images/skip-marketing-preview.jpg)
 
 ## Overview
 

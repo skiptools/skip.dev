@@ -4,7 +4,6 @@ This is the source for the [skip.dev](https://skip.dev) home page
 for the Skip information, blog, and documentation. It is
 implemented with Astro and Starlight.
 
-
 ## Project Structure
 
 Inside this Astro + Starlight project, you'll see the following folders and files:
@@ -43,10 +42,10 @@ All commands are run from the root of the project, from a terminal:
 
 ## Starlight documentation
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build).
 
 ## License
 
-Skip © 2026 by <a href="https://skip.dev">the Skip project</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+Skip © 2026 by <a href="https://skip.dev">the Skip project</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
 
 

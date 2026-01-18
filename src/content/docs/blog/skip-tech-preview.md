@@ -10,7 +10,7 @@ author: Marc Prud'hommeaux
 
 We're thrilled to announce the tech preview of Skip: dual-platform app development in Swift. 
 
-<img src="/assets/images/skipdev.png" alt="Screenshot" style="width: 90%"/>
+<img src="https://assets.skip.dev/images/skipdev.png" alt="Screenshot" style="width: 90%"/>
 
 You write a modern iPhone app, and Skip transpiles it into a native Android app in real time.
 

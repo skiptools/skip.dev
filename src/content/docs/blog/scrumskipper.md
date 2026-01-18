@@ -23,7 +23,7 @@ author: Abe White
 You can also watch a [tour video](/tour/scrumskipper/) of this process.
 :::
 
-<img alt="Recording of Scrumdinger app operating on iOS and Android simultaneously" src="/assets/images/scrumskipper/launch.gif" style="width: 100%; max-width: 800; border: 1px solid #000" />
+<img alt="Recording of Scrumdinger app operating on iOS and Android simultaneously" src="https://assets.skip.dev/images/scrumskipper/launch.gif" style="width: 100%; max-width: 800; border: 1px solid #000" />
  
 ## Overview
 
@@ -39,9 +39,9 @@ You can get the full Scrumdinger source code from the [last page](https://develo
 
 Download and expand the zip file. Assuming you have the latest [Xcode](https://developer.apple.com/xcode/) installed, you can run the iPhone app by opening `TranscribingSpeechToText/Complete/Scrumdinger.xcodeproj`. The first time you attempt to open it, you may need to confirm that you trust the download. Once Xcode has loaded the project, select the iOS Simulator you'd like to use and hit the Run button!
 
-<img alt="Screenshot of the iOS app's scrum list" src="/assets/images/scrumskipper/ios-final-scrums.png" style="width: 50%; max-width: 300px; border: 1px solid #000" />
-<img alt="Screenshot of the iOS app's scrum detail" src="/assets/images/scrumskipper/ios-final-detail.png" style="width: 50%; max-width: 300px; border: 1px solid #000" />
-<img alt="Screenshot of the iOS app's meeting view" src="/assets/images/scrumskipper/ios-final-meeting.png" style="width: 50%; max-width: 300px; border: 1px solid #000" />
+<img alt="Screenshot of the iOS app's scrum list" src="https://assets.skip.dev/images/scrumskipper/ios-final-scrums.png" style="width: 50%; max-width: 300px; border: 1px solid #000" />
+<img alt="Screenshot of the iOS app's scrum detail" src="https://assets.skip.dev/images/scrumskipper/ios-final-detail.png" style="width: 50%; max-width: 300px; border: 1px solid #000" />
+<img alt="Screenshot of the iOS app's meeting view" src="https://assets.skip.dev/images/scrumskipper/ios-final-meeting.png" style="width: 50%; max-width: 300px; border: 1px solid #000" />
 
 Play around with the app - this is what we're going to bring to Android. First, however, we need to install Skip.
 
@@ -53,7 +53,7 @@ Skip's Android version of Scrumdinger won't be pixel-identical to the iOS versio
 
 Follow the [Getting Started](/docs/gettingstarted/) guide to install Skip and your Android environment, including [Android Studio](https://developer.android.com/studio). Next, launch Android Studio and open the Virtual Device Manager from the ellipsis menu of the Welcome dialog. From there, Create Device (e.g., “Pixel 6”) and then start the Emulator. Skip needs a connected Android device or Emulator to run the Android version of your app.
 
-<img alt="Screenshot of Android Studio Device Manager" src="/assets/images/scrumskipper/emulator.png" style="width: 100%; max-width: 700px;" />
+<img alt="Screenshot of Android Studio Device Manager" src="https://assets.skip.dev/images/scrumskipper/emulator.png" style="width: 100%; max-width: 700px;" />
 
 Now we're ready to turn Scrumdinger into a dual-platform Skip app.
 
@@ -69,17 +69,17 @@ skip init --open-xcode --appid=com.xyz.Scrumskipper scrum-skipper Scrumskipper
 
 This will create a template SwiftUI app and open it in Xcode. Let's run the template as-is to make sure it's working: select your desired iOS Simulator in Xcode, and hit the Run button. If you just installed or updated Skip, you may have to trust the Skip plugin:
 
-<img alt="Xcode's Trust Plugin dialog" src="/assets/images/scrumskipper/trust-plugin.png" style="width: 100%; max-width: 200px;" />
+<img alt="Xcode's Trust Plugin dialog" src="https://assets.skip.dev/images/scrumskipper/trust-plugin.png" style="width: 100%; max-width: 200px;" />
 
 If all goes well, you should see something like the following:
 
-<img alt="Screenshot of template app running in iOS Simulator and Android Emulator" src="/assets/images/scrumskipper/template-app.png" style="width: 100%; max-width: 700px;" />
+<img alt="Screenshot of template app running in iOS Simulator and Android Emulator" src="https://assets.skip.dev/images/scrumskipper/template-app.png" style="width: 100%; max-width: 700px;" />
 
 Great! Next, copy Scrumdinger's source code to Scrumskipper:
 
 1. Drag the `Scrumdinger/Models` and `Scrumdinger/Views` folders from Scrumdinger's Xcode window into the `Scrumskipper/Sources/Scrumskipper/` folder in Scrumskipper's window.
 
-    <img alt="Copy source folders from Scrumdinger to Scrumskipper" src="/assets/images/scrumskipper/copy-source.png" style="width: 100%; max-width: 600px;" />
+    <img alt="Copy source folders from Scrumdinger to Scrumskipper" src="https://assets.skip.dev/images/scrumskipper/copy-source.png" style="width: 100%; max-width: 600px;" />
 
 1. Replace Scrumskipper's `ContentView` body with the content of Scrumdinger's primary `WindowGroup`. Scrumskipper's `ContentView` should now look like this:
 
@@ -133,7 +133,7 @@ It's the moment of truth: hit that Xcode Run button!
 
 Almost immediately, you'll get an API unavailable error like this one:
 
-<img alt="Xcode API unavailable error from Skip" src="/assets/images/scrumskipper/api-unavailable-error.png" style="width: 100%; max-width: 600px; border: 1px solid #000" />
+<img alt="Xcode API unavailable error from Skip" src="https://assets.skip.dev/images/scrumskipper/api-unavailable-error.png" style="width: 100%; max-width: 600px; border: 1px solid #000" />
 
 This is our first hint that **migrating an existing iOS codebase to Android is not trivial**, even with Skip. Starting a *new* app with Skip can be a lot of fun, because it's relatively easy to avoid problematic patterns and APIs, and you can tackle any issues one at a time as they appear. But when you take on an existing codebase, you get hit with everything at once. Even if Skip perfectly translates 95+% of your original Swift source and API calls - code that was certainly never intended to be cross-platform - that can leave dozens or even hundreds of errors to deal with! 
 
@@ -211,9 +211,9 @@ You can view the final result in the source of our `skipapp-scrumskipper` [sampl
 
 After using compiler directives to work around these errors, we have liftoff! Scrumskipper launches on both the iOS Simulator and Android Emulator. Clearly, however, it needs additional work.
 
-<img alt="Screenshot of the Android app's scrum list" src="/assets/images/scrumskipper/android-initial-scrums.png" style="width: 50%; max-width: 300px;" />
-<img alt="Screenshot of the Android app's scrum detail" src="/assets/images/scrumskipper/android-initial-detail.png" style="width: 50%; max-width: 300px;" />
-<img alt="Screenshot of the Android app's meeting view" src="/assets/images/scrumskipper/android-initial-meeting.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's scrum list" src="https://assets.skip.dev/images/scrumskipper/android-initial-scrums.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's scrum detail" src="https://assets.skip.dev/images/scrumskipper/android-initial-detail.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's meeting view" src="https://assets.skip.dev/images/scrumskipper/android-initial-meeting.png" style="width: 50%; max-width: 300px;" />
 
 ## Fixups
 
@@ -227,8 +227,8 @@ Copying over Scrumdinger's source code wasn't quite enough. We forgot to copy it
 
 Scrumdinger uses SF Symbols for all of its in-app images. Android obviously doesn't include these out of the box, but Skip allows you to easily add symbols to your app. Just place vector images with the desired symbol names in your `Module` asset catalog, as described [here](/docs/modules/skip-ui/#system-symbols). For the purposes of this demo, we exported the symbols from Apple's SF Symbols app.
 
-<img alt="Exporting a SF Symbol" src="/assets/images/scrumskipper/symbols-export.png" style="width: 100%; max-width: 700px;" />
-<img alt="Copying SF Symbols to Scrumskipper" src="/assets/images/scrumskipper/symbols-copy.png" style="width: 100%; max-width: 700px;" />
+<img alt="Exporting a SF Symbol" src="https://assets.skip.dev/images/scrumskipper/symbols-export.png" style="width: 100%; max-width: 700px;" />
+<img alt="Copying SF Symbols to Scrumskipper" src="https://assets.skip.dev/images/scrumskipper/symbols-copy.png" style="width: 100%; max-width: 700px;" />
 
 ### MeetingView
 
@@ -286,10 +286,10 @@ Remember how we were going to circle back to the `Theme` enum's named colors on 
 
 The completed native Android app actually looks a lot like its iOS counterpart:
 
-<img alt="Screenshot of the Android app's scrum list" src="/assets/images/scrumskipper/android-final-scrums.png" style="width: 50%; max-width: 300px;" />
-<img alt="Screenshot of the Android app's scrum detail" src="/assets/images/scrumskipper/android-final-detail.png" style="width: 50%; max-width: 300px;" />
-<img alt="Screenshot of the Android app's edit view" src="/assets/images/scrumskipper/android-final-edit.png" style="width: 50%; max-width: 300px;" />
-<img alt="Screenshot of the Android app's meeting view" src="/assets/images/scrumskipper/android-final-meeting.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's scrum list" src="https://assets.skip.dev/images/scrumskipper/android-final-scrums.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's scrum detail" src="https://assets.skip.dev/images/scrumskipper/android-final-detail.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's edit view" src="https://assets.skip.dev/images/scrumskipper/android-final-edit.png" style="width: 50%; max-width: 300px;" />
+<img alt="Screenshot of the Android app's meeting view" src="https://assets.skip.dev/images/scrumskipper/android-final-meeting.png" style="width: 50%; max-width: 300px;" />
 
 ## Conclusion
 

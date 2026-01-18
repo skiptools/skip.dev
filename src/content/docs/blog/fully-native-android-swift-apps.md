@@ -8,7 +8,7 @@ permalink: /blog/fully-native-android-swift-apps/
 draft: false
 ---
 
-<img src="/assets/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
+<img src="https://assets.skip.dev/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
 
 In our series on using native Swift on Android, we have covered the basics of the Swift-Android toolchain in [Part 1](/blog/native-swift-on-android-1/), bridging between compiled Swift and Kotlin in [Part 2](/blog/skip-native-tech-preview/), and the creation of a cross-platform app with a shared Swift model layer in [Part 3](/blog/shared-swift-model/).
 

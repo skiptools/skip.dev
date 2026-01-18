@@ -72,7 +72,7 @@ Voilà! You've now unlocked the full potential for high-performance C libraries 
 
 Xcode has built-in support for C. It provides syntax highlighting, auto-completion of function and type names, doc-comment lookup, and inline error reporting. If you are comfortable writing in a memory-unsafe language, Xcode is a productive way to develop cross-platform C code. And developing it alongside a higher-level Swift wrapper with fast unit testing cycles is an effective way to iterate on library development.
 
-<img src="/assets/images/skip-c-project.png" alt="Screenshot of Xcode with C project" style="width: 90%"/>
+<img src="https://assets.skip.dev/images/skip-c-project.png" alt="Screenshot of Xcode with C project" style="width: 90%"/>
 
 ## C and Kotlin/Java
 

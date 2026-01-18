@@ -11,7 +11,7 @@ You may already be familiar with [Skip](/) as a tool for bringing your Swift iOS
 
 We've [discussed the advantages](/blog/bringing-swift-to-android/) of a transpilation-based strategy in the past. But despite the fact that Android is a Java/Kotlin-oriented platform, there are also significant benefits to compiled code. Skip has featured support for integrating with [C code](/blog/sharing-c-between-swift-and-kotlin/) on both Android and iOS for a long time. It only makes sense that our *transpiled* Swift code should also integrate with *compiled* Swift code.
 
-![Swift Android Logo](/assets/images/Swift-Android.svg)
+![Swift Android Logo](https://assets.skip.dev/images/Swift-Android.svg)
 {: style="text-align: center; width: 200px; margin: auto;"}
 
 And so we are excited to announce the first technology preview of a **native Swift toolchain and driver for Android**! This toolset enables developers to build and run Swift executables and test cases on a connected Android device or emulator.
@@ -256,7 +256,7 @@ idiomatic way, with self-contained libraries embedded in the application's assem
 
 This is where integration with Skip's broader ecosystem comes into play. [Additional installments](#next) of this series explore Skip's system for transparently bridging compiled Swift to Java, Kotlin, and transpiled Swift - including Skip's existing [SwiftUI support](/docs/modules/skip-ui) for Android. This allows the best of all worlds: transpiled Swift to talk to Android libraries, SwiftUI on top of [Jetpack Compose](https://developer.android.com/compose), and business logic and algorithms implemented in compiled Swift!
 
-<img src="/assets/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
+<img src="https://assets.skip.dev/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
 
 :::note
 We would love to hear feedback from developers on their experience with the tools, and to discuss the best way to get your packages ready for a Swift multi-platform world. Reach out to us on our [Slack channel](/slack) or [community forums](https://community.skip.tools).

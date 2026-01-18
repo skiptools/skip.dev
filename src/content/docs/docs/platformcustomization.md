@@ -437,7 +437,7 @@ As of this writing, there is a compatibility issue between Android Studio's Grad
 1. In Terminal, run `brew upgrade gradle` to install the latest Gradle version locally.
 1. Point Android Studio's Settings at your local Gradle installation `/opt/homebrew/opt/gradle/libexec`, as in the image below.
 
-<img width="800" alt="Android Studio Gradle settings" src="/assets/images/gradle-settings-android-studio.png" />
+<img width="800" alt="Android Studio Gradle settings" src="https://assets.skip.dev/images/gradle-settings-android-studio.png" />
 -->
 
 #### Unit Testing

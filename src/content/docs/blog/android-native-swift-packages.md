@@ -10,7 +10,7 @@ permalink: /blog/android-native-swift-packages/
 draft: false
 ---
 
-![Swift Android Logo](/assets/images/Swift-Android.svg)
+![Swift Android Logo](https://assets.skip.dev/images/Swift-Android.svg)
 {: style="text-align: center; width: 200px; margin: auto;"}
 
 * Table of contents

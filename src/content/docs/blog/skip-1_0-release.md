@@ -8,7 +8,7 @@ author: The Skip Team
 draft: false
 ---
 
-<img src="/assets/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
+<img src="https://assets.skip.dev/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
 
 We’re thrilled to announce the release of Skip 1.0!
 

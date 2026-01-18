@@ -15,7 +15,7 @@ permalink: /blog/shadow-content-in-compose/
 author: Abe White
 ---
 
-<img alt="Drop shadow on complex content" src="/assets/images/compose-shadow-content.png" />
+<img alt="Drop shadow on complex content" src="https://assets.skip.dev/images/compose-shadow-content.png" />
 
 Skip's open-source [SkipUI library](https://source.skip.tools/skip-ui) implements the SwiftUI API for Android. To do so, SkipUI leverages [Compose](https://developer.android.com/jetpack/compose), Android's own modern, declarative UI framework.
 
