@@ -33,7 +33,7 @@ draft: false
 
 <p>
     In our 
-    <a href="https://skip.tools/blog/scrumskipper/">blog post</a>, we show how we took the Scrumdinger app and brought it to Android through the power of Skip. This new &quot;Scrumskipper&quot; app demonstrates how an existing iOS-only app can be incrementally turned into a dual-platform iOS+Android app.
+    <a href="/blog/scrumskipper/">blog post</a>, we show how we took the Scrumdinger app and brought it to Android through the power of Skip. This new &quot;Scrumskipper&quot; app demonstrates how an existing iOS-only app can be incrementally turned into a dual-platform iOS+Android app.
 </p>
 
 <p>
@@ -50,9 +50,9 @@ draft: false
 
 <p>
     All the Skip runtime frameworks are free and open-source software, from the low-level 
-    <a href="https://skip.tools/docs/modules/skip-foundation/">SkipFoundation</a>
+    <a href="/docs/modules/skip-foundation/">SkipFoundation</a>
      to the high level 
-    <a href="https://skip.tools/docs/modules/skip-ui/">SkipUI</a>. In addition, we have a whole constellation of optional frameworks that enable additional functionality, from SQLite database support (<a href="https://skip.tools/docs/modules/skip-sql/">SkipSQL</a>) to Lottie animations (<a href="https://skip.tools/docs/modules/skip-motion/">SkipMotion</a>).
+    <a href="/docs/modules/skip-ui/">SkipUI</a>. In addition, we have a whole constellation of optional frameworks that enable additional functionality, from SQLite database support (<a href="/docs/modules/skip-sql/">SkipSQL</a>) to Lottie animations (<a href="/docs/modules/skip-motion/">SkipMotion</a>).
 </p>
 
 <p>
@@ -68,7 +68,7 @@ draft: false
 
 <p>
     These are just two examples of recent community contributions to the Skip ecosystem. If you would like to learn more about how to help improve Skip&#39;s support for various Android features, check out our 
-    <a href="https://skip.tools/docs/contributing/">contribution guide</a>.
+    <a href="/docs/contributing/">contribution guide</a>.
 </p>
 
 <p>
@@ -79,10 +79,10 @@ draft: false
     You can follow us on Mastodon at 
     <a href="https://mas.to/@skiptools">https://mas.to/@skiptools</a>, and join in the Skip discussions at 
     <a href="http://community.skip.tools/">http://community.skip.tools/</a>. The Skip FAQ at 
-    <a href="https://skip.tools/docs/faq/">https://skip.tools/docs/faq/</a>
+    <a href="/docs/faq/">/docs/faq/</a>
      is there to answer any questions, and be sure to check out the video tours at 
-    <a href="https://skip.tools/tour/">https://skip.tools/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
-    <a href="https://skip.tools/slack/">https://skip.tools/slack/</a>.
+    <a href="/tour/">/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
+    <a href="/slack/">/slack/</a>.
 </p>
 
 <p>Happy Skipping!</p>

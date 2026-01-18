@@ -22,13 +22,13 @@ draft: false
     The big news this month is the release of the Skip's 
     <b>native</b>
      compiled Swift technology preview! Now you are not limited to just using transpiled packages in Skip apps: you can also embed fully native Swift using our Android toolchain and transparent bridge generation. The SkipFuse framework enables you to move seamlessly between native Swift and your transpiled Jetpack Compose user interface. This unlocks the entire universe of pure-Swift packages for use in your Android app! Read the introductory blog post at 
-    <a href="https://skip.tools/blog/skip-native-tech-preview/">https://skip.tools/blog/skip-native-tech-preview/</a>
+    <a href="/blog/skip-native-tech-preview/">/blog/skip-native-tech-preview/</a>
      and then browse the full documentation at 
-    <a href="https://skip.tools/docs/native/">https://skip.tools/docs/native/</a>.
+    <a href="/docs/native/">/docs/native/</a>.
 </p>
 
 <p>
-    <img alt="Screenshot of native toochain development" src="https://assets.skip.tools/screens/skip-native-splash.png"/>
+    <img alt="Screenshot of native toochain development" src="https://assets.skip.dev/screens/skip-native-splash.png"/>
 </p>
 
 <p>
@@ -57,7 +57,7 @@ draft: false
 
 <p>
     SkipUI supports Android-specific SwiftUI modifiers to customize Material colors, components, and effects. Check out the "Material" section of our SkipUI documentation to see how: 
-    <a href="https://skip.tools/docs/modules/skip-ui/#material">https://skip.tools/docs/modules/skip-ui/#material</a>
+    <a href="/docs/modules/skip-ui/#material">/docs/modules/skip-ui/#material</a>
 </p>
 
 <p>
@@ -94,10 +94,10 @@ draft: false
     You can follow us on Mastodon at 
     <a href="https://mas.to/@skiptools">https://mas.to/@skiptools</a>, and join in the Skip discussions at 
     <a href="http://community.skip.tools/">http://community.skip.tools/</a>. The Skip FAQ at 
-    <a href="https://skip.tools/docs/faq/">https://skip.tools/docs/faq/</a>
+    <a href="/docs/faq/">/docs/faq/</a>
      is there to answer any questions, and be sure to check out the video tours at 
-    <a href="https://skip.tools/tour/">https://skip.tools/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
-    <a href="https://skip.tools/slack/">https://skip.tools/slack/</a>.
+    <a href="/tour/">/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
+    <a href="/slack/">/slack/</a>.
 </p>
 
 <p>Happy Skipping!</p>

@@ -42,7 +42,7 @@ author: The Skip Team
 
 <p>
     Abe and Marc were delighted to be invited back to Peter Witham&#39;s excellent Compile Swift podcast, where they discussed the present and future directions for Skip, and dove into some interesting technical details of Skip&#39;s inner workings, including the secrets to the unbeatable performance of apps that are built using Skip. Check it out at: 
-    <a href="https://skip.tools/blog/skip-on-compile-swift-podcast/">https://skip.tools/blog/skip-on-compile-swift-podcast</a>
+    <a href="/blog/skip-on-compile-swift-podcast/">/blog/skip-on-compile-swift-podcast</a>
 </p>
 
 <p>
@@ -53,7 +53,7 @@ author: The Skip Team
     We truly believe Skip is the best way to build mobile applications that reach the 
     <b>entire</b>
      marketplace. No other solution offers the same level of user interface polish, raw performance, and seamless integration with the native platform interfaces. We&#39;ve updated our comparison table to highlight some of the benefits of Skip over alternatives like Flutter, React, and other legacy solutions: 
-    <a href="https://skip.tools/compare/">https://skip.tools/compare</a>
+    <a href="/compare/">/compare</a>
 </p>
 
 <p>
@@ -70,23 +70,23 @@ author: The Skip Team
     <li>
         <b>Lottie animations</b>
          The updated SkipMotion packages enables you to include&nbsp;Lottie animations directly in both your iOS and Android apps. With its impeccably smooth rendering, Lottie has become the de-facto solution for adding whimsy and delight to mobile apps. Discover more about the module at&nbsp;
-        <a href="https://skip.tools/docs/modules/skip-motion/">https://skip.tools/docs/modules/skip-motion</a>
+        <a href="/docs/modules/skip-motion/">/docs/modules/skip-motion</a>
         &nbsp;and see the sample application at&nbsp;
-        <a href="https://skip.tools/docs/samples/skipapp-lottiedemo">https://skip.tools/docs/samples/skipapp-lottiedemo</a>
+        <a href="/docs/samples/skipapp-lottiedemo">/docs/samples/skipapp-lottiedemo</a>
     </li>
     <li>
         <b>Firebase Firestore</b>
          Firebase is one of the most popular solutions for storing and synchronizing your data between your devices and the cloud. Our SkipFirestore module is the first part of a comprehensive SkipFirebase package, and sits atop the official Kotlin and Swift Firebase libraries maintained by Google. Read more about the package at&nbsp;
-        <a href="https://skip.tools/docs/modules/skip-firebase/">https://skip.tools/docs/modules/skip-firebase</a>
+        <a href="/docs/modules/skip-firebase/">/docs/modules/skip-firebase</a>
         &nbsp;and take a look at the &quot;FireSide&quot; sample app at&nbsp;
-        <a href="https://skip.tools/docs/samples/skipapp-fireside">https://skip.tools/docs/samples/skipapp-fireside</a>
+        <a href="/docs/samples/skipapp-fireside">/docs/samples/skipapp-fireside</a>
     </li>
     <li>
         <b>Native SQL</b>
          The SkipSQL package was recently updated to facilitate&nbsp;using either the vendor-provided sqlite libraries (thereby keeping your app size low), or embedding a full native SQLPlus build, which enables many of the great sqlite extensions that the community has provided over the years: full-text search, encryption, and advanced JSON functions. Read the full documentation at&nbsp;
-        <a href="https://skip.tools/docs/modules/skip-sql/">https://skip.tools/docs/modules/skip-sql</a>
+        <a href="/docs/modules/skip-sql/">/docs/modules/skip-sql</a>
         &nbsp;and check out the &quot;Data Bake&quot; sample app at&nbsp;
-        <a href="https://skip.tools/docs/samples/skipapp-databake">https://skip.tools/docs/samples/skipapp-databake</a>
+        <a href="/docs/samples/skipapp-databake">/docs/samples/skipapp-databake</a>
     </li>
 </ul>
 
@@ -120,9 +120,9 @@ author: The Skip Team
     , and join in the Skip discussions at 
     <a href="http://community.skip.tools/">http://community.skip.tools</a>
     . The Skip FAQ at 
-    <a href="https://skip.tools/docs/faq/">https://skip.tools/docs/faq</a>
+    <a href="/docs/faq/">/docs/faq</a>
     &nbsp;is there to answer any questions, and be sure to check out the video tours at 
-    <a href="https://skip.tools/tour/">https://skip.tools/tour</a>
+    <a href="/tour/">/tour</a>
     .
 </p>
 

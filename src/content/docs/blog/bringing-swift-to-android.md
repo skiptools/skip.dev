@@ -19,7 +19,7 @@ There are multiple paths to supporting Swift on Android, and - like everything i
 
 Our Swift-to-Kotlin transpiler is powered by [SwiftSyntax](https://github.com/apple/swift-syntax), and we use use [Swift Package Manager](https://github.com/apple/swift-package-manager) to both invoke the transpiler as part of the build process, and to integrate our suite of [open source Android libraries](/docs/modules/). 
 
-![Diagram of Skip's Swift-on-Android build process](https://raw.githubusercontent.com/skiptools/assets.skip.tools/main/diagrams/skip-diagrams-app.svg)
+![Diagram of Skip's Swift-on-Android build process](https://assets.skip.dev/diagrams/skip-diagrams-app.svg)
 
 The result is a workflow in which you work in Xcode, writing standard Swift and SwiftUI. Our build plugin leaves your source code untouched, but generates, packages, and builds the equivalent Kotlin and Jetpack Compose alongside it. One Swift and SwiftUI codebase, two fully native apps.
 
@@ -113,7 +113,7 @@ Unit testing is critical for verifying functionality and ensuring that what work
 
 [XCTest](https://developer.apple.com/documentation/xctest) is Apple's native framework for writing and running unit tests in Swift. Through our open source [SkipUnit](/docs/modules/skip-unit/) library, we support the XCTest API on top of [JUnit](https://junit.org/junit5/), the venerable Java unit testing framework. 
 
-![Diagram of Skip's XCTest-on-Android test process](https://raw.githubusercontent.com/skiptools/assets.skip.tools/main/diagrams/skip-diagrams-testing.svg)
+![Diagram of Skip's XCTest-on-Android test process](https://assets.skip.dev/diagrams/skip-diagrams-testing.svg)
 
 Being able to run a unified set of Swift unit tests across your Apple **and** Android targets is a critical aspect of any Swift-on-Android solution. In fact the Skip modules themselves rely heavily on this testing support: we use GitHub actions to run our suite of Swift unit tests across both iOS and Android on every commit to prevent regressions.
 

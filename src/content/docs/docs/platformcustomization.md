@@ -418,7 +418,7 @@ To open your dual-platform Xcode app in Android Studio:
 1. Control-click the `Android/settings.gradle.kts` file and select `Open with External Editor` from the resulting context menu.
 1. In Android Studio, select `File → Sync Project with Gradle Files`
 
-<img width="400" alt="Open in Android Studio" src="https://assets.skip.tools/images/transpiled-android-studio.png" />
+<img width="400" alt="Open in Android Studio" src="https://assets.skip.dev/images/transpiled-android-studio.png" />
 
 Once your app is open in Android Studio, you can run and debug it from there. Keep in mind that while you can iterate on your app's custom [Kotlin files](#kotlin-files) with Android Studio, any edits you make to transpiled files will get overwritten the next time you update the source Swift.
 
@@ -444,7 +444,7 @@ As of this writing, there is a compatibility issue between Android Studio's Grad
 
 To run your unit tests in Android Studio, first run them in Xcode so that they get transpiled. Then find your `Test` module's output folder within `SkipStone/plugins`, and use `Open with External Editor` on its `settings.gradle.kts` file.  Running your unit tests in Android Studio will allow you to use Android's native debugging tools to debug your tests as well.
 
-<img width="300" alt="Open in Android Studio" src="https://assets.skip.tools/images/transpiled-tests-android-studio.png" />
+<img width="300" alt="Open in Android Studio" src="https://assets.skip.dev/images/transpiled-tests-android-studio.png" />
 
 ### Separate iOS and Android Apps
 

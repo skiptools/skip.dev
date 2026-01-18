@@ -46,21 +46,21 @@ launch it and open the "Virtual Device Manager" from the "More Actions" (or elli
 the "Welcome to Android Studio" dialog. On the resulting "Device Manager" screen, select "Create virtual device".
 
 <div style="text-align: center; margin: auto;">
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_1_setup_welcome_screen.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_1_setup_welcome_screen.png" alt="Android Emulator Setup 1: Welcome Screen" style="width: 45%"/></a>
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_2_setup_device_manager.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_2_setup_device_manager.png" alt="Android Emulator Setup 2: Device Manager" style="width: 45%"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_1_setup_welcome_screen.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_1_setup_welcome_screen.png" alt="Android Emulator Setup 1: Welcome Screen" style="width: 45%"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_2_setup_device_manager.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_2_setup_device_manager.png" alt="Android Emulator Setup 2: Device Manager" style="width: 45%"/></a>
 </div>
 
 On the "Select Hardware" screen, select a device (e.g., “Pixel 6”) and then on the "Select a system image" screen select one of the recommended images (e.g., "UpsideDownCake", a.k.a. API 34), and then on the next screen name the device and select "Finish". When you return to the "Device Manager" screen, you will see a new device (like "Pixel 6 API 34"), which you can then launch with the triangular play button. A little window titled "Android Emulator" will appear and the operating system will boot.
 
 <div style="text-align: center; margin: auto;">
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_3_avd_select_hardware.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_3_avd_select_hardware.png" alt="Android Emulator Setup 3: Select Hardware" style="width: 30%"/></a>
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_4_avd_system_image.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_4_avd_system_image.png" alt="Android Emulator Setup 4: Select System Image" style="width: 30%"/></a>
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_5_avd_verify.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_5_avd_verify.png" alt="Android Emulator Setup 5: Verify Connfiguration" style="width: 30%"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_3_avd_select_hardware.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_3_avd_select_hardware.png" alt="Android Emulator Setup 3: Select Hardware" style="width: 30%"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_4_avd_system_image.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_4_avd_system_image.png" alt="Android Emulator Setup 4: Select System Image" style="width: 30%"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_5_avd_verify.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_5_avd_verify.png" alt="Android Emulator Setup 5: Verify Connfiguration" style="width: 30%"/></a>
 </div>
 
 <div style="text-align: center; margin: auto;">
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_6_setup_device_manager.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_6_setup_device_manager.png" alt="Android Emulator Setup 6: Device Manager" style="width: 45%"/></a>
-<a href="https://assets.skip.tools/android-emulator-setup/emulator_7_running.png" target="_blank"><img src="https://assets.skip.tools/android-emulator-setup/emulator_7_running.png" alt="Android Emulator Setup 6: Running Emulator" style="max-width: 45%; max-height: 300px;"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_6_setup_device_manager.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_6_setup_device_manager.png" alt="Android Emulator Setup 6: Device Manager" style="width: 45%"/></a>
+<a href="https://assets.skip.dev/android-emulator-setup/emulator_7_running.png" target="_blank"><img src="https://assets.skip.dev/android-emulator-setup/emulator_7_running.png" alt="Android Emulator Setup 6: Running Emulator" style="max-width: 45%; max-height: 300px;"/></a>
 </div>
 
 :::caution

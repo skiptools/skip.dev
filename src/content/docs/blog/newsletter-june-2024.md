@@ -17,12 +17,12 @@ draft: false
 <p>
     We&#39;ve posted a new Skip &quot;Showreel&quot; video, providing a quick 3-minute overview of Skip and the highlights of using it to build native dual-platform apps. You can find it on YouTube at: 
     <a href="https://www.youtube.com/watch?v=lQjaaAqgxp4">https://www.youtube.com/watch?v=lQjaaAqgxp4</a>. This and other videos are also available from our Tour page at: 
-    <a href="https://skip.tools/tour/">https://skip.tools/tour/</a>. We will be posting new videos in the coming weeks and months, so consider either following us on YouTube, or subscribing to our RSS feed from 
-    <a href="https://skip.tools/blog/">https://skip.tools/blog/</a>.
+    <a href="/tour/">/tour/</a>. We will be posting new videos in the coming weeks and months, so consider either following us on YouTube, or subscribing to our RSS feed from 
+    <a href="/blog/">/blog/</a>.
 </p>
 
 <p>
-    <img alt="skip-showreel-poster.png" src="https://assets.skip.tools/tour/showreel_video_poster.png"/>
+    <img alt="skip-showreel-poster.png" src="https://assets.skip.dev/tour/showreel_video_poster.png"/>
 </p>
 
 <p>
@@ -30,7 +30,7 @@ draft: false
 </p>
 
 <p>
-    The Skip Showcase app (<a href="https://skip.tools/docs/samples/skipapp-showcase/">https://skip.tools/docs/samples/skipapp-showcase/</a>) has long been our go-to for providing a side-by-side comparison of SwiftUI components with the Jetpack Compose equivalents that SkipUI provides. Browsing thought these components simultaneously on an iPhone and Android device gives a good sense Skip&#39;s capabilities and power, and is a great way to demonstrate Skip&#39;s benefits to project managers and stakeholders before breaking ground on a new project.
+    The Skip Showcase app (<a href="/docs/samples/skipapp-showcase/">/docs/samples/skipapp-showcase/</a>) has long been our go-to for providing a side-by-side comparison of SwiftUI components with the Jetpack Compose equivalents that SkipUI provides. Browsing thought these components simultaneously on an iPhone and Android device gives a good sense Skip&#39;s capabilities and power, and is a great way to demonstrate Skip&#39;s benefits to project managers and stakeholders before breaking ground on a new project.
 </p>
 
 <p>
@@ -55,7 +55,7 @@ draft: false
 
 <p>
     Skip and Kotlin Multiplatform (KMP) are two sides of the same coin. Skip brings your Swift/iOS codebase to Android, and KMP brings your Kotlin/Android codebase to iOS. Many people have assumed that this diametrical opposition means that the two technologies are incompatible. But this is not the case! KMP modules can be embedded in Skip apps, and they work seamlessly, for the most part, with the Swift-to-Kotlin code transpilation that Skip provides. Check out our deep dive into the integration at 
-    <a href="https://skip.tools/blog/skip-and-kotlin-multiplatform/">https://skip.tools/blog/skip-and-kotlin-multiplatform/</a>
+    <a href="/blog/skip-and-kotlin-multiplatform/">/blog/skip-and-kotlin-multiplatform/</a>
      and learn how you can take your business-logic KMP modules and integrate them in both the iOS and Android sides of your Skip app.
 </p>
 
@@ -65,7 +65,7 @@ draft: false
 
 <p>
     By popular demand, we are starting to migrate away from our gitter.im Matrix chat system to a new Skiptools Slack group. Going forward, this will be the preferred medium for live discussions and getting technical help. The Skip team will be standing by to answer questions and help with any issues that members of the community may encounter. You can sign up and join the conversation at: 
-    <a href="https://skip.tools/slack/">https://skip.tools/slack/</a>.
+    <a href="/slack/">/slack/</a>.
 </p>
 
 <p>
@@ -78,7 +78,7 @@ draft: false
     Fortunately, the popular Fastlane tool (
     <a href="https://fastlane.tools/">https://fastlane.tools/</a>
     ) has evolved over the years to help alleviate some of the drudgery of submitting new apps, as well as updated releases, to these storefronts. And we&#39;re happy to report that new projects created with the `skip init` command will now include Fastlane templates that provide everything you need to automate your app distributions. Read more about it on our blog post: 
-    <a href="https://skip.tools/blog/skip-and-fastlane/">https://skip.tools/blog/skip-and-fastlane/</a>.
+    <a href="/blog/skip-and-fastlane/">/blog/skip-and-fastlane/</a>.
 </p>
 
 <p>
@@ -97,10 +97,10 @@ draft: false
     You can follow us on Mastodon at 
     <a href="https://mas.to/@skiptools">https://mas.to/@skiptools</a>, and join in the Skip discussions at 
     <a href="http://community.skip.tools/">http://community.skip.tools/</a>. The Skip FAQ at 
-    <a href="https://skip.tools/docs/faq/">https://skip.tools/docs/faq/</a>
+    <a href="/docs/faq/">/docs/faq/</a>
      is there to answer any questions, and be sure to check out the video tours at 
-    <a href="https://skip.tools/tour/">https://skip.tools/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
-    <a href="https://skip.tools/slack/">https://skip.tools/slack/</a>.
+    <a href="/tour/">/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
+    <a href="/slack/">/slack/</a>.
 </p>
 
 <p>Happy Skipping!</p>

@@ -52,10 +52,10 @@ Whether you are contemplating building a brand new app or considering your optio
     You can follow us on Mastodon at 
     <a href="https://mas.to/@skiptools">https://mas.to/@skiptools</a>, and join in the Skip discussions at 
     <a href="http://community.skip.tools/">http://community.skip.tools/</a>. The Skip FAQ at 
-    <a href="https://skip.tools/docs/faq/">https://skip.tools/docs/faq/</a>
+    <a href="/docs/faq/">/docs/faq/</a>
      is there to answer any questions, and be sure to check out the video tours at 
-    <a href="https://skip.tools/tour/">https://skip.tools/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
-    <a href="https://skip.tools/slack/">https://skip.tools/slack/</a>.
+    <a href="/tour/">/tour/</a>. And, as always, you can reach out directly to us on our Slack channel at 
+    <a href="/slack/">/slack/</a>.
 </p>
 
 

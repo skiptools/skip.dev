@@ -36,9 +36,9 @@ export default defineConfig({
       },
       plugins: [
         // TODO: activate link validator
-        //starlightLinksValidator({
-        //  errorOnRelativeLinks: false,
-        //}),
+        starlightLinksValidator({
+          errorOnRelativeLinks: false,
+        }),
         starlightBlog({
           prefix: 'blog',
           navigation: 'header-start',
