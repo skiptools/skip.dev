@@ -47,7 +47,7 @@ skip checkup
 [✓] Skip checkup succeeded in 190.21s</code>
 ```
 
-If the installation or checkup fails, try running again with `skip checkup --verbose` to get more details, and check the [FAQ](/docs/faq/) for common solutions or reach out to the community on [Slack](/slack/) or the [Discussion Forums](https://community.skip.tools).
+If the installation or checkup fails, try running again with `skip checkup --verbose` to get more details, and check the [FAQ](/docs/faq/) for common solutions or reach out to the community on [Slack](/slack/) or the [Discussion Forums](https://forums.skip.dev).
 
 Next, create a new Skip app project with:
 

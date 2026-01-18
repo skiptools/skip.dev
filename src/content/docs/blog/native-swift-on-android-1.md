@@ -259,7 +259,7 @@ This is where integration with Skip's broader ecosystem comes into play. [Additi
 <img src="https://assets.skip.dev/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 100%"/>
 
 :::note
-We would love to hear feedback from developers on their experience with the tools, and to discuss the best way to get your packages ready for a Swift multi-platform world. Reach out to us on our [Slack channel](/slack) or [community forums](https://community.skip.tools).
+We would love to hear feedback from developers on their experience with the tools, and to discuss the best way to get your packages ready for a Swift multi-platform world. Reach out to us on our [Slack channel](/slack) or [community forums](https://forums.skip.dev).
 :::
 
 ## Native Swift on Android Series {#next}

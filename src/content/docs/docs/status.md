@@ -20,4 +20,4 @@ Skip is stable and powers many production apps on the App Store and Play Store.
 
 Skip Fuse is a recent advance in Skip's capabilities. We appreciate your [feedback](/docs/help/) to continue to improve its functionality and tooling.
 
-Continue reading the Skip documentation to learn more. The best way to get help and connect with fellow Skip users is to join the community [Slack](/slack/). We also have forums for both general [discussions](http://community.skip.tools) and specific [issues and bug reports](https://source.skip.tools/skip/issues).
+Continue reading the Skip documentation to learn more. The best way to get help and connect with fellow Skip users is to join the community [Slack](/slack/). We also have forums for both general [discussions](http://forums.skip.dev) and specific [issues and bug reports](https://source.skip.tools/skip/issues).

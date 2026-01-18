@@ -118,7 +118,7 @@ author: The Skip Team
     You can follow us on Mastodon at 
     <a href="https://mas.to/@skiptools">https://mas.to/@skiptools</a>
     , and join in the Skip discussions at 
-    <a href="http://community.skip.tools/">http://community.skip.tools</a>
+    <a href="http://forums.skip.dev/">http://forums.skip.dev</a>
     . The Skip FAQ at 
     <a href="/docs/faq/">/docs/faq</a>
     &nbsp;is there to answer any questions, and be sure to check out the video tours at 

@@ -44,7 +44,7 @@ skip checkup --native
 ```
 
 :::note
-For detailed installation instructions, see the [Getting Started documentation](/docs/gettingstarted/). If any steps in the checkup command fail, consult the generated log file, which should contain an error message describing the failure. You can seek assistance on our [Slack](/slack/) or [discussion forums](https://community.skip.tools).
+For detailed installation instructions, see the [Getting Started documentation](/docs/gettingstarted/). If any steps in the checkup command fail, consult the generated log file, which should contain an error message describing the failure. You can seek assistance on our [Slack](/slack/) or [discussion forums](https://forums.skip.dev).
 :::
 
 If everything passes successfully, you can now create your first cross-platform native Swift app with the command:

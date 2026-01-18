@@ -92,4 +92,4 @@ private fun shadowColorMatrix(color: Color): ColorMatrix {
 
 You can see this in action in the [Skip Showcase app's](https://github.com/skiptools/skipapp-showcase) shadow playground, and in the image at the top of this article.
 
-We hope that you find this useful! If you have questions or suggestions for improvements, please reach out to us on Mastodon [@skiptools@mas.to](https://mas.to/@skiptools), via chat [skiptools.slack.com](https://skiptools.slack.com), or in our [discussion forums](http://community.skip.tools).
+We hope that you find this useful! If you have questions or suggestions for improvements, please reach out to us on Mastodon [@skiptools@mas.to](https://mas.to/@skiptools), via chat [skiptools.slack.com](https://skiptools.slack.com), or in our [discussion forums](http://forums.skip.dev).

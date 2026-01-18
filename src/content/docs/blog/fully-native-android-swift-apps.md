@@ -41,7 +41,7 @@ $ skip checkup --native
 ```
 
 :::caution
-If you haven't used Skip before, this command may take a long time to complete! Skip has to download and install all of the libraries necessary for Android app development. If any steps in the checkup command fail, consult the generated log file, which should contain an error message describing the failure. You can seek assistance on our [Slack](/slack/) or [discussion forums](https://community.skip.tools).
+If you haven't used Skip before, this command may take a long time to complete! Skip has to download and install all of the libraries necessary for Android app development. If any steps in the checkup command fail, consult the generated log file, which should contain an error message describing the failure. You can seek assistance on our [Slack](/slack/) or [discussion forums](https://forums.skip.dev).
 :::
 
 You're now ready to create your first fully native cross-platform Swift app:
@@ -167,7 +167,7 @@ As a demonstration and validation of this technology, we have published one of o
 Despite being generally available, Skip's native support is currently a technology _preview_. We are working on updating our documentation, finding and squashing remaining bugs and limitations, reducing build times, and generating smaller Android binaries. Even as a preview, however, you can build complete, production-ready cross-platform Swift apps, as Skip Notes demonstrates.
 
 :::note
-As always, you can seek assistance on our [Slack](/slack/) or [discussion forums](https://community.skip.tools).
+As always, you can seek assistance on our [Slack](/slack/) or [discussion forums](https://forums.skip.dev).
 :::
 
 Cross-platform Swift and SwiftUI have been a dream of ours for a long time. We are immensely excited about the possibilities this unlocks for creating truly best-in-class apps for both iOS and Android from a single codebase!

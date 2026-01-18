@@ -1,0 +1,56 @@
+---
+title: About
+description: About the Skip team
+---
+
+export const members = [
+  {
+    name: "Marc Prud'hommeaux",
+    role: "Developer",
+    email: "marc@skip.tools",
+    apps: "Stanza, Kindle, NYT Cooking, Bose, more…",
+    photo: "marc.jpg"
+  },
+  {
+    name: "Abe White",
+    role: "Developer",
+    email: "abe@skip.tools",
+    apps: "Stanza, Kindle, Twitter, more…",
+    photo: "abe.jpg"
+  }
+];
+
+## About Us
+
+We've thought for a long time that there must be a better way to achieve the uncompromising benefits of a genuinely native iOS app experience without resorting to re-writing your apps for Android. We've seen first-hand that the premier dual-platform apps are written not once, but twice, backed by separate teams that manually synchronize designs, release cycles, bug fixes, and a myriad of other factors that lead to coordination friction, bloated teams, and administrative overhead.
+
+We believe you should be able to reach the entire 5 billion mobile market with one small team, not two large teams. So we undertook the Skip project to revolutionize the way apps are created, developed, and maintained.
+
+## Meet the Team
+
+{members.map((member) => (
+  <div style="display: flex; align-items: center; margin-top: 2rem;">
+    <img 
+      src={`https://assets.skip.dev/images/${member.photo}`} 
+      alt={`Photograph of ${member.name}`} 
+      style="box-shadow: 0 0 1px; max-width: 50px; max-height: 50px; border-radius: 50px; margin-right: 10px;" 
+    />
+    <div>
+      {member.name}
+      <br />
+      <a href={`mailto:${member.email}`}>{member.email}</a>
+      <br />
+      <small><span style="font-family: monospace;">Apps</span>: {member.apps}</small>
+    </div>
+  </div>
+))}
+
+Marc and Abe have been writing software together since the late 1990s. They were founding members of the Kodo team, a Java object-relational mapping tool. Oracle acquired SolarMetric in 2006, where they went on to open-source Kodo's Java bytecode library and core persistence engine as the Serp Bytecode Toolkit and Apache OpenJPA projects.
+
+Before the iOS App Store opened in 2008, they collaborated on Stanza, one of the first iPhone e-book readers. Initially developed for Android, they decided to exclusively target the iPhone to provide a first-rate user experience. After Stanza gained immense popularity in its first year, Amazon acquired Lexcycle, and Abe and Marc went on the help build the Kindle apps for iPhone, iPad, and Android.
+
+Abe spent the next decade at Twitter, where he was tech lead for iOS UI frameworks. Marc worked on a myriad of popular apps such as the New York Times Cooking app and apps for Bose, as well as publicly speaking on Swift at various conferences and venues around the world.
+
+Abe and Marc co-founded the Skip project in 2023.
+
+Reach out to us directly, or drop into our [community Slack](/slack/) to chat or ask questions, and check out the [Discussion Forums](https://community.skip.tools). Follow [@skiptools@mas.to](https://mas.to/@skiptools) on Mastodon. For press and general inquiries: [skip@skip.tools](mailto:skip@skip.tools).
