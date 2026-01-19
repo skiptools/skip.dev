@@ -19,13 +19,19 @@ If you haven't already, we highly recommend reading [Part 2](/blog/skip-native-t
 
 The app we create in Part 2 uses a compiled Swift model layer and a shared SwiftUI interface, which Skip [transpiles](https://en.wikipedia.org/wiki/Source-to-source_compiler) to Jetpack Compose on Android. The following diagram illustrates this dual-platform, single-codebase architecture:
 
+<div class="diagram-vector">
+    
 ![Skip Native Diagram](https://assets.skip.dev/diagrams/skip-diagrams-native-model.svg)
-{: .diagram-vector }
+
+</div>
 
 In this article, by contrast, we create separate iOS and Android apps. The iOS app and shared model layer are written in Swift and SwiftUI using Xcode. The Android app is written in [Kotlin](https://kotlinlang.org) and [Jetpack Compose](https://developer.android.com/compose) using Android Studio, and it imports the compiled Swift model as a dependency. This structure  allows you to reuse the lower layers of your app logic while fully embracing the standard IDEs and UI toolkits on each platform: 
 
+<div class="diagram-vector">
+    
 ![Skip Shared Model Diagram](https://assets.skip.dev/diagrams/skip-diagrams-native-twoapps.svg)
-{: .diagram-vector }
+
+</div>
 
 :::note
 Thanks to Skip's ability to [move fluidly between SwiftUI and Compose](/docs/platformcustomization/#swiftui-and-compose), you could also choose to share *parts* of your SwiftUI interface between iOS and Android while maintaining the rest separately.

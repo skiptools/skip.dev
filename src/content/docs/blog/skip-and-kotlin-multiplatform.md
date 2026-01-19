@@ -54,8 +54,11 @@ The iOS side is a bit more involved: the KMP project must be compiled and export
 
 The resulting project and dependency layout will look like this:
 
+<div class="diagram-vector">
+  
 ![Skip KMP Diagram](https://assets.skip.dev/diagrams/skip-diagrams-kmp.svg)
-{: .diagram-vector }
+
+</div>
 
 ## Adding a KMP dependency to a Skip Framework
 

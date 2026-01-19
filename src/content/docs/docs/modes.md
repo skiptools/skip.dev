@@ -17,8 +17,11 @@ Skip's *native* mode compiles your Swift natively for Android, and it is the mod
 
 The following diagram depicts a native project:
 
+<div class="diagram-vector">
+  
 ![Skip Native Diagram](https://assets.skip.dev/diagrams/skip-diagrams-native.svg)
-{: .diagram-vector }
+
+</div>
 
 ### Advantages
 
@@ -55,8 +58,11 @@ Transpilation is the process of converting one computer language into another la
 
 The following diagram depicts a pure transpiled project:
 
+<div class="diagram-vector">
+  
 ![Skip Non-Native Diagram](https://assets.skip.dev/diagrams/skip-diagrams-non-native.svg)
-{: .diagram-vector }
+
+</div>
 
 ### Advantages
 
@@ -372,8 +378,11 @@ equivalent functionality in the
 [`androidx.security.crypto.EncryptedSharedPreferences`](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences)
 package on Android.
 
+<div class="diagram-vector">
+
 ![Skip Bridging Diagram](https://assets.skip.dev/diagrams/skip-diagrams-bridging.svg)
-{: .diagram-vector }
+
+</div>
 
 ### `AnyDynamicObject`
 

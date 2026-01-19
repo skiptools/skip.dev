@@ -35,8 +35,11 @@ let package = Package(
 
 SkipUI vends the `skip.ui` Kotlin package. It is a reimplementation of SwiftUI for Kotlin on Android using Jetpack Compose. Its goal is to mirror as much of SwiftUI as possible, allowing Skip developers to use SwiftUI with confidence.
 
+<div class="diagram-vector">
+  
 ![SkipUI Diagram](https://assets.skip.dev/diagrams/skip-diagrams-ui.svg)
-{: .diagram-vector }
+
+</div>
 
 SkipUI is used directly by [Skip Lite](/docs/status/#skip_fuse) transpiled Swift, and it is used indirectly by [Skip Fuse](/docs/status/#skip_fuse) compiled Swift through the SkipFuseUI native framework.
 

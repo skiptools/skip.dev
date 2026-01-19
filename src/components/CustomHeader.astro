@@ -1,48 +1,63 @@
 ---
-// src/components/CustomHeader.astro
-import type { Props } from '@astrojs/starlight/props';
-import Default from '@astrojs/starlight/components/Header.astro';
-import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
-import Search from "@astrojs/starlight/components/Search.astro";
-import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
-import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
-import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
-import Navigation from "./Navigation.astro";
-// Use the image zoom, can be rendered anywhere
-import ImageZoom from "starlight-image-zoom/components/ImageZoom.astro";
+import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
+import Search from '@astrojs/starlight/components/Search.astro';
+import SiteTitle from './SiteTitle.astro';
+import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
+import ThemeSelect from './ThemeSelect.astro';
 
-const links = [
-  { text: 'Docs', href: '/docs/' },
-  { text: 'Blog', href: '/blog/' },
-  { text: 'Sponsor', href: '/sponsor/' },
-  //{ text: 'About', href: '/about/' },
+const curLocale = Astro.locals.starlightRoute.locale;
+const slug = Astro.locals.starlightRoute.entry.slug;
+
+type Link = {
+  title: string;
+  value: string;
+  transfer: boolean;
+};
+
+// Note that these links are duplicated in SiteTitle.astro and CustomHeader.astro
+const links: Link[] = [
+  {
+    title: 'Docs',
+    value: '/docs/',
+    transfer: true,
+  },
+  {
+    title: 'Blog',
+    value: '/blog/',
+    transfer: false,
+  },
+  {
+    title: 'Sponsor',
+    value: '/sponsor/',
+    transfer: true,
+  },
 ];
 ---
 
 <div class="header sl-flex">
-  <div class="title-wrapper sl-flex">
-    <SiteTitle {...Astro.props} />
-    <div class="separator"></div>
-    <div class="sl-flex nav-wrapper">
-    </div>
+  <div class="full-width sl-flex">
+    <SiteTitle />
   </div>
-  <div
-    class="search-container place-self-end h-full place-content-center"
-  >
-    <nav class="custom-header-nav">
-    { links.map((link) => <a class="mr-4"href={link.href}>{link.text}</a> )}
-    </nav>
-    <Search {...Astro.props} />
+  <div class="sl-flex">
+    <Search />
   </div>
   <div class="sl-hidden md:sl-flex right-group">
-    <div class="sl-flex social-icons">
-      <SocialIcons {...Astro.props} />
+    <div class="desktop">
+      {
+        links.map((link) => (
+          <a href={link.transfer && curLocale ? `/${curLocale}${link.value}` : link.value}>
+            {link.title}
+          </a>
+        ))
+      }
     </div>
-    <ThemeSelect {...Astro.props} />
-    <LanguageSelect {...Astro.props} />
+    <div class="sl-flex social-icons">
+      <SocialIcons />
+    </div>
+    <LanguageSelect />
+    <ThemeSelect />
   </div>
 </div>
-
 
 <style>
   .header {
@@ -51,42 +66,18 @@ const links = [
     align-items: center;
     height: 100%;
   }
-
-  .title-wrapper {
-    overflow: hidden;
-    align-items: center;
-    gap: 0.75rem; /* half the previous space */
-  }
-
-  .separator {
-    width: 1px;
-    height: 1.5rem;
-    background-color: var(--sl-color-gray-5);
-    margin-inline: 0.375rem; /* half the previous margin */
-  }
-
-  .nav-wrapper {
-    align-items: center;
-  }
-
-  /* Limit the search bar width */
-  .search-container {
+  .full-width {
     width: 100%;
-    max-width: 50%; /* constrain search to half page width */
-    min-width: 12rem; /* ensure it doesn’t get too small */
-    display: flex;
-    justify-content: flex-end;
   }
-
   .right-group,
   .social-icons {
     gap: 1rem;
-    justify-content: flex-end;
     align-items: center;
   }
-
+  .desktop,
+  .release-link::after,
   .social-icons::after {
-    content: "";
+    content: '';
     height: 2rem;
     border-inline-end: 1px solid var(--sl-color-gray-5);
   }
@@ -95,70 +86,148 @@ const links = [
     :global(:root[data-has-sidebar]) {
       --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
     }
-
     :global(:root:not([data-has-toc])) {
       --__toc-width: 0rem;
     }
-
     .header {
-      --__sidebar-width: max(
-        0rem,
-        var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x)
-      );
+      --__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
       --__main-column-fr: calc(
         (
-            100% + var(--__sidebar-pad, 0rem) -
-              var(--__toc-width, var(--sl-sidebar-width)) -
-              (2 * var(--__toc-width, var(--sl-nav-pad-x))) -
-              var(--sl-content-inline-start, 0rem) - var(--sl-content-width)
+            100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
+              (2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
+              var(--sl-content-width)
           ) / 2
       );
       display: grid;
       grid-template-columns:
         /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
         minmax(
-          calc(
-            var(--__sidebar-width) +
-              max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))
-          ),
+          calc(var(--__sidebar-pad, 0rem)),
           auto
         )
-        /* 2 (search box): all free space that is available, capped at 50%. */
-        minmax(0, 1fr)
+        /* 2 (search box): all free space that is available. */
+        1fr
         /* 3 (right items): use the space that these need. */
         auto;
       align-content: center;
     }
   }
+  a:hover {
+    color: var(--sl-color-gray-2);
+  }
+  :root[data-theme='light'] {
+    .header a:hover {
+      color: var(--sl-color-gray-3);
+    }
+  }
+</style>
+<style is:global>
+  .header {
+    border: none !important;
+  }
+body[data-mobile-menu-expanded] header {
+  background-color: var(--sl-color-bg);
+}
+</style>
 
-  /* Container for your custom nav links */
-  .custom-header-nav {
-    display: flex;
+{
+slug === '' || slug === curLocale ?
+<style>
+  .header {
+    background-color: transparent;
+      -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    padding-inline-end: calc(var(--sl-nav-gap) + var(--sl-nav-pad-x));
+  }
+
+  @media (min-width: 50rem) {
+    header {
+      background-color: transparent !important;
+    }
+  }
+  @media (min-width: 50rem) {
+    .header {
+      padding-inline-end: var(--sl-nav-pad-y);
+    }
+  }
+</style>
+: ''
+}
+
+<style>
+  .desktop {
+    display: none;
     align-items: center;
-    gap: 1.25rem;
-    margin-right: 1rem;
+    gap: 1rem;
+    padding-inline-end: 1rem;
   }
-  
-  /* Base link styling using Starlight design tokens */
-  .custom-header-nav a {
-    text-decoration: none;
-    font-size: var(--sl-text-sm);
-    font-weight: 500;
-    color: var(--sl-color-gray-3);
-    transition: color 0.2s ease;
-  }
-  
-  /* Hover and active states */
-  .custom-header-nav a:hover,
-  .custom-header-nav a:focus {
-    color: var(--sl-color-white);
-  }
-  
-  /* Optional: Hide on mobile if the header gets too crowded */
-  @media (max-width: 50rem) {
-    .custom-header-nav {
+  @media (min-width: 72rem) {
+    .desktop {
+      display: flex;
+    }
+    .mobile {
       display: none;
     }
   }
-  
+
+  a {
+    color: var(--sl-color-white);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* From https://github.com/withastro/starlight/blob/main/packages/starlight/components/Select.astro */
+  label {
+    --sl-label-icon-size: 0.875rem;
+    --sl-caret-size: 1.25rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--sl-color-gray-1);
+  }
+
+  label:hover {
+    color: var(--sl-color-gray-2);
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .label-icon {
+    font-size: var(--sl-label-icon-size);
+    inset-inline-start: 0;
+  }
+
+  .caret {
+    font-size: var(--sl-caret-size);
+    inset-inline-end: 0;
+  }
+
+  select {
+    border: 0;
+    padding-block: 0.625rem;
+    padding-inline: calc(var(--sl-label-icon-size) + 0.25rem) calc(var(--sl-caret-size) + 0.25rem);
+    width: var(--sl-select-width);
+    background-color: transparent;
+    text-overflow: ellipsis;
+    color: inherit;
+    cursor: pointer;
+    appearance: none;
+  }
+
+  option {
+    background-color: var(--sl-color-bg-nav);
+    color: var(--sl-color-gray-1);
+  }
+
+  @media (min-width: 50rem) {
+    select {
+      font-size: var(--sl-text-sm);
+    }
+  }
 </style>

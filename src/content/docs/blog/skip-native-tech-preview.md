@@ -153,8 +153,11 @@ On iOS, both the `HelloSwift` and `HelloSwiftModel` targets are native Swift, so
 
 Skip's bridging solution is called "SkipFuse". Using the SkipStone build plugin, SkipFuse automatically generates bridging code that enables transparent communication between the two layers. This is modeled in the following diagram, which illustrates how the two modules are combined into final iOS and Android app packages: 
 
+<div class="diagram-vector">
+  
 ![Skip Native Diagram](https://assets.skip.dev/diagrams/skip-diagrams-native-model.svg)
-{: .diagram-vector }
+
+</div>
 
 The details of Skip's bridging are discussed in the [documentation](/docs/modes/#bridging). To summarize, the bridging system parses the public types, properties, and functions of your Swift module and exposes them to the transpiled Kotlin layer of your user interface. It supports the `Observation` framework, so you can use `@Observable` classes to manage application state in a way that is tracked by your UI, ensuring that your data and user interface are always in sync. 
 

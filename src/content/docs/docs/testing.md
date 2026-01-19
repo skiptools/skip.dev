@@ -5,8 +5,11 @@ permalink: /docs/testing/
 
 ## Unit Testing
 
+<div class="diagram-vector">
+    
 ![Testing Diagram](https://assets.skip.dev/diagrams/skip-diagrams-testing.svg)
-{: .diagram-vector }
+
+</div>
 
 <!--
 The [SkipUnit module](/docs/modules/skip-unit/) contains Skip's implementation of the iOS `XCTest` API for Android. Read its documentation to learn how to run **parity tests** across both iOS and Android to ensure that your logic is behaving identically on both platforms.

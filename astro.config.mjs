@@ -11,6 +11,7 @@ import { remarkHeadingId } from "remark-custom-heading-id";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://skip.dev',
+  trailingSlash: 'always',
   //base: '/docs',
   markdown: {
     remarkPlugins: [remarkHeadingId],
@@ -51,6 +52,10 @@ export default defineConfig({
         ja: {
           label: '日本語',
           lang: 'ja',
+        },
+        ko: {
+          label: '한국어',
+          lang: 'ko',
         },
         'zh-cn': {
           label: '简体中文',

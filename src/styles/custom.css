@@ -31,6 +31,33 @@
 	--sl-color-black: #ffffff;
 }
 
+/* Override hero for when there is no image */
+.hero {
+  grid-template-columns: 1fr;
+}
+
+.hero h1 {
+  text-align: center;
+  max-width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.hero .tagline {
+  text-align: center;
+  max-width: 100%;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.hero .actions {
+  justify-content: center;
+  text-align: center;
+  max-width: 100%;
+}
+
+
+
 div.showcase-screenshot-container {
   width: 100%;
   display: flex;
@@ -63,5 +90,15 @@ div.localization-screenshot-container img {
     /* width: 100px; */
 }
 
+.diagram-vector img {
+	width: 90%;
+	padding: 15px;
+	background: white;
+	align-content: center;  
+	margin: auto;
+	text-align: center;
+	border-radius: 10px;
+	margin: 0 auto;
+}
 
 

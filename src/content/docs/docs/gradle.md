@@ -7,8 +7,9 @@ permalink: /docs/gradle/
 Gradle is the build system for Android, and is the equivalent of SwiftPM for Darwin Swift development. When Skip builds your project, it bridges and/or transpiles your Swift code to Kotlin, and it also converts your `Package.swift` file into a `build.gradle.kts` file in the Skip plugin's output directory. This conversion happens transitively on all your project's Skip-enabled dependencies, including the [Skip Core Frameworks](/docs/faq/#skipstack) modules. This results in a local inter-connected network of Gradle projects containing the entirety of your project's source dependency tree.
 
 <!-- 
+<div class="diagram-vector">
 ![Project Diagram](https://assets.skip.dev/diagrams/skip-diagrams-project.svg)
-{: .diagram-vector }
+</div>
  -->
  
 The following sections detail Skip's use of Gradle, including how to build with Gradle from the command line.

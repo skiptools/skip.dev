@@ -1,12 +1,15 @@
 ---
-title: Build native apps for iPhone and Android with Skip
+title: Build truly native iPhone and Android apps with Skip
 description: Introduction to using Skip for dual-platform app development.
 template: splash
 editUrl: false
 tableOfContents: false
 sideBar: false
+head:
+  - tag: title
+    content: 'Skip: Build truly native iPhone and Android apps with Skip'
 hero:
-  tagline: Skip brings Swift app development to Android. It is a tool that enables developers to build genuinely native apps for both iOS and Android from a single Swift and SwiftUI codebase.
+  tagline: Skip brings Swift app development to Android. It is a toolkit that enables developers to build genuinely native apps for both iOS and Android from a single Swift and SwiftUI codebase.
   #image:
   #  file: ../../assets/houston.webp
   banner:
@@ -15,7 +18,7 @@ hero:
       <a href="https://example.com">Check it out</a>
   actions:
     - text: Learn More
-      link: /docs
+      link: /docs/
       icon: right-arrow
       variant: primary
     - text: Get Started
@@ -26,7 +29,7 @@ hero:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-<div style="margin: 0; padding: 0; position: relative; align-items: center; align-content: center; justify-content: center;">
+<div>
   <video autoplay="" muted="" loop="" playsinline="" controlslist="nodownload" style="background: transparent; width: 100%;" poster="https://skip.tools/assets/video/skip-splash-poster.png">
 	<source src="https://skip.tools/assets/video/skip-splash.mov">
 	Your browser does not support the video tag.
@@ -37,22 +40,22 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 ## Skip Advantages
 
 <CardGrid>
-	<Card title="Genuinely Native" icon="pencil">
+	<Card title="Genuinely Native" icon="approve-check-circle">
 		Skip apps don't just “look native”, they _are_ native: SwiftUI on iOS and Jetpack Compose on Android. You know the difference, and so do your users.
 	</Card>
-	<Card title="Feather Weight" icon="pencil">
+	<Card title="Feather Weight" icon="cloud-download">
 		With _Skip Zero_, your iOS app has no dependencies on any Skip frameworks. And the resulting Android app only requires open source libraries.
 	</Card>
-	<Card title="Memory Efficient" icon="pencil">
+	<Card title="Memory Efficient" icon="magnifier">
 		With no additional managed runtime, Skip apps are as efficient as they can possibly be on both platforms.
 	</Card>
-	<Card title="Idyllic IDE" icon="pencil">
+	<Card title="Idyllic IDE" icon="heart">
 		Skip's IDE is Xcode, the premier development environment for Swift. For serious Android customization, incorporate Kotlin written directly in Android Studio.
 	</Card>
-	<Card title="Perfect Integration" icon="pencil">
+	<Card title="Perfect Integration" icon="star">
 		Skip supports thousands of cross-platform modules. It also bridges seamlessly with Kotlin and Compose, so integrating with Android libraries is painless.
 	</Card>
-	<Card title="Foundationally Open" icon="pencil">
+	<Card title="Foundationally Open" icon="github">
 		Swift-on-Android is only half the story. Skip's app development frameworks are all free and open-source.
 	</Card>
 </CardGrid>

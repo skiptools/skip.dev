@@ -38,5 +38,8 @@ tableOfContents: false
 | [SkipXML](skip-xml) | [skip-xml.git](https://source.skip.tools/skip-xml.git) | <a href='https://github.com/skiptools/skip-xml/releases' alt='Releases for skip-xml'><img decoding='async' loading='lazy' alt='Release' src='https://img.shields.io/github/v/release/skiptools/skip-xml.svg?style=flat' /></a> | <a href='https://github.com/skiptools/skip-xml/actions' alt='CI for skip-xml'><img decoding='async' loading='lazy' alt='Release' src='https://github.com/skiptools/skip-xml/actions/workflows/ci.yml/badge.svg?style=flat' /></a> |
 | [SkipZip](skip-zip) | [skip-zip.git](https://source.skip.tools/skip-zip.git) | <a href='https://github.com/skiptools/skip-zip/releases' alt='Releases for skip-zip'><img decoding='async' loading='lazy' alt='Release' src='https://img.shields.io/github/v/release/skiptools/skip-zip.svg?style=flat' /></a> | <a href='https://github.com/skiptools/skip-zip/actions' alt='CI for skip-zip'><img decoding='async' loading='lazy' alt='Release' src='https://github.com/skiptools/skip-zip/actions/workflows/ci.yml/badge.svg?style=flat' /></a> |
 
+<div class="diagram-vector">
+    
 ![Skip Modules Diagram](https://assets.skip.dev/diagrams/skip-modules.svg)
-{: .diagram-vector }
+
+</div>
