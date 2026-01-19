@@ -34,7 +34,7 @@ You are now set up to work on Skip libraries! This is a great way to fix any iss
 
 ### Working in Android Studio
 
-Launching your app from Android Studio will **not** use your Workspace's local libraries by default. If you'd like to work in Android Studio, edit your app's `Android/settings.gradle.kts` file to point Android Studio at Xcode's build, as described in [Platform Customization](/docs/platformcustomization/#android-studio-setup).
+Launching your app from Android Studio will **not** use your Workspace's local libraries by default. If you'd like to work in Android Studio, edit your app's `Android/settings.gradle.kts` file to point Android Studio at Xcode's build, as described in [Cross-Platform Topics](/docs/platformcustomization/#android-studio-setup).
 
 :::tip
 If Android Studio appears to be stuck on the official library releases rather than your local versions, use its `File → Sync Project with Gradle Files` command to force Android Studio to re-evaluate `settings.gradle.kts`.

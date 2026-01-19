@@ -1,5 +1,5 @@
 ---
-title: Porting Swift Packages Android
+title: Porting Swift Packages to Android
 permalink: /docs/porting/
 ---
 

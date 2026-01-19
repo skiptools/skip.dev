@@ -52,7 +52,7 @@ Skip is implemented as a Swift Package Manager plugin, and so is only available 
 
 ### Which parts of Skip are free and which parts are commercial? {#free_commercial}
 
-Earlier, Skip would require a license key for non-commercial app development. No longer: Skip is now completely free and open-source, but please do consider suporting the project.
+Earlier, Skip would require a license key for non-commercial app development. No longer: Skip is now completely free and open-source, but please do consider [supporting](/sponsor/) the project.
 
 ### Which FOSS license is recommended for framework development? {#foss_license_recommendations}
 

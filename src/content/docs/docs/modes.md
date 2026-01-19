@@ -1,5 +1,4 @@
 ---
-Xtitle: Native and Transpiled Modes
 title: Skip Fuse vs Lite
 permalink: /docs/modes/
 ---
@@ -8,7 +7,7 @@ Skip supports both *native* mode - in which your Swift is compiled natively for 
 
 ## Native Mode: Skip Fuse {#native}
 
-Skip's *native* mode compiles your Swift natively for Android, and it is the mode we recommend for most apps. It is a combination of:
+Skip's *native* mode compiles your Swift natively with the [Swift SDK for Android](https://www.swift.org/documentation/articles/swift-sdk-for-android-getting-started.html), and it is the mode we recommend for most apps. It is a combination of:
 
 - A native Swift toolchain for Android.
 - Integration of Swift functionality like logging and networking with the Android operating system.
@@ -88,7 +87,7 @@ Transpiled mode's ease of interacting with Kotlin and Java API makes it ideal fo
 
 ## Configuration
 
-Every Skip module must include a `Skip/skip.yml` file in its source directory. The `skip init` command creates this file for you automatically when you [start a new project](/docs/gettingstarted/). The `mode` that you declare in `skip.yml` determines whether a module is compiled as native Swift or transpiled into Kotlin:
+Every Skip module must include a `Skip/skip.yml` file in its source directory. The `skip create` command creates this file for you automatically when you [start a new project](/docs/gettingstarted/). The `mode` that you declare in `skip.yml` determines whether a module is compiled as native Swift or transpiled into Kotlin:
 
 ```yml title="skip.yml"
 skip:
@@ -97,7 +96,7 @@ skip:
 
 If the `mode` is not specified, it defaults to `'transpiled'`. A project can contain a mix of native and transpiled modules. As we will see later, you also configure [bridging](#bridging) between the native Swift and transpiled Swift/Kotlin/Java in `skip.yml`.
 
-The `skip init` command will also generate the appropriate dependencies for your target mode in `Package.swift`. For model-level code, a native module will typically depend on SkipFuse and SkipModel, while a transpiled module will depend on SkipModel alone. For UI code, a native module will depend on SkipFuseUI, while a transpiled module will depend on SkipUI. Here is an example `Package.swift` for a native app with separate model and logic modules:
+The `skip create` command will also generate the appropriate dependencies for your target mode in `Package.swift`. For model-level code, a native module will typically depend on SkipFuse and SkipModel, while a transpiled module will depend on SkipModel alone. For UI code, a native module will depend on SkipFuseUI, while a transpiled module will depend on SkipUI. Here is an example `Package.swift` for a native app with separate model and logic modules:
 
 ```yml title="Package.swift"
 import PackageDescription
@@ -115,7 +114,7 @@ let package = Package(
         .package(url: "https://source.skip.tools/skip.git", from: "1.2.7"),
         .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
         .package(url: "https://source.skip.tools/skip-fuse.git", from: "1.0.0"),
-        .package(url: "https://source.skip.tools/skip-fuse-ui.git", "0.0.0"..<"2.0.0")
+        .package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.0.0")
     ],
     targets: [
         .target(name: "HiyaSkip", dependencies: [
@@ -144,30 +143,61 @@ Just as Xcode can generate "bridging headers" that allow your Swift and Objectiv
 
 ### Configuration
 
-You can use bridging with any Skip module - that is, any module that includes the SkipStone build [plugin](/docs/dependencies/) and has a [`skip.yml`](#configuration) file. To bridge a type or API, add a `// SKIP @bridge` [Skip comment](/docs/platformcustomization/#skip-comments) to its declaration. The following example bridges the `Person` class and its `name` property, but its `age` property remains unbridged.
+You can use bridging with any Skip module - that is, any module that includes the SkipStone build [plugin](/docs/dependencies/) and has a [`skip.yml`](#configuration) file. To bridge a type or API, add a `// SKIP @bridge` [Skip comment](/docs/platformcustomization/#skip-comments) to its declaration. The following example bridges the `Person` class minus its `age` property.
 
 ```swift title="Person.swift"
 // SKIP @bridge
 public class Person {
     // SKIP @bridge
-    public var name: String
-    public var age: Int
+    public init() { ... }
+ 
+    // SKIP @bridge
+    public var firstName = ""
+
+    // SKIP @bridge
+    public var lastName = "" 
+
+    public var age = 0
+
+    // SKIP @bridge
+    public func fullName() -> String { ... } 
 
     ...
 } 
 ```
+
+Assuming this is a native Swift module, bridging allows `Person` to be used from Kotlin code:
+
+```kotlin title="PersonClient.kt"
+fun personClient(): String {
+  val p = Person()
+  p.firstName = "Tim"
+  p.lastName = "Apple"
+  // p.age = 10 This would be a compile error! Age is not bridged
+  return p.fullName()
+} 
+```
+
+Following sections will cover [Swift to Kotlin/Java](#bridgetokotlin) and [Kotlin/Java to Swift](#bridgetoswift) bridging in more detail.
 
 To bridge a type and include its members by default, use `// SKIP @bridgeMembers`. This will bridge all members with the same or greater declared visibility as the type. In other words, adding this to a `public` type will bridge all of its `public` members, while adding it to a type with default visibility will bridge all members with at least default visibility. To exclude a member from being bridged, add the `// SKIP @nobridge` comment. Here is the `Person` class using `@bridgeMembers`:
 
 ```swift title="Person.swift"
 // SKIP @bridgeMembers
 public class Person {
-    public var name: String
+    public init() { ... }
+ 
+    public var firstName = ""
+
+    public var lastName = "" 
+
     // SKIP @nobridge
-    public var age: Int
+    public var age = 0
+
+    public func fullName() -> String { ... } 
 
     ...
-}
+} 
 ```
 
 Rather than annotate every bridged API, you can use `skip.yml` to enable auto-bridging. When auto-bridging is enabled for a module, all public API is bridged by default. To turn on auto-bridging, simply add `bridging: true` to your module's `skip.yml`. No additional configuration is required.
@@ -184,9 +214,16 @@ Use `// SKIP @nobridge` to exclude a type or API from auto-bridging. Here is the
 
 ```swift title="Person.swift"
 public class Person {
-    public var name: String
+    public init() { ... }
+ 
+    public var firstName = ""
+
+    public var lastName = "" 
+
     // SKIP @nobridge
-    public var age: Int
+    public var age = 0
+
+    public func fullName() -> String { ... } 
 
     ...
 } 
@@ -325,7 +362,7 @@ public final class SecureStorage {
         return prefs.getString(key, nil)
     }
 
-    // Additional types omitted...
+    // Additional getters omitted...
 
     /// Store a key value pair.
     public func set(_ string: String, forKey key: String) {
@@ -335,7 +372,7 @@ public final class SecureStorage {
         editor.apply()
     }
 
-    // Additional types omitted...
+    // Additional setters omitted...
 
     private var preferences: SharedPreferences?
 
@@ -484,7 +521,7 @@ let date: JDate = object.as(JDate.self)
 When using `dynamicroot`, keep the following in mind:
 
 1. Generated types have `internal` visibility, so they are only visible to your current module. This prevents conflicts when multiple linked modules use the same Kotlin/Java types.
-1. The types are only generated for the Android build of your code. After all, iOS can't use Kotlin/Java API. So you must only use these generated types in code guarded with `#if os(Android)`. See [Platform Customization](/docs/platformcustomization/).
+1. The types are only generated for the Android build of your code. After all, iOS can't use Kotlin/Java API. So you must only use these generated types in code guarded with `#if os(Android)`. See [Cross-Platform Topics](/docs/platformcustomization/).
 
 :::caution
 `AnyDynamicObject` is convenient, but remember that your calls are completely unchecked by the compiler. Attempting to use the wrong API will result in a runtime error. For a strongly-typed alternative, consider Apple's [swift-java](https://github.com/swiftlang/swift-java) project.
@@ -568,5 +605,5 @@ The combination of transpiled bridging and `AnyDynamicObject` allows you to prov
 
 Whether you are using native or transpiled modes, you are writing your code in Swift. Migrating between them, therefore, is much easier than moving between different programming languages - in fact it is often trivial. This is particularly true when migrating from transpiled to native mode, given that transpiled mode supports only a subset of native mode's Swift syntax, and native mode offers far more third-party libraries. 
 
-The first step in migration is to update your `skip.yml` and `Package.swift` files, as described in the [Configuration](#configuration) section. Then it is a matter of migrating any code that behaves differently under each mode. See the chapters on [Development](/docs/app-development/) and [Platform Customization](/docs/platformcustomization/) in particular.
+The first step in migration is to update your `skip.yml` and `Package.swift` files, as described in the [Configuration](#configuration) section. Then it is a matter of migrating any code that behaves differently under each mode. See the chapters on [Development](/docs/app-development/) and [Cross-Platform Topics](/docs/platformcustomization/) in particular.
 

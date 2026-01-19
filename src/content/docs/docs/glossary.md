@@ -114,7 +114,7 @@ The ability to write platform-specific code for iOS and Android within a Skip pr
 
 **Related Terms:** [SkipBridge](#skip-bridge), [Conditional Compilation](#conditional-compilation)
 
-**Learn More:** [Platform Customization Guide](/docs/platformcustomization/)
+**Learn More:** [Cross-Platform Topics Guide](/docs/platformcustomization/)
 
 ### Dual-Platform Development {#dual-platform-development}
 The practice of developing for both iOS and Android simultaneously from a single codebase, which is Skip's core value proposition. Skip facilitates using a single language ([Swift](#swift)) and a single [IDE](#ide) ([Xcode](#xcode)) to iteratively develop an app for both [iOS](#ios) and [Android](#android) simultaneously.

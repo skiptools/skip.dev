@@ -97,7 +97,7 @@ When you log a message in your app, the `OSLog` messages from the Swift side of 
 
 ## Accessing Generated Source {#accessing-transpiled-output}
 
-The location of the Kotlin and Swift source Skip generates during bridging and transpiling differs for app and framework targets. We discuss how to access your generated source in Xcode below. The Platform Customization documentation covers how to work with your Android code [in Android Studio](/docs/platformcustomization/#android-studio).
+The location of the Kotlin and Swift source Skip generates during bridging and transpiling differs for app and framework targets. We discuss how to access your generated source in Xcode below. The Cross-Platform Topics documentation covers how to work with your Android code [in Android Studio](/docs/platformcustomization/#android-studio).
 
 <img alt="Framework Transpilation Browse Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-test-browse.png" style="width: 100%; XXXmax-width: 750px;" />
 

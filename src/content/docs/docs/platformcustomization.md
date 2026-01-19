@@ -117,6 +117,8 @@ for i in 1..<10 {
 }
 ```
 
+If you find yourself wanting to include Kotlin, consider adding [Kotlin files](#kotlin-files) to your project rather than translating it into embedded Swift.
+
 ### Complex Types
 
 You may want to pass complex data types back and forth between your compiled Swift and transpiled code in your `#if SKIP` blocks, as well as between your transpiled Swift and various Kotlin and Java APIs. 
@@ -447,7 +449,7 @@ To run your unit tests in Android Studio, first run them in Xcode so that they g
 
 ### Separate iOS and Android Apps
 
-If you've created separate iOS and Android apps that share dual-platform frameworks, running your Android app in Android Studio is the same as running any other Android app. See the [Getting Started](/docs/project-types/#separate-apps) guide for tips on integrating dual-platform frameworks into your Android development workflow.
+If you've created separate iOS and Android apps that share dual-platform frameworks, running your Android app in Android Studio is the same as running any other Android app. See the [Project Types](/docs/project-types/#separate-apps) guide for tips on integrating dual-platform frameworks into your Android development workflow.
 
 ### Frameworks
 

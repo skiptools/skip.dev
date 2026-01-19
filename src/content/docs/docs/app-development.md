@@ -3,9 +3,7 @@ title: App Development
 permalink: /docs/app-development/
 ---
 
-Skip allows you to share as much or as little code as you want between the iOS and Android versions of your app. The  [Platform Customization](/docs/platformcustomization/) chapter details how to integrate Android-specific or iOS-specific code. This chapter focuses on shared dual-platform development.
-
-In general, dual-platform Skip app development *is* modern iOS app development. You work in Xcode. You code in Swift and SwiftUI. As much as possible, Skip’s goal is to disappear. 
+Skip allows you to share as much or as little code as you want between the iOS and Android versions of your app. The  [Cross-Platform Topics](/docs/platformcustomization/) chapter details how to integrate Android-specific or iOS-specific code. This chapter focuses on shared dual-platform development.
 
 The following sections do not attempt to teach you iOS development. There are other available resources for that. Rather, we focus on where dual-platform Skip development differs from standard iOS development, including how to use Skip’s tools and what to do when things go wrong.
 
@@ -15,13 +13,13 @@ The following sections do not attempt to teach you iOS development. There are ot
 The biggest mistake that new Skip developers make is to assume that a Skip or Android build error means that they cannot use a particular iOS feature. With Skip, that is *never* the case.
 :::
 
-You may be able to find a solution among the [thousands of cross-platform modules](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) Skip already supports, or to [port](/docs/porting) a Swift package that doesn't yet compile for Android.
+We designed Skip from the ground up knowing that all multi-platform tools have limitations, and Skip is no exception. That is why we concentrated on making it trivial to [exclude unsupported iOS code](/docs/platformcustomization/#compiler-directives) from your Android build. You can truly use *any* iOS features, right inline, without compromise and without re-architecting your app.
 
-But we also designed Skip from the ground up knowing that all multi-platform tools have limitations, and Skip is no exception. That is why we concentrated on making it trivial to [exclude unsupported iOS code](/docs/platformcustomization/#compiler-directives) from your Android build. You can truly use *any* iOS features, right inline, without compromise and without re-architecting your app.
+Of course, using an iOS feature without Android support means you'll need to provide an Android fallback or alternative. You may be able to find a solution among the [thousands of cross-platform modules](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) Skip already supports, or to [port](/docs/porting) a Swift package that doesn't yet compile for Android.
 
-Of course, using an iOS feature without Android support means you'll need to provide an Android fallback or alternative. Which is why Skip also makes it easy to [integrate Android-specific solutions](/docs/platformcustomization), whether to work around limitations or to differentiate your Android experience. 
+Skip also makes it easy to [integrate Android-specific solutions](/docs/platformcustomization), whether to work around limitations or to differentiate your Android experience. 
 
-So remember: build errors show you what may not yet be supported out of the box on Android. They might require extra work to overcome, but they are not blockers!
+So remember: build errors show you what may not yet be supported out of the box on Android. They might require extra work to overcome, but they are not blockers! 
 
 ## Building and Running
 
@@ -61,7 +59,7 @@ There is often a significant difference between Debug and Release build performa
 
 ### Dual-Platform Apps
 
-Assuming you followed the [app creation](/docs/gettingstarted/) instructions using `skip init`, each successful build of your Skip app will automatically attempt to launch it on the running Android emulator or device. Exactly one emulator or device must be running in order for the Skip project's `Launch APK` script phase to install and run the app successfully. 
+Assuming you followed the [app creation](/docs/gettingstarted/) instructions using `skip create`, each successful build of your Skip app will automatically attempt to launch it on the running Android emulator or device. Exactly one emulator or device must be running in order for the Skip project's `Launch APK` script phase to install and run the app successfully. 
 
 If you are having trouble with Skip's Xcode plugin, check the [Troubleshooting](/docs/help/#troubleshooting) section for help.
 
@@ -69,6 +67,18 @@ If you are having trouble with Skip's Xcode plugin, check the [Troubleshooting](
 
 :::caution
 There is an incompatibility between the new Xcode Previews and Skip apps. Xcode no longer sets the appropriate environment variable to identify Preview builds, causing every update to attempt a full Android rebuild. This issue is discussed at [https://github.com/orgs/skiptools/discussions/263](https://github.com/orgs/skiptools/discussions/263). The workaround is to enable `Editor > Canvas > Use Legacy Previews Execution`. We have filed a bug with Apple, and we hope this workaround is unnecessary in the future.
+:::
+
+#### Building and Running iOS-Only {#ios-only}
+
+By default, whenever you run your iOS app from Xcode, Skip will also create and run the Android app. Building and running the app side-by-side is very useful for ensuring that both sides of the app look and behave the same while iterating on the app.
+
+However, you may sometimes want to run only the iOS side of the app for certain time periods, such as when debugging an iOS-specific issue. To do this, you can edit the `AppName.xcconfig` file, and change the `SKIP_ACTION = launch` to `SKIP_ACTION = build`. This will cause the Android side of the app to be built, but not run.
+
+If you want to skip over the entire Android build process, you can instead set `SKIP_ACTION = none` property in the `AppName.xcconfig` file. This can increase development velocity considerably.
+
+:::tip
+It is not recommended to leave `SKIP_ACTION = none` for long periods of time, since it may result in Android-specific errors accumulating without any indication.
 :::
 
 ### Separate iOS and Android Apps
@@ -83,18 +93,6 @@ Building a dual-platform framework in Xcode builds your iOS code and runs the Sk
 
 :::caution
 You must run your tests against a macOS destination in order to perform an Android framework build. Testing against the iOS destination will not run the Android tests.
-:::
-
-### Building and Running iOS-Only {#ios-only}
-
-By default, whenever you run your iOS app from Xcode, Skip will also create and run the Android app. Building and running the app side-by-side is very useful for ensuring that both sides of the app look and behave the same while iterating on the app.
-
-However, you may sometimes want to run only the iOS side of the app for certain time periods, such as when debugging an iOS-specific issue. To do this, you can edit the `AppName.xcconfig` file, and change the `SKIP_ACTION = launch` to `SKIP_ACTION = build`. This will cause the Android side of the app to be built, but not run.
-
-If you want to skip over the entire Kotlin Gradle build process, you can instead set `SKIP_ACTION = none` property in the `AppName.xcconfig` file. This can increase development velocity considerably.
-
-:::tip
-It is not recommended to leave `SKIP_ACTION = none` for long periods of time, since it may result in Android-specific errors accumulating without any indication.
 :::
 
 ---
@@ -132,9 +130,9 @@ Dealing with errors is an integral part of development. Be sure to read the [Deb
 
 ---
 
-## UI Coding {#ui}
+## UI and View Model Coding {#ui}
 
-Google recommends [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android user interface development. Skip can translate a [large subset](/docs/modules/skip-ui/#supported-swiftui) of SwiftUI into Compose, allowing you to build cross-platform iOS and Android UI in SwiftUI. Or you can write a separate Android UI in pure Compose using your Android IDE of choice. Skip even allows you to move fluidly between SwiftUI and Compose, as described in our [platform customization](/docs/platformcustomization/#swiftui-and-compose) documentation. In the end, the choice between using SwiftUI, Jetpack Compose, or a combination of the two is up to you.
+Google recommends [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android user interface development. Skip can translate a [large subset](/docs/modules/skip-ui/#supported-swiftui) of SwiftUI into Compose, allowing you to build cross-platform iOS and Android UI in SwiftUI. Or you can write a separate Android UI in pure Compose using your Android IDE of choice. Skip even allows you to move fluidly between SwiftUI and Compose, as described in our [Cross-Platform Topics](/docs/platformcustomization/#swiftui-and-compose) documentation. In the end, the choice between using SwiftUI, Jetpack Compose, or a combination of the two is up to you.
 
 ### `@Observables`
 
@@ -167,6 +165,8 @@ let package = Package(
     ]
 )
 ```
+
+The [`CityManager`](https://github.com/skiptools/skipapp-travelposters-native/blob/main/travel-posters-model/Sources/TravelPostersModel/CityManager.swift) type in the [TravelPosters](https://github.com/skiptools/skipapp-travelposters-native) sample is an example of an `@Observable` that is shared between separate iOS and Android apps.
 
 :::note
 This section only applies to [Skip Fuse](/docs/status/#skip_fuse). A [Skip Lite](/docs/status/#skip_fuse) transpiled model layer does not require additional imports or dependencies to power a Compose UI.
@@ -224,7 +224,7 @@ Skip Fuse supports [thousands of third-party modules](https://swiftpackageindex.
 
 ### Features
 
-Some iOS app extensions and features are not yet implemented for Android, or have no direct Android counterpart. Use the techniques in [Platform Customization](/docs/platformcustomization/) to implement iOS-only or Android-only solutions. For example, you might use a [compiler directive](/docs/platformcustomization/#compiler-directives) to exclude your iOS widget from your Android build, and include a [Kotlin file](/docs/platformcustomization/#kotlin-files) implementing a native widget for Android instead.
+Some iOS app extensions and features are not yet implemented for Android, or have no direct Android counterpart. Use the techniques in [Cross-Platform Topics](/docs/platformcustomization/) to implement iOS-only or Android-only solutions. For example, you might use a [compiler directive](/docs/platformcustomization/#compiler-directives) to exclude your iOS widget from your Android build, and include a [Kotlin file](/docs/platformcustomization/#kotlin-files) implementing a native widget for Android instead.
 
 ---
 

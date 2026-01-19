@@ -228,7 +228,7 @@ Regardless of which option you choose, the implementation strategy is the same:
 1. If you're creating a library, follow the [Getting Started instructions](/docs/project-types/#framework_development) for new dual-platform frameworks. You may be integrating closely with the Android Kotlin or Java dependency, so consider creating a Skip Lite [transpiled](/docs/modes/#transpiled) module whose API you [bridge](/docs/modes/#bridging) to native Swift.
 1. Add a [Swift Package dependency](/docs/dependencies/#ios) on the iOS library, and add a [Java/Kotlin dependency](/docs/dependencies/#android) on the Android library you want to use.
 1. If you're writing a common wrapper class or library, write the wrapper API.
-1. Within the implementation code, use Skip [compiler directives](/docs/platformcustomization/#compiler-directives) to conditionally import and call the API for the appropriate library. Use the techniques in [Platform Customization](/docs/platformcustomization) to call Kotlin and Java APIs.
+1. Within the implementation code, use Skip [compiler directives](/docs/platformcustomization/#compiler-directives) to conditionally import and call the API for the appropriate library. Use the techniques in [Cross-Platform Topics](/docs/platformcustomization) to call Kotlin and Java APIs.
 
 The resulting implementation pattern looks something like this:
 

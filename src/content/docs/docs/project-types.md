@@ -3,7 +3,7 @@ title: Project Types
 permalink: /docs/project-types/
 ---
 
-The Skip [Getting Started](/docs/gettingstarted/) guide demonstrates using `skip create` to generate a basic app project interactively, but there are a variety of additional project types that can be created using the `skip init` command. This document discussed the various different project types that can be created and built with Skip.
+The Skip [Getting Started](/docs/gettingstarted/) guide demonstrates using `skip create` to generate a basic app project interactively, but there are a variety of additional project types. This document discussed the various different project types that can be created and built with Skip.
 
 ## Creating an App with `skip init` {#app_development}
 
@@ -18,7 +18,7 @@ The `skip init` command is an alternative to the interactive `skip create` comma
 Create a new dual-platform app project with the command:
 
 ```console
-skip init --transpiled-app --appid=bundle.id project-name AppName
+skip init --native-app --appid=bundle.id project-name AppName
 ```
 
 :::tip
@@ -32,7 +32,7 @@ Your `appid` must contain at least two words, and each word must be separated by
 Pass the `--open-xcode` argument to immediately open the project in Xcode. For example:
 
 ```console
-skip init --open-xcode --transpiled-app --appid=bundle.id.HelloSkip hello-skip HelloSkip
+skip init --open-xcode --native-app --appid=bundle.id.HelloSkip hello-skip HelloSkip
 ```
 {: id="skip-init-cmd"}
 
@@ -42,33 +42,12 @@ This will create a `hello-skip/` folder with a new SwiftPM package containing a 
 See the [command line reference](/docs/skip-cli/#init) for a complete listing of `skip init` options.
 :::
 
-`skip create` and `skip init` will create a functional template app, but before you can build and launch it, an Android emulator needs to be running. You can set up an emulator by running 
-`skip android emulator create` and then `skip android emulator launch`, as described in
-the [command line reference](/docs/skip-cli/#android-emulator-create).
-
-Alternatively, you can install and launch `Android Studio.app`, 
-and then open the Device Manager from the ellipsis menu of the Welcome dialog 
-to create an emulator of your choice.
-You can then use the Device Manager to launch the emulator, or you can run it from the terminal with a command like `~/Library/Android/sdk/emulator/emulator @Pixel_6_API_33`.
-
-
-
-<img alt="Screenshot of the Android Studio Device Manager" src="https://assets.skip.dev/intro/device_manager.png" style="width: 100%; max-width: 600px;" />
-
-Once the Android emulator is running, select and run the `HelloSkip` target in Xcode. The first build will take some time to compile the Skip libraries, and you may be prompted with a dialog to affirm that you trust the Skip plugin. Once the build and run action completes, the SwiftUI app will open in the selected iOS simulator, and at the same time the Android app will launch in the currently-running Android emulator.
-
-<img alt="Screenshot of Skip running in both the iOS Simulator and Android Emulator" src="https://assets.skip.dev/intro/skip_xcode.png" style="width: 100%;" />
-
-Browse to the `ContentView.swift` file and make a small change and re-run the target: the app will be re-built and re-run on both platforms simultaneously with your changes.
-
-You're now ready to continue working on your first Skip app! For more information - including common issues and workarounds - see the [Development](/docs/app-development/) chapter. Consider browsing our other documentation as well. Happy Skipping!
-
 ### Creating a Multi-Module App
 
 Skip is designed to accommodate and encourage using multi-module projects. You can create a modularized project by specifying additional module names to `skip init` at the end of the chain. For example: 
 
 ```console
-skip init --transpiled-app --appid=bundle.id.HelloSkip multi-project HelloSkip HelloModel HelloCore
+skip init --native-app --appid=bundle.id.HelloSkip multi-project HelloSkip HelloModel HelloCore
 ```
 
 This command will create a SwiftPM project with three modules: `HelloSkip`, `HelloModel`, and `HelloCore`. The heuristics of such module creation is that the modules will all be dependent on their subsequent peer module, with the first module (`HelloSkip`) having an initial dependency on `SkipFuseUI` and the second module depending on `SkipFuse` and `SkipModel`. The `Package.swift` file can be manually edited to shuffle around dependencies, or to add new dependencies on additional frameworks.
@@ -211,22 +190,3 @@ We recommend using [Skip Fuse](/docs/status/#skip_fuse) where possible, as it of
 
 Porting an app to an entirely new platform isn't easy, even with Skip. Remember that [we're here to help](/docs/help/).
 
----
-
-## Updating Skip {#updating}
-
-To update the `skip` command line tool:
-
-```shell
-$ skip upgrade
-```
-
-To update your Xcode project to use the latest version of the Skip plugin and libraries allowed by your `Package.swift` configuration, use the `File -> Packages -> Update to Latest Package Versions` Xcode menu option.
-
----
-
-## Additional Resources {#resources}
-
-- Use `skip help` for a complete list of `skip` tool commands, and see the [command line reference](/docs/skip-cli/).
-- Check the general [help](/docs/help/) page for troubleshooting and contact information.
-- Continue browsing this [documentation](/docs/) to learn more about developing with Skip.

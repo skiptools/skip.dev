@@ -5,6 +5,8 @@ permalink: /docs/
 #tableOfContents: false
 ---
 
+Skip is a technology for building fully native iOS and Android apps.
+
 The mobile app market is divided between the iPhone and Android. The iPhone is popular in the West and leads in app revenue, while Android has many more worldwide users overall.[^apprevenue]
 
 [^apprevenue]: Spending Power: iOS users spend $140 annually on apps versus $69 for Android users. iOS also dominates subscription revenue, with 5× higher average revenue per user (ARPU). Source: [iOS vs Android: Subscription Metrics Compared — appenure.com](https://www.appeneure.com/blog/ios-vs-android-subscription-metrics-compared/seobot-blog)
@@ -194,21 +196,19 @@ The mobile app market is divided between the iPhone and Android. The iPhone is p
 </div>
 
 
-Neglecting either platform means leaving behind a large percentage of potential users, but apps are often designed and built for iOS first. Clients ask for an iOS app on the Apple App Store, then expect an eventual port to Android and the Google Play Store and other app marketplaces.
-
-:::caution[Consider This…]{icon="starlight"}
-Large tech companies and small startups alike will usually design for iOS first, then adapt their designs for Android. 
-:::
-
-Skip is a technology for building native iOS and Android apps that is designed for an iOS-first app ecosystem.
-
-With Skip, you work in Xcode, writing in Swift and SwiftUI. The Skip plugin continuously performs the steps necessary to convert your iOS app project into an equivalent Android app. Skip's goal is to disappear into the background, giving you an uncompromising iOS development experience while its Xcode plugin handles the Android version automatically.
+Neglecting either platform means leaving behind a large percentage of potential users. Skip is the [only dual-platform solution](/compare/) to deliver fully native apps for the entire mobile market.
 
 :::tip
 To jump right in and get started, please go straight to the [<u>getting started</u>](/docs/gettingstarted/) guide.
 :::
 
-Use Skip for bits of shared logic and UI, for your entire app, or anything in between. Skip makes [integration](/docs/platformcustomization/) between your Swift and Android API as well as your SwiftUI and Compose views a snap, without significant overhead or complex bridging. And it is the [only dual-platform solution](/compare/) to deliver fully native apps for both platforms.
+With Skip, you write your shared code in Swift and SwiftUI. Your Swift is compiled natively for both iOS and Android, with no added runtime interpreter or garbage collector to slow it down. Your SwiftUI runs as-is on iOS, and it uses Google's recommended [Jetpack Compose](https://developer.android.com/compose) UI toolkit on Android. Your users get a platform-perfect look and feel, not some uncanny-valley replica.
+
+Use Skip for bits of shared logic and UI, for your entire app, or anything in between. Skip makes [integration](/docs/platformcustomization/) between your Swift and Android API as well as your SwiftUI and Compose views a snap, without significant overhead or complex bridging.
+
+:::caution[Consider This…]{icon="starlight"}
+Large tech companies and small startups alike will usually design for iOS first, then adapt their designs for Android. Clients ask for an iOS app, then expect an eventual port to Android. Skip is the only app framework designed for the iOS-first app ecosystem.
+:::
 
 <img src="https://assets.skip.dev/images/skip-marketing-preview.jpg" alt="Screenshot" style="width: 90%"/>
 
@@ -256,7 +256,7 @@ Skip can save you enormous amounts of time and effort, without requiring you to 
 Skip has many advantages over other cross platform solutions like Flutter and React Native:
 
 - **Genuinely Native.** Skip apps don't just “look native”, they *are* native: SwiftUI on iOS and Jetpack Compose on Android. You know the difference, and so do your users. Take full advantage of new platform features and get automatic integration with core functionality like accessibility, which is a requirement for compliance in many fields.
-- **Featherweight.** With *SkipZero*, your iOS app has no dependencies on any Skip frameworks. And the resulting Android app only depends on open source libraries. _The size of a minimal Skip-enabled iOS .ipa is less than 1 megabyte, and the size of a minimal Skip Android .apk is under 10 megabytes._
+- **Featherweight.** With *SkipZero*, your iOS app has no dependencies on any Skip frameworks. And the resulting Android app only depends on open source libraries.
 - **Memory Efficient.** With no additional managed runtime, Skip apps are as efficient as they can possibly be on both platforms. Skip does not introduce a garbage collected runtime into your iOS app (unlike frameworks that use JavaScript or Dart), ensuring that your app's memory watermark and battery usage are optimal.
 - **Idyllic IDE.** Skip's IDE is Xcode, the premier development environment for Swift. For serious Android customization, incorporate Kotlin written directly in Android Studio.
 - **Platform Perfect.** Skip supports [thousands of cross-platform modules](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid). It also bridges seamlessly with Kotlin and Compose, so integrating with Android libraries is painless.
