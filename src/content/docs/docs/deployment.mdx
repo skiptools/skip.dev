@@ -1,8 +1,8 @@
 ---
 title: Deployment
 permalink: /docs/deployment/
-
 ---
+import { FileTree } from '@astrojs/starlight/components';
 
 Skip app projects will build and launch the Android version of the app by starting the gradle process as part of the `Run Scripts` phase of the Xcode build process. This mechanism enables developers to rapidly iterate on an app by running both the iOS and Android versions side-by-side in the iOS Simulator and Android emulator. Similarly, Skip framework testing will run the transpiled Kotlin test cases by running `gradle test` on the translated modules.
 
@@ -96,10 +96,6 @@ skiptools/skipapp-showcase % ls -lah .build/Android/app/outputs/bundle/*/*
 
 See the [Gradle project reference](/docs/gradle/) for more information on the structure of a Skip gradle project. More information on using the gradle CLI for building Android apps can be found at [https://developer.android.com/build/building-cmdline](https://developer.android.com/build/building-cmdline).
 
-<!-- 
-## GitHub Workflows
- -->
-
 ## Fastlane Integration {#fastlane}
 
 Fastlane is a tool that automates the release of an app to the Apple App Store and the Google Play Store. It is an alternative to the manual steps required to create and upload a release of an app through the web site for each of the stores.
@@ -127,55 +123,55 @@ The `Darwin/` and `Android/` folders will each contain a template for the fastla
 
 The structure of the metadata for each platform is different. For iOS and other Apple platforms, the `Darwin/` folder will look like this:
 
-```
-Darwin/fastlane
-├── AppStore.xcconfig
-├── Appfile
-├── Deliverfile
-├── Fastfile
-├── README.md
-├── apikey.json*
-├── metadata
-│   └── en-US
-│       ├── description.txt
-│       ├── keywords.txt
-│       ├── release_notes.txt
-│       └── subtitle.txt
-└── screenshots
-    └── en-US
-        ├── 0_APP_IPHONE_55_0.png
-        ├── 0_APP_IPHONE_65_0.png
-        ├── 1_APP_IPHONE_65_1.png
-        ├── 2_APP_IPHONE_65_2.png
-        ├── 3_APP_IPHONE_65_3.png
-        ├── 4_APP_IPHONE_65_4.png
-        └── 5_APP_IPHONE_65_5.png
-```
+<FileTree>
+- Darwin/fastlane
+    - AppStore.xcconfig
+    - Appfile
+    - Deliverfile
+    - Fastfile
+    - README.md
+    - apikey.json*
+    - metadata
+        - en-US
+            - description.txt
+            - keywords.txt
+            - release_notes.txt
+            - subtitle.txt
+    - screenshots
+        - en-US
+            - 0_APP_IPHONE_55_0.png
+            - 0_APP_IPHONE_65_0.png
+            - 1_APP_IPHONE_65_1.png
+            - 2_APP_IPHONE_65_2.png
+            - 3_APP_IPHONE_65_3.png
+            - 4_APP_IPHONE_65_4.png
+            - 5_APP_IPHONE_65_5.png
+</FileTree>
 
 The `Android/` folder will look like:
 
-```
-Android/fastlane
-├── Appfile
-├── Fastfile
-├── README.md
-├── apikey.json*
-└── metadata
-    └── android
-        └── en-US
-            ├── full_description.txt
-            ├── images
-            │   ├── featureGraphic.png
-            │   ├── icon.png
-            │   └── phoneScreenshots
-            │       ├── 1_en-US.png
-            │       ├── 2_en-US.png
-            │       ├── 3_en-US.png
-            │       └── 4_en-US.png
-            ├── short_description.txt
-            ├── title.txt
-            └── video.txt
-```
+<FileTree>
+- Android/fastlane
+    - Appfile
+    - Fastfile
+    - README.md
+    - apikey.json*
+    - metadata
+        - android
+            - en-US
+                - full_description.txt
+                - images
+                    - featureGraphic.png
+                    - icon.png
+                    - phoneScreenshots
+                        - 1_en-US.png
+                        - 2_en-US.png
+                        - 3_en-US.png
+                       - 4_en-US.png
+                - short_description.txt
+                - title.txt
+                - video.txt
+</FileTree>
 
 The fastlane `Fastfile`, `Appfile`, and `Deliverfile` for each platform can be configured to automatically submit the release for review, or to release it to the storefront's testing service. See the [fastlane documentation](https://docs.fastlane.tools) for further details.
 
@@ -196,14 +192,9 @@ Once you are ready to create a new release of your app, you can run the `fastlan
 
 A sample session for releasing an iOS app will look like:
 
-<details>
-<summary><code>fastlane release</code></summary>
-<div class="highlight">
-<pre class="highlight" style="line-height: 1.0">
-<code>
+```plaintext collapse={20-1000}
 zap skipapp-showcase/Darwin % fastlane release
 [✔] 🚀 
-[10:59:50]: Get started using a Gemfile for fastlane https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile
 [10:59:50]: ------------------------------
 [10:59:50]: --- Step: default_platform ---
 [10:59:50]: ------------------------------
@@ -279,9 +270,9 @@ zap skipapp-showcase/Darwin % fastlane release
 [11:00:41]: ▸ Archive Succeeded
 [11:00:41]: Generated plist file with the following values:
 [11:00:41]: ▸ -----------------------------------------
-[11:00:41]: ▸ {
+[11:00:41]: ▸ 
 [11:00:41]: ▸   "method": "app-store"
-[11:00:41]: ▸ }
+[11:00:41]: ▸ 
 [11:00:41]: ▸ -----------------------------------------
 [11:00:41]: $ /usr/bin/xcrun /opt/homebrew/Cellar/fastlane/2.220.0/libexec/gems/fastlane-2.220.0/gym/lib/assets/wrap_xcodebuild/xcbuild-safe.sh -exportArchive -exportOptionsPlist '/var/folders/zl/wkdjv4s1271fbm6w0plzknkh0000gn/T/gym_config20240612-40159-xgzrb9.plist' -archivePath ~/Library/Developer/Xcode/Archives/2024-06-12/Showcase\ 2024-06-12\ 10.59.56.xcarchive -exportPath '/var/folders/zl/wkdjv4s1271fbm6w0plzknkh0000gn/T/gym_output20240612-40159-udedtq' -skipPackagePluginValidation -skipMacroValidation 
 [11:00:55]: Successfully exported and signed the ipa file:
@@ -423,24 +414,15 @@ zap skipapp-showcase/Darwin % fastlane release
 +------+---------------------+-------------+
 
 [11:04:01]: fastlane.tools finished successfully 🎉
-
-</code>
-</pre>
-</div>
-</details>
+```
 
 ### Fastlane Example (Android) {#fastlane_sample_android}
 
 A sample session for Android will look like:
 
-<details>
-<summary><code>fastlane release</code></summary>
-<div class="highlight">
-<pre class="highlight" style="line-height: 1.0">
-<code>
+```plaintext collapse={20-1000}
 zap skipapp-showcase/Android % fastlane release
 [✔] 🚀 
-[15:29:48]: Get started using a Gemfile for fastlane https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile
 [15:29:48]: ------------------------------
 [15:29:48]: --- Step: default_platform ---
 [15:29:48]: ------------------------------
@@ -565,10 +547,4 @@ zap skipapp-showcase/Android % fastlane release
 +------+----------------------+-------------+
 
 [15:32:10]: fastlane.tools finished successfully 🎉
-</code>
-</pre>
-</div>
-</details>
-
-### Troubleshooting Fastlane {#fastlane_troubleshooting}
-
+```

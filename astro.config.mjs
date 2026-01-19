@@ -69,7 +69,6 @@ export default defineConfig({
         Header: './src/components/CustomHeader.astro',
       },
       plugins: [
-        // TODO: activate link validator
         starlightLinksValidator({
           errorOnRelativeLinks: false,
         }),

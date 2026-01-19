@@ -2,6 +2,7 @@
 title: Project Types
 permalink: /docs/project-types/
 ---
+import { FileTree } from '@astrojs/starlight/components';
 
 The Skip [Getting Started](/docs/gettingstarted/) guide demonstrates using `skip create` to generate a basic app project interactively, but there are a variety of additional project types. This document discussed the various different project types that can be created and built with Skip.
 
@@ -9,9 +10,9 @@ The Skip [Getting Started](/docs/gettingstarted/) guide demonstrates using `skip
 
 The `skip init` command is an alternative to the interactive `skip create` command, which facilitates the initialization of an app with a single, non-interactive command. Run `skip init --help` or see the the [command line reference](/docs/skip-cli/#init) for a complete listing of `skip init` options.
 
- <!-- The most common structure is as a single, dual-platform app project. Creating a dual-platform app project does not prevent you from [customizing](/docs/platformcustomization/) your app for Android, even to the point of e.g. writing your entire Android UI in Kotlin and Compose. But it generally assumes that you'll manage the iOS and Android versions of your app through Xcode as a single logical application. -->
+{ /* The most common structure is as a single, dual-platform app project. Creating a dual-platform app project does not prevent you from [customizing](/docs/platformcustomization/) your app for Android, even to the point of e.g. writing your entire Android UI in Kotlin and Compose. But it generally assumes that you'll manage the iOS and Android versions of your app through Xcode as a single logical application. */ }
 
-<!-- The other common structure is to create separate iOS and Android apps that use a set of dual-platform frameworks for shared functionality. Using this option, it is up to you to create and manage the separate iOS and Android applications using Xcode and Android Studio (or your Android IDE of choice), respectively.  -->
+{ /* The other common structure is to create separate iOS and Android apps that use a set of dual-platform frameworks for shared functionality. Using this option, it is up to you to create and manage the separate iOS and Android applications using Xcode and Android Studio (or your Android IDE of choice), respectively. */ }
 
 ### Creating a Dual-Platform App
 
@@ -34,7 +35,6 @@ Pass the `--open-xcode` argument to immediately open the project in Xcode. For e
 ```console
 skip init --open-xcode --native-app --appid=bundle.id.HelloSkip hello-skip HelloSkip
 ```
-{: id="skip-init-cmd"}
 
 This will create a `hello-skip/` folder with a new SwiftPM package containing a single module named `HelloSkip`, along with folders named `Darwin` and `Android` and the shared `Skip.env` app configuration file. The `Darwin` folder will contain a `HelloSkip.xcodeproj` project with a `HelloSkip` target, which you can open in Xcode.
 
@@ -115,33 +115,32 @@ The `--native-model` option we passed to `skip init` will configure Skip to auto
 
 The structure of a Skip framework is exactly the same as any other SwiftPM package:
 
-```console
-lib-name
-├── Package.resolved
-├── Package.swift
-├── README.md
-├── Sources
-│   └── ModuleName
-│       ├── ModuleName.swift
-│       ├── Resources
-│       │   └── Localizable.xcstrings
-│       └── Skip
-│           └── skip.yml
-└── Tests
-    └── ModuleNameTests
-        ├── ModuleNameTests.swift
-        ├── Resources
-        │   └── TestData.json
-        ├── Skip
-        │   └── skip.yml
-        └── XCSkipTests.swift
-
-```
+<FileTree>
+- lib-name
+    - Package.swift
+    - README.md
+    - Sources
+        - ModuleName
+            - ModuleName.swift
+            - Resources
+                - Localizable.xcstrings
+            - Skip
+                - skip.yml
+    - Tests
+        - ModuleNameTests
+            - ModuleNameTests.swift
+            - XCSkipTests.swift
+            - Resources
+                - TestData.json
+            - Skip
+                - skip.yml
+</FileTree>
 
 Skip frameworks use a standard `Package.swift` file, with the exception of added dependencies on Skip libraries and use of the `skipstone` plugin for transpilation:
 
 ```swift
-// swift-tools-version: 5.8
+// Package.swift
+// swift-tools-version: 5.9
 import PackageDescription
 
 let package = Package(

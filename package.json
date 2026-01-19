@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.37.3",
+    "@expressive-code/plugin-collapsible-sections": "^0.41.6",
     "astro": "^5.16.11",
     "node-addon-api": "^8.5.0",
     "node-gyp": "^12.1.0",
