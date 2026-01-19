@@ -55,13 +55,12 @@ Next, create a new Skip app project with:
 skip create
 ```
 
-You will be guided through a series of questions about the app you want to create, including whether you want to use the Skip Lite or Skip Fuse mode.
+You will be guided through a series of questions about the app you want to create. The first two are especially important:
 
-:::tip[Skip Lite or Skip Fuse?]{icon=right-arrow}
-Information about the different modes can be found in the [Native and Transpiled Modes](/docs/modes/) documentation. In this example, we create a Skip Fuse app, which uses the official [Swift SDK for Android](https://www.swift.org/documentation/articles/swift-sdk-for-android-getting-started.html).
-:::
+1. App or Library? The App option creates a single Swift and SwiftUI app that uses Skip's Xcode plugin to automatically build for Android. The Library option creates a Swift library that you can use in a unified Skip app, or use as shared business logic in [separate iOS and Android apps](/docs/project-types/#separate-apps). Neither option prevents you from using a combination of Swift and Kotlin, SwiftUI and Compose in your final application.
+2. Skip Lite or Skip Fuse? Information about the different modes can be found in the [Native and Transpiled Modes](/docs/modes/) documentation. In this example, we create a Skip Fuse app, which uses the official [Swift SDK for Android](https://www.swift.org/documentation/articles/swift-sdk-for-android-getting-started.html).
 
-An example session for creating a `hello-skip/HelloSkip` project (which generates a project identical to the minimal [Skip Fuse sample app](https://github.com/skiptools/skipapp-howdy) or [Skip Lite sample app](https://github.com/skiptools/skipapp-hello)) might look like:
+If you're new to Skip, we recommend starting your exploration with an App project. An example session for creating a `hello-skip/HelloSkip` project (which generates a project identical to the minimal [Skip Fuse sample app](https://github.com/skiptools/skipapp-howdy) or [Skip Lite sample app](https://github.com/skiptools/skipapp-hello)) might look like:
 
 ```console title="skip create session"
 $ skip create
@@ -107,7 +106,7 @@ Open the Xcode project after initialization? (y/n) [y]: y
 ```
 
 :::tip
-You can alternatively create a conventional Skip project using the non-interactive `skip init` command, as described in the [command line reference](/docs/skip-cli/#init).
+You can alternatively create a Skip project using the non-interactive `skip init` command, as described in the [command line reference](/docs/skip-cli/#init).
 :::
 
 Once your app pre-builds and opens in Xcode, you are _almost_ ready to go. One more step is needed, which is to create and launch an Android emulator (which is the Android equivalent of the iPhone Simulator and is used for local app development). The `skip` tool has a command to quickly install and configure an Android emulator for your project:
@@ -149,14 +148,14 @@ Congratulations! You have created and launched you first dual-platform app. At t
 From here you should proceed to:
 
 - Join the [Skip Slack](/slack/) to connect with the Skip developer community.
-- Peruse the [Skip Sample Apps](/docs/samples/) to see common design pattern and examples of best practices for your app.
-- Browse the various [Skip Integration Frameworks](/docs/modules/) that are available to add to your project, which unlock additional capabilities for your dual-platform app
+- Peruse the [Skip Sample Apps](/docs/samples/) to see common design patterns and best practices.
+- Check the [Swift Package Index](https://swiftpackageindex.com) to see if your favorite Swift packages are among the thousands available for Android, and browse the various [Skip Integration Frameworks](/docs/modules/) to unlock additional capabilities for your dual-platform app.
 - Read about the advantages of Skip over other cross-platform frameworks like Flutter and React Native in our [Comparison Guide](/compare/).
+- Read the [App Development](/docs/app-development/) documentation to learn about developing with Skip.
+- Explore the other [Project Types](/docs/project-types/) that can be created with Skip, including multi-module apps, transpiled apps, and sharing business logic in separate iOS and Android apps.
 - Consider whether [Skip Fuse or Skip Lite](/docs/modes/) is the best fit for your project needs.
-- Explore the different [Skip Project Types](/docs/project-types/) that can be created with Skip, including multi-module, bridged, and native framework or app projects.
 - Review the [Glossary of Terms](/docs/glossary/) to familiarize yourself with some of the new and unfamiliar terminology you may encounter while using Skip for Android app development.
 - If you have an existing app you want to bring into Skip, read the [Migration Guide](/docs/project-types/#existing_development).
-
 
 ## Updating Skip {#updating}
 
@@ -168,8 +167,3 @@ skip upgrade
 
 To update your Xcode project to use the latest version of the Skip plugin and libraries allowed by your `Package.swift` configuration, use the `File -> Packages -> Update to Latest Package Versions` Xcode menu option. When the Skip plugin is updated, you may be prompted to trust the new version with an Xcode warning and confirmation dialog.
 
-## Additional Resources {#resources}
-
-- Use `skip help` for a complete list of `skip` tool commands, and see the [command line reference](/docs/skip-cli/).
-- Check the general [help](/docs/help/) page for troubleshooting and contact information.
-- Continue browsing this [documentation](/docs/) to learn more about developing with Skip.
