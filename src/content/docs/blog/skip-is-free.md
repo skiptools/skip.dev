@@ -9,12 +9,12 @@ draft: false
 ---
 
 :::note[TL;DR]
-Skip is now completely free and open source. We're calling on sponsors to help sustain the future of truly native cross-platform development.
+Skip is now completely free and open source. [Become a sponsor](https://skip.dev/sponsor) to help sustain the future of truly native cross-platform development.
 :::
 
 Since launching Skip in 2023, we’ve pursued one mission: enable developers to create premium mobile apps for iOS and Android from a single Swift and SwiftUI codebase — without any of the compromises that have encumbered cross-platform development tools since, well, forever.
 
-Over the past three years, Skip has evolved significantly. We started with a Swift-to-Kotlin transpiler and Android support for the most common SwiftUI APIs. We then founded the Swift Android Workgroup and released the Swift Android SDK to compile Swift natively for Android. We now have dozens of popular integration frameworks, interoperate with thousands of cross-platform Swift packages, and feature the most complete independent SwiftUI implementation.
+Over the past three years, Skip has evolved significantly. We started with a Swift-to-Kotlin transpiler and Android support for the most common SwiftUI APIs. We then founded the Swift Android Workgroup and released the Swift Android SDK to compile Swift natively for Android. We now have dozens of popular integration frameworks, interoperate with thousands of cross-platform Swift packages, and feature the most complete independent SwiftUI implementation available.
 
 ### The Challenge of Paid Developer Tools
 
@@ -32,7 +32,7 @@ As of Skip 1.7, all licensing requirements have been removed. No license keys, n
 
 - **Current Skip developers**: Your setup remains completely unchanged, except you will no longer need your license key after upgrading.
 - **New Skip users**: You can start building immediately — no evaluation license required.
-- **Open source skipstone**: We’ve open-sourced the skip tool (internally known as skipstone), which is the engine that powers Skip. This is the tool that handles all the critical built-time functionality: Project creation and management, Xcode and SwiftPM plugin logic, iOS-to-Android project transformation, resource and localization bundling, JNI bridge creation, source transpilation, app packaging, and project export. It is now available as a public GitHub repository at https://github.com/skiptools/skipstone under a free and open-source license.
+- **Open source skipstone**: We’ve open-sourced the skip tool (internally known as skipstone), which is the engine that powers Skip. This is the tool that handles all the critical build-time functionality: Project creation and management, Xcode and SwiftPM plugin logic, iOS-to-Android project transformation, resource and localization bundling, JNI bridge creation, source transpilation, app packaging, and project export. It is now available as a public GitHub repository at https://github.com/skiptools/skipstone under a free and open-source license.
 - **Migrate the skip.tools site to skip.dev**: As part of this process, we are launching our new home at https://skip.dev! This new site hosts our documentation, blog, and case studies, and it is also open-source and welcomes contributions at https://github.com/skiptools/skip.dev. We will eventually be migrating the entirety of https://skip.tools to https://skip.dev.
 
 ### Supporting Skip’s Future
@@ -41,19 +41,19 @@ Since day one, Skip has been bootstrapped. We haven’t taken venture capital or
 
 But independence requires community support. And that is where you come in.
 
-- **Current subscribers**: Your plan will automatically transition to a “supporter” tier. You can cancel anytime with no consequences (other than making us sad), but we hope you’ll consider staying on, at least throughout this transition period.
+- **Current subscribers**: Your Small Business or Professional plan will automatically transition to an [Individual](https://skip.dev/sponsor) or [Supporter](https://skip.dev/sponsor) tier, respectively. You can cancel any time with no consequences (other than making us sad), but we hope you’ll consider staying on, at least throughout this transition period.
 - **Individual developers**: If you believe in Skip’s mission, please consider supporting us through [GitHub Sponsors](https://github.com/sponsors/skiptools) with a monthly contribution.
-- **Companies and organizations**: For businesses that want to see Skip flourish, we offer corporate sponsorship tiers with visibility on our homepage and documentation. Your sponsorship directly funds development of the integration frameworks essential to production apps, as well as the ongoing maintenance, support, and infrastructure. Sponsorship comes with some compelling perks! Please visit https://skip.dev/sponsor to see the sponsorship tiers.
+- **Companies and organizations**: For businesses that want to see Skip flourish, we offer corporate sponsorship tiers with visibility on our homepage and in our documentation. Your sponsorship directly funds development of the integration frameworks essential to production apps, as well as the ongoing maintenance, support, and infrastructure. Sponsorship comes with some compelling perks! Please visit https://skip.dev/sponsor to see the sponsorship tiers.
 
-Investing in Skip is also investing in your own team's capabilities and long-term competitive advantage. Your support ensures Skip continues evolving alongside Swift, Kotlin, and both mobile platforms, enabling your developers to build exceptional native experiences efficiently, today and into the future.
+Investing in Skip is also investing in your own team's capabilities and competitive advantage. Your support accelerates Skip's development and ensures its long-term success, enabling your developers to build exceptional native experiences efficiently, today and into the future.
 
 ### What Comes Next
 
 We’re at a pivotal moment in the app development field. Legacy cross‑platform frameworks are struggling to keep pace with the rapid evolution of modern UI systems like Liquid Glass on iOS and Material Expressive on Android. The compromises that once felt acceptable in exchange for a unified codebase now result in dated interfaces, weaker user experiences, and real competitive disadvantages. Teams ready to move beyond those trade‑offs can count on Skip to champion what matters most: delivering truly native, uncompromised experiences on both major mobile platforms.
 
-Opening Skip to the community marks the next step in its evolution. Software is never finished — especially a tool that must track the constant shifts in Swift and Kotlin, SwiftPM and Gradle, Xcode and Android Studio, iOS and Android, and the ongoing growth of SwiftUI and Jetpack Compose. It’s a demanding, sometimes relentless pursuit, and we’re committed to it. But sustaining and expanding this work depends on the support of the developers who believe in Skip’s mission.
+Opening Skip to the community marks the next step in its evolution. Software is never finished — especially a tool that supports modern Swift and Kotlin, SwiftPM and Gradle, Xcode and Android Studio, iOS and Android, and the ongoing growth of SwiftUI and Jetpack Compose. It’s a demanding pursuit, and we’re committed to it. But sustaining and expanding this work depends on the support of developers who believe in Skip’s mission.
 
-Together, we can continue building toward Skip’s vision: a genuinely no‑compromise, cross‑platform foundation for universal mobile apps.
+Together, we will continue building toward Skip’s vision: a genuinely no‑compromise, cross‑platform foundation for universal mobile apps.
 
 Thank you for your support, and as always, Happy Skipping!
 
