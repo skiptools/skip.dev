@@ -14,7 +14,7 @@ Skip is now completely free and open source. [Become a sponsor](https://skip.dev
 
 Since launching Skip in 2023, we’ve pursued one mission: enable developers to create premium mobile apps for iOS and Android from a single Swift and SwiftUI codebase — without any of the compromises that have encumbered cross-platform development tools since, well, forever.
 
-Over the past three years, Skip has evolved significantly. We started with a Swift-to-Kotlin transpiler and Android support for the most common SwiftUI APIs. We then founded the Swift Android Workgroup and released the Swift Android SDK to compile Swift natively for Android. We now have dozens of popular integration frameworks, interoperate with thousands of cross-platform Swift packages, and feature the most complete independent SwiftUI implementation available.
+Over the past three years, Skip has evolved significantly. We started with a Swift-to-Kotlin transpiler and Android support for the most common SwiftUI APIs. We then founded the [Swift Android Workgroup](https://www.swift.org/android-workgroup/) and released the Swift Android SDK to compile Swift natively for Android. We now have dozens of popular integration frameworks, interoperate with thousands of cross-platform Swift packages, and feature the most complete independent SwiftUI implementation available.
 
 ### The Challenge of Paid Developer Tools
 
