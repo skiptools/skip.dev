@@ -11,7 +11,7 @@ Skip welcomes community contributions in all forms. There are many ways to contr
 - Submit pull requests to third-party Swift libraries so that they can build for Android and show up as Android compatible on the [Swift Package Index](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid). See the [porting guide](/docs/porting/) for helpful tips.
 
 :::tip
-Remember that you are not required to contribute updates you make. You can build and deploy apps using local modifications to any of the Skip Core Frameworks or Integration Frameworks. But we sincerely hope that you will: your improvements to the Swift ecosystem and to Skip's open source libraries will benefit all Swift-for-Android developers, and by extension all users of Swift-on-Android apps.
+You can build and deploy apps using local modifications to any of the Skip Core Frameworks or Integration Frameworks. Contributing these improvements to the Swift ecosystem and to Skip's open source libraries will benefit all Swift-for-Android developers, and by extension all users of Swift-on-Android apps.
 :::
 
 ## Local Skip Libraries {#local-libraries}

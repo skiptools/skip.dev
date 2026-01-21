@@ -1,0 +1,102 @@
+---
+title: Créez des applications iPhone et Android véritablement natives avec Skip
+description: Introduction à l'utilisation de Skip pour le développement d'applications bi-plateformes.
+template: splash
+editUrl: false
+tableOfContents: false
+sideBar: false
+head:
+  - tag: title
+    content: 'Skip : Créez des applications iPhone et Android véritablement natives avec Skip'
+hero:
+  tagline: Skip apporte le développement d'applications Swift à Android. C'est un outil qui permet aux développeurs de créer des applications véritablement natives pour iOS et Android à partir d'une seule base de code Swift et SwiftUI.
+  #image:
+  #  file: ../../assets/houston.webp
+  banner:
+    content: |
+      Nous venons de lancer quelque chose de cool !
+      <a href="https://example.com">Découvrez-le</a>
+  actions:
+    - text: En savoir plus
+      link: /docs/
+      icon: right-arrow
+      variant: primary
+    - text: Commencer
+      link: /docs/gettingstarted/
+      icon: right-arrow
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div>
+  <video autoplay="" muted="" loop="" playsinline="" controlslist="nodownload" style="background: transparent; width: 100%;" poster="https://skip.tools/assets/video/skip-splash-poster.png">
+	<source src="https://skip.tools/assets/video/skip-splash.mov">
+	Votre navigateur ne prend pas en charge la balise vidéo.
+	</source>
+  </video>
+</div>
+
+
+# Comment fonctionne Skip
+
+Pendant que vous écrivez votre source Swift et SwiftUI, le plugin Skip Xcode crée en continu le code équivalent pour Android. Développez des bibliothèques bi-plateformes ou des applications entières, avec des performances natives et des interfaces utilisateur natives sur les deux plateformes.
+
+
+## Avantages de Skip
+
+
+
+<CardGrid>
+
+  <Card title="SwiftUI, jusqu'au bout" icon="approve-check-circle">
+	Écrivez du vrai SwiftUI une seule fois et obtenez une interface utilisateur native de première classe sur les deux plateformes.
+	Skip traduit les vues SwiftUI en Jetpack Compose, en préservant la mise en page,
+	l'accessibilité et les conventions de la plateforme.
+	Pas de saccades, pas de conventions d'interface obsolètes, pas de vallée dérangeante.
+
+	[En savoir plus →](/docs/modules/skip-ui/#supported-swiftui)
+  </Card>
+
+  <Card title="Pas de runtime. Pas de gonflement." icon="cloud-download">
+	Skip fait son travail au moment de la compilation. Vous obtenez du code natif jusqu'au bout,
+      sans runtime géré ni moteur lourd.
+	Votre application iOS peut être livrée sans aucune dépendance Skip, and your Android app
+	ne dépend que de bibliothèques open source standard.
+
+	[En savoir plus →](/docs/modes/)
+  </Card>
+
+  <Card title="Performances natives par conception" icon="magnifier">
+	Parce que les applications Skip utilisent du vrai code natif, vos applications ont une utilisation de la mémoire prévisible,
+	des temps de démarrage rapides et des caractéristiques de performance identiques à
+	celles de Swift et Kotlin écrits à la main.
+
+	[En savoir plus →](/docs/project-types/)
+  </Card>
+
+  <Card title="IDE de première partie" icon="heart">
+	Continuez à utiliser Xcode comme principal environnement de développement Swift.
+	Créez, déboguez et refactorisez le code des applications et des bibliothèques Swift exactement comme vous l'avez toujours fait.
+	Passez à Android Studio si vous souhaitez effectuer une personnalisation importante spécifique à la plateforme.
+
+	[En savoir plus →](/docs/app-development/)
+  </Card>
+
+  <Card title="Interopérabilité Android transparente" icon="star">
+	Besoin d'un SDK ou d'une bibliothèque Android spécifique ?
+	Skip interopère proprement avec Kotlin et Jetpack Compose, vous pouvez donc
+	intégrer les API Android sans vous battre avec le framework.
+
+	[En savoir plus →](/docs/platformcustomization/)
+  </Card>
+
+  <Card title="Open Source, conçu pour le long terme" icon="github">
+	Skip et ses frameworks de base sont gratuits et open source.
+	Pas de verrouillage, pas de runtimes propriétaires et pas d'attente pour que les fournisseurs rattrapent
+	les dernières versions d'iOS ou d'Android.
+
+	[En savoir plus →](/blog/skip-is-free/)
+  </Card>
+
+</CardGrid>

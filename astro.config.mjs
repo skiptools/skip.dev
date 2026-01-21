@@ -30,39 +30,43 @@ export default defineConfig({
       logo: {
         src: './src/assets/skipicon.svg',
       },
+      /*
       defaultLocale: 'root',
       locales: {
-        root: {
+        'root': {
           label: 'English',
           lang: 'en',
         },
-        /*
-        es: {
+        'fr': {
+          lang: 'fr',
+          label: 'Français',
+        },
+        'es': {
           label: 'Español',
           lang: 'es',
         },
-        de: {
+        'de': {
           label: 'Deutsch',
           lang: 'de',
         },
-        fr: {
-          label: 'Français',
-          lang: 'fr',
+        'pt': {
+          label: 'Português',
+          lang: 'pt-BR',
         },
-        ja: {
+        'ja': {
           label: '日本語',
           lang: 'ja',
         },
-        ko: {
+        'ko': {
           label: '한국어',
           lang: 'ko',
         },
-        'zh-cn': {
+        'zh': {
           label: '简体中文',
           lang: 'zh-CN',
         },
-        */
       },
+      */
       components: {
         // Override the default Header component
         Header: './src/components/CustomHeader.astro',

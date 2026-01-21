@@ -1,0 +1,102 @@
+---
+title: Crie aplicativos verdadeiramente nativos para iPhone e Android com o Skip
+description: Introdução ao uso do Skip para desenvolvimento de aplicativos multiplataforma.
+template: splash
+editUrl: false
+tableOfContents: false
+sideBar: false
+head:
+  - tag: title
+    content: 'Skip: Crie aplicativos verdadeiramente nativos para iPhone e Android com o Skip'
+hero:
+  tagline: O Skip traz o desenvolvimento de aplicativos Swift para o Android. É uma ferramenta que permite aos desenvolvedores criar aplicativos genuinamente nativos para iOS e Android a partir de uma única base de código Swift e SwiftUI.
+  #image:
+  #  file: ../../assets/houston.webp
+  banner:
+    content: |
+      O Skip agora é gratuito e de código aberto!
+      <a href="/blog/skip-is-free">Leia o anúncio</a>
+  actions:
+    - text: Saiba Mais
+      link: /docs/
+      icon: right-arrow
+      variant: primary
+    - text: Comece Agora
+      link: /docs/gettingstarted/
+      icon: right-arrow
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div>
+  <video autoplay="" muted="" loop="" playsinline="" controlslist="nodownload" style="background: transparent; width: 100%;" poster="https://skip.tools/assets/video/skip-splash-poster.png">
+	<source src="https://skip.tools/assets/video/skip-splash.mov">
+	Seu navegador não suporta a tag de vídeo.
+	</source>
+  </video>
+</div>
+
+
+# Como o Skip Funciona
+
+À medida que você escreve seu código-fonte em Swift e SwiftUI, o plugin Skip para Xcode cria continuamente o código equivalente para Android. Desenvolva bibliotecas multiplataforma ou aplicativos inteiros, com desempenho nativo e interfaces de usuário nativas em ambas as plataformas.
+
+
+## Vantagens do Skip
+
+
+
+<CardGrid>
+
+  <Card title="SwiftUI, do Início ao Fim" icon="approve-check-circle">
+	Escreva SwiftUI real uma vez e obtenha uma interface de usuário nativa de primeira classe em ambas as plataformas.
+	O Skip traduz as visualizações do SwiftUI para o Jetpack Compose, preservando o layout,
+	a acessibilidade e as convenções da plataforma.
+	Sem instabilidade, sem convenções de interface desatualizadas, sem vale da estranheza.
+
+	[Saiba mais →](/docs/modules/skip-ui/#supported-swiftui)
+  </Card>
+
+  <Card title="Sem Runtime. Sem Inchaço." icon="cloud-download">
+	O Skip faz seu trabalho em tempo de compilação. Você obtém código nativo do início ao fim,
+      sem um tempo de execução gerenciado ou um motor pesado.
+	Seu aplicativo iOS pode ser enviado com zero dependências do Skip, e seu aplicativo Android
+	depende apenas de bibliotecas de código aberto padrão.
+
+	[Saiba mais →](/docs/modes/)
+  </Card>
+
+  <Card title="Desempenho Nativo por Design" icon="magnifier">
+	Como os aplicativos Skip usam código nativo real, seus aplicativos têm uso de memória
+	previsível, tempos de inicialização rápidos e características de desempenho idênticas
+	ao Swift e Kotlin escritos à mão.
+
+	[Saiba mais →](/docs/project-types/)
+  </Card>
+
+  <Card title="IDEs de Primeira Linha" icon="heart">
+	Continue usando o Xcode como seu principal ambiente de desenvolvimento Swift.
+	Construa, depure e refatore o código do aplicativo e da biblioteca Swift exatamente como sempre fez.
+	Use o Android Studio se quiser fazer uma personalização pesada específica da plataforma.
+
+	[Saiba mais →](/docs/app-development/)
+  </Card>
+
+  <Card title="Interoperabilidade Perfeita com Android" icon="star">
+	Precisa de um SDK ou biblioteca específica do Android?
+	O Skip interopera de forma limpa com o Kotlin e o Jetpack Compose, para que você possa
+	integrar APIs do Android sem lutar contra o framework.
+
+	[Saiba mais →](/docs/platformcustomization/)
+  </Card>
+
+  <Card title="Código Aberto, Construído para o Longo Prazo" icon="github">
+	O Skip e seus frameworks principais são gratuitos e de código aberto.
+	Sem aprisionamento tecnológico, sem tempos de execução proprietários e sem esperar que os fornecedores
+	acompanhem os últimos lançamentos do iOS ou Android.
+
+	[Saida mais →](/blog/skip-is-free/)
+  </Card>
+
+</CardGrid>

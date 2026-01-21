@@ -1,0 +1,101 @@
+---
+title: Skip を使用して真にネイティブな iPhone および Android アプリを構築する
+description: デュアルプラットフォーム アプリ開発に Skip を使用する方法の概要。
+template: splash
+editUrl: false
+tableOfContents: false
+sideBar: false
+head:
+  - tag: title
+    content: 'Skip: Skip を使用して真にネイティブな iPhone および Android アプリを構築する'
+hero:
+  tagline: Skip は Swift アプリ開発を Android にもたらします。これは、開発者が単一の Swift および SwiftUI コードベースから iOS と Android の両方に対応する真にネイティブなアプリを構築できるようにするツールです。
+  #image:
+  #  file: ../../assets/houston.webp
+  banner:
+    content: |
+      クールなものをリリースしました！
+      <a href="https://example.com">チェックしてください</a>
+  actions:
+    - text: 詳細を見る
+      link: /docs/
+      icon: right-arrow
+      variant: primary
+    - text: 始める
+      link: /docs/gettingstarted/
+      icon: right-arrow
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div>
+  <video autoplay="" muted="" loop="" playsinline="" controlslist="nodownload" style="background: transparent; width: 100%;" poster="https://skip.tools/assets/video/skip-splash-poster.png">
+	<source src="https://skip.tools/assets/video/skip-splash.mov">
+	お使いのブラウザは video タグをサポートしていません。
+	</source>
+  </video>
+</div>
+
+
+# Skip の仕組み
+
+Swift および SwiftUI ソースを作成すると, Skip Xcode プラグインは Android 用の同等のコードを継続的にビルドします。両方のプラットフォームでネイティブ パフォーマンスとネイティブ ユーザー インターフェイスを備えたデュアルプラットフォーム ライブラリまたはアプリ全体を開発します。
+
+
+## Skip の利点
+
+
+
+<CardGrid>
+
+  <Card title="SwiftUI、隅々まで" icon="approve-check-circle">
+	本物の SwiftUI を一度記述すれば、両方のプラットフォームでファーストクラスのネイティブ UI を入手できます。
+	Skip は SwiftUI ビューを Jetpack Compose に変換し、レイアウト、
+	アクセシビリティ、プラットフォームの規則を維持します。
+	ガタつき、時代遅れのインターフェイス規則、不気味の谷はありません。
+
+	[詳細を見る →](/docs/modules/skip-ui/#supported-swiftui)
+  </Card>
+
+  <Card title="ランタイムなし。肥大化なし。" icon="cloud-download">
+	Skip はコンパイル時にその作業を行います。マネージド ランタイムやヘビーウェイト エンジンなしで、隅々までネイティブ コードを入手できます。
+	iOS アプリは Skip の依存関係なしで出荷でき、Android アプリは
+	標準のオープンソース ライブラリにのみ依存します。
+
+	[詳細を見る →](/docs/modes/)
+  </Card>
+
+  <Card title="設計によるネイティブ パフォーマンス" icon="magnifier">
+	Skip アプリは本物のネイティブ コードを使用しているため、アプリのメモリ使用量は予測可能で、
+	起動時間が速く、パフォーマンス特性は
+	手書きの Swift および Kotlin と同じです。
+
+	[詳細を見る →](/docs/project-types/)
+  </Card>
+
+  <Card title="ファーストパーティ IDE" icon="heart">
+	Xcode をプライマリ Swift 開発環境として引き続き使用します。
+	これまでどおりに Swift アプリケーションとライブラリ コードをビルド、デバッグ、リファクタリングします。
+	プラットフォーム固有のヘビーなカスタマイズを行いたい場合は、Android Studio にドロップインします。
+
+	[詳細を見る →](/docs/app-development/)
+  </Card>
+
+  <Card title="シームレスな Android 相互運用" icon="star">
+	特定の Android SDK またはライブラリが必要ですか？
+	Skip は Kotlin および Jetpack Compose とクリーンに相互運用するため、
+	フレームワークと戦うことなく Android API を統合できます。
+
+	[詳細を見る →](/docs/platformcustomization/)
+  </Card>
+
+  <Card title="オープンソース、長期的に構築" icon="github">
+	Skip とそのコア フレームワークは無料でオープンソースです。
+	ロックイン、独自のランタイムはなく、ベンダーが
+	最新の iOS または Android リリースに追いつくのを待つ必要もありません。
+
+	[詳細を見る →](/blog/skip-is-free/)
+  </Card>
+
+</CardGrid>

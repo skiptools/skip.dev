@@ -18,9 +18,18 @@ const tourCollection = defineCollection({
 */
 
 export const collections = {
-    i18n: defineCollection({ loader: i18nLoader(), schema: i18nSchema() }),
     docs: defineCollection({ loader: docsLoader(), schema: docsSchema({
       extend: (context) => blogSchema(context)
     }) }),
+    i18n: defineCollection({
+        loader: i18nLoader(),
+        schema: i18nSchema({
+            extend: z.object({
+                'header.link.docs': z.string().optional(),
+                'header.link.blog': z.string().optional(),
+                'header.link.sponsor': z.string().optional(),
+            }),
+        }),
+    }),
     //tour: tourCollection,
 };

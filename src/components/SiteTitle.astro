@@ -17,17 +17,17 @@ type Link = {
 // Note that these links are duplicated in SiteTitle.astro and CustomHeader.astro
 const links: Link[] = [
   {
-    title: 'Docs',
+    title: Astro.locals.t('header.link.docs'),
     value: '/docs/',
     transfer: true,
   },
   {
-    title: 'Blog',
+    title: Astro.locals.t('header.link.blog'),
     value: '/blog/',
     transfer: false,
   },
   {
-    title: 'Sponsor',
+    title: Astro.locals.t('header.link.sponsor'),
     value: '/sponsor/',
     transfer: true,
   },

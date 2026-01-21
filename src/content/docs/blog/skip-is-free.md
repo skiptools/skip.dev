@@ -5,7 +5,7 @@ tags: [skip, open-source, licensing, announcement, sustainability, cross-platfor
 layout: post
 permalink: /blog/skip-is-free/
 author: the Skip Team
-draft: false
+draft: true
 ---
 
 :::note[TL;DR]
