@@ -1,6 +1,6 @@
 ---
 title: "Skip Is Now Free and Open Source"
-date:   2026-01-27
+date:   2026-01-21
 tags: [skip, open-source, licensing, announcement, sustainability, cross-platform]
 layout: post
 permalink: /blog/skip-is-free/
