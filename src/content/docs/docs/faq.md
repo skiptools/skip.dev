@@ -48,7 +48,7 @@ macOS 13 (ARM or Intel) with the latest Xcode, Android Studio "Koala" (2024.1.1)
 
 ### Can Skip run on Linux or Windows? {#linux}
 
-Skip is implemented as a Swift Package Manager plugin, and so is only available on platforms where SwiftPM plugins are supported. Currently SwiftPM plugins are only supported on macOS.
+Skip does have limited support for Linux (and Windows via WSL). The `skip` tool itself can be installed with Homebrew (see [Getting Started](/docs/gettingstarted/)), and `skip` can be used to create projects, build frameworks, run in CI, and act as a frontend to `skip android [build|test|sdk|emulator]`. However, it cannot yet be used to build complete apps due to the reliance on the SwiftUI and Xcode toolchain distributed as part of macOS. We are considering ways of expanding Skip's utility on Linux and Windows for the future.
 
 ### Which parts of Skip are free and which parts are commercial? {#free_commercial}
 
@@ -217,7 +217,7 @@ By default, whenever you run your iOS app from Xcode, Skip will also builds and 
 
 ### How does Skip run my test cases? {#testcases}
 
-Skip-enabled projects have an `XCSkipTests.swift` test case, which is generated as part of the `skip init` command (see [Getting Started](/docs/gettingstarted/). This test case will use the `SkipDrive` module to launch the `gradle test` command on the generated project. It will then interpret the test results and convert any failures back into XCTest failures, including mapping back the line numbers from the JUnit tests to the original Swift. This will result in a test failure showing up twice in Xcode: once for the Swift XCTest failure, and one for the Kotlin JUnit failure.
+Skip-enabled projects have an `XCSkipTests.swift` test case, which is generated as part of the `skip init` command (see [Getting Started](/docs/gettingstarted/)). This test case will use the `SkipDrive` module to launch the `gradle test` command on the generated project. It will then interpret the test results and convert any failures back into XCTest failures, including mapping back the line numbers from the JUnit tests to the original Swift. This will result in a test failure showing up twice in Xcode: once for the Swift XCTest failure, and one for the Kotlin JUnit failure.
 
 ### How can I run unit tests against an Android Emulator or Device? {#testing}
 
