@@ -1,11 +1,10 @@
 ---
-layout: wide
 title: Skip Comparison Matrix
 permalink: /compare/
+tableOfContents: false
 ---
 
 <style>
-
 table {
     font-family: system-ui;
     border-collapse: collapse;
@@ -24,8 +23,8 @@ th, td {
 }
 
 th {
-    background-color: #333;
-    color: white;
+    background-color: var(--sl-color-accent);
+    color: var(--sl-color-black);
     min-width: 55pt;
 }
 
@@ -35,21 +34,21 @@ td:nth-child(1) {
 
 /* Highlight the second "Skip" column */
 td:nth-child(2999) {
-    background-color: var(--system-teal-color-medium);
+    /* background-color: var(--sl-color-gray-4); */
     /* color: var(--text-background-color); */
     font-weight: bolder;
 }
 
 tr:nth-child(even) {
-    background-color: var(--alternating-content-background-color);
+    background-color: var(--sl-color-gray-6);
 }
 
 tr:hover {
-    background-color: var(--system-teal-color-medium);
+    background-color: var(--sl-color-gray-7);
 }
 
 td {
-    border: 1px solid var(--grid-color);
+    border: 1px solid var(--sl-color-gray-5);
     font-weight: normal;
 }
 
@@ -68,19 +67,16 @@ img.table-icon {
 This table presents a comparison between using Skip for dual-platform iOS and Android development versus 
 some of the other cross-platform app builder technologies that are available.
 
-{% assign check = '<img class="table-icon icon system-green" alt="checkmark" src="/assets/icons/checkmark.circle.fill.svg"/>' %}
-{% assign cross = '<img class="table-icon icon system-red" alt="cross" src="/assets/icons/x.circle.fill.svg"/>' %}
-
 | | Write<br/>Twice | Skip | Flutter | React<br/>Native | Compose<br/>Multiplatform | |
 |-:|:-:|:-:|:-:|:-:|:-:|:-|
-| Develop with a single language<br/>in a single codebase | {{ cross }} | {{ check }} | {{ check }} | {{ check }} | {{ check }} |
-| Modern memory-safe language | {{ check }} | {{ check }}  | {{ check }}  | {{ check }} | {{ check }} |
-| Natively Compiled | {{ check }} | {{ check }} | {{ check }} | {{ cross }} | {{ check }} | |
-| Memory efficient<br/>(no added garbage collection) | {{ check }}<br/>{{ check }} | {{ check }}<br/>{{ check }} | {{ cross }}<br/>{{ cross }} | {{ cross }}<br/>{{ cross }} | {{ cross }}<br/>{{ check }} | iOS<br/><br/>Android |
-| Platform-native widgets | {{ check }}<br/>{{ check }} | {{ check }}<br/>{{ check }}  | {{ cross }}<br/>{{ cross }} | {{ check }}<br/>{{ check }} | {{ cross }}<br/>{{ check }} | iOS: native UIKit<br/><br/>Android: native Views |
-| Vendor-recommended toolkit | {{ check }}<br/>{{ check }} | {{ check }}<br/>{{ check }}  | {{ cross }}<br/>{{ cross }} | {{ cross }}<br/>{{ cross }} | {{ cross }}<br/>{{ check }} | Apple: SwiftUI<br/><br/>Google: Jetpack Compose |
-| Effortless platform API access | {{ check }}<br/>{{ check }} | {{ check }}<br/>{{ check }} | {{ cross }}<br/>{{ cross }} | {{ cross }}<br/>{{ cross }} | {{ cross }}<br/>{{ check }} | iOS: Swift<br/><br/>Android: Kotlin |
-| Ejectable | N/A | {{ check }} | {{ cross }} | {{ cross }} | {{ cross }} |
+| Develop with a single language<br/>in a single codebase | ❌ | ✅ | ✅ | ✅ | ✅ |
+| Modern memory-safe language | ✅ | ✅  | ✅  | ✅ | ✅ |
+| Natively Compiled | ✅ | ✅ | ✅ | ❌ | ✅ | |
+| Memory efficient<br/>(no added garbage collection) | ✅<br/>✅ | ✅<br/>✅ | ❌<br/>❌ | ❌<br/>❌ | ❌<br/>✅ | iOS<br/>Android |
+| Platform-native widgets | ✅<br/>✅ | ✅<br/>✅  | ❌<br/>❌ | ✅<br/>✅ | ❌<br/>✅ | iOS: native UIKit<br/>Android: native Views |
+| Vendor-recommended toolkit | ✅<br/>✅ | ✅<br/>✅  | ❌<br/>❌ | ❌<br/>❌ | ❌<br/>✅ | Apple: SwiftUI<br/>Google: Jetpack Compose |
+| Effortless platform API access | ✅<br/>✅ | ✅<br/>✅ | ❌<br/>❌ | ❌<br/>❌ | ❌<br/>✅ | iOS: Swift<br/>Android: Kotlin |
+| Ejectable | N/A | ✅ | ❌ | ❌ | ❌ |
 
 
 # Technology Comparison Table
