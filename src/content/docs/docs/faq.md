@@ -44,7 +44,7 @@ Skip provides [several mechanisms](/docs/platformcustomization/) to integrate wi
 
 ### What are the system requirements for using Skip? {#sysreq}
 
-macOS 13 (ARM or Intel) with the latest Xcode, Android Studio "Koala" (2024.1.1), and Homebrew installed. Additional software is required to build and test projects for Android. See Skip's [installation instructions](/docs/gettingstarted).
+macOS 15 (ARM or Intel) with Xcode 16.4 or higher. Additional software is required to build and test projects for Android. See Skip's [installation instructions](/docs/gettingstarted).
 
 ### Can Skip run on Linux or Windows? {#linux}
 
