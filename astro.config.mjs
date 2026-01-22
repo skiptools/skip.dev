@@ -30,7 +30,6 @@ export default defineConfig({
       logo: {
         src: './src/assets/skipicon.svg',
       },
-      /*
       defaultLocale: 'root',
       locales: {
         'root': {
@@ -66,7 +65,6 @@ export default defineConfig({
           lang: 'zh-CN',
         },
       },
-      */
       components: {
         // Override the default Header component
         Header: './src/components/CustomHeader.astro',

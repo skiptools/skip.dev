@@ -1,0 +1,102 @@
+---
+title: 使用 Skip 构建真正的原生 iPhone 和 Android 应用
+description: Skip 双平台应用开发简介。
+template: splash
+editUrl: false
+tableOfContents: false
+sideBar: false
+head:
+  - tag: title
+    content: 'Skip: 使用 Skip 构建真正的原生 iPhone 和 Android 应用'
+hero:
+  tagline: Skip 将 Swift 应用开发带到 Android。它是一个使开发人员能够从单一的 Swift和 SwiftUI 代码库为 iOS 和 Android 构建真正原生应用的工具。
+  #image:
+  #  file: ../../assets/houston.webp
+  banner:
+    content: |
+      Skip 现在是免费和开源的！
+      <a href="/blog/skip-is-free">阅读公告</a>
+  actions:
+    - text: 了解更多
+      link: /docs/
+      icon: right-arrow
+      variant: primary
+    - text: 开始
+      link: /docs/gettingstarted/
+      icon: right-arrow
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div>
+  <video autoplay="" muted="" loop="" playsinline="" controlslist="nodownload" style="background: transparent; width: 100%;" poster="https://skip.tools/assets/video/skip-splash-poster.png">
+	<source src="https://skip.tools/assets/video/skip-splash.mov">
+	您的浏览器不支持视频标签。
+	</source>
+  </video>
+</div>
+
+
+# Skip 如何工作
+
+在您编写 Swift 和 SwiftUI 源代码时，Skip Xcode 插件会持续构建等效的 Android 代码。开发双平台库或整个应用程序，在两个平台上都具有原生性能和原生用户界面。
+
+
+## Skip 优势
+
+
+
+<CardGrid>
+
+  <Card title="从头到尾的 SwiftUI" icon="approve-check-circle">
+	只需编写一次真正的 SwiftUI，即可在两个平台上获得一流的原生 UI。
+	Skip 将 SwiftUI 视图转换为 Jetpack Compose，保留布局、
+	可访问性和平台约定。
+	没有卡顿，没有过时的界面约定，没有“恐怖谷”效应。
+
+	[了解更多 →](/docs/modules/skip-ui/#supported-swiftui)
+  </Card>
+
+  <Card title="没有运行时。没有臃肿。" icon="cloud-download">
+	Skip 在编译时完成所有工作。您可以获得从头到尾的原生代码，
+      没有托管运行时或重量级引擎。
+	您的 iOS 应用可以零 Skip 依赖项发布，而您的 Android 应用
+	仅依赖于标准的开源库。
+
+	[了解更多 →](/docs/modes/)
+  </Card>
+
+  <Card title="原生性能设计" icon="magnifier">
+	因为 Skip 应用使用真正的原生代码，所以您的应用具有可预测的内存
+	使用、快速的启动时间和与
+	手写 Swift 和 Kotlin 相同的性能特征。
+
+	[了解更多 →](/docs/project-types/)
+  </Card>
+
+  <Card title="第一方 IDE" icon="heart">
+	继续使用 Xcode 作为您的主要 Swift 开发环境。
+	像往常一样构建、调试和重构 Swift 应用程序和库代码。
+	如果您想进行大量的平台特定自定义，请使用 Android Studio。
+
+	[了解更多 →](/docs/app-development/)
+  </Card>
+
+  <Card title="无缝 Android 互操作" icon="star">
+	需要特定的 Android SDK 或库吗？
+	Skip 与 Kotlin 和 Jetpack Compose 清晰地互操作，因此您可以
+	集成 Android API 而无需与框架作斗争。
+
+	[了解更多 →](/docs/platformcustomization/)
+  </Card>
+
+  <Card title="开源，为长远发展而构建" icon="github">
+	Skip 及其核心框架是免费和开源的。
+	没有锁定，没有专有运行时，也无需等待供应商赶上
+	最新的 iOS 或 Android 版本。
+
+	[了解更多 →](/blog/skip-is-free/)
+  </Card>
+
+</CardGrid>
