@@ -73,12 +73,12 @@ async function processRepositories() {
   for (const mod of MODULES.concat(SAMPLES)) {
     const isApp = mod.repo.startsWith("skipapp-") ? true : false;
     const modType = isApp ? 'sample app' : 'framework';
-    const OUTPUT_DIR = './src/content/docs/docs/' + (isApp ? 'samples' : 'modules');
+    const outputDir = './src/content/docs/docs/' + (isApp ? 'samples' : 'modules');
 
     const rawBaseUrl = `https://raw.githubusercontent.com/${owner}/${mod.repo}/${branch}`;
     const url = rawBaseUrl + '/README.md';
 
-    console.log(`Fetching ${mod.name} from ${url}...`);
+    console.log(`Fetching ${mod.name} from ${url}`);
 
     try {
       const response = await fetch(url);
@@ -128,7 +128,7 @@ This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github
       const finalContent = frontmatter + content;
 
       // Save file
-      const folderPath = path.join(OUTPUT_DIR, mod.repo);
+      const folderPath = path.join(outputDir, mod.repo);
       if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
 
       const filePath = path.join(folderPath, 'index.md');
