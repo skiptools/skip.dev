@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-fuse/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-fuse/releases' alt='Releases for skip-fuse'><img decoding='async' loading='lazy' alt='Releases for skip-fuse' src='https://img.shields.io/github/v/release/skiptools/skip-fuse.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-fuse](https://github.com/skiptools/skip-fuse) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 

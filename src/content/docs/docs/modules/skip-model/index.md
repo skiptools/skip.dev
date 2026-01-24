@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-model/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-model/releases' alt='Releases for skip-model'><img decoding='async' loading='lazy' alt='Releases for skip-model' src='https://img.shields.io/github/v/release/skiptools/skip-model.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-model](https://github.com/skiptools/skip-model) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-Model object observation for [Skip Lite](https://skip.dev) transpiled Swift. Parts of this package are also used by [Skip Fuse](/docs/status/#skip_fuse) to bridge `@Observables` to Compose.
+Model object observation for Skip Lite transpiled Swift. Parts of this package are also used by [Skip Fuse](/docs/status/#skip_fuse) to bridge `@Observables` to Compose.
 
 See what API is included [here](#api-support).
 
@@ -42,7 +42,7 @@ SkipModel vends the `skip.model` Kotlin package. This package contains `Observab
 
 ## Dependencies
 
-SkipLib depends on the [skip](https://source.skip.dev/skip) transpiler plugin and the [SkipFoundation](https://source.skip.dev/skip-foundation) package.
+SkipLib depends on the [skip](https://source.skip.dev/skip) transpiler plugin and the [SkipFoundation](/docs/modules/skip-foundation) package.
 
 SkipModel is part of the core *SkipStack* and is not intended to be imported directly. The transpiler includes `import skip.model.*` in generated Kotlin for any Swift source that imports the `Combine`, `Observation`, or `SwiftUI` frameworks.
 
@@ -56,7 +56,7 @@ Much of Skip's model support is implemented directly in the Skip transpiler. The
 
 ## Contributing
 
-We welcome contributions to SkipModel. The Skip product [documentation](/docs/contributing/) includes helpful instructions and tips on local Skip library development. When submitting code, please include unit tests in your [PR](https://source.skip.dev/skip-model/pulls).
+We welcome contributions to SkipModel. The Skip product [documentation](/docs/contributing/) includes helpful instructions and tips on local Skip library development. When submitting code, please include unit tests in your [PR](/docs/modules/skip-model/pulls).
 
 ## Model Objects
 

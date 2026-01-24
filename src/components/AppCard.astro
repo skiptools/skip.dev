@@ -1,0 +1,55 @@
+---
+const { app } = Astro.props;
+---
+
+<article class="app-card">
+  <div class="screenshots">
+    <img src={app.screenshots[0]} alt={`${app.name} screenshot`} />
+  </div>
+
+  <div class="content">
+    <h3>{app.name}</h3>
+    <p class="tagline">{app.tagline}</p>
+    <p>{app.description}</p>
+
+    <ul class="meta">
+      <li>{app.platforms.join(" · ")}</li>
+      <li>{app.tags.join(" · ")}</li>
+    </ul>
+
+    <div class="links">
+      {app.website && <a href={app.website}>Website</a>}
+      {app.appStore && <a href={app.appStore}>App Store</a>}
+      {app.playStore && <a href={app.playStore}>Google Play</a>}
+      {app.source && <a href={app.source}>Source</a>}
+    </div>
+  </div>
+</article>
+
+<style>
+.app-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--sl-color-bg);
+  box-shadow: var(--sl-shadow-sm);
+}
+
+.screenshots img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.tagline {
+  font-weight: 500;
+  color: var(--sl-color-text-accent);
+}
+
+.links a {
+  margin-right: 1rem;
+  font-weight: 500;
+}
+</style>
+

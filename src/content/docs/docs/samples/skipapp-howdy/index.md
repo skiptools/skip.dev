@@ -5,16 +5,16 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-howdy/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-howdy/releases' alt='Releases for skipapp-howdy'><img decoding='async' loading='lazy' alt='Releases for skipapp-howdy' src='https://img.shields.io/github/v/release/skiptools/skipapp-howdy.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-howdy](https://github.com/skiptools/skipapp-howdy) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip](https://skip.dev) dual-platform app project.
+This is a Skip dual-platform app project.
 It builds a native app for both iOS and Android.
 
 This is a fully-native compiled Swift app, in contrast
-with the [skipapp-hello](https://source.skip.dev/skipapp-hello)
+with the [skipapp-hello](/docs/samples/skipapp-hello)
 sample, which is a fully-transpiled sample app.
 
 To learn about the distinction, see the

@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-marketplace/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-marketplace/releases' alt='Releases for skip-marketplace'><img decoding='async' loading='lazy' alt='Releases for skip-marketplace' src='https://img.shields.io/github/v/release/skiptools/skip-marketplace.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-marketplace](https://github.com/skiptools/skip-marketplace) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
@@ -77,7 +77,7 @@ default: canUseNativeBillling = false
 Managing in-app purchases in SkipMarketplace works best for non-consumable one-time-product entitlements, products that the user buys once and owns forever. You can use it for one-time-product consumables and subscriptions, but it's best to integrate those tightly with a server-side database that tracks purchases, consumptions and expirations. Your server-side web app can also sign promotional offers, accepts webhook notifications from the app stores, etc.
 :::
 >
-> Rather than building all of that yourself to integrate with SkipMarketplace, you might prefer to use [RevenueCat](https://www.revenuecat.com/) for this, using the [skip-revenue](https://source.skip.dev/skip-revenue) library. (RevenueCat does cost money; if you want to roll your own subscription-management software, you can do it with SkipMarketplace.)
+> Rather than building all of that yourself to integrate with SkipMarketplace, you might prefer to use [RevenueCat](https://www.revenuecat.com/) for this, using the [skip-revenue](/docs/modules/skip-revenue) library. (RevenueCat does cost money; if you want to roll your own subscription-management software, you can do it with SkipMarketplace.)
 
 ### Android Configuration
 
@@ -218,7 +218,7 @@ do {
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

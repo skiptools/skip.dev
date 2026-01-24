@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-av/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-av/releases' alt='Releases for skip-av'><img decoding='async' loading='lazy' alt='Releases for skip-av' src='https://img.shields.io/github/v/release/skiptools/skip-av.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-av](https://github.com/skiptools/skip-av) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-Audio/Video functionality for [Skip Lite](https://skip.dev) apps.
+Audio/Video functionality for Skip Lite apps.
 
 See what API is included [here](#api-support).
 
@@ -44,7 +44,7 @@ let package = Package(
 
 ## Dependencies
 
-SkipAV depends on the [skip](https://source.skip.dev/skip) transpiler plugin and the [SkipUI](https://source.skip.dev/skip-ui) package.
+SkipAV depends on the [skip](https://source.skip.dev/skip) transpiler plugin and the [SkipUI](/docs/modules/skip-ui) package.
 
 SkipAV is part of the core *SkipStack* and is not intended to be imported directly. The transpiler includes `import skip.av.*` in generated Kotlin for any Swift source that imports the `AVKit` or `AVFoundation` frameworks.
 

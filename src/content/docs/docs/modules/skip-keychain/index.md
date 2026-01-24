@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-keychain/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-keychain/releases' alt='Releases for skip-keychain'><img decoding='async' loading='lazy' alt='Releases for skip-keychain' src='https://img.shields.io/github/v/release/skiptools/skip-keychain.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-keychain](https://github.com/skiptools/skip-keychain) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip](https://skip.dev) Swift/Kotlin library project providing a simple unified API to secure key/value storage. It uses the Keychain on Darwin platforms and `EncyptedSharedPreferences` on Android.
+This is a Skip Swift/Kotlin library project providing a simple unified API to secure key/value storage. It uses the Keychain on Darwin platforms and `EncyptedSharedPreferences` on Android.
 
 <div align="center">
 <video id="intro_video" style="height: 500px;" autoplay muted loop playsinline>
@@ -83,7 +83,7 @@ For newer devices, follow [these instructions](https://developer.android.com/ide
 ## Building
 
 This project is a Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

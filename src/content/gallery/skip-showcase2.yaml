@@ -1,0 +1,22 @@
+name: Skip Showcase
+tagline: Shared SwiftUI components for Skip apps
+description: >
+  Skip Showcase provides reusable SwiftUI components that work
+  across iOS and Android using Skip.
+
+website: https://skip.tools
+source: https://github.com/skiptools/skip-ui
+
+platforms:
+  - iOS
+  - Android
+
+tags:
+  - SwiftUI
+  - Cross-platform
+  - Open Source
+
+screenshots:
+  - /screenshots/skip-ui/1.png
+  - /screenshots/skip-ui/2.png
+

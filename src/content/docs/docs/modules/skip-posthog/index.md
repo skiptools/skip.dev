@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-posthog/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-posthog/releases' alt='Releases for skip-posthog'><img decoding='async' loading='lazy' alt='Releases for skip-posthog' src='https://img.shields.io/github/v/release/skiptools/skip-posthog.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-posthog](https://github.com/skiptools/skip-posthog) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-A [Skip](https://skip.dev) interface for integrating PostHog analytics into your cross-platform iOS and Android applications.
+A Skip interface for integrating PostHog analytics into your cross-platform iOS and Android applications.
 
 ## About PostHog
 
@@ -223,7 +223,7 @@ PostHogSDK.shared.optIn()
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-qrcode/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-qrcode/releases' alt='Releases for skip-qrcode'><img decoding='async' loading='lazy' alt='Releases for skip-qrcode' src='https://img.shields.io/github/v/release/skiptools/skip-qrcode.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-qrcode](https://github.com/skiptools/skip-qrcode) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a free [Skip](https://skip.dev) Swift/Kotlin library project containing the following modules:
+This is a free Skip Swift/Kotlin library project containing the following modules:
 
 SkipQRCode
 
@@ -284,7 +284,7 @@ Android Side (Transpiled):
 
 ## Building
 
-This project uses the [Skip](https://skip.dev) plugin with native compilation mode.
+This project uses the Skip plugin with native compilation mode.
 
 Install Skip using [Homebrew](https://brew.sh):
 ```bash
@@ -349,7 +349,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Credits
 
-Built with [Skip](https://skip.dev) - Swift for iOS and Android
+Built with Skip - Swift for iOS and Android
 
 **Technologies Used:**
 - iOS: VisionKit, SwiftUI

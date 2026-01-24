@@ -5,13 +5,13 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-nfc/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-nfc/releases' alt='Releases for skip-nfc'><img decoding='async' loading='lazy' alt='Releases for skip-nfc' src='https://img.shields.io/github/v/release/skiptools/skip-nfc.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-nfc](https://github.com/skiptools/skip-nfc) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
 This package provides rudimentary support for Android and iOS NFC interaction
-for [Skip](https://skip.dev) apps.
+for Skip apps.
 
 ## Setup
 
@@ -72,7 +72,7 @@ For example:
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

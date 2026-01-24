@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-showcase/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-showcase/releases' alt='Releases for skipapp-showcase'><img decoding='async' loading='lazy' alt='Releases for skipapp-showcase' src='https://img.shields.io/github/v/release/skiptools/skipapp-showcase.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-showcase](https://github.com/skiptools/skipapp-showcase) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-Showcase is a [Skip Lite](https://skip.dev) app that demonstrates many of the components available in SkipUI.
+Showcase is a Skip Lite app that demonstrates many of the components available in SkipUI.
 
 <div align="center">
   <a href="https://play.google.com/store/apps/details?id=org.appfair.app.Showcase" style="display: inline-block;"><img src="https://appfair.org/assets/badges/google-play-store.svg" alt="Download on the Google Play Store" style="height: 60px; vertical-align: middle; object-fit: contain;" /></a>
@@ -37,7 +37,7 @@ To get started:
 $ brew install skiptools/skip/skip
 ```
 2. Configure and launch an Android emulator from the [Android Studio device manager](https://developer.android.com/studio/run/emulator-launch-without-app).
-3. Download this [repository as a zip file](https://source.skip.dev/skipapp-showcase/archive/main.zip) and unzip it, or clone the repository:
+3. Download this [repository as a zip file](/docs/samples/skipapp-showcase/archive/main.zip) and unzip it, or clone the repository:
 ```
 $ git clone https://source.skip.dev/skipapp-showcase.git
 ```

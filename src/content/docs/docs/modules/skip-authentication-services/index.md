@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-authentication-services/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-authentication-services/releases' alt='Releases for skip-authentication-services'><img decoding='async' loading='lazy' alt='Releases for skip-authentication-services' src='https://img.shields.io/github/v/release/skiptools/skip-authentication-services.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-authentication-services](https://github.com/skiptools/skip-authentication-services) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
@@ -67,7 +67,7 @@ First, you'll need to have a login page on a web site you control. When the user
 
 Your web site should pass an authentication token in a query parameter to the redirect URL, e.g. `com.example.myapp://auth?login_token=12345abcdef`. When the user signs in, `WebAuthenticationSession` will dismiss the login screen and return the URL containing the token. 
 
-If you need to store the token securely, consider storing it in the user's keychain with the [skip-keychain](https://source.skip.dev/skip-keychain) library.
+If you need to store the token securely, consider storing it in the user's keychain with the [skip-keychain](/docs/modules/skip-keychain) library.
 
 :::note
 Be sure to test `WebAuthenticationSession` on the oldest version of Android that you support, as well as the latest version. Old versions of Android require additional "fallback" setup; see the previous section for details.
@@ -125,7 +125,7 @@ struct ContentView: View {
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

@@ -5,13 +5,13 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-notes/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-notes/releases' alt='Releases for skipapp-notes'><img decoding='async' loading='lazy' alt='Releases for skipapp-notes' src='https://img.shields.io/github/v/release/skiptools/skipapp-notes.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-notes](https://github.com/skiptools/skipapp-notes) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-Skip notes is a [Skip Fuse](https://skip.dev) dual-platform note taking app
-built using [Skip](https://skip.dev)
+Skip notes is a Skip Fuse dual-platform note taking app
+built using Skip
 and distributed through the [App Fair](https://appfair.org).
 
 <div align="center">

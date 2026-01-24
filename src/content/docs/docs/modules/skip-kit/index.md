@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-kit/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-kit/releases' alt='Releases for skip-kit'><img decoding='async' loading='lazy' alt='Releases for skip-kit' src='https://img.shields.io/github/v/release/skiptools/skip-kit.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-kit](https://github.com/skiptools/skip-kit) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This [Skip Lite](https://skip.dev) module enhances the `SkipUI` package with commonly-used features,
+This Skip Lite module enhances the `SkipUI` package with commonly-used features,
 such as a permission checker and a picker for photos and other media.
 
 ## Setup
@@ -243,7 +243,7 @@ A file provider (like the one used for using the `MediaPicker`) is necessary for
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

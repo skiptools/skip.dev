@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-motion/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-motion/releases' alt='Releases for skip-motion'><img decoding='async' loading='lazy' alt='Releases for skip-motion' src='https://img.shields.io/github/v/release/skiptools/skip-motion.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-motion](https://github.com/skiptools/skip-motion) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip](https://skip.dev) Swift/Kotlin library project that 
+This is a Skip Swift/Kotlin library project that 
 provides the ability to play Lottie animations in dual-platform Skip apps
 for iOS and Android.
 
@@ -76,7 +76,7 @@ SkipMotion is in a very early stage, and lack any playback
 controls or other customization of the animations.
 
 You are encouraged to contribute to the project or
-file an [issue](https://source.skip.dev/skip-motion/issues)
+file an [issue](/docs/modules/skip-motion/issues)
 with needs and requests.
 
 ## Size
@@ -86,13 +86,13 @@ size of the release `.ipa` and `.apk` artifacts for your project.
 
 ## Example
 
-See the [LottieDemo](https://source.skip.dev/skipapp-lottiedemo/releases)
+See the [LottieDemo](/docs/samples/skipapp-lottiedemo/releases)
 project for an example of using `SkipMotion` in a Skip App project.
 
 ## Building
 
 This project is a Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

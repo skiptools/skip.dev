@@ -7,6 +7,8 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import { remarkHeadingId } from "remark-custom-heading-id";
+// shared definitions of the modules and samples
+import { coreFrameworks, integrationFrameworks, sampleApps } from './skip-repositories.js';
 
 // https://astro.build/config
 export default defineConfig({
@@ -131,67 +133,17 @@ export default defineConfig({
         {
           label: 'Core Frameworks',
           collapsed: true,
-          items: [
-            'docs/modules/skip-unit',
-            'docs/modules/skip-lib',
-            'docs/modules/skip-foundation',
-            'docs/modules/skip-model',
-            'docs/modules/skip-ui',
-            'docs/modules/skip-fuse',
-            'docs/modules/skip-fuse-ui',
-            'docs/modules/skip-bridge',
-          ],
+          items: coreFrameworks.map(item => `docs/modules/${item.repo}`),
         },
         {
           label: 'Integration Frameworks',
           collapsed: true,
-          items: [
-            'docs/modules',
-            'docs/modules/skip-authentication-services',
-            'docs/modules/skip-auth0',
-            'docs/modules/skip-av',
-            'docs/modules/skip-bluetooth',
-            'docs/modules/skip-kit',
-            'docs/modules/skip-device',
-            'docs/modules/skip-ffi',
-            'docs/modules/skip-firebase',
-            'docs/modules/skip-script',
-            'docs/modules/skip-keychain',
-            'docs/modules/skip-marketplace',
-            'docs/modules/skip-motion',
-            'docs/modules/skip-nfc',
-            'docs/modules/skip-posthog',
-            'docs/modules/skip-qrcode',
-            'docs/modules/skip-revenue',
-            'docs/modules/skip-sentry',
-            'docs/modules/skip-socketio',
-            'docs/modules/skip-sql',
-            'docs/modules/skip-supabase',
-            'docs/modules/skip-web',
-            'docs/modules/skip-xml',
-            'docs/modules/skip-zip',
-          ],
+          items: integrationFrameworks.map(item => `docs/modules/${item.repo}`),
         },
         {
           label: 'Example Apps',
           collapsed: true,
-          items: [
-            'docs/samples/skipapp-showcase-fuse',
-            'docs/samples/skipapp-showcase',
-            'docs/samples/skipapp-hello',
-            'docs/samples/skipapp-howdy',
-            'docs/samples/skipapp-hiya',
-            'docs/samples/skipapp-bookings-fuse',
-            'docs/samples/skipapp-bookings',
-            'docs/samples/skipapp-travelposters-native',
-            'docs/samples/skipapp-fireside-fuse',
-            'docs/samples/skipapp-fireside',
-            'docs/samples/skipapp-notes',
-            'docs/samples/skipapp-databake',
-            'docs/samples/skipapp-weather',
-            'docs/samples/skipapp-lottiedemo',
-            'docs/samples/skipapp-scrumskipper',
-          ],
+          items: sampleApps.map(item => `docs/samples/${item.repo}`),
         },
         {
           label: 'Component Gallery',

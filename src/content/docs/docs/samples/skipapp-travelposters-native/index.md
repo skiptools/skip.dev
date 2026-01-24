@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-travelposters-native/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-travelposters-native/releases' alt='Releases for skipapp-travelposters-native'><img decoding='async' loading='lazy' alt='Releases for skipapp-travelposters-native' src='https://img.shields.io/github/v/release/skiptools/skipapp-travelposters-native.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-travelposters-native](https://github.com/skiptools/skipapp-travelposters-native) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 

@@ -5,19 +5,19 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-fireside/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-fireside/releases' alt='Releases for skipapp-fireside'><img decoding='async' loading='lazy' alt='Releases for skipapp-fireside' src='https://img.shields.io/github/v/release/skiptools/skipapp-fireside.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-fireside](https://github.com/skiptools/skipapp-fireside) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip Lite](https://skip.dev) dual-platform app project.
+This is a Skip Lite dual-platform app project.
 It creates a native app for both iOS and Android.
 
 This app shows Skip Lite's integration with the Firebase backend
 cloud computing services
 using the official native Firebase SDKs for iOS and Android.
 It utilizes the
-[Skip Firebase](https://source.skip.dev/skip-firebase)
+[Skip Firebase](/docs/modules/skip-firebase)
 framework.
 
 <video id="intro_video" style="width: 100%" controls autoplay>
@@ -40,7 +40,7 @@ $ brew install skiptools/skip/skip
 ```
 $ ~/Library/Android/sdk/emulator/emulator @Pixel_6_API_30
 ```
-3. Download this [repository as a zip file](https://source.skip.dev/skipapp-fireside/archive/main.zip) and unzip it, or clone the repository:
+3. Download this [repository as a zip file](/docs/samples/skipapp-fireside/archive/main.zip) and unzip it, or clone the repository:
 ```
 $ git clone https://source.skip.dev/skipapp-fireside.git
 ```

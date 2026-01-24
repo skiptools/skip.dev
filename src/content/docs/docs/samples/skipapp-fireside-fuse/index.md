@@ -5,15 +5,15 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-fireside-fuse/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-fireside-fuse/releases' alt='Releases for skipapp-fireside-fuse'><img decoding='async' loading='lazy' alt='Releases for skipapp-fireside-fuse' src='https://img.shields.io/github/v/release/skiptools/skipapp-fireside-fuse.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-fireside-fuse](https://github.com/skiptools/skipapp-fireside-fuse) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip Fuse](https://skip.dev) dual-platform app project demonstrating the use
+This is a Skip Fuse dual-platform app project demonstrating the use
 of Firebase Firestore and Firebase Messaging.
 It builds a native app for both iOS and Android.
-See the `skip-firebase` module [documentation](https://source.skip.dev/skip-firebase) for details on integrating Firebase into your cross-platform Skip projects.
+See the `skip-firebase` module [documentation](/docs/modules/skip-firebase) for details on integrating Firebase into your cross-platform Skip projects.
 
 ## Building
 

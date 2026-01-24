@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-hiya/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-hiya/releases' alt='Releases for skipapp-hiya'><img decoding='async' loading='lazy' alt='Releases for skipapp-hiya' src='https://img.shields.io/github/v/release/skiptools/skipapp-hiya.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-hiya](https://github.com/skiptools/skipapp-hiya) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip](https://skip.dev) dual-platform app project
+This is a Skip dual-platform app project
 that demonstrates the integration between a native Swift model
 layer compiled for Android connected to a transpiled SwiftUI
 user interface. For more information on using natively-compiled
@@ -26,7 +26,7 @@ skip init --native-model --appid=hiya.skip skipapp-hiya HiyaSkip HiyaSkipModel H
 The package will contain three modules:
 
 1. A top-level `HiyaSkip` target that uses SwiftUI that will be transpiled to Jetpack Compose on Android to make up the user interface portion of the app
-2. A `HiyaSkipModel` model layer that will be compiled natively for both Android and iOS. It contains an `@Observable ViewModel` that will be used directly on iOS, and on Android will be bridged to the transpiled user-interface layer using [SkipFuse](https://source.skip.dev/skip-fuse) and [SkipBridge](https://source.skip.dev/skip-bridge).
+2. A `HiyaSkipModel` model layer that will be compiled natively for both Android and iOS. It contains an `@Observable ViewModel` that will be used directly on iOS, and on Android will be bridged to the transpiled user-interface layer using [SkipFuse](/docs/modules/skip-fuse) and [SkipBridge](/docs/modules/skip-bridge).
 3. A pure swift cross-platform `HiyaSkipLogic` module that does not use any bridging, and is depended on by `HiyaSkipModel`
 
 

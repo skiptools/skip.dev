@@ -17,6 +17,28 @@ const tourCollection = defineCollection({
 });
 */
 
+/*
+const gallery = defineCollection({
+  type: "data",
+  schema: z.object({
+    name: z.string(),
+    tagline: z.string(),
+    description: z.string(),
+
+    website: z.string().url().optional(),
+    appStore: z.string().url().optional(),
+    playStore: z.string().url().optional(),
+    source: z.string().url().optional(),
+
+    platforms: z.array(z.enum(["iOS", "Android"])),
+    tags: z.array(z.string()).default([]),
+
+    screenshots: z.array(z.string())
+  })
+});
+*/
+
+
 export const collections = {
     docs: defineCollection({ loader: docsLoader(), schema: docsSchema({
       extend: (context) => blogSchema(context)
@@ -32,4 +54,5 @@ export const collections = {
         }),
     }),
     //tour: tourCollection,
+    //gallery: gallery,
 };

@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-script/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-script/releases' alt='Releases for skip-script'><img decoding='async' loading='lazy' alt='Releases for skip-script' src='https://img.shields.io/github/v/release/skiptools/skip-script.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-script](https://github.com/skiptools/skip-script) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 SkipScript provides a unified interface to the JavaScriptCore script engine on
@@ -45,7 +45,7 @@ as a dependency and a Swift source file imports the `JavaScriptCore` framework.
 
 In this case, a subset of the the Objective-C JavaScriptAPI is mimicked on the
 Kotlin side, passing the calls through to the underlying C interface to the 
-JavaScriptCore API using JNA and [SkipFFI](https://source.skip.dev/skip-ffi/).
+JavaScriptCore API using JNA and [SkipFFI](/docs/modules/skip-ffi/).
 
 
 An example of evaluating some JavaScript:
@@ -71,7 +71,7 @@ Android, on the other hand, does not ship JSC as part of the operating system, a
 ## Building
 
 This project is a Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

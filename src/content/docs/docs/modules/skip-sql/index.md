@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-sql/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-sql/releases' alt='Releases for skip-sql'><img decoding='async' loading='lazy' alt='Releases for skip-sql' src='https://img.shields.io/github/v/release/skiptools/skip-sql.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-sql](https://github.com/skiptools/skip-sql) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-The SkipSQL module is a dual-platform [Skip Lite](https://skip.dev) framework that provides access to sqlite database in Darwin and Android systems.
+The SkipSQL module is a dual-platform Skip Lite framework that provides access to sqlite database in Darwin and Android systems.
 
 ## Usage
 
@@ -366,7 +366,7 @@ outer join types, it is possible to have empty rows, which would map to
 
 SkipSQL speaks directly to the low-level SQLite3 C library that is pre-installed on all iOS and Android devices.
 On Darwin/iOS, and with SkipFuse on Android, it communicates directly through Swift's C integration.
-With transpiled SkipLite on Android, it uses the [SkipFFI](https://source.skip.dev/skip-ffi) module to interact directly with the underlying sqlite installation on Android for SkipSQL, or with the locally-built SQLite that is packages and bundled with the application as a shared object file.
+With transpiled SkipLite on Android, it uses the [SkipFFI](/docs/modules/skip-ffi) module to interact directly with the underlying sqlite installation on Android for SkipSQL, or with the locally-built SQLite that is packages and bundled with the application as a shared object file.
 
 Note that for performance and a consistent API, SkipSQL eschews Android's `android.database.sqlite` Java wrapper, and instead uses the same SQLite C API on both Android and Darwin platforms.
 
@@ -518,7 +518,7 @@ extension SQLContext {
 ## Building
 
 This project is a Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

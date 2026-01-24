@@ -2,60 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-// Configuration: Add your repos and replacements here
-// NOTE: these need to be manually sync'd with the list in astro.config.mjs
-const MODULES = [
-  { repo: 'skip-unit', name: 'SkipUnit' },
-  { repo: 'skip-lib', name: 'SkipLib' },
-  { repo: 'skip-foundation', name: 'SkipFoundation' },
-  { repo: 'skip-model', name: 'SkipModel' },
-  { repo: 'skip-ui', name: 'SkipUI' },
-  { repo: 'skip-fuse', name: 'SkipFuse' },
-  { repo: 'skip-fuse-ui', name: 'SkipFuseUI' },
-  { repo: 'skip-bridge', name: 'SkipBridge' },
-
-  { repo: 'skip-authentication-services', name: 'AuthenticationServices' },
-  { repo: 'skip-auth0', name: 'Auth0' },
-  { repo: 'skip-av', name: 'AVKit' },
-  { repo: 'skip-bluetooth', name: 'Bluetooth' },
-  { repo: 'skip-kit', name: 'Camera & Media' },
-  { repo: 'skip-device', name: 'Device Hardware' },
-  { repo: 'skip-ffi', name: 'FFI' },
-  { repo: 'skip-firebase', name: 'Firebase' },
-  { repo: 'skip-script', name: 'JavaScriptCore' },
-  { repo: 'skip-keychain', name: 'Keychain' },
-  { repo: 'skip-marketplace', name: 'Marketplace' },
-  { repo: 'skip-motion', name: 'Lottie' },
-  { repo: 'skip-nfc', name: 'NFC' },
-  { repo: 'skip-posthog', name: 'PostHog' },
-  { repo: 'skip-qrcode', name: 'QR Codes' },
-  { repo: 'skip-revenue', name: 'RevenueCat' },
-  { repo: 'skip-sentry', name: 'Sentry' },
-  { repo: 'skip-socketio', name: 'Socket.IO' },
-  { repo: 'skip-sql', name: 'SQLite' },
-  { repo: 'skip-supabase', name: 'Supabase' },
-  { repo: 'skip-web', name: 'WebView' },
-  { repo: 'skip-xml', name: 'XML' },
-  { repo: 'skip-zip', name: 'Zip' },
-];
-
-const SAMPLES = [
-  { repo: 'skipapp-showcase-fuse', name: 'Showcase (Fuse)' },
-  { repo: 'skipapp-showcase', name: 'Showcase (Lite)' },
-  { repo: 'skipapp-hello', name: 'Hello Skip (Lite)' },
-  { repo: 'skipapp-howdy', name: 'Howdy Skip (Fuse)' },
-  { repo: 'skipapp-hiya', name: 'Hiya Skip (Mixed)' },
-  { repo: 'skipapp-bookings-fuse', name: 'Travel Bookings (Fuse)' },
-  { repo: 'skipapp-bookings', name: 'Travel Bookings (Lite)' },
-  { repo: 'skipapp-travelposters-native', name: 'Travel Posters (Split)' },
-  { repo: 'skipapp-fireside-fuse', name: 'Fireside (Fuse)' },
-  { repo: 'skipapp-fireside', name: 'Fireside (Lite)' },
-  { repo: 'skipapp-notes', name: 'Notes (Lite)' },
-  { repo: 'skipapp-databake', name: 'Data Bake (Lite)' },
-  { repo: 'skipapp-weather', name: 'Weather (Lite)' },
-  { repo: 'skipapp-lottiedemo', name: 'Lottie (Lite)' },
-  { repo: 'skipapp-scrumskipper', name: 'Scrumskipper (Lite)' },
-];
+// shared definitions of the modules and samples
+import { coreFrameworks, integrationFrameworks, sampleApps } from '../skip-repositories.js';
 
 const replacements = [
     //{ search: '# Skip Lib', replace: '# Introduction to Skip Lib' },
@@ -63,14 +11,21 @@ const replacements = [
     { search: 'https://github.com/skiptools', replace: 'https://source.skip.dev' },
     { search: '](https://skip.dev/', replace: '](/' },
     { search: '](https://skip.tools/', replace: '](/' },
+    { search: '](https://source.skip.dev/skip-', replace: '](/docs/modules/skip-' },
+    { search: '](https://source.skip.dev/skipapp-', replace: '](/docs/samples/skipapp-' },
     { search: 'href="https://skip.dev/docs/', replace: 'href="/docs/' },
+    { search: '[Skip](https://skip.dev)', replace: 'Skip' }, // strip out bare links to the skip.dev root page
+    { search: '[Skip Lite](https://skip.dev)', replace: 'Skip Lite' },
+    { search: '[Skip Fuse](https://skip.dev)', replace: 'Skip Fuse' },
 ];
 
 const owner = 'skiptools';
 const branch = 'main';
 
+const allModules = coreFrameworks.concat(integrationFrameworks).concat(sampleApps);
+
 async function processRepositories() {
-  for (const mod of MODULES.concat(SAMPLES)) {
+  for (const mod of allModules) {
     const isApp = mod.repo.startsWith("skipapp-") ? true : false;
     const modType = isApp ? 'sample app' : 'framework';
     const outputDir = './src/content/docs/docs/' + (isApp ? 'samples' : 'modules');
@@ -121,7 +76,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/${owner}/${mod.repo}/edit/${branch}/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/${owner}/${mod.repo}/releases' alt='Releases for ${mod.repo}'><img decoding='async' loading='lazy' alt='Releases for ${mod.repo}' src='https://img.shields.io/github/v/release/${owner}/${mod.repo}.svg?style=flat' /></a>]{icon="github"}
 This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github.com/${owner}/${mod.repo}) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 `;

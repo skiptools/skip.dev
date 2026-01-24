@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-ui/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-ui/releases' alt='Releases for skip-ui'><img decoding='async' loading='lazy' alt='Releases for skip-ui' src='https://img.shields.io/github/v/release/skiptools/skip-ui.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-ui](https://github.com/skiptools/skip-ui) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-SwiftUI support for [Skip](https://skip.dev) apps.
+SwiftUI support for Skip apps.
 
 ## Setup
 
@@ -45,7 +45,7 @@ SkipUI is used directly by [Skip Lite](/docs/status/#skip_fuse) transpiled Swift
 
 ## Dependencies
 
-SkipUI depends on the [skip](https://source.skip.dev/skip) transpiler plugin. The transpiler must transpile SkipUI's own source code, and SkipUI relies on the transpiler's transformation of SwiftUI code. See [Implementation Strategy](#implementation-strategy) for details. SkipUI also depends on the [SkipFoundation](https://source.skip.dev/skip-foundation) and [SkipModel](https://source.skip.dev/skip-model) packages.
+SkipUI depends on the [skip](https://source.skip.dev/skip) transpiler plugin. The transpiler must transpile SkipUI's own source code, and SkipUI relies on the transpiler's transformation of SwiftUI code. See [Implementation Strategy](#implementation-strategy) for details. SkipUI also depends on the [SkipFoundation](/docs/modules/skip-foundation) and [SkipModel](/docs/modules/skip-model) packages.
 
 SkipUI is part of the core *Core Skip Frameworks* and is not intended to be imported directly.
 The module is transparently adopted by importing SwiftUI in compiled Swift, and through the translation of `import SwiftUI` into `import skip.ui.*` for transpiled code.
@@ -2551,7 +2551,7 @@ Color("WarningYellow", bundle: .module)
 Your named colors must use Xcode's "Floating point (0.0-1.0)" input method. You can convert named colors using other methods by selecting them in Xcode and using the UI picker to update the input method. The values will be preserved.
 :::
 
-See the [Skip Showcase app](https://source.skip.dev/skipapp-showcase) `ColorPlayground` for a concrete example of using a named color in an asset catalog, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Asset_Image.png)) to see the configuration of the `.xcassets` file for the app module.
+See the [Skip Showcase app](/docs/samples/skipapp-showcase) `ColorPlayground` for a concrete example of using a named color in an asset catalog, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Asset_Image.png)) to see the configuration of the `.xcassets` file for the app module.
 
 When an app project is first created with `skip init`, it will contain two separate asset catalogs: a project-level `Assets.xcassets` catalog that contains the app's icons, and an empty module-level `Module.xcassets` catalog. **Add your assets to `Module.xcassets`.** Only the module-level catalog will be transpiled, since the project-level catalog is not processed by the skip transpiler.
 
@@ -2563,7 +2563,7 @@ For Android, Skip only uses named colors that you've set for "Universal" devices
 
 ### ColorScheme
 
-SkipUI fully supports the `.preferredColorScheme` modifier. If you created your app with the `skip` tool prior to v0.8.26, however, you will have to update the included `Android/app/src/main/kotlin/.../Main.kt` file in order for the modifier to work correctly. Using the latest [`Main.kt`](https://source.skip.dev/skipapp-hello/blob/main/Android/app/src/main/kotlin/hello/skip/Main.kt) as your template, please do the following:
+SkipUI fully supports the `.preferredColorScheme` modifier. If you created your app with the `skip` tool prior to v0.8.26, however, you will have to update the included `Android/app/src/main/kotlin/.../Main.kt` file in order for the modifier to work correctly. Using the latest [`Main.kt`](/docs/samples/skipapp-hello/blob/main/Android/app/src/main/kotlin/hello/skip/Main.kt) as your template, please do the following:
 
 1. Replace the all of the import statements with ones from latest `Main.kt`
 1. Replace the contents of the `setContent { ... }` block with the content from the latest `Main.kt`
@@ -2586,7 +2586,7 @@ Custom fonts are embedded differently for each platform. On Android you should c
 
 For iOS, you must add the font by adding to the Xcode project's app target and ensure the font file is included in the file list in the app target's "Build Phases" tab's "Copy Bundle Resources" phase. In addition, iOS needs to have the font explicitly listed in the Xcode project target's "Info" tab under "Custom Application Target Properties" by adding a new key for the "Fonts provided by application" (whose raw name is "UIAppFonts") and adding each font's file name to the string array.
 
-See the [Skip Showcase app](https://source.skip.dev/skipapp-showcase) `TextPlayground` for a concrete example of using a custom font, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Custom_Font.png)) to see how the font is included on both the iOS and Android sides of the app.
+See the [Skip Showcase app](/docs/samples/skipapp-showcase) `TextPlayground` for a concrete example of using a custom font, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Custom_Font.png)) to see how the font is included on both the iOS and Android sides of the app.
 
 ### Environment Keys
 
@@ -2711,7 +2711,7 @@ Image("Cat", bundle: .module, label: Text("Cat JPEG image"))
 When an app project is first created with `skip init`, it will contain two separate asset catalogs: a project-level `Assets.xcassets` catalog that contains the app's icons, and an empty module-level `Module.xcassets` catalog. **Add your assets to `Module.xcassets`.** Only the module-level catalog will be transpiled, since the project-level catalog is not processed by the skip transpiler.
 :::
 
-See the [Skip Showcase app](https://source.skip.dev/skipapp-showcase) `ImagePlayground` for a concrete example of using a bundled image in an asset catalog, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Asset_Image.png)) to see the configuration of the `.xcassets` file for the app module.
+See the [Skip Showcase app](/docs/samples/skipapp-showcase) `ImagePlayground` for a concrete example of using a bundled image in an asset catalog, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Asset_Image.png)) to see the configuration of the `.xcassets` file for the app module.
 
 :::note
 Note that you **must** specify the `bundle` parameter for images explicitly, since a Skip project uses per-module resources, rather than the default `Bundle.main` bundle that would be assumed of the parameter were omitted.
@@ -2753,7 +2753,7 @@ The `Image(systemName:)` constructor is used to display a standard system symbol
 When exporting from the SF Symbols app, selecting "Export for: Xcode 12" may result in sharper rendering on Android.
 :::
 
-See the [Skip Showcase app](https://source.skip.dev/skipapp-showcase) `ImagePlayground` for a concrete example of using a system symbol with an exported symbol image, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Custom_Symbol.png)) to see how the symbol is included in the `.xcassets` file for the app module.
+See the [Skip Showcase app](/docs/samples/skipapp-showcase) `ImagePlayground` for a concrete example of using a system symbol with an exported symbol image, and see that project's Xcode project file ([screenshot](https://assets.skip.dev/screens/SkipUI_Custom_Symbol.png)) to see how the symbol is included in the `.xcassets` file for the app module.
 
 :::warning
 SkipUI currently supports using the view's `foregroundStyle` and `fontWeight` to customize the color and weight of the symbol, but other symbol modifiers such as `symbolVariant` and `symbolRenderingMode` are currently unsupported.
@@ -3020,7 +3020,7 @@ Remember that you can use `#if SKIP` blocks to confine your `.ignoresSafeArea` c
 
 #### Enabling or Disabling Edge-to-Edge
 
-Modern SkipUI versions enable Jetpack Compose's "edgeToEdge" mode by default. If you created your app with the `skip` tool prior to v0.8.32, however, you will have to update the included `Android/app/src/main/kotlin/.../Main.kt` file to render content behind system bars. Using the latest [`Main.kt`](https://source.skip.dev/skipapp-hello/blob/main/Android/app/src/main/kotlin/hello/skip/Main.kt) as your template, please do the following:
+Modern SkipUI versions enable Jetpack Compose's "edgeToEdge" mode by default. If you created your app with the `skip` tool prior to v0.8.32, however, you will have to update the included `Android/app/src/main/kotlin/.../Main.kt` file to render content behind system bars. Using the latest [`Main.kt`](/docs/samples/skipapp-hello/blob/main/Android/app/src/main/kotlin/hello/skip/Main.kt) as your template, please do the following:
 
 1. Add the following import: `import androidx.activity.enableEdgeToEdge`
 1. Add the following line to the `MainActivity.onCreate(savedInstanceState:)` function:
@@ -3091,13 +3091,13 @@ To help fill in unimplemented API in SkipUI:
 1. Write an appropriate Compose implementation. See [Implementation Strategy](#implementation-strategy) below.
 1. Add a compiled Swift wrapper to SkipFuseUI.
 1. Write Showcase code to exercise your component. See [Tests](#tests).
-1. [Submit a PR](https://source.skip.dev/skip-ui/pulls).
+1. [Submit a PR](/docs/modules/skip-ui/pulls).
 
 Other forms of contributions such as test cases, comments, and documentation are also welcome!
 
 ## Tests
 
-The most common way to test SkipUI's support for a SwiftUI component is through the [Skip Showcase](https://source.skip.dev/skipapp-showcase) and [Skip Showcase Fuse](https://source.skip.dev/skipapp-showcase-fuse) apps. Whenever you add or update support for a visible element of SwiftUI, make sure there is a showcase view that exercises the element. This not only gives us a mechanism to test appearance and behavior, but the showcase app becomes a demonstration of supported SwiftUI components on Android over time.
+The most common way to test SkipUI's support for a SwiftUI component is through the [Skip Showcase](/docs/samples/skipapp-showcase) and [Skip Showcase Fuse](/docs/samples/skipapp-showcase-fuse) apps. Whenever you add or update support for a visible element of SwiftUI, make sure there is a showcase view that exercises the element. This not only gives us a mechanism to test appearance and behavior, but the showcase app becomes a demonstration of supported SwiftUI components on Android over time.
 
 ## Implementation Strategy
 

@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-databake/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-databake/releases' alt='Releases for skipapp-databake'><img decoding='async' loading='lazy' alt='Releases for skipapp-databake' src='https://img.shields.io/github/v/release/skiptools/skipapp-databake.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-databake](https://github.com/skiptools/skipapp-databake) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This app demonstrates using a local database in a [Skip Lite](https://skip.dev) app
+This app demonstrates using a local database in a Skip Lite app
 using the SkipSQL package to update an embedded database.
 
 ![Screenshot](https://assets.skip.dev/skipapp-databake-dev-screenshot.png)

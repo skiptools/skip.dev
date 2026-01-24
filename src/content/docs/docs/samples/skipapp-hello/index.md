@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-hello/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-hello/releases' alt='Releases for skipapp-hello'><img decoding='async' loading='lazy' alt='Releases for skipapp-hello' src='https://img.shields.io/github/v/release/skiptools/skipapp-hello.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-hello](https://github.com/skiptools/skipapp-hello) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip Lite](https://skip.dev) dual-platform app project.
+This is a Skip Lite dual-platform app project.
 It builds a native app for both iOS and Android.
 
 This is the exact project with will be output when running the command:

@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-unit/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-unit/releases' alt='Releases for skip-unit'><img decoding='async' loading='lazy' alt='Releases for skip-unit' src='https://img.shields.io/github/v/release/skiptools/skip-unit.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-unit](https://github.com/skiptools/skip-unit) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 

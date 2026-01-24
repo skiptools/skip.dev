@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-sentry/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-sentry/releases' alt='Releases for skip-sentry'><img decoding='async' loading='lazy' alt='Releases for skip-sentry' src='https://img.shields.io/github/v/release/skiptools/skip-sentry.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-sentry](https://github.com/skiptools/skip-sentry) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip](https://skip.dev) Swift/Kotlin library project that
+This is a Skip Swift/Kotlin library project that
 abstracts the
 [Sentry iOS](https://docs.sentry.io/platforms/apple/guides/ios/usage/)
 and
@@ -55,7 +55,7 @@ Follow the guide at [https://docs.sentry.io/platforms/apple/configuration/](http
 ## Building
 
 This project is a Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

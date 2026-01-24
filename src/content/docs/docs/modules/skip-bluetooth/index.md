@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skip-bluetooth/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skip-bluetooth/releases' alt='Releases for skip-bluetooth'><img decoding='async' loading='lazy' alt='Releases for skip-bluetooth' src='https://img.shields.io/github/v/release/skiptools/skip-bluetooth.svg?style=flat' /></a>]{icon="github"}
 This framework is available at [github.com/skiptools/skip-bluetooth](https://github.com/skiptools/skip-bluetooth) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip Lite](https://skip.dev) Swift/Kotlin library project that
+This is a Skip Lite Swift/Kotlin library project that
 provides API parity to `CoreBluetooth` for Android.
 
 ## Setup
@@ -123,7 +123,7 @@ You must request runtime permissions in an `#IF SKIP` block to prevent your app 
 
 Before using any Bluetooth API's, you must request user permissions.
 One way to do this is to use the `PermissionManager` API in
-[SkipKit](https://source.skip.dev/skip-kit#permissionmanager):
+[SkipKit](/docs/modules/skip-kit#permissionmanager):
 
 ```swift
 import SkipKit
@@ -188,7 +188,7 @@ permission previously.
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
+Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

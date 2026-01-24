@@ -5,12 +5,12 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-showcase-fuse/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-showcase-fuse/releases' alt='Releases for skipapp-showcase-fuse'><img decoding='async' loading='lazy' alt='Releases for skipapp-showcase-fuse' src='https://img.shields.io/github/v/release/skiptools/skipapp-showcase-fuse.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-showcase-fuse](https://github.com/skiptools/skipapp-showcase-fuse) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 
-This is a [Skip Fuse](https://skip.dev) dual-platform app project.
+This is a Skip Fuse dual-platform app project.
 It builds a native app for both iOS and Android.
 
 <div align="center">

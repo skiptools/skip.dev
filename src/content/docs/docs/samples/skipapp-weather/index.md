@@ -5,7 +5,7 @@ note: This documentation section is derived from the GitHub README.md source usi
 editUrl: https://github.com/skiptools/skipapp-weather/edit/main/README.md
 ---
 
-:::note[Source Repository]{icon="github"}
+:::note[Source Repository <a href='https://github.com/skiptools/skipapp-weather/releases' alt='Releases for skipapp-weather'><img decoding='async' loading='lazy' alt='Releases for skipapp-weather' src='https://img.shields.io/github/v/release/skiptools/skipapp-weather.svg?style=flat' /></a>]{icon="github"}
 This sample app is available at [github.com/skiptools/skipapp-weather](https://github.com/skiptools/skipapp-weather) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
@@ -17,7 +17,7 @@ the [Skip Tour](/tour) video.
 
 ![Screenshot](https://assets.skip.dev/skipapp-weather-dev-screenshot.png)
 
-This app uses the [SkipDevice](https://source.skip.dev/skip-device) framework to access the current location.
+This app uses the [SkipDevice](/docs/modules/skip-device) framework to access the current location.
 
 ## Building
 
