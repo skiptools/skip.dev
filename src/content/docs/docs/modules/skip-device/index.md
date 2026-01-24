@@ -1,11 +1,14 @@
 ---
-title: Device Hardware
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-device/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipDevice
+description: Documentation for SkipDevice fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-device/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-device framework is available at [https://github.com/skiptools/skip-device.git](https://source.skip.tools/skip-device.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-device](https://github.com/skiptools/skip-device) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipDevice
 
 The SkipDevice module is a dual-platform Skip framework that provides access to 
 network reachability, location, and device sensor data.
@@ -22,7 +25,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-device.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.dev/skip-device.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -306,7 +309,7 @@ On Android, the `app/src/main/AndroidManifest.xml` file will need to be edited t
 ## Building
 
 This project is a Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
@@ -333,6 +336,6 @@ The general flow for contributing to this and any other Skip package is:
 2. Check out your fork locally
 3. When developing alongside a Skip app, add the package to a [shared workspace](/docs/contributing) to see your changes incorporated in the app
 4. Push your changes to your fork and ensure the CI checks all pass in the Actions tab
-5. Add your name to the Skip [Contributor Agreement](https://source.skip.tools/clabot-config)
+5. Add your name to the Skip [Contributor Agreement](https://source.skip.dev/clabot-config)
 6. Open a Pull Request from your fork with a description of your changes
 

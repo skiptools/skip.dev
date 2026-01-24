@@ -1,11 +1,14 @@
 ---
-title: AuthenticationServices
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-authentication-services/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipAuthenticationServices
+description: Documentation for SkipAuthenticationServices fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-authentication-services/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-authentication-services framework is available at [https://github.com/skiptools/skip-authentication-services.git](https://source.skip.tools/skip-authentication-services.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-authentication-services](https://github.com/skiptools/skip-authentication-services) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipAuthenticationServices
 
 This module provides a compatibility API corresponding to Apple's [AuthenticationServices](https://developer.apple.com/documentation/AuthenticationServices) framework.
 
@@ -22,7 +25,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-authentication-services.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.dev/skip-authentication-services.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -64,10 +67,11 @@ First, you'll need to have a login page on a web site you control. When the user
 
 Your web site should pass an authentication token in a query parameter to the redirect URL, e.g. `com.example.myapp://auth?login_token=12345abcdef`. When the user signs in, `WebAuthenticationSession` will dismiss the login screen and return the URL containing the token. 
 
-If you need to store the token securely, consider storing it in the user's keychain with the [skip-keychain](/docs/modules/skip-keychain) library.
+If you need to store the token securely, consider storing it in the user's keychain with the [skip-keychain](https://source.skip.dev/skip-keychain) library.
 
-> [!IMPORTANT]
-> Be sure to test `WebAuthenticationSession` on the oldest version of Android that you support, as well as the latest version. Old versions of Android require additional "fallback" setup; see the previous section for details.
+:::note
+Be sure to test `WebAuthenticationSession` on the oldest version of Android that you support, as well as the latest version. Old versions of Android require additional "fallback" setup; see the previous section for details.
+:::
 
 ```swift
 #if os(Android)
@@ -121,7 +125,7 @@ struct ContentView: View {
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

@@ -1,14 +1,17 @@
 ---
-title: NFC
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-nfc/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipNFC
+description: Documentation for SkipNFC fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-nfc/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-nfc framework is available at [https://github.com/skiptools/skip-nfc.git](https://source.skip.tools/skip-nfc.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-nfc](https://github.com/skiptools/skip-nfc) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipNFC
 
 This package provides rudimentary support for Android and iOS NFC interaction
-for Skip apps.
+for [Skip](https://skip.dev) apps.
 
 ## Setup
 
@@ -22,7 +25,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-nfc.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.dev/skip-nfc.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -69,7 +72,7 @@ For example:
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

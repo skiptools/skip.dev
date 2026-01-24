@@ -1,13 +1,16 @@
 ---
-title: FFI
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-ffi/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipFFI
+description: Documentation for SkipFFI fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-ffi/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-ffi framework is available at [https://github.com/skiptools/skip-ffi.git](https://source.skip.tools/skip-ffi.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-ffi](https://github.com/skiptools/skip-ffi) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipFFI
 
-This is a [Skip Lite](/docs/status#skip_lite) Swift/Kotlin library project that provides 
+This is a [Skip Lite](https://skip.dev) Swift/Kotlin library project that provides 
 the capability for Skip's Kotlin transpiled code to call into C and C++ libraries
 on Android.
 
@@ -16,8 +19,8 @@ library to simulate Swift types like `Swift.OpaquePointer` as `com.sun.jna.Point
 and implements `Swift.withUnsafeMutablePointer` using a `com.sun.jna.ptr.PointerByReference` on the Java side.
 
 This capability is used by Skip frameworks like
-[SkipSQL](/docs/modules/skip-sql) and
-[SkipScript](/docs/modules/skip-script) to
+[SkipSQL](https://source.skip.dev/skip-sql) and
+[SkipScript](https://source.skip.dev/skip-script) to
 provide a unified API to underlying native C APIs on both Darwin and Android.
 
 ## Setup
@@ -32,7 +35,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-ffi.git", from: "1.0.0"),
+        .package(url: "https://source.skip.dev/skip-ffi.git", from: "1.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -118,7 +121,7 @@ Android NDK toolchain to build the embedded C library for each of Android's supp
 architectures, much in the same way as Xcode and SwiftPM handle building and linking
 C source with Swift code for various architectures.
 
-See the [Skip C Demo](http://source.skip.tools/skip-c-demo) sample project for an
+See the [Skip C Demo](http://source.skip.dev/skip-c-demo) sample project for an
 example of using C files to provide a unified API to both Swift and Kotlin.
 
 
@@ -141,7 +144,7 @@ Similarly, you can set the `ANDROID_SERIAL` environment variable in the Run Argu
 ## Building
 
 This project is a Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
@@ -168,6 +171,6 @@ The general flow for contributing to this and any other Skip package is:
 2. Check out your fork locally
 3. When developing alongside a Skip app, add the package to a [shared workspace](/docs/contributing) to see your changes incorporated in the app
 4. Push your changes to your fork and ensure the CI checks all pass in the Actions tab
-5. Add your name to the Skip [Contributor Agreement](https://source.skip.tools/clabot-config)
+5. Add your name to the Skip [Contributor Agreement](https://source.skip.dev/clabot-config)
 6. Open a Pull Request from your fork with a description of your changes
 

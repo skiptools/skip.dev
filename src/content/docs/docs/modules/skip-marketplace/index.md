@@ -1,11 +1,14 @@
 ---
-title: Marketplace
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-marketplace/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipMarketplace
+description: Documentation for SkipMarketplace fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-marketplace/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-marketplace framework is available at [https://github.com/skiptools/skip-marketplace.git](https://source.skip.tools/skip-marketplace.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-marketplace](https://github.com/skiptools/skip-marketplace) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipMarketplace
 
 This module provide support for interfacing with an app's
 marketplace, such as the Google Play Store for Android
@@ -28,7 +31,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-marketplace.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.dev/skip-marketplace.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -69,11 +72,12 @@ default: canUseNativeBillling = false
 ```
 
 ## Listing and purchasing in-app purchases
+
 :::tip
-> Managing in-app purchases in SkipMarketplace works best for non-consumable one-time-product entitlements, products that the user buys once and owns forever. You can use it for one-time-product consumables and subscriptions, but it's best to integrate those tightly with a server-side database that tracks purchases, consumptions and expirations. Your server-side web app can also sign promotional offers, accepts webhook notifications from the app stores, etc.
->
-> Rather than building all of that yourself to integrate with SkipMarketplace, you might prefer to use [RevenueCat](https://www.revenuecat.com/) for this, using the [skip-revenue](/docs/modules/skip-revenue) library. (RevenueCat does cost money; if you want to roll your own subscription-management software, you can do it with SkipMarketplace.)
+Managing in-app purchases in SkipMarketplace works best for non-consumable one-time-product entitlements, products that the user buys once and owns forever. You can use it for one-time-product consumables and subscriptions, but it's best to integrate those tightly with a server-side database that tracks purchases, consumptions and expirations. Your server-side web app can also sign promotional offers, accepts webhook notifications from the app stores, etc.
 :::
+>
+> Rather than building all of that yourself to integrate with SkipMarketplace, you might prefer to use [RevenueCat](https://www.revenuecat.com/) for this, using the [skip-revenue](https://source.skip.dev/skip-revenue) library. (RevenueCat does cost money; if you want to roll your own subscription-management software, you can do it with SkipMarketplace.)
 
 ### Android Configuration
 
@@ -214,7 +218,7 @@ do {
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

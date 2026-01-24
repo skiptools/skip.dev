@@ -1,10 +1,12 @@
 ---
-title: XML
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-xml/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipXML
+description: Documentation for SkipXML fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-xml/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-xml framework is available at [https://github.com/skiptools/skip-xml.git](https://source.skip.tools/skip-xml.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-xml](https://github.com/skiptools/skip-xml) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
 
 SkipXML is a Skip framework that provides an XML Document parser.
@@ -21,7 +23,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-xml.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.dev/skip-xml.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -52,7 +54,7 @@ func parseXML(data: Data) throws -> String {
 ## Building
 
 This project is a Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

@@ -1,13 +1,16 @@
 ---
-title: WebView
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-web/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipWeb
+description: Documentation for SkipWeb fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-web/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-web framework is available at [https://github.com/skiptools/skip-web.git](https://source.skip.tools/skip-web.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-web](https://github.com/skiptools/skip-web) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipWeb
 
-SkipWeb provides an embedded WebView for [Skip Lite](/docs/status#skip_lite) transpiled Swift.
+SkipWeb provides an embedded WebView for [Skip Lite](https://skip.dev) transpiled Swift.
 On iOS it uses a [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview)
 and on Android it uses an [android.webkit.WebView](https://developer.android.com/develop/ui/views/layout/webapps/webview).
 
@@ -29,9 +32,9 @@ struct EmbeddedWebView : View {
 
 ## Customization
 
-The [`WebView`](https://source.skip.tools/skip-web/blob/main/Sources/SkipWeb/WebView.swift) is backed by a
-[`WebEngine`](https://source.skip.tools/skip-web/blob/main/Sources/SkipWeb/WebEngine.swift).
-It can be configured with a [`WebEngineConfiguration`](https://source.skip.tools/skip-web/blob/main/Sources/SkipWeb/WebEngine.swift) instance. For example:
+The [`WebView`](https://source.skip.dev/skip-web/blob/main/Sources/SkipWeb/WebView.swift) is backed by a
+[`WebEngine`](https://source.skip.dev/skip-web/blob/main/Sources/SkipWeb/WebEngine.swift).
+It can be configured with a [`WebEngineConfiguration`](https://source.skip.dev/skip-web/blob/main/Sources/SkipWeb/WebEngine.swift) instance. For example:
 
 ```swift
 import Foundation
@@ -39,7 +42,7 @@ import SwiftUI
 import SkipWeb
 
 struct ConfigurableWebView : View {
-    let navigator: WebViewNavigator = WebViewNavigator(initialURL: URL("https://skip.tools")!)
+    let navigator: WebViewNavigator = WebViewNavigator(initialURL: URL("https://skip.dev")!)
     @ObservedObject var configuration: WebEngineConfiguration
     @Binding var state: WebViewState
 
@@ -74,7 +77,7 @@ the results in a sheet can be implemented with the following View:
 import SwiftUI
 import SkipWeb
 
-/// This component uses the `SkipWeb` module from https://source.skip.tools/skip-web
+/// This component uses the `SkipWeb` module from https://source.skip.dev/skip-web
 struct WebViewPlayground: View {
     @State var config = WebEngineConfiguration()
     @State var navigator = WebViewNavigator()
@@ -85,7 +88,7 @@ struct WebViewPlayground: View {
 
     var body: some View {
         VStack {
-            WebView(configuration: config, navigator: navigator, url: URL(string: "https://skip.tools")!, state: $state)
+            WebView(configuration: config, navigator: navigator, url: URL(string: "https://skip.dev")!, state: $state)
         }
         .toolbar {
             Button {
@@ -186,13 +189,13 @@ Many delegates that are provided by `WKWebView` are not yet implemented in this 
 and so deeper customization may require custom implementation work.
 To implement these, you may need to fork the repository and add it to your workspace,
 as described in the [Contributing guide](/docs/contributing/).
-Please consider creating a [Pull Request](https://source.skip.tools/skip-web/pulls)
+Please consider creating a [Pull Request](https://source.skip.dev/skip-web/pulls)
 with features and fixes that you create, as this benefits the entire Skip community.
 
 ## Building
 
 This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using 
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
@@ -219,6 +222,6 @@ The general flow for contributing to this and any other Skip package is:
 2. Check out your fork locally
 3. When developing alongside a Skip app, add the package to a [shared workspace](/docs/contributing) to see your changes incorporated in the app
 4. Push your changes to your fork and ensure the CI checks all pass in the Actions tab
-5. Add your name to the Skip [Contributor Agreement](https://source.skip.tools/clabot-config)
+5. Add your name to the Skip [Contributor Agreement](https://source.skip.dev/clabot-config)
 6. Open a Pull Request from your fork with a description of your changes
 

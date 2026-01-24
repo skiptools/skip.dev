@@ -1,13 +1,16 @@
 ---
-title: QR Codes
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-qrcode/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipQRCode
+description: Documentation for SkipQRCode fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-qrcode/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-qrcode framework is available at [https://github.com/skiptools/skip-qrcode.git](https://source.skip.tools/skip-qrcode.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-qrcode](https://github.com/skiptools/skip-qrcode) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipQRCode
 
-This is a free Skip Swift/Kotlin library project containing the following modules:
+This is a free [Skip](https://skip.dev) Swift/Kotlin library project containing the following modules:
 
 SkipQRCode
 
@@ -17,7 +20,7 @@ Add SkipQRCode as a dependency in your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://source.skip.tools/skip-qrcode.git", "0.0.1"..<"2.0.0")
+    .package(url: "https://source.skip.dev/skip-qrcode.git", "0.0.1"..<"2.0.0")
 ],
 targets: [
     .target(
@@ -281,7 +284,7 @@ Android Side (Transpiled):
 
 ## Building
 
-This project uses the Skip plugin with native compilation mode.
+This project uses the [Skip](https://skip.dev) plugin with native compilation mode.
 
 Install Skip using [Homebrew](https://brew.sh):
 ```bash
@@ -346,7 +349,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Credits
 
-Built with Skip - Swift for iOS and Android
+Built with [Skip](https://skip.dev) - Swift for iOS and Android
 
 **Technologies Used:**
 - iOS: VisionKit, SwiftUI

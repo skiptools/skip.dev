@@ -1,13 +1,16 @@
 ---
-title: AVKit
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-av/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipAV
+description: Documentation for SkipAV fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-av/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-av framework is available at [https://github.com/skiptools/skip-av.git](https://source.skip.tools/skip-av.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-av](https://github.com/skiptools/skip-av) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipAV
 
-Audio/Video functionality for [Skip Lite](/docs/status#skip_lite) apps.
+Audio/Video functionality for [Skip Lite](https://skip.dev) apps.
 
 See what API is included [here](#api-support).
 
@@ -29,7 +32,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-av.git", from: "1.0.0"),
+        .package(url: "https://source.skip.dev/skip-av.git", from: "1.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -41,9 +44,9 @@ let package = Package(
 
 ## Dependencies
 
-SkipAV depends on the [skip](https://source.skip.tools/skip) transpiler plugin and the [SkipUI](/docs/modules/skip-ui) package.
+SkipAV depends on the [skip](https://source.skip.dev/skip) transpiler plugin and the [SkipUI](https://source.skip.dev/skip-ui) package.
 
-SkipAV is part of the core *Skip Core Frameworks* and is not intended to be imported directly. The transpiler includes `import skip.av.*` in generated Kotlin for any Swift source that imports the `AVKit` or `AVFoundation` frameworks.
+SkipAV is part of the core *SkipStack* and is not intended to be imported directly. The transpiler includes `import skip.av.*` in generated Kotlin for any Swift source that imports the `AVKit` or `AVFoundation` frameworks.
 
 ## Example
 
@@ -52,7 +55,7 @@ import SwiftUI
 import AVKit
 
 struct PlayerView: View {
-    @State var player = AVPlayer(playerItem: AVPlayerItem(url: URL(string: "https://skip.tools/assets/introduction.mov")!))
+    @State var player = AVPlayer(playerItem: AVPlayerItem(url: URL(string: "https://skip.dev/assets/introduction.mov")!))
     @State var isPlaying: Bool = false
 
     var body: some View {

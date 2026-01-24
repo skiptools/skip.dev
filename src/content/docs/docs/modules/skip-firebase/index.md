@@ -1,19 +1,22 @@
 ---
-title: Firebase
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-firebase/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipFirebase
+description: Documentation for SkipFirebase fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-firebase/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-firebase framework is available at [https://github.com/skiptools/skip-firebase.git](https://source.skip.tools/skip-firebase.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-firebase](https://github.com/skiptools/skip-firebase) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipFirebase
 
-This package provides Firebase support for Skip Swift projects.
+This package provides Firebase support for [Skip](https://skip.dev) Swift projects.
 The Swift side uses the official Firebase iOS SDK directly,
 with the various `SkipFirebase*` modules passing the transpiled calls
 through to the Firebase Android SDK.
 
 For an example of using Firebase in a [Skip Fuse](/docs/status/#skip_fuse) app, see the
-[FiresideFuse Sample](/docs/samples/skipapp-fireside-fuse). For a [Skip Lite](/docs/status/#skip_fuse) app, see the [Fireside Sample](/docs/samples/skipapp-fireside).
+[FiresideFuse Sample](https://source.skip.dev/skipapp-fireside-fuse/). For a [Skip Lite](/docs/status/#skip_fuse) app, see the [Fireside Sample](https://source.skip.dev/skipapp-fireside/).
 
 ## Package
 
@@ -22,7 +25,7 @@ modules in the Firebase iOS SDK (at [https://github.com/firebase/firebase-ios-sd
 which is also mirrored in the division of the Firebase Kotlin Android gradle modules (at [https://github.com/firebase/firebase-android-sdk.git](https://github.com/firebase/firebase-android-sdk.git)).
 
 See the `Package.swift` files in the
-[FiresideFuse](/docs/samples/skipapp-fireside-fuse) and [Fireside](/docs/samples/skipapp-fireside) apps for examples of integrating Firebase dependencies.
+[FiresideFuse](https://source.skip.dev/skipapp-fireside-fuse/) and [Fireside](https://source.skip.dev/skipapp-fireside/) apps for examples of integrating Firebase dependencies.
 
 <!--
 An example of a Skip Lite app projects using the `Firestore` API at the model layer and the `Messaging` API at the app layer can be seen from the command:
@@ -46,11 +49,11 @@ let package = Package(
         .library(name: "FireSideModel", targets: ["FireSideModel"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip.git", from: "1.0.0"),
-        .package(url: "https://source.skip.tools/skip-ui.git", from: "1.0.0"),
-        .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.0.0"),
-        .package(url: "https://source.skip.tools/skip-model.git", from: "1.0.0"),
-        .package(url: "https://source.skip.tools/skip-firebase.git", "0.0.0"..<"2.0.0")
+        .package(url: "https://source.skip.dev/skip.git", from: "1.0.0"),
+        .package(url: "https://source.skip.dev/skip-ui.git", from: "1.0.0"),
+        .package(url: "https://source.skip.dev/skip-foundation.git", from: "1.0.0"),
+        .package(url: "https://source.skip.dev/skip-model.git", from: "1.0.0"),
+        .package(url: "https://source.skip.dev/skip-firebase.git", "0.0.0"..<"2.0.0")
     ],
     targets: [
         .target(name: "FireSide", dependencies: [
@@ -103,9 +106,8 @@ plugins {
 }
 ```
 
-:::tip
-For concrete examples, see the [FireSideFuse Sample](/docs/samples/skipapp-fireside-fuse) project.
-:::
+For concrete examples, see the [FireSideFuse Sample](https://source.skip.dev/skipapp-fireside-fuse/) project.
+{: class="callout info"}
 
 Once Firebase has been added to your project, you need to configure the `FirebaseApp` on app startup. This is typically done in the `onInit()` callback of the `*AppDelegate` in your `*App.swift` file. Here is a snippet from the FireSideFuse sample app:
 
@@ -331,9 +333,8 @@ open class MainActivity: AppCompatActivity {
 
 1. See Firebase's [iOS instructions](https://firebase.google.com/docs/cloud-messaging/ios/client) and [Android instructions](https://firebase.google.com/docs/cloud-messaging/android/client) for additional details and options, including how to send test messages to your apps!
 
-:::tip
-The [FiresideFuse](/docs/samples/skipapp-fireside-fuse) and [Fireside](/docs/samples/skipapp-fireside) projects are great references for seeing complete, working Skip Fuse and Skip Lite apps using Firebase push notifications.
-:::
+The [FiresideFuse](https://source.skip.dev/skipapp-fireside-fuse/) and [Fireside](https://source.skip.dev/skipapp-fireside/) projects are great references for seeing complete, working Skip Fuse and Skip Lite apps using Firebase push notifications.
+{: class="callout info"}
 
 ## Error handling
 

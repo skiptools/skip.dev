@@ -1,13 +1,16 @@
 ---
-title: Sentry
-note: This documentation section is derived from https://raw.githubusercontent.com/skiptools/skip-sentry/main/README.md using the scripts/syncdocs.sh script. Do not change the file here, change it there.
+title: SkipSentry
+description: Documentation for SkipSentry fetched from GitHub.
+note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
+editUrl: https://github.com/skiptools/skip-sentry/edit/main/README.md
 ---
 
 :::note[Source Repository]{icon="github"}
-The skip-sentry framework is available at [https://github.com/skiptools/skip-sentry.git](https://source.skip.tools/skip-sentry.git), which can be checked out and tested with `skip test` once Skip is [installed](/docs/gettingstarted/).
+This framework is available at [github.com/skiptools/skip-sentry](https://github.com/skiptools/skip-sentry) and can be checked out and improved locally as described in the [Contribution Guide](/docs/contributing/#local-libraries).
 :::
+# SkipSentry
 
-This is a Skip Swift/Kotlin library project that
+This is a [Skip](https://skip.dev) Swift/Kotlin library project that
 abstracts the
 [Sentry iOS](https://docs.sentry.io/platforms/apple/guides/ios/usage/)
 and
@@ -29,7 +32,7 @@ let package = Package(
         .library(name: "MyProduct", targets: ["MyTarget"]),
     ],
     dependencies: [
-        .package(url: "https://source.skip.tools/skip-sentry.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.dev/skip-sentry.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "MyTarget", dependencies: [
@@ -52,7 +55,7 @@ Follow the guide at [https://docs.sentry.io/platforms/apple/configuration/](http
 ## Building
 
 This project is a Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+[Skip](https://skip.dev) plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
