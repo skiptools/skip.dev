@@ -38,6 +38,7 @@ export default defineConfig({
           label: 'English',
           lang: 'en',
         },
+        /*
         'fr': {
           lang: 'fr',
           label: 'Français',
@@ -66,6 +67,7 @@ export default defineConfig({
           label: '简体中文',
           lang: 'zh-CN',
         },
+        */
       },
       components: {
         // Override the default Header component
@@ -107,10 +109,9 @@ export default defineConfig({
           items: [
             'docs', // index
             'docs/gettingstarted',
-            'docs/help',
             //'docs/status',
-            'docs/modes',
             'docs/project-types',
+            'docs/modes',
             'docs/app-development',
             'docs/development-topics',
             'docs/platformcustomization',
@@ -126,6 +127,7 @@ export default defineConfig({
             'docs/skip-cli',
             'docs/c-development',
             'docs/update-guide',
+            'docs/help',
             'docs/faq',
             'docs/glossary',
           ],
