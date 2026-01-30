@@ -105,12 +105,14 @@ The resulting Gradle project hierarchy contains not only the links to the plugin
 
 ---
 
-## Building Locally
+## Building Locally with `skip gradle`
 
 Gradle projects can be run manually, either from Android Studio or using the `gradle` command-line tool. Skip app projects created with `skip init` have a root `Android/` folder that contains a `settings.gradle.kts` file. This can be opened in Android Studio, or it can be run directly from the command line.
 
 :::note
 The Android build folder is configured by `settings.gradle.kts` to output to the root `.build/Android/` folder. This centralizes the location of the build artifacts and enables a single folder to be ignored in a `.gitignore` file (rather than the default Gradle folder name of `build/`).
+
+When you build in Xcode, the output directory is located in `~/Library/Developer/Xcode/DerivedData`. You can update the `Android/settings.gradle.kts` to point to Xcode's output directory, allowing Android Studio and Xcode to use the same output directory.
 :::
 
 ```plaintext collapse={21-1000}
@@ -194,6 +196,27 @@ $ ls -lah .build/Android/app/outputs/apk/*/*.apk
 
 ```
 
+### Building Locally with Gradle Directly
+
+Android Studio doesn't run `skip gradle`. Android Studio opens your `Android/settings.gradle.kts` and runs `gradle` directly, itself, and so can you.
+
+```plaintext
+$ gradle -p Android assemble
+```
+
+Under the hood, here's how that works:
+
+1. `Android/settings.gradle.kts` is configured to launch the `skip` CLI tool to generate the code of the Skip Gradle Plugin. It runs a command like this:
+    ```plaintext
+    skip plugin --prebuild --package-path `pwd`/.. --plugin-ref /tmp/skip-plugin-path.tmp
+    ```
+    That generates the plugin source code in `.build/Android/skip-gradle`, and creates a `skip-plugin-path.tmp` file, containing just one line, the absolute path to `.build/Android/skip-gradle`.
+
+    `Android/settings.gradle.kts` then runs `includeBuild()` on the plugin path directory to load the plugin.
+2. `.build/Android/skip-gradle` contains its own `settings.gradle.kts` and `build.gradle.kts`, which provide steps to build the Skip Gradle Plugin.
+3. The Skip Gradle plugin merges content from `Android/app/build.gradle.kts` with settings it finds in `Sources/YourApp/Skip/skip.yml` as it runs the build.
+    * You can read the plugin implementation in `.build/Android/skip-gradle/src/main/kotlin/SkipGradlePlugins.kt` for details about how exactly the Skip build works. (In Git, you'll find it in [`PluginCommand.swift`](https://github.com/skiptools/skipstone/blob/main/Sources/SkipBuild/Commands/PluginCommand.swift).)
+    * You can find the generated `build.gradle.kts` file in your `.build` output directory.
 ---
 
 ## Skip Frameworks
