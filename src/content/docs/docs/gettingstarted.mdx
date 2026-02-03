@@ -6,11 +6,14 @@ tableOfContents: false
 import { Steps } from '@astrojs/starlight/components';
 
 :::note[System Requirements]
-Skip requires a macOS 15+ development host with [Xcode 16](https://developer.apple.com/xcode) or later installed.
+Skip requires a macOS 15+ development machine.
 :::
 
 <Steps>
-1. Skip is installed and updated using the popular Homebrew package management tool, which can be installed from [brew.sh](https://brew.sh). Once Homebrew has been setup, install Skip by running the Terminal command:
+1. Install [Xcode](https://developer.apple.com/xcode)
+1. Install [Android Studio](https://developer.android.com/studio)
+1. Install [Homebrew](https://brew.sh)
+1. Once Homebrew has been setup, install Skip by running the Terminal command:
 
     ```console
     brew install skiptools/skip/skip
@@ -135,7 +138,7 @@ Skip requires a macOS 15+ development host with [Xcode 16](https://developer.app
     ```
     
     :::tip
-    You can alternatively install and launch an emulator using a graphical user interface by downloading and running [Android Studio](https://developer.android.com/studio) and opening the `Virtual Device Manager` from the ellipsis menu of the Welcome dialog. From there, `Create Device` (e.g., "Pixel 6") and then `Launch` the emulator.
+    You can alternatively configure and launch an emulator using a graphical user interface by running Android Studio and opening the `Virtual Device Manager` from the ellipsis menu of the Welcome dialog. From there, `Create Device` (e.g., "Pixel 6") and then `Launch` the emulator. See [Create and manage virtual devices](https://developer.android.com/studio/run/managing-avds).
     :::
     
 1. Now you should be ready to launch your new app! In Xcode, ensure the "HelloSkip App" scheme is selected along with a simulator destination (e.g., "iPhone 17"), and then Run the scheme.
