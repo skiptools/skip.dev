@@ -1,9 +1,13 @@
 ---
-title: Skip Fuse vs Lite
+title: 'Lite and Fuse Modes'
 permalink: /docs/modes/
 ---
 
-Skip supports both *native* mode - in which your Swift is compiled natively for Android - and *transpiled* mode - in which your Swift is converted to Kotlin. The mode is specified at the level of a Swift module. We refer to apps that primarily use native mode as **Skip Fuse** apps, and apps that primarily use transpiled mode as **Skip Lite** apps. It is not uncommon, however, to use both native and transpiled modules within a single Swift-on-Android app. 
+Skip supports both a *compiled* "Fuse" mode - in which your Swift is compiled natively for Android - and a *transpiled* "Lite" mode - in which your Swift is transpiled into Kotlin. The mode is specified at the level of a Swift module. We refer to apps that primarily use native mode as **Skip Fuse** apps, and apps that primarily use transpiled mode as **Skip Lite** apps.
+
+:::note
+It is not uncommon to use both compiled and transpiled modules within a single Swift-on-Android app.
+:::
 
 ## Native Mode: Skip Fuse {#native}
 

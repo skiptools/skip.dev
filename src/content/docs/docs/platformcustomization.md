@@ -372,15 +372,24 @@ When working on Kotlin and Java files, we typically prefer to [open the generate
 
 ### Kotlin Package Names
 
-Skip transforms your CamelCase Swift module names into dot-separated lowercase Kotlin package names:
+By default, Skip transforms your CamelCase Swift module names into dot-separated lowercase Kotlin package names:
 
 - `MyPackage` becomes `my.package`
 - `MyHTTPLibrary` becomes `my.http.library`
 - Kotlin package names must have at least two segments, so `Product` becomes `product.module`
 
+:::note
 Skip also removes the `Tests` suffix from module names during translation, so that your tests and source end up in the same Kotlin package. Kotlin does not have an equivalent of Swift's `@testable` attribute, so this is the only way to allow your tests to access internal module API.
+:::
 
 To avoid having to explicitly `import` your Kotlin and Java API when using it in your `#if SKIP` blocks, set the package name of your Kotlin and Java files to the derived package name of your Swift module. For example, if you are including the file `Sources/MyCoolApp/Skip/CustomKotlin.kt`, the package header should be `package my.cool.app`.
+
+As of Skip 1.7.2, the generated package name can be customized in the module's [`skip.yml`](/docs/modes/#configuration) file:
+
+```yml
+skip:
+  package: 'org.example.mypackage'
+```
 
 ---
 
