@@ -1,0 +1,10 @@
+- appName: "Skip Showcase"
+  developer: "Skip"
+  description: "A showcase of SwiftUI components side-by-side on iOS and Android."
+  screenshots:
+    android: "https://play-lh.googleusercontent.com/ZRavqbn7qK9_qdXkTYbbABKjVYQl-J-JuzyeTj1tM3CrD0fZGP5j_6ui_juyhdZOoA=w1052-h592"
+    ios: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/fe/ab/09/feab09c9-4e72-25f7-359a-211592859c81/1_en-US.png/314x680bb.webp"
+  appStoreLinks:
+    android: "https://play.google.com/store/apps/details?id=org.appfair.app.Showcase"
+    ios: "https://apps.apple.com/us/app/skip-showcase/id6474885022"
+

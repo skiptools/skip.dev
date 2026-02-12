@@ -7,6 +7,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import { remarkHeadingId } from "remark-custom-heading-id";
+import yaml from '@rollup/plugin-yaml'; // Added for YAML support
 // shared definitions of the modules and samples
 import { coreFrameworks, integrationFrameworks, sampleApps } from './skip-repositories.js';
 
@@ -24,6 +25,11 @@ export default defineConfig({
 			}
 		}]
     ],
+  },
+  vite: { // Added Vite configuration
+    plugins: [
+      yaml()
+    ]
   },
 	integrations: [
 		starlight({

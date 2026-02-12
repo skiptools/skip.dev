@@ -1,53 +1,51 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-import AnchorHeading from '@astrojs/starlight/components/AnchorHeading.astro';
+// Directly import the YAML file
+import showcaseData from '../content/gallery/apps.yaml';
 
-import { getCollection } from "astro:content";
-import AppCard from "../components/AppCard.astro";
-
-const apps = await getCollection("gallery");
-
-const sidebar = [
-  { label: 'Back to Docs', link: '/guides/getting-started/' },
-  //{
-  //label: 'App Categories',
-    //items: categories.map(cat => ({
-    //label: cat,
-    //link: `/apps/category/${cat.toLowerCase()}`,
-    //})),
-    //},
-  { label: 'Submit an App', link: '/submit' },
-];
+const apps = showcaseData; // showcaseData will be the array of app objects
 ---
 
-<StarlightPage
-    frontmatter={{ 
-        title: 'My custom page',
-        description: 'A page describing the apps',
-        template: 'doc',
-        tableOfContents: false,
-    }}
-    sidebar={sidebar}
-    >
-  <p>This is a custom page with a custom component:</p>
-  <!-- <CustomComponent /> -->
+<StarlightPage frontmatter={{ title: "Showcase", description: "Showcase of apps built with Skip", tableOfContents: false, template: 'splash' }}>
+  <p>Explore applications built with Skip.</p>
 
-  <AnchorHeading level="2" id="learn-more">Learn more</AnchorHeading>
-
-    <section class="apps-grid">
-      {apps.map(({ data }) => (
-        <AppCard app={data} />
-      ))}
-    </section>
-
-  <p>
-    <a href="https://starlight.astro.build/">Read more in the Starlight docs</a>
-  </p>
-</StarlightPage>
+  <div class="showcase-grid">
+    {apps.map((app) => ( // Iterate over the 'apps' array
+      <div class="showcase-card">
+        <h2>{app.appName}</h2>
+        <p>Developer: {app.developer}</p>
+        <p>{app.description}</p>
+        {app.screenshots.android && (
+          <img src={app.screenshots.android} alt={`${app.appName} Android screenshot`} />
+        )}
+        {app.screenshots.ios && (
+          <img src={app.screenshots.ios} alt={`${app.appName} iOS screenshot`} />
+        )}
+        {app.appStoreLinks.android && (
+        <a href={app.appStoreLinks.android} style="display: inline-block;"><img src="https://appfair.org/assets/badges/google-play-store.svg" alt="Download on the Google Play Store" style="height: 60px; vertical-align: middle; object-fit: contain;"></a>
+        )}
+        {app.appStoreLinks.ios && (
+        <a href={app.appStoreLinks.ios} style="display: inline-block;"><img src="https://appfair.org/assets/badges/apple-app-store.svg" alt="Download on the Apple App Store" style="height: 60px; vertical-align: middle; object-fit: contain;"></a>
+        )}
+      </div>
+    ))}
+  </div>
+</Layout>
 
 <style>
-.apps-grid {
-  display: grid;
-  gap: 2rem;
-}
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .showcase-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  .showcase-card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
 </style>

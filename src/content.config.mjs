@@ -42,32 +42,10 @@ const tour = defineCollection({
 });
 */
 
-/*
-const gallery = defineCollection({
-  type: "data",
-  schema: z.object({
-    name: z.string(),
-    tagline: z.string(),
-    description: z.string(),
-
-    website: z.string().url().optional(),
-    appStore: z.string().url().optional(),
-    playStore: z.string().url().optional(),
-    source: z.string().url().optional(),
-
-    platforms: z.array(z.enum(["iOS", "Android"])),
-    tags: z.array(z.string()).default([]),
-
-    screenshots: z.array(z.string())
-  })
-});
-*/
-
 
 export const collections = {
     docs: docs,
     talks: talks,
     i18n: i18n,
     //tour: tour,
-    //gallery: gallery,
 };

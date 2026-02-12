@@ -1,7 +1,7 @@
 {
-  "name": "astro",
+  "name": "skip.dev",
   "type": "module",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "scripts": {
     "sync-docs": "node ./scripts/sync-modules.js",
     "dev": "npm run sync-docs && astro dev",
@@ -11,9 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.37.3",
+    "@astrojs/starlight": "^0.37.6",
     "@expressive-code/plugin-collapsible-sections": "^0.41.6",
-    "astro": "^5.16.11",
+    "@rollup/plugin-yaml": "^4.1.2",
+    "astro": "^5.17.2",
     "node-addon-api": "^8.5.0",
     "node-gyp": "^12.1.0",
     "rehype-autolink-headings": "^7.1.0",
@@ -22,6 +23,7 @@
     "remark-custom-heading-id": "^2.0.0",
     "sharp": "^0.34.2",
     "starlight-blog": "^0.25.2",
-    "starlight-links-validator": "^0.19.2"
+    "starlight-links-validator": "^0.19.2",
+    "vite-plugin-yaml": "^1.0.4"
   }
 }
