@@ -10,18 +10,18 @@ This framework is available at [github.com/skiptools/skip-unit](https://github.c
 :::
 
 
-Base Skip gradle plugin module and unit testing for [Skip](https://skip.tools) apps, adapting Swift XCUnit to transpiled Kotlin JUnit test cases.
+Base Skip gradle plugin module and unit testing for Skip apps, adapting Swift XCUnit to transpiled Kotlin JUnit test cases.
 
 ## About
 
 SkipUnit vends the `skip.unit` Kotlin package containing a Swift `XCTest` interface to the Java/Kotlin `JUnit` testing framework.
-Combined with the Skip [transpiler](https://source.skip.tools/skip), this provides automatic transpilation of XCUnit test cases as JUnit tests, which enables parity testing to identify and isolate any differences between your Swift code and your transpiled Skip Kotlin code.
+Combined with the Skip [transpiler](https://source.skip.dev/skip), this provides automatic transpilation of XCUnit test cases as JUnit tests, which enables parity testing to identify and isolate any differences between your Swift code and your transpiled Skip Kotlin code.
 
 ## Dependencies
 
-SkipUnit depends on the [skip](https://source.skip.tools/skip) transpiler plugin and has no additional library dependencies.
+SkipUnit depends on the [skip](https://source.skip.dev/skip) transpiler plugin and has no additional library dependencies.
 
-It is part of the core *SkipStack* and is not intended to be imported directly.
+It is part of the *Skip Core Frameworks* and is not intended to be imported directly.
 The module is transparently adopted through the translation of `import XCUnit` into `import skip.unit.*` by the Skip transpiler.
 
 ## Parity Testing

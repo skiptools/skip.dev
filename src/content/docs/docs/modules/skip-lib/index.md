@@ -10,7 +10,7 @@ This framework is available at [github.com/skiptools/skip-lib](https://github.co
 :::
 
 
-Swift standard library for [Skip Lite](/docs/status#skip_lite) transpiled Swift.
+Swift standard library for [Skip Lite](/docs/modes/#lite) transpiled Swift.
 
 See what API is currently implemented [here](#swift-standard-library-support).
 

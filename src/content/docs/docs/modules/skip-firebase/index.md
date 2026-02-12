@@ -15,8 +15,8 @@ The Swift side uses the official Firebase iOS SDK directly,
 with the various `SkipFirebase*` modules passing the transpiled calls
 through to the Firebase Android SDK.
 
-For an example of using Firebase in a [Skip Fuse](/docs/status/#skip_fuse) app, see the
-[FiresideFuse Sample](/docs/samples/skipapp-fireside-fuse). For a [Skip Lite](/docs/status/#skip_fuse) app, see the [Fireside Sample](/docs/samples/skipapp-fireside).
+For an example of using Firebase in a [Skip Fuse](/docs/modes/#fuse) app, see the
+[FiresideFuse Sample](/docs/samples/skipapp-fireside-fuse). For a [Skip Lite](/docs/modes/#lite) app, see the [Fireside Sample](/docs/samples/skipapp-fireside).
 
 ## Package
 
@@ -193,7 +193,7 @@ After [setting up](#setup) your app to use Firebase, enabling push notifications
     ```
 
 1. Consider increasing the `minSdk` version of your Android app. Prior to SDK 33, Android does not provide any control over asking the user for push notification permissions. Rather, the system will prompt the user for permission only after receiving a notification and opening the app. Increasing your `minSdk` will allow you to decide when to request notification permissions. To do so, edit your `Android/app/build.gradle.kts` file and change the `minSdk` value to 33.
-1. Define a delegate to receive notification callbacks. In keeping with Skip's philosophy of *transparent adoption*, both the iOS and Android sides of your app will receive callbacks via iOS's standard `UNUserNotificationCenterDelegate` API, as well as the Firebase iOS SDK's `MessagingDelegate`. Here are example [Skip Fuse](/docs/status/#skip_fuse) delegate implementations that works across both platforms:
+1. Define a delegate to receive notification callbacks. In keeping with Skip's philosophy of *transparent adoption*, both the iOS and Android sides of your app will receive callbacks via iOS's standard `UNUserNotificationCenterDelegate` API, as well as the Firebase iOS SDK's `MessagingDelegate`. Here are example [Skip Fuse](/docs/modes/#fuse) delegate implementations that works across both platforms:
 
 ```swift
 import SwiftFuseUI

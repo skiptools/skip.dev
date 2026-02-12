@@ -320,7 +320,7 @@ skip init --native-app --appid=bundle.id project-name AppName
 ```
 
 :::tip
-Passing `--native-app` creates a [Skip Fuse](/docs/status/#skip_fuse) app, and `--transpiled-app` will create a [Skip Lite](/docs/status/#skip_fuse) app.
+Passing `--native-app` creates a [Skip Fuse](/docs/modes/#fuse) app, and `--transpiled-app` will create a [Skip Lite](/docs/modes/#lite) app.
 :::
 
 :::note
@@ -382,7 +382,7 @@ Additional notes:
 
 ### Creating a Dual-Platform Framework {#framework_development}
 
-[SkipFuse](/docs/status/#skip_fuse) apps can depend on pure SwiftPM packages as well as pure Kotlin/Java Android libraries. See the chapter covering [dependencies](/docs/dependencies) for details. This section describes how to create a Swift framework whose API can be used from both Swift and Kotlin. The most common use cases are powering [SkipLite](/docs/status/#skip_fuse) transpiled apps or [separate iOS and Android](#separate-apps) apps.
+[SkipFuse](/docs/modes/#fuse) apps can depend on pure SwiftPM packages as well as pure Kotlin/Java Android libraries. See the chapter covering [dependencies](/docs/dependencies) for details. This section describes how to create a Swift framework whose API can be used from both Swift and Kotlin. The most common use cases are powering [SkipLite](/docs/modes/#lite) transpiled apps or [separate iOS and Android](#separate-apps) apps.
 
 Dual-platform Skip frameworks are pure SwiftPM packages that encapsulate common functionality. Frameworks are simpler than app projects, as they do not need `Darwin/` and `Android/` folders.
 
@@ -397,7 +397,7 @@ skip init --native-model lib-name ModuleName
 This will create a new `lib-name` folder containing a `Package.swift` with targets of `ModuleName` and `ModuleNameTests`.
 
 :::tip
-Passing `--native-model` creates a [Skip Fuse](/docs/status/#skip_fuse) compiled Swift package. Omit this flag to create a [Skip Lite](/docs/status/#skip_fuse) transpiled package instead. Skip frameworks like [SkipLib](/docs/modules/skip-lib) and [SkipFoundation](/docs/modules/skip-foundation) are examples of transpiled packages, and they are rich sources of examples of various strategies for providing dual-platform functionality.
+Passing `--native-model` creates a [Skip Fuse](/docs/modes/#fuse) compiled Swift package. Omit this flag to create a [Skip Lite](/docs/modes/#lite) transpiled package instead. Skip frameworks like [SkipLib](/docs/modules/skip-lib) and [SkipFoundation](/docs/modules/skip-foundation) are examples of transpiled packages, and they are rich sources of examples of various strategies for providing dual-platform functionality.
 :::
 
 The generated package can be opened in Xcode, which you can use to build and run the unit tests. Or use `swift build` and `swift test` from the Terminal for headless testing as part of a continuous integration process.
@@ -482,7 +482,7 @@ Regardless of which option you choose, your first steps are the same:
 1. Modularize your app into Swift Package Manager packages, if it isn't already.
 1. Starting with your "base" module and working your way up the stack, attempt to get each module building for Android.
 
-We recommend using [Skip Fuse](/docs/status/#skip_fuse) where possible, as it offers greater compatibility with existing Swift code and dependencies.
+We recommend using [Skip Fuse](/docs/modes/#fuse) where possible, as it offers greater compatibility with existing Swift code and dependencies.
 
 Porting an app to an entirely new platform isn't easy, even with Skip. Remember that [we're here to help](/docs/help/).
 

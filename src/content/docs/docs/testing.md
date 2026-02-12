@@ -32,7 +32,7 @@ final class MyNativeSwiftTests: XCTestCase {
 ```
 
 :::note
-We will offer Android unit testing of unbridged native code in a future release. If you are using [Skip Lite](/docs/status/#skip_fuse), *all* of your code is transpiled, so you do not have to limit your testing to bridged types.
+We will offer Android unit testing of unbridged native code in a future release. If you are using [Skip Lite](/docs/modes/#lite), *all* of your code is transpiled, so you do not have to limit your testing to bridged types.
 :::
 
 ### Robolectric Testing

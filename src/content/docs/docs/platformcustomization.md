@@ -74,7 +74,7 @@ func androidTimeString(milliseconds: Int64) -> String {
 What is going on here?
 
 1. The `printFormatted` function uses `#if os(Android)` to call `androidTimeString(milliseconds:)` in the Android build.
-1. `androidTimeString(milliseconds:)` is defined within a `#if SKIP` block. All code within `#if SKIP` blocks is [transpiled](/docs/modes/#transpiled) to Kotlin. So while this looks like Swift code, it becomes Kotlin code during the Android build process. That means it can **call any other Kotlin or Java API** naturally, just as if the API were written in Swift. Here we use various Java date formatting functions.
+1. `androidTimeString(milliseconds:)` is defined within a `#if SKIP` block. All code within `#if SKIP` blocks is [transpiled](/docs/modes/#lite) to Kotlin. So while this looks like Swift code, it becomes Kotlin code during the Android build process. That means it can **call any other Kotlin or Java API** naturally, just as if the API were written in Swift. Here we use various Java date formatting functions.
 1. Skip automatically [bridges](/docs/modes/#bridging) all of the **non-private** code in your `SKIP` blocks so that you can interact with it from your compiled Swift.
 
 :::note
@@ -84,7 +84,7 @@ You are not required to use fully-qualified type names. Skip allows you to `impo
 While the example above is rather contrived, consider the broader implications. You can use this mechanism to directly interact with **any** Android libraries, including third-party dependencies or your own custom Kotlin. The ability so easily utilize both iOS-only and Android-only APIs - right inline - differentiates Skip from many other cross-platform solutions, where calling platform-native code can be difficult. [Later](#swiftui-and-compose), we'll see how to take advantage of this to mix SwiftUI and Compose views.
 
 :::tip
-If you are using [Skip Lite](/docs/status/#skip_fuse), *all* of your Swift is transpiled, so you can use `#if SKIP` and `#if os(Android)` interchangeably.
+If you are using [Skip Lite](/docs/modes/#lite), *all* of your Swift is transpiled, so you can use `#if SKIP` and `#if os(Android)` interchangeably.
 :::
 
 ### Syntax {#kotlin-in-swift-syntax}
@@ -205,7 +205,7 @@ Skip also provides Android-specific SwiftUI API that allows you to customize Ski
 Skip ensures that the `@Observable` types you define in your shared Swift business logic can power your Compose UI as well, as described in the Development [chapter](/docs/app-development/#observables). Transparent model integration is an additional way that Skip allows you to move seamlessly between shared and platform-specific code.
 
 :::note
-In [Skip Lite](/docs/status/#skip_fuse), `AsyncStream` also features deep Kotlin integration. You can construct an `AsyncStream` from a Kotlin `Flow`, and you can retrieve a `Flow` from an `AsyncStream` using the standard [`.kotlin()` function](#calling-kotlin-api).
+In [Skip Lite](/docs/modes/#lite), `AsyncStream` also features deep Kotlin integration. You can construct an `AsyncStream` from a Kotlin `Flow`, and you can retrieve a `Flow` from an `AsyncStream` using the standard [`.kotlin()` function](#calling-kotlin-api).
 :::
 
 ---
@@ -286,7 +286,7 @@ androidx.core.app.ActivityCompat.requestPermissions(activity, permissions.toType
 
 ## iOS and Android Libraries
 
-In addition to Skip's own dual-platform libraries, [thousands of Swift packages](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) are available for Android. You can use these packages in your [Skip Fuse](/docs/status/#skip_fuse) app just as you would in an iOS-only app. To learn how to integrate iOS-only or Android-only dependencies, however, read the [Dependencies](/docs/dependencies/) documentation chapter.
+In addition to Skip's own dual-platform libraries, [thousands of Swift packages](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) are available for Android. You can use these packages in your [Skip Fuse](/docs/modes/#fuse) app just as you would in an iOS-only app. To learn how to integrate iOS-only or Android-only dependencies, however, read the [Dependencies](/docs/dependencies/) documentation chapter.
 
 ---
 

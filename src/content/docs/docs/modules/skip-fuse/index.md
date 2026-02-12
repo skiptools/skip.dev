@@ -10,7 +10,7 @@ This framework is available at [github.com/skiptools/skip-fuse](https://github.c
 :::
 
 
-SkipFuse helps fuse the Swift and Android worlds for [Skip Fuse](/docs/modes/#native) modules and apps. It is an umbrella framework that vends cross-platform functionality. For example, SkipFuse:
+SkipFuse helps fuse the Swift and Android worlds for [Skip Fuse](/docs/modes/#fuse) modules and apps. It is an umbrella framework that vends cross-platform functionality. For example, SkipFuse:
 
 - Vends OSLog APIs on Android so that your OSLog messages appear in Android's Logcat logging.
 - Transparently integrates your Swift `@Observables` into Jetpack Compose, so that they can transparently power Compose UI.

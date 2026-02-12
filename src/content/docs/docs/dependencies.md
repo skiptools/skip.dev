@@ -45,7 +45,7 @@ let package = Package(
 ```
 
 :::caution
-[Skip Lite](/docs/status/#skip_fuse) modules cannot use pure SwiftPM packages for Android. A Skip Lite module will see that the dependency does not have a `Skip/skip.yml` file and exclude it from the Android build. 
+[Skip Lite](/docs/modes/#fuse) modules cannot use pure SwiftPM packages for Android. A Skip Lite module will see that the dependency does not have a `Skip/skip.yml` file and exclude it from the Android build. 
 :::
 
 ---
@@ -200,7 +200,7 @@ include(":SkipFFI")
 
 The generated build files will be overwritten the next time the Skip plugin is run, and so the generated output shouldn't be edited directly. Instead, any changes to the module's `Skip/skip.yml` properties will result in the `build.gradle.kts` and `settings.gradle.kts` being regenerated and included as part of the build.
 
-To use an Android package in [transpiled](/docs/modes/#transpiled) Swift, import it as usual:
+To use an Android package in [transpiled](/docs/modes/#lite) Swift, import it as usual:
 
 ```swift
 #if SKIP
@@ -225,7 +225,7 @@ You often want to use functionality that has existing libraries for both iOS and
 
 Regardless of which option you choose, the implementation strategy is the same:
 
-1. If you're creating a library, follow the [Getting Started instructions](/docs/project-types/#framework_development) for new dual-platform frameworks. You may be integrating closely with the Android Kotlin or Java dependency, so consider creating a Skip Lite [transpiled](/docs/modes/#transpiled) module whose API you [bridge](/docs/modes/#bridging) to native Swift.
+1. If you're creating a library, follow the [Getting Started instructions](/docs/project-types/#framework_development) for new dual-platform frameworks. You may be integrating closely with the Android Kotlin or Java dependency, so consider creating a Skip Lite [transpiled](/docs/modes/#lite) module whose API you [bridge](/docs/modes/#bridging) to native Swift.
 1. Add a [Swift Package dependency](/docs/dependencies/#ios) on the iOS library, and add a [Java/Kotlin dependency](/docs/dependencies/#android) on the Android library you want to use.
 1. If you're writing a common wrapper class or library, write the wrapper API.
 1. Within the implementation code, use Skip [compiler directives](/docs/platformcustomization/#compiler-directives) to conditionally import and call the API for the appropriate library. Use the techniques in [Cross-Platform Topics](/docs/platformcustomization) to call Kotlin and Java APIs.
@@ -260,7 +260,7 @@ public struct MyCommonAPI {
 
 You can see this pattern clearly in the source of Skip frameworks like [SkipKeychain](https://github.com/skiptools/skip-keychain/blob/main/Sources/SkipKeychain/SkipKeychain.swift), which is a great example to learn from.
 
-When writing a dual-platform library that vends the functionality of a standard or well-known iOS framework, consider exactly mirroring that framework's iOS API, just as Skip mirrors Foundation and other frameworks for [transpiled](/docs/modes/#transpiled) code. This follows Skip's philosophy of *transparent adoption*. Then rather than writing to your custom API, users can write to the exact iOS API. At the usage site, only the import will be different:
+When writing a dual-platform library that vends the functionality of a standard or well-known iOS framework, consider exactly mirroring that framework's iOS API, just as Skip mirrors Foundation and other frameworks for [transpiled](/docs/modes/#lite) code. This follows Skip's philosophy of *transparent adoption*. Then rather than writing to your custom API, users can write to the exact iOS API. At the usage site, only the import will be different:
 
 ```swift
 #if !os(Android)

@@ -10,7 +10,7 @@ This framework is available at [github.com/skiptools/skip-model](https://github.
 :::
 
 
-Model object observation for Skip Lite transpiled Swift. Parts of this package are also used by [Skip Fuse](/docs/status/#skip_fuse) to bridge `@Observables` to Compose.
+Model object observation for [Skip Lite](/docs/modes/#lite) transpiled Swift. Parts of this package are also used by [Skip Fuse](/docs/modes/#fuse) to bridge `@Observables` to Compose.
 
 See what API is included [here](#api-support).
 

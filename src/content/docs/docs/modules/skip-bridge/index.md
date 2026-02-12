@@ -12,5 +12,5 @@ This framework is available at [github.com/skiptools/skip-bridge](https://github
 
 Bridging between Swift and Kotlin/Java for Skip Fuse apps.
 
-Documentation can be found at [https://skip.dev/docs/modes/](/docs/modes/).
+Documentation can be found at [https://skip.dev/docs/bridging/](/docs/bridging/).
 

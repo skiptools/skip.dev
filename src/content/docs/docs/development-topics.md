@@ -432,6 +432,6 @@ For more information, see the [`skip icon` CLI reference](/docs/skip-cli/#icon).
 Skip fully supports iOS and Android system color schemes, as well as SwiftUI styling modifiers like `.background`, `.foregroundStyle`, `.tint`, and so on. You may, however, want to customize aspects of your Android UI's colors and components that cannot be configured through SwiftUI's standard modifiers. Skip provides additional Android-only API for this purpose. These SwiftUI add-ons allow you to reach "under the covers" and manipulate Skip's underlying use of Compose. They are detailed in the SkipUI module documentation's [Material](/docs/modules/skip-ui/#material) topic.
 
 :::caution
-Material SwiftUI modifiers for [Skip Fuse](/docs/status/#skip_fuse) are a work in progress. They are currently only supported for [Skip Lite](/docs/status/#skip_fuse) apps.
+Material SwiftUI modifiers for [Skip Fuse](/docs/modes/#fuse) are a work in progress. They are currently only supported for [Skip Lite](/docs/modes/#lite) apps.
 :::
 

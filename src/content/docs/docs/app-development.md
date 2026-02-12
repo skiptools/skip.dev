@@ -106,7 +106,7 @@ Writing dual-platform code with Skip resembles coding a standard iOS app, and it
 1. Writing a dual-platform apps means using dual-platform libraries. Our documentation on [dependencies](/docs/dependencies/) discusses how to use other dual-platform libraries as well as iOS and Android-specific libraries.
 
 :::caution
-If you are using [Skip Lite](/docs/status/#skip_fuse), you may run into limitations in the Swift that can be transpiled. For more information on what Swift language features the transpiler supports, see the [Transpilation Reference](/docs/swiftsupport/).
+If you are using [Skip Lite](/docs/modes/#lite), you may run into limitations in the Swift that can be transpiled. For more information on what Swift language features the transpiler supports, see the [Transpilation Reference](/docs/swiftsupport/).
 :::
 
 ### Build Errors
@@ -169,7 +169,7 @@ let package = Package(
 The [`CityManager`](https://github.com/skiptools/skipapp-travelposters-native/blob/main/travel-posters-model/Sources/TravelPostersModel/CityManager.swift) type in the [TravelPosters](https://github.com/skiptools/skipapp-travelposters-native) sample is an example of an `@Observable` that is shared between separate iOS and Android apps.
 
 :::note
-This section only applies to [Skip Fuse](/docs/status/#skip_fuse). A [Skip Lite](/docs/status/#skip_fuse) transpiled model layer does not require additional imports or dependencies to power a Compose UI.
+This section only applies to [Skip Fuse](/docs/modes/#fuse). A [Skip Lite](/docs/modes/#lite) transpiled model layer does not require additional imports or dependencies to power a Compose UI.
 :::
 
 ### SwiftUI
@@ -193,7 +193,7 @@ struct MyView : View {
 ```
 
 :::note
-These restrictions do not apply to transpiled [Skip Lite](/docs/status/#skip_fuse) SwiftUI.
+These restrictions do not apply to transpiled [Skip Lite](/docs/modes/#lite) SwiftUI.
 :::
 
 Under the hood, SkipFuseUI uses the SkipUI user interface library. Its documentation includes a list of [supported SwiftUI](/docs/modules/skip-ui/#supported-swiftui). We highly recommend that you browse this list and the associated documentation on various [SkipUI topics](/docs/modules/skip-ui/#topics). It will help you avoid many common errors when writing cross-platform SwiftUI.
@@ -213,7 +213,7 @@ With Skip, you *never* have to compromise your iOS app. You can always use [comp
 Using an iOS API that is not yet supported on Android will result in either an unavailable API error or build error from the Android Swift compiler. If you encounter an error, check the [porting guide](/docs/porting/#skipfuse) to see if the API is actually available, but requires different imports for Android. If you are writing SwiftUI code, consult the [SkipUI module](/docs/modules/skip-ui/#supported-swiftui) to learn what is supported.
 
 :::note
-If you are using [Skip Lite](/docs/status/#skip_fuse), each of Skip's transpiled [core modules](/docs/modules/) specifies its Android-supported API set.
+If you are using [Skip Lite](/docs/modes/#lite), each of Skip's transpiled [core modules](/docs/modules/) specifies its Android-supported API set.
 :::
 
 When you encounter missing API on Android, you have options! You may be able to use alternate, supported APIs to accomplish the task. The [Swift Package Index](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) site lists many cross-platform Swift packages that are known to build for Android. If you can't find an existing solution, you can use Skip's [iOS and Android integration](/docs/platformcustomization/) techniques to implement separate iOS and Android code paths, taking advantage of each platforms' respective native solutions. And if the API you want to use is in a framework already mirrored for Android - either as a [Skip open source library](https://source.skip.tools) or a [community library](/docs/contributing/#community-libraries) - you may be able to easily add the missing API to the existing library. If you augment an existing library, please consider [contributing](/docs/contributing/) your improvements back to the Skip community. Follow the instructions [here](/docs/contributing/#local-libraries) to configure Xcode for local Skip library development.    

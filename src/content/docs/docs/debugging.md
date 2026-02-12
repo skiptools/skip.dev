@@ -88,7 +88,7 @@ logger.info("My message")
 ```
 
 :::tip
-If you are using [Skip Lite](/docs/status/#skip_fuse), import `OSLog` instead of `SkipFuse`.
+If you are using [Skip Lite](/docs/modes/#lite), import `OSLog` instead of `SkipFuse`.
 :::
 
 When you log a message in your app, the `OSLog` messages from the Swift side of the app will appear in Xcode's console as you'd expect. Skip's Android implementation of `OSLog.Logger`, on the other hand, forwards log messages to [Logcat](https://developer.android.com/tools/logcat), which is Android's native logging mechanism. Using the Logcat tab in Android Studio is a good way to browse and filter the app's log messages on the Android side. You can also view Logcat output in the Terminal using the command `adb logcat`, which has a variety of filtering flags that can applied to the default (verbose) output.

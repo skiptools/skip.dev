@@ -20,7 +20,7 @@ In many ways, Skip and KMP are inverses of each other, in that:
  - Skip brings your Swift/iOS codebase to Android.
  - KMP brings your Kotlin/Android codebase to iOS.
 
-The mechanics powering these transformations are different – Skip uses source [transpilation](/docs/modes/#transpiled) to convert Swift into idiomatic Kotlin, whereas KMP compiles Kotlin into native code that presents an Objective-C interface – but the high-level benefits are the same: you can maintain a single codebase for both your iOS and Android app.
+The mechanics powering these transformations are different – Skip uses source [transpilation](/docs/modes/#lite) to convert Swift into idiomatic Kotlin, whereas KMP compiles Kotlin into native code that presents an Objective-C interface – but the high-level benefits are the same: you can maintain a single codebase for both your iOS and Android app.
 
 ## Skip or KMP?
 
