@@ -13,17 +13,18 @@
   "dependencies": {
     "@astrojs/starlight": "^0.37.6",
     "@expressive-code/plugin-collapsible-sections": "^0.41.6",
-    "@rollup/plugin-yaml": "^4.1.2",
     "astro": "^5.17.2",
     "node-addon-api": "^8.5.0",
-    "node-gyp": "^12.1.0",
+    "node-gyp": "^12.2.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
     "rehype-slug": "^6.0.0",
     "remark-custom-heading-id": "^2.0.0",
-    "sharp": "^0.34.2",
+    "sharp": "^0.34.5",
     "starlight-blog": "^0.25.2",
-    "starlight-links-validator": "^0.19.2",
-    "vite-plugin-yaml": "^1.0.4"
+    "starlight-links-validator": "^0.19.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-yaml": "^4.1.2"
   }
 }
