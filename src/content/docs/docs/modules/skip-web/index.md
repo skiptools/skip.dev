@@ -53,6 +53,10 @@ struct ConfigurableWebView : View {
 
 ```
 
+`WebViewNavigator` can keep a warm `WebEngine` and reuse it across view recreation.
+When the same navigator is rebound to an engine that already has content/history, `initialURL`/`initialHTML` are not reloaded.
+This lets apps preserve page state when navigating away and back with the same navigator instance.
+
 ## JavaScript
 
 JavaScript can be executed against the browser with:
@@ -225,6 +229,102 @@ SkipWeb validates this contract at popup creation time:
 For iOS parity, return a child created with `platformContext.makeChildWebEngine(...)`.
 By default this mirrors the parent `WebEngineConfiguration` and inspectability on the popup child. Pass an explicit configuration only when you intentionally want the child to diverge.
 This default mirroring is configuration-level. Platform delegate assignments on the returned child (`WKUIDelegate`, `WKNavigationDelegate`) are not automatically copied from the parent, so assign them explicitly if your app depends on that behavior.
+
+## Scroll Delegate
+
+`SkipWeb` exposes a `WebView`-attached scroll delegate API that follows `UIScrollViewDelegate` naming where practical while remaining portable across iOS and Android.
+
+Attach a delegate through `WebView(scrollDelegate:)`:
+
+```swift
+import SwiftUI
+import SkipWeb
+
+final class ScrollProbe: SkipWebScrollDelegate {
+    func scrollViewDidEndDragging(_ scrollView: WebScrollViewProxy, willDecelerate decelerate: Bool) {
+        print("ended drag at y=\(scrollView.contentOffset.y), decelerate=\(decelerate)")
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: WebScrollViewProxy) {
+        print("scroll settled at y=\(scrollView.contentOffset.y)")
+    }
+}
+
+struct ScrollHostView: View {
+    private let scrollDelegate = ScrollProbe()
+    @State private var navigator = WebViewNavigator()
+
+    var body: some View {
+        WebView(
+            navigator: navigator,
+            url: URL(string: "https://example.com")!,
+            scrollDelegate: scrollDelegate
+        )
+    }
+}
+```
+
+Supported callbacks:
+
+- `scrollViewDidScroll(_:)`
+- `scrollViewWillBeginDragging(_:)`
+- `scrollViewDidEndDragging(_:willDecelerate:)`
+- `scrollViewWillBeginDecelerating(_:)`
+- `scrollViewDidEndDecelerating(_:)`
+
+`WebScrollViewProxy` exposes portable geometry through `WebScrollPoint` and `WebScrollSize`:
+
+- `contentOffset`
+- `contentSize`
+- `visibleSize`
+- `isTracking`
+- `isDragging`
+- `isDecelerating`
+- `isScrollEnabled`
+
+### Platform callback semantics
+
+| Callback | iOS | Android |
+| --- | --- | --- |
+| `scrollViewDidScroll(_:)` | Native `UIScrollViewDelegate.scrollViewDidScroll` | `WebView.setOnScrollChangeListener` |
+| `scrollViewWillBeginDragging(_:)` | Native `UIScrollViewDelegate.scrollViewWillBeginDragging` | Inferred from touch-slop crossing, or synthesized from first scroll delta while touch is active if `ACTION_MOVE` is missed |
+| `scrollViewDidEndDragging(_:willDecelerate:)` | Native `UIScrollViewDelegate.scrollViewDidEndDragging` | Inferred from touch end; `willDecelerate` is computed from fling velocity vs Android minimum fling velocity |
+| `scrollViewWillBeginDecelerating(_:)` | Native `UIScrollViewDelegate.scrollViewWillBeginDecelerating` | Emitted when fling velocity crosses the deceleration threshold |
+| `scrollViewDidEndDecelerating(_:)` | Native `UIScrollViewDelegate.scrollViewDidEndDecelerating` | Emitted after a short idle period (~120 ms) with no new scroll deltas during momentum |
+
+Android deceleration is heuristic-based because `android.webkit.WebView` does not expose a direct `didEndDecelerating` callback.
+
+### Important differences from `UIScrollViewDelegate`
+
+- `SkipWebScrollDelegate` intentionally exposes a focused subset: no `scrollViewDidScrollToTop(_:)`, zoom callbacks, or scrolling-animation callbacks in the public API.
+- On iOS, callback timing comes directly from `UIScrollViewDelegate`; on Android, drag/deceleration lifecycle callbacks are synthesized from touch and scroll signals.
+- On Android, `ACTION_CANCEL` is finalized with a short grace period so nested gesture interception does not prematurely end a drag.
+- On Android, a new touch during momentum immediately ends the synthetic deceleration phase before starting a new drag sequence.
+- `scrollViewDidScroll(_:)` is offset-change-driven (including programmatic scroll changes), while drag/deceleration lifecycle callbacks are user-gesture-driven.
+
+## Snapshots
+
+`SkipWeb` provides `WebEngine.takeSnapshot(configuration:)` and `WebViewNavigator.takeSnapshot(configuration:)`
+using `SkipWebSnapshotConfiguration`, which mirrors the core `WKSnapshotConfiguration` fields:
+
+- `rect` (`.null` captures the full visible web view bounds)
+- `snapshotWidth` (output width while preserving aspect ratio)
+- `afterScreenUpdates`
+
+```swift
+let snapshot = try await navigator.takeSnapshot(
+    configuration: SkipWebSnapshotConfiguration(
+        rect: .null,
+        snapshotWidth: 240,
+        afterScreenUpdates: true
+    )
+)
+
+let png = snapshot.pngData
+```
+
+On Android, `afterScreenUpdates` is best-effort: SkipWeb captures on the next UI tick before drawing the `WebView` into a bitmap.
+If that UI-tick wait cannot be scheduled (for example, when the view is detached), `takeSnapshot` throws `WebSnapshotError.afterScreenUpdatesUnavailable`.
 
 ## Contribution
 

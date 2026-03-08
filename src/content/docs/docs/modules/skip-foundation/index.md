@@ -147,14 +147,30 @@ Support levels:
 <li><code>var shortWeekdaySymbols: [String]</code></li>
 <li><code>var amSymbol: String</code></li>
 <li><code>var pmSymbol: String</code></li>
+<li><code>func component(_ component: Calendar.Component, from date: Date) -> Int</code></li>
+<li><code>func minimumRange(of component: Calendar.Component) -> Range&lt;Int>?</code></li>
+<li><code>func maximumRange(of component: Calendar.Component) -> Range&lt;Int>?</code></li>
+<li><code>func range(of smaller: Calendar.Component, in larger: Calendar.Component, for date: Date) -> Range&lt;Int>?</code></li>
+<li><code>func dateInterval(of component: Calendar.Component, for date: Date) -> DateInterval?</code></li>
+<li><code>func dateInterval(of component: Calendar.Component, start: inout Date, interval: inout TimeInterval, for date: Date) -> Bool</code></li>
+<li><code>func ordinality(of smaller: Calendar.Component, in larger: Calendar.Component, for date: Date) -> Int?</code></li>
 <li><code>func date(from components: DateComponents) -> Date?</code></li>
+<li><code>func date(byAdding components: DateComponents, to date: Date, wrappingComponents: Bool = false) -> Date?</code></li>
+<li><code>func date(byAdding component: Calendar.Component, value: Int, to date: Date, wrappingComponents: Bool = false) -> Date?</code></li>
+<li><code>func date(bySetting component: Calendar.Component, value: Int, of date: Date) -> Date?</code></li>
+<li><code>func date(bySettingHour hour: Int, minute: Int, second: Int, of date: Date, matchingPolicy: Calendar.MatchingPolicy = .nextTime, repeatedTimePolicy: Calendar.RepeatedTimePolicy = .first, direction: Calendar.SearchDirection = .forward) -> Date?</code></li>
+<li><code>func date(_ date: Date, matchesComponents components: DateComponents) -> Bool</code></li>
 <li><code>func dateComponents(in zone: TimeZone? = nil, from date: Date) -> DateComponents</code></li>
 <li><code>func dateComponents(_ components: Set&lt;Calendar.Component>, from start: Date, to end: Date) -> DateComponents</code></li>
 <li><code>func dateComponents(_ components: Set&lt;Calendar.Component>, from date: Date) -> DateComponents</code></li>
-<li><code>func component(_ component: Calendar.Component, from date: Date) -> Int</code></li>
-<li><code>func date(byAdding components: DateComponents, to date: Date, wrappingComponents: Bool = false) -> Date?</code></li>
-<li><code>func date(byAdding component: Calendar.Component, value: Int, to date: Date, wrappingComponents: Bool = false) -> Date?</code></li>
+<li><code>func startOfDay(for date: Date) -> Date</code></li>
+<li><code>func compare(_ date1: Date, to date2: Date, toGranularity component: Calendar.Component) -> ComparisonResult</code></li>
+<li><code>func isDate(_ date1: Date, equalTo date2: Date, toGranularity component: Calendar.Component) -> Bool</code></li>
+<li><code>func isDate(_ date1: Date, inSameDayAs date2: Date) -> Bool</code></li>
+<li><code>func isDateInToday(_ date: Date) -> Bool</code></li>
 <li><code>func isDateInWeekend(_ date: Date) -> Bool</code></li>
+<li><code>func enumerateDates(startingAfter start: Date, matching components: DateComponents, matchingPolicy: Calendar.MatchingPolicy, repeatedTimePolicy: Calendar.RepeatedTimePolicy = .first, direction: Calendar.SearchDirection = .forward, using block: (_ result: Date?, _ exactMatch: Bool, _ stop: inout Bool) -> Void)</code></li>
+<li><code>func nextDate(after date: Date, matching components: DateComponents, matchingPolicy: Calendar.MatchingPolicy, repeatedTimePolicy: Calendar.RepeatedTimePolicy = .first, direction: Calendar.SearchDirection = .forward) -> Date?)</code></li>
           </ul>
         </details> 
       </td>
@@ -244,6 +260,7 @@ Support levels:
 <li><code>var utf8String: String?</code></li>
 <li><code>func base64EncodedString() -> String</code></li>
 <li><code>func sha256() -> Data</code></li>
+<li><code>func subdata(in range: Range<Int>) -> Data</code></li>
 <li><code>func hex() -> String</code></li>
 <li><code>mutating func reserveCapacity(_ minimumCapacity: Int)</code></li>
 <li><code>mutating func append(_ other: Data)</code></li>
@@ -274,7 +291,7 @@ Support levels:
         <details>
           <summary><code>DateComponents</code></summary>
           <ul>
-            <li><code>nanosecond</code>, <code>weekdayOrdinal</code>, <code>quarter</code>, <code>yearForWeekOfYear</code> are not supported</li>
+            <li><code>nanosecond</code>, <code>yearForWeekOfYear</code> are not supported</li>
           </ul>
         </details> 
       </td>

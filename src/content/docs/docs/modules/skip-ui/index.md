@@ -2090,7 +2090,22 @@ Support levels:
               <ul>
                 <li>See <a href="#scrolling">Scrolling</a></li>
               </ul>
-          </details>      
+          </details>
+       </td>
+    </tr>
+    <tr>
+      <td>🟠</td>
+      <td>
+          <details>
+              <summary><code>.scrollPosition</code></summary>
+              <ul>
+                <li>Only <code>scrollPosition(id: Binding&lt;(some Hashable)?>)</code> is supported</li>
+                <li>Only works with lazy containers: <code>LazyHStack</code>, <code>LazyVStack</code>, <code>LazyHGrid</code>, <code>LazyVGrid</code>, and <code>List</code></li>
+                <li>The <code>anchor</code> parameter is not supported</li>
+                <li><code>scrollPosition(_ position: Binding&lt;ScrollPosition>, anchor: UnitPoint? = nil)</code> is not supported</li>
+                <li>See <a href="#scrolling">Scrolling</a></li>
+              </ul>
+          </details>
        </td>
     </tr>
     <tr>
@@ -2477,13 +2492,13 @@ Support levels:
           <details>
               <summary><code>UNNotificationTrigger</code></summary>
               <ul>
-                  <li>Ignored on Android</li>
+                  <li>Only `nextTriggerDate` is evaluated but not the `repeat` value</li>
               </ul>
           </details>      
        </td>
     </tr>
    <tr>
-      <td>🟠</td>
+      <td>🟡</td>
       <td>
           <details>
               <summary><code>UNUserNotificationCenter</code></summary>
@@ -2492,7 +2507,13 @@ Support levels:
                   <li><code>func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool</code></li>
                   <li><code>var delegate: (any UNUserNotificationCenterDelegate)?</code></li>
                   <li><code>func add(_ request: UNNotificationRequest) async throws</code></li>
-                  <li>The `add` function ignores all scheduling and repeat options and simply delivers the notification immediately.</li>
+                  <li>The `add` function ignores all repeat options and and simply delivers the notification either immediately or after the next trigger date is reached.</li>
+                  <li><code>func pendingNotificationRequests() async -> [UNNotificationRequest]</code></li>
+                  <li><code>func removePendingNotificationRequests(withIdentifiers identifiers: [String])</code></li>
+                  <li><code>func removeAllPendingNotificationRequests()</code></li>
+                  <li><code>func deliveredNotifications() async -> [UNNotification]</code></li>
+                  <li><code>func removeDeliveredNotifications(withIdentifiers identifiers: [String])</code></li>
+                  <li><code>func removeAllDeliveredNotifications()</code></li>
               </ul>
           </details>      
        </td>
@@ -2896,6 +2917,7 @@ SkipUI fully supports SwiftUI's various layout mechanisms, including `HStack`, `
 
 - Skip never places content in an implicit `VStack`, like SwiftUI sometimes does. Always place multiple views in an explicit stack of the desired type.
 - Expanding elements such as `Spacer` or `.frame(maxWidth: .infinity)` within nested `HStacks` or `VStacks` may measure differently. Try un-nesting stacks to get more SwiftUI-like layout.
+- Views with `.frame(maxWidth:)` or `.frame(maxHeight:)` set to explicit values larger than the parent's actual size may expand beyond the parent container's bounds on Android. To work around this, use a `GeometryReader` to compute the parent's size and set an explicit `.frame(width:)` or `.frame(height:)` instead of `maxWidth` or `maxHeight`. See [Issue #339](https://source.skip.dev/skip-ui/issues/339).
 
 Note: if your app was developed under an earlier version of Skip and it relies on nuances of older layout behavior, you can apply the Android-only `.layoutImplementationVersion()` modifier. Set this modifier on a `View` hierarchy to simulate the previous behavior:
 
@@ -3078,6 +3100,8 @@ With these updates in place, your app should extend below the system bars. If yo
 
 - The `UnitRect` parameter to `ScrollView` and `ScrollViewProxy` is ignored.
 - `ScrollViewProxy` works only for `List` and lazy containers: `LazyHStack`, `LazyVStack`, `LazyHGrid`, and `LazyVGrid`.
+- `.scrollPosition(id:)` works only for lazy containers (`List`, `LazyHStack`, `LazyVStack`, `LazyHGrid`, `LazyVGrid`). The `anchor` parameter is not supported.
+- `.scrollPosition(_ position: Binding<ScrollPosition>, anchor: UnitPoint? = nil)` is not supported.
 - If you place a lazy container in a `ScrollView`, it must be the **only** content of that `ScrollView`.
 - The content of any `ScrollView` with the `.scrollTargetBehavior` modifier applied must be a single lazy container with the `.scrollTargetLayout` modifier applied, as in the following example:
 
