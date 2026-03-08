@@ -8,6 +8,10 @@ import ThemeSelect from './ThemeSelect.astro';
 const curLocale = Astro.locals.starlightRoute.locale;
 const slug = Astro.locals.starlightRoute.entry.slug;
 
+const showBanner = (Astro.locals.starlightRoute.entry.data as any).showBanner !== false;
+const bannerMessage = (Astro.locals.t as (key: string) => string)('banner.message');
+const hasBanner = showBanner && bannerMessage;
+
 type Link = {
   title: string;
   value: string;
@@ -33,6 +37,35 @@ const links: Link[] = [
   },
 ];
 ---
+{hasBanner && (
+  <div class="site-banner" role="status" data-banner hidden>
+    <span class="banner-text" set:html={bannerMessage} />
+    <button class="banner-close" type="button" aria-label="Dismiss banner">
+      <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1.5 1.5L12.5 12.5M12.5 1.5L1.5 12.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+)}
+<script is:inline>
+  (function() {
+    var banner = document.querySelector('[data-banner]');
+    if (!banner) return;
+    var key = 'banner-dismissed-at';
+    var ts = localStorage.getItem(key);
+    if (ts && Date.now() - Number(ts) < 30 * 86400000) {
+      banner.remove();
+      return;
+    }
+    localStorage.removeItem(key);
+    document.body.prepend(banner);
+    banner.removeAttribute('hidden');
+    banner.querySelector('.banner-close').addEventListener('click', function() {
+      localStorage.setItem(key, String(Date.now()));
+      banner.remove();
+    });
+  })();
+</script>
 <div class="header sl-flex">
   <div class="full-width sl-flex">
     <SiteTitle />
@@ -59,6 +92,83 @@ const links: Link[] = [
 </div>
 
 <style>
+  /* ── Site-wide announcement banner ── */
+  /* JS moves the banner to <body> so it's independent of the header. */
+  .site-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--sl-banner-height);
+    padding: 0 2.5rem 0 1rem;
+    background: linear-gradient(90deg, hsl(38, 65%, 20%), hsl(28, 60%, 23%));
+    border-bottom: 1px solid hsl(38, 50%, 30%);
+    font-size: var(--sl-text-sm);
+    line-height: 1.4;
+    text-align: center;
+    color: hsl(40, 55%, 88%);
+  }
+  .banner-text {
+    display: inline;
+  }
+  .banner-close {
+    position: absolute;
+    inset-inline-end: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    background: hsla(0, 0%, 100%, 0.1);
+    border: 1px solid hsla(0, 0%, 100%, 0.15);
+    border-radius: 0.25rem;
+    color: hsl(40, 40%, 75%);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .banner-close:hover {
+    background: hsla(0, 0%, 100%, 0.2);
+    border-color: hsla(0, 0%, 100%, 0.3);
+    color: hsl(40, 55%, 95%);
+  }
+  :root[data-theme='light'] .banner-close {
+    background: hsla(30, 50%, 30%, 0.08);
+    border-color: hsla(30, 50%, 30%, 0.2);
+    color: hsl(30, 40%, 40%);
+  }
+  :root[data-theme='light'] .banner-close:hover {
+    background: hsla(30, 50%, 30%, 0.15);
+    border-color: hsla(30, 50%, 30%, 0.35);
+    color: hsl(30, 45%, 25%);
+  }
+  .banner-text :global(a) {
+    color: hsl(40, 100%, 72%);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .banner-text :global(a:hover) {
+    color: hsl(40, 100%, 85%);
+  }
+  :root[data-theme='light'] .site-banner {
+    background: linear-gradient(90deg, hsl(40, 80%, 92%), hsl(35, 75%, 88%));
+    border-bottom-color: hsl(38, 55%, 80%);
+    color: hsl(30, 45%, 22%);
+  }
+  :root[data-theme='light'] .banner-text :global(a) {
+    color: hsl(25, 85%, 38%);
+  }
+  :root[data-theme='light'] .banner-text :global(a:hover) {
+    color: hsl(25, 90%, 30%);
+  }
+
   .header {
     gap: var(--sl-nav-gap);
     justify-content: space-between;
@@ -99,7 +209,7 @@ const links: Link[] = [
       );
       display: grid;
       grid-template-columns:
-        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+        /* 1 (site title): runs up until the main content column's left edge or the width of the title, whichever is the largest  */
         minmax(
           calc(var(--__sidebar-pad, 0rem)),
           auto
@@ -126,6 +236,39 @@ const links: Link[] = [
   }
 body[data-mobile-menu-expanded] header {
   background-color: var(--sl-color-bg);
+}
+
+/* ── Site-wide banner offset ──
+   JS moves the banner to <body>, so it's a direct child of body.
+   When it exists, push the header and all content down by --sl-banner-height. */
+:root {
+  --sl-banner-height: 0rem;
+}
+body:has(> .site-banner) {
+  --sl-banner-height: 2rem;
+}
+body:has(> .site-banner) header {
+  top: var(--sl-banner-height) !important;
+}
+body:has(> .site-banner) .sidebar-pane {
+  top: calc(var(--sl-nav-height) + var(--sl-banner-height)) !important;
+}
+body:has(> .site-banner) .main-frame {
+  padding-top: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height) + var(--sl-banner-height)) !important;
+}
+body:has(> .site-banner) .right-sidebar {
+  padding-top: calc(var(--sl-nav-height) + var(--sl-banner-height)) !important;
+}
+body:has(> .site-banner) mobile-starlight-toc nav {
+  top: calc(var(--sl-nav-height) + var(--sl-banner-height) - 1px) !important;
+}
+body:has(> .site-banner) {
+  scroll-padding-top: calc(1.5rem + var(--sl-nav-height) + var(--sl-mobile-toc-height) + var(--sl-banner-height)) !important;
+}
+@media (min-width: 72em) {
+  body:has(> .site-banner) {
+    scroll-padding-top: calc(1.5rem + var(--sl-nav-height) + var(--sl-banner-height)) !important;
+  }
 }
 </style>
 

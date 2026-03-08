@@ -1,5 +1,6 @@
 {
   "header.link.docs": "Documentation",
   "header.link.blog": "Blog",
-  "header.link.sponsor": "Sponsor"
+  "header.link.sponsor": "Sponsor",
+  "banner.message": "Help Skip get to 5,000 stars on GitHub by starring the <a href=\"https://github.com/skiptools/skip\" target=\"_blank\" rel=\"noopener\">skip</a> repo!"
 }

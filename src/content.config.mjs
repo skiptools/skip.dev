@@ -7,7 +7,9 @@ import { blogSchema } from 'starlight-blog/schema';
 const docs = defineCollection({
   loader: docsLoader(),
   schema: docsSchema({
-    extend: (context) => blogSchema(context)
+    extend: (context) => blogSchema(context).extend({
+      showBanner: z.boolean().optional().default(true),
+    }),
   })
 });
 
@@ -24,6 +26,7 @@ const i18n = defineCollection({
       'header.link.docs': z.string().optional(),
       'header.link.blog': z.string().optional(),
       'header.link.sponsor': z.string().optional(),
+      'banner.message': z.string().optional(),
     }),
   }),
 });
