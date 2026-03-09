@@ -22,7 +22,31 @@ Skip requires a macOS 15+ development machine.
     ```
   
     This will download and install the `skip` tool itself, along with the Android SDK and `gradle` build tool that is necessary for building and running the Android side of your apps.
-  
+1. Create and launch an Android emulator (which is the Android equivalent of the iPhone Simulator and is used for local app development). The `skip` tool has a command to quickly install and configure an Android emulator for your project:
+    
+    ```console
+    skip android emulator create
+    ```
+    
+    ```plaintext
+      [✓] Configure Android SDK Manager (1.55s)
+      [✓] Install platform-tools (0.77s)
+      [✓] Install emulator (0.75s)
+      [✓] Install platforms;android-34 (0.76s)
+      [✓] Install system-images;android-34;google_apis;arm64-v8a (0.75s)
+      [✓] Create emulator: emulator-34-medium_phone (0.76s)
+      [✓] Create Android emulator succeeded in 5.35s
+    ```
+    
+   Once this command completes successfully, you will have an Android emulator installed, which you can launch and observe the logging output with:
+    
+    ```console
+    skip android emulator launch
+    ```
+    
+    :::tip
+    You can alternatively configure and launch an emulator using a graphical user interface by running Android Studio and opening the `Virtual Device Manager` from the ellipsis menu of the Welcome dialog. From there, `Create Device` (e.g., "Pixel 6") and then `Launch` the emulator. See [Create and manage virtual devices](https://developer.android.com/studio/run/managing-avds).
+    :::
 1. You can ensure that the basic development prerequisites are satisfied by running:
   
     ```console
@@ -115,32 +139,6 @@ Skip requires a macOS 15+ development machine.
     
     :::info
     You can alternatively create a Skip project using the non-interactive `skip init` command, as described in the [command line reference](/docs/skip-cli/#init).
-    :::
-    
-1. Once your app pre-builds and opens in Xcode, you are _almost_ ready to go. One more step is needed, which is to create and launch an Android emulator (which is the Android equivalent of the iPhone Simulator and is used for local app development). The `skip` tool has a command to quickly install and configure an Android emulator for your project:
-    
-    ```console
-    skip android emulator create
-    ```
-    
-    ```plaintext
-      [✓] Configure Android SDK Manager (1.55s)
-      [✓] Install platform-tools (0.77s)
-      [✓] Install emulator (0.75s)
-      [✓] Install platforms;android-34 (0.76s)
-      [✓] Install system-images;android-34;google_apis;arm64-v8a (0.75s)
-      [✓] Create emulator: emulator-34-medium_phone (0.76s)
-      [✓] Create Android emulator succeeded in 5.35s
-    ```
-    
-   Once this command completes successfully, you will have an Android emulator installed, which you can launch and observe the logging output with:
-    
-    ```console
-    skip android emulator launch
-    ```
-    
-    :::tip
-    You can alternatively configure and launch an emulator using a graphical user interface by running Android Studio and opening the `Virtual Device Manager` from the ellipsis menu of the Welcome dialog. From there, `Create Device` (e.g., "Pixel 6") and then `Launch` the emulator. See [Create and manage virtual devices](https://developer.android.com/studio/run/managing-avds).
     :::
     
 1. Now you should be ready to launch your new app! In Xcode, ensure the "HelloSkip App" scheme is selected along with a simulator destination (e.g., "iPhone 17"), and then Run the scheme.
