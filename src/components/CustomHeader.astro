@@ -10,7 +10,7 @@ const slug = Astro.locals.starlightRoute.entry.slug;
 
 const showBanner = (Astro.locals.starlightRoute.entry.data as any).showBanner !== false;
 const bannerMessage = (Astro.locals.t as (key: string) => string)('banner.message');
-const hasBanner = showBanner && bannerMessage;
+const hasBanner = showBanner && bannerMessage && bannerMessage !== 'banner.message';
 
 type Link = {
   title: string;

@@ -394,7 +394,7 @@ Place shared resources in the `Sources/ModuleName/Resources/` folder. Skip will 
 ```
 let resourceURL = Bundle.module.url(forResource: "sample", withExtension: "dat")
 let resourceData = Data(contentsOf: resourceURL)
-``` 
+```
 
 Resources are embedded in the `assets/` folder of the Android APK, and are accessed through
 a custom URL handler for the "asset:" protocol that reads assets from the specified path.
@@ -402,6 +402,46 @@ a custom URL handler for the "asset:" protocol that reads assets from the specif
 :::caution
 Unlike Darwin platforms, where resources are stored as individual files on disk, Android resources remain in their containing APK when the app is installed. For this reason, you can only access resources via the `Bundle.module.url(forResource:)` API. The `Bundle.module.path(forResource:)` functions will raise an exception if attempted on Android.
 :::
+
+### Resource Modes
+
+Skip supports two resource processing modes, configured in your module's `Skip/skip.yml` file:
+
+- **`process`** (default): Resources are flattened into a single output directory. Localization files (`.xcstrings`) are automatically converted into `.lproj` folders with `.strings` and `.stringsdict` files. This is the standard behavior for most resources.
+- **`copy`**: Resources are copied as-is, preserving the original file and directory hierarchy. No special processing is performed — localization files, asset catalogs, and other files are left untouched. This is useful when you need to maintain a specific directory structure that your code navigates at runtime.
+
+:::note
+The Skip build plugin cannot read your `Package.swift` file at build time. Any resource directories declared in `Package.swift` must also be mirrored in the module's `Skip/skip.yml` file so that Skip knows how to handle them on Android.
+:::
+
+To configure resources, add a `resources` array to the `skip` section of your `Skip/skip.yml`:
+
+```yaml
+skip:
+  resources:
+    - path: 'Resources'
+      mode: 'process'
+    - path: 'ResourcesCopy'
+      mode: 'copy'
+```
+
+The corresponding `Package.swift` target declaration must include both resource directories:
+
+```swift
+.target(
+    name: "MyModule",
+    dependencies: [...],
+    resources: [
+        .process("Resources"),
+        .copy("ResourcesCopy")
+    ],
+    plugins: [.plugin(name: "skipstone", package: "skip")]
+)
+```
+
+In this example, files in `Resources/` are processed normally (localization conversion, flattening), while files in `ResourcesCopy/` are copied verbatim with their directory structure intact. Both sets of resources are merged into the same Android asset hierarchy and are accessible via `Bundle.module` at runtime.
+
+If no `resources` section is specified in `skip.yml`, Skip falls back to the default behavior of processing the `Resources/` folder with `process` mode.
 
 ### Colors
 
