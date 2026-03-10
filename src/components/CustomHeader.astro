@@ -19,21 +19,15 @@ type Link = {
 };
 
 // Note that these links are duplicated in SiteTitle.astro and CustomHeader.astro
-function formatStarCount(n: number): string {
-  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-  return String(n);
-}
-
 let starCount = '';
 try {
-  const headers: Record<string, string> = { 'Accept': 'application/vnd.github.v3+json' };
-  const token = import.meta.env.GITHUB_TOKEN ?? process.env.GITHUB_TOKEN;
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch('https://api.github.com/repos/skiptools/skip', { headers });
+  const res = await fetch('https://github.com/skiptools/skip');
   if (res.ok) {
-    const data = await res.json();
-    if (data?.stargazers_count) {
-      starCount = formatStarCount(data.stargazers_count);
+    const html = await res.text();
+    // Match the stargazers link, e.g. id="repo-stars-counter-star" ... >2.8k<
+    const match = html.match(/id="repo-stars-counter-star"[^>]*>([^<]+)</);
+    if (match) {
+      starCount = match[1].trim();
     }
   }
 } catch {}
