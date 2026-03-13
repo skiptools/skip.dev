@@ -58,7 +58,11 @@ By default, Skip uses the simulated Robolectric Android environment to run your 
 
 ## Writing Tests
 
-A standard Skip test is just a plain XCTest:
+Skip Lite supports both XCTest and a subset of Swift Testing for writing transpiled tests.
+
+### XCTest
+
+A standard Skip test using XCTest:
 
 ```swift
 import XCTest
@@ -70,16 +74,51 @@ final class MyUnitTests: XCTestCase {
 }
 ```
 
+### Swift Testing
+
+You can also write tests using Swift Testing's `@Test` and `@Suite` annotations. The `#expect` macro maps to assertion functions and `#require` maps to `requireNotNil`:
+
+```swift
+import Testing
+
+@Suite struct MathTests {
+    @Test func addition() {
+        #expect(1 + 1 == 2)
+    }
+
+    @Test func inequality() {
+        #expect(3 != 5)
+    }
+}
+```
+
+Freestanding `@Test` functions (not inside a struct or class) are also supported and are automatically wrapped in a generated test class for JUnit:
+
+```swift
+import Testing
+
+@Test func addition() {
+    #expect(1 + 2 == 3)
+}
+```
+
+The following Swift Testing features are supported:
+- `@Test` functions (both as members and freestanding)
+- `@Suite` types
+- `#expect` with equality (`==`), inequality (`!=`), comparisons (`>`, `<`, `>=`, `<=`), and boolean expressions
+- `#require` for optional unwrapping
+
+Not all Swift Testing features are currently transpiled. Parameterized tests, traits, and tags are not supported.
+
 **Note**: The Skip transpiler currently does not have access to the internal API of the module being tested. If you take advantage of Swift's `@testable imports` to exercise internal API, the transpiler will not be able to perform its usual type inference when translating your test code. This just means that you might have to be more explicit about types and to fully-qualify values (e.g. `MyType.value` instead of just `.value`) when unit testing internal API.
 
 ## Running Tests
 
 The transpiled unit tests are intended to be run as part of the standard Xcode and Swift Package Manager testing process.
 
-This is done by adding one additional test class to the project's `Tests/ModuleNameTests/` folder named `XCSkipTests.swift`.
+The tests are driven by a test harness file called `XCSkipTests.swift`. If your test target does not already contain a file with this name, the Skip build plugin will auto-generate one during the build. This means that for most projects, you do not need to create or maintain this file yourself — just run `swift test` and the harness is created for you.
 
-This additional test class is added automatically when a library is created with the `skip init` command. 
-When adopting Skip into an existing process, add the test case manually:
+If you need to customize the test harness (for example, to specify a device target or adjust the Gradle task), you can add your own `XCSkipTests.swift` to your test target and the build plugin will use it instead of generating one:
 
 ```
 #if os(macOS) // Skip transpiled tests only run on macOS targets
@@ -90,14 +129,14 @@ import SkipTest
 final class XCSkipTests: XCTestCase, XCGradleHarness {
     public func testSkipModule() async throws {
         try await runGradleTests(device: .none) // set device ID to run in Android emulator vs. Robolectric
-    }   
-}       
+    }
+}
 #endif
 ```
 
 ### Running Tests from Xcode
 
-Once the `XCSkipTests.swift` file has been added to a project, the transpiled test cases will automatically run whenever testing against the **macOS** run destination.
+The transpiled test cases will automatically run whenever testing against the **macOS** run destination.
 As such, you need to ensure that your Swift code compiles and runs the same on macOS and iOS.
 This is a pre-requisite for Skip's parity testing, which runs the XCUnit test cases on macOS against the transpiled Kotlin tests in the Android testing environment. While many of the Foundation and SwiftUI APIs are identical on macOS and iOS, you may occasionally have to work around minor differences. 
 

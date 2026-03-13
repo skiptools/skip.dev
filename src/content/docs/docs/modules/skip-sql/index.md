@@ -94,27 +94,59 @@ try sqlite.transaction {
 
 ### Schema Migration
 
-There is no built-in support for schema migrations. Following is a part of a sample of how you might perform migrations in your own app.
+SkipSQL provides built-in support for version-based schema migrations using SQLite's `userVersion` pragma. The `migrate()` method accepts an array of migration closures, each representing a schema version. Only migrations that haven't been applied yet will run, each within its own transaction:
 
 ```swift
-// track the version of the schema with the `userVersion` pragma, which can be used for schema migration
+try ctx.migrate(migrations: [
+    // Version 1: initial schema
+    { ctx in
+        try ctx.exec(sql: "CREATE TABLE DATA_ITEM (ID INTEGER PRIMARY KEY AUTOINCREMENT)")
+    },
+    // Version 2: add description column
+    { ctx in
+        try ctx.exec(sql: "ALTER TABLE DATA_ITEM ADD COLUMN DESCRIPTION TEXT")
+    },
+    // Version 3: add a new table
+    { ctx in
+        try ctx.createTableIfNotExists(NewTable.self)
+    },
+])
+```
+
+Each migration runs in a transaction and increments `userVersion` upon success. If a migration fails, it rolls back without affecting subsequent migrations. You can safely add new closures to the end of the array as your schema evolves — previously applied migrations are skipped.
+
+#### Helper Methods
+
+Additional schema utilities are available:
+
+```swift
+// Check if a table exists in the database
+let exists = try ctx.tableExists("DATA_ITEM") // true
+
+// Create a table from an SQLCodable type (safe if already exists)
+try ctx.createTableIfNotExists(DemoTable.self)
+
+// Add a column to an existing table (safe if already exists)
+try ctx.addColumnIfNotExists(DemoTable.newColumn, to: DemoTable.table)
+```
+
+#### Manual Migration
+
+For more control, you can implement migrations manually using the `userVersion` pragma directly:
+
+```swift
 func migrateSchema(v version: Int64, ddl: String) throws {
     if ctx.userVersion < version {
-        let startTime = Date.now
         try ctx.transaction {
-            try ctx.exec(sql: ddl) // perform the DDL operation
-            // then update the schema version
+            try ctx.exec(sql: ddl)
             ctx.userVersion = version
         }
-        logger.log("updated database schema to \(version) in \(startTime.durationToNow)")
     }
 }
 
-// the initial creation script for a new database
 try migrateSchema(v: 1, ddl: """
 CREATE TABLE DATA_ITEM (ID INTEGER PRIMARY KEY AUTOINCREMENT)
 """)
-// migrate records to have new description column
 try migrateSchema(v: 2, ddl: """
 ALTER TABLE DATA_ITEM ADD COLUMN DESCRIPTION TEXT
 """)
@@ -224,6 +256,73 @@ while let row = cursor.next() {
     logger.log("got instance: \(instance)")
 }
 ```
+
+### Convenience Query Methods
+
+`SQLContext` provides several convenience methods for common operations on `SQLCodable` types:
+
+#### Checking Existence
+
+```swift
+// Check if any rows exist
+let hasRows = try ctx.exists(DemoTable.self)
+
+// Check if rows match a predicate
+let hasMatch = try ctx.exists(DemoTable.self, where: DemoTable.txt.equals(SQLValue("ABC")))
+```
+
+#### Fetching
+
+```swift
+// Fetch all rows
+let all: [DemoTable] = try ctx.fetchAll(DemoTable.self)
+
+// Fetch with filtering, ordering, and pagination
+let page: [DemoTable] = try ctx.fetchAll(DemoTable.self,
+    where: DemoTable.num.isNotNull(),
+    orderBy: DemoTable.int,
+    order: .descending,
+    limit: 10,
+    offset: 20)
+```
+
+#### Batch Insert
+
+```swift
+// Insert multiple instances in a single transaction
+let items = [
+    DemoTable(int: 1, txt: "A"),
+    DemoTable(int: 2, txt: "B"),
+    DemoTable(int: 3, txt: "C"),
+]
+let inserted = try ctx.insertAll(items) // returns instances with assigned primary keys
+```
+
+#### Deleting All Rows
+
+```swift
+// Delete all rows from a table
+try ctx.deleteAll(DemoTable.self)
+```
+
+#### Aggregate Functions
+
+```swift
+// Sum, average, min, max of a column
+let total = try ctx.sum(column: DemoTable.int, of: DemoTable.self)
+let average = try ctx.avg(column: DemoTable.int, of: DemoTable.self)
+let minimum = try ctx.min(column: DemoTable.int, of: DemoTable.self)
+let maximum = try ctx.max(column: DemoTable.int, of: DemoTable.self)
+
+// With filtering
+let filteredSum = try ctx.sum(column: DemoTable.int, of: DemoTable.self,
+    where: DemoTable.txt.isNotNull())
+
+// Generic aggregate for any SQL aggregate function
+let result = try ctx.aggregate("GROUP_CONCAT", column: DemoTable.txt, type: DemoTable.self)
+```
+
+All aggregate functions return an `SQLValue`, which can be accessed with `.longValue`, `.realValue`, `.textValue`, etc.
 
 ### Primary keys and auto-increment columns
 

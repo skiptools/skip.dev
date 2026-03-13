@@ -24,7 +24,7 @@ SkipWeb provides two ways to display web content in Skip Lite apps:
 | **Browser chrome** | Provided by the OS (address bar, back/forward, share) | You build your own toolbar and controls |
 | **JavaScript access** | None — the page runs in a sandboxed browser | Full `evaluateJavaScript` support |
 | **Navigation control** | None — the user navigates freely within the browser | Programmatic back/forward, reload, URL changes |
-| **Cookie/session sharing** | Shares the user's browser cookies and autofill | Isolated web engine per `WebView` instance |
+| **Cookie/session sharing** | Shares the user's browser cookies and autofill | Uses the app's WebView cookie store (shared across WebViews by default; not the same store as Safari/Chrome) |
 | **Customization** | Custom share-sheet actions | Full layout control, scroll delegates, snapshot API |
 
 Use `openWebBrowser` when you want to send the user to a web page with minimal code and maximum platform-native UX. Use `WebView` when you need to embed web content as part of your app's UI with programmatic control.
@@ -487,6 +487,58 @@ extension View {
     ) -> some View
 }
 ```
+
+## Cookies, Storage, and Cache
+
+`SkipWeb` exposes portable browser-data APIs through `WebEngine` and `WebViewNavigator`:
+
+- `cookies(for:)`
+- `cookieHeader(for:)`
+- `setCookie(_:requestURL:)`
+- `applySetCookieHeaders(_:for:)`
+- `clearCookies()`
+- `removeData(ofTypes:modifiedSince:)`
+
+Supporting types:
+
+- `WebCookie` (`name`, `value`, optional `domain`/`path`/`expires`, plus `isSecure`/`isHTTPOnly`)
+- `WebSiteDataType` (`cookies`, `diskCache`, `memoryCache`, `offlineWebApplicationCache`, `localStorage`, `sessionStorage`, `webSQLDatabases`, `indexedDBDatabases`)
+
+Example:
+
+```swift
+let url = URL(string: "https://example.com/path")!
+
+try await navigator.setCookie(
+    WebCookie(name: "session", value: "abc123"),
+    requestURL: url
+)
+
+let header = await navigator.cookieHeader(for: url)
+try await navigator.applySetCookieHeaders(
+    ["pref=1; Path=/; HttpOnly"],
+    for: url
+)
+await navigator.clearCookies()
+try await navigator.removeData(
+    ofTypes: Set([.diskCache, .memoryCache, .localStorage]),
+    modifiedSince: .distantPast
+)
+```
+
+Platform behavior:
+
+- iOS uses the web view's `websiteDataStore.httpCookieStore`.
+- On iOS, cookie scope follows the `WKWebsiteDataStore` attached to that `WKWebView`.
+- In default SkipWeb usage, that is WebKit's shared default data store, so cookies are shared across SkipWeb web views in the app.
+- On iOS, a custom `WKWebView` with a different data store (for example `WKWebsiteDataStore.nonPersistent()`) uses that store instead.
+- Android uses `android.webkit.CookieManager`.
+- On Android, `CookieManager` is a process-wide singleton store shared by all `WebView` instances (not per-`WebView` configurable).
+- `cookies(for:)` returns URL-matching cookies; on Android this is best-effort because `CookieManager` reads as a cookie-header string (limited metadata).
+- `setCookie(_:requestURL:)` requires either `cookie.domain` or a `requestURL` host; otherwise it throws `WebCookieError.missingCookieDomain`.
+- `removeData(ofTypes:modifiedSince:)` maps to iOS `WKWebsiteDataStore.removeData`.
+- On Android, `removeData` requires `modifiedSince == .distantPast` when `ofTypes` is non-empty; otherwise it throws `WebDataRemovalError.unsupportedModifiedSinceOnAndroid`.
+- Android data removal is bucket-level (cookies/cache/storage), not timestamp-granular, and may clear a broader bucket than an individual requested data type.
 
 ## Contribution
 

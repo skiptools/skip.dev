@@ -15,7 +15,9 @@ Skip provides several ways to test your code on Android, depending on whether yo
 
 Skip Lite transpiles your Swift source into Kotlin, and your XCTest test cases into JUnit tests. This means your tests run as standard JUnit on the Android side, which plugs into the well-established Gradle testing infrastructure.
 
-When you create a Skip Lite package with `skip init`, an `XCSkipTests.swift` file is automatically added to your test target:
+The transpiled tests are driven by a test harness file called `XCSkipTests.swift`. If your test target does not already contain a file with this name, the Skip build plugin will auto-generate one during the build. This means that for most projects, you do not need to create or maintain this file yourself — just run `swift test` and the harness is created for you.
+
+If you need to customize the test harness (for example, to specify a device target or adjust the Gradle task), you can add your own `XCSkipTests.swift` to your test target and the build plugin will use it instead of generating one. A typical custom harness looks like this:
 
 ```swift
 #if os(macOS) // Skip transpiled tests only run on macOS targets
@@ -32,7 +34,10 @@ final class XCSkipTests: XCTestCase, XCGradleHarness {
 
 This test harness is what connects Xcode to the Gradle test pipeline. When you run tests against the **macOS** destination in Xcode (or via `swift test` on the command line), `testSkipModule()` triggers the full transpilation and Gradle build, runs the JUnit tests, and reports the results back as XCTest outcomes. The net effect is that you get parity testing across both platforms from a single test run.
 
-The limitation is that only XCTest-style tests are supported. Your Swift tests are transpiled into Kotlin JUnit, so they are subject to the same transpilation constraints as the rest of your Skip Lite code. Swift Testing (`@Test`) is not available in this mode.
+Your Swift tests are transpiled into Kotlin JUnit, so they are subject to the same transpilation constraints as the rest of your Skip Lite code. Both XCTest and a subset of Swift Testing are supported:
+
+- **XCTest**: Classes inheriting from `XCTestCase` with `test`-prefixed methods are transpiled into JUnit test classes with `@Test` annotations. Standard `XCTAssert*` functions map to JUnit assertions.
+- **Swift Testing**: Functions annotated with `@Test` and types annotated with `@Suite` are also transpiled into JUnit tests. The `#expect` macro is mapped to assertion functions (`expectEqual`, `expectNotEqual`, `expectTrue`, `expectGreaterThan`, etc.) and `#require` is mapped to `requireNotNil`. Freestanding `@Test` functions (not inside a struct or class) are automatically wrapped in a generated test class. Not all Swift Testing features are supported — parameterized tests, traits, and tags are not currently transpiled.
 
 ### Local Testing with Robolectric
 
@@ -110,7 +115,7 @@ func testAndroidSpecificFeature() {
 | | Skip Lite (Robolectric) | Skip Lite (Instrumented) | Skip Fuse (CLI) | Skip Fuse (APK) |
 |---|---|---|---|---|
 | **Command** | `swift test` | `ANDROID_SERIAL=… swift test` | `skip android test` | `skip android test --apk` |
-| **Test framework** | XCTest only (transpiled to JUnit) | XCTest only (transpiled to JUnit) | XCTest + Swift Testing | Swift Testing only |
+| **Test framework** | XCTest + Swift Testing (transpiled to JUnit) | XCTest + Swift Testing (transpiled to JUnit) | XCTest + Swift Testing | Swift Testing only |
 | **Runs on** | Host JVM (macOS/Linux) | Android emulator/device | Android emulator/device via `adb shell` | Android emulator/device as installed APK |
 | **Android APIs** | Simulated via Robolectric | Full | Not available (no JVM/JNI) | Full (real app process with JNI) |
 | **Resource bundles** | Managed by Gradle | Managed by Gradle | Yes (sidecar `.resources` dirs) | No (no Foundation APK bundle support) |
