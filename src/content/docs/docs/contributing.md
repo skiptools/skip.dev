@@ -36,7 +36,7 @@ You can build and deploy apps using local modifications to any of the Skip Core 
 
 Launching your app from Android Studio will **not** use your Workspace's local libraries by default. If you'd like to work in Android Studio, edit your app's `Android/settings.gradle.kts` file to point Android Studio at Xcode's build, as described in [Cross-Platform Topics](/docs/platformcustomization/#android-studio-setup).
 
-:::tip
+:::note
 If Android Studio appears to be stuck on the official library releases rather than your local versions, use its `File → Sync Project with Gradle Files` command to force Android Studio to re-evaluate `settings.gradle.kts`.
 :::
 
@@ -80,6 +80,16 @@ So a sample workflow making a contribution would look like this:
 :::note
 If the PRs involve changing the API surface (including removing `@unavailable` annotations), then the CI will likely fail on everything except the `SkipUI` changes due to the fact that the other packages are only built against the most recent release tags of `SkipUI` rather than the `main` branch. That's OK: when the PRs are reviewed, they will all be reviewed together and once merged and included in a new release, the CI will become green again.
 :::
+
+### Workflow example
+
+An example of a series of pull requests that demonstrates the workflow of adding a new feature to SkipUI can be seen at:
+
+1. Add `View.contextMenu` modifier: https://github.com/skiptools/skip-ui/pull/356
+2. Support `View.contextMenu` modifier: https://github.com/skiptools/skip-fuse-ui/pull/93
+3. Add ContextMenuPlayground to demonstrate SkipUI `View.contextMenu`: https://github.com/skiptools/skipapp-showcase/pull/74
+4. Add ContextMenuPlayground to demonstrate SkipFuseUI `View.contextMenu`: https://github.com/skiptools/skipapp-showcase-fuse/pull/50
+
 
 ## Integration Frameworks
 
