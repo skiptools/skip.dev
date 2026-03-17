@@ -707,6 +707,7 @@ Support levels:
 <li><code>init(data: Data, encoding: StringEncoding)</code></li>
 <li><code>init(bytes: [UInt8], encoding: StringEncoding)</code></li>
 <li><code>init(contentsOf: URL)</code></li>
+<li><code>static func localizedStringWithFormat(_ format: String, _ arguments: Any...) -> String</code></li>
 <li><code>var capitalized: String</code></li>
 <li><code>var deletingLastPathComponent: String</code></li>
 <li><code>func replacingOccurrences(of search: String, with replacement: String) -> String</code></li>
