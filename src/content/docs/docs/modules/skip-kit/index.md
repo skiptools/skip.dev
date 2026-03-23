@@ -240,6 +240,145 @@ On iOS it will use an instance of `QLPreviewController` to display the file at t
 On iOS there's no need to provide a filename or a mime type, but sometimes on Android is necessary (for example when selecting a document using the document picker). On Android if no mime type is supplied it will try to guess it by the file url. If no mime type can be found the application chooser will be empty. 
 A file provider (like the one used for using the `MediaPicker`) is necessary for the Intent to correctly pass reading permission to the receiving app. As long as your Skip already implements the FileProvider and the `file_paths.xml` as described in the `Camera and Media Permission` section there's nothing else needed, otherwise you need to follow the instructions in the mentioned section. 
 
+## WebBrowser
+
+For cases where you want to display a web page without the full power and complexity of an embedded `WebView` (from [SkipWeb](/docs/modules/skip-web)), SkipKit provides the `View.openWebBrowser()` modifier. This opens a URL in the platform's native in-app browser:
+
+- **iOS**: [SFSafariViewController](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller) — a full-featured Safari experience presented within your app, complete with the address bar, share sheet, and reader mode.
+- **Android**: [Chrome Custom Tabs](https://developer.android.com/develop/ui/views/layout/webapps/in-app-browsing-embedded-web) — a Chrome-powered browsing experience that shares cookies, autofill, and saved passwords with the user's browser.
+
+### Basic Usage
+
+Open a URL in the platform's native in-app browser:
+
+```swift
+import SwiftUI
+import SkipKit
+
+struct MyView: View {
+    @State var showPage = false
+
+    var body: some View {
+        Button("Open Documentation") {
+            showPage = true
+        }
+        .openWebBrowser(
+            isPresented: $showPage,
+            url: "https://skip.dev/docs",
+            mode: .embeddedBrowser(params: nil)
+        )
+    }
+}
+```
+
+### Launch in System Browser
+
+To open the URL in the user's default browser app instead of an in-app browser:
+
+```swift
+Button("Open in Safari / Chrome") {
+    showPage = true
+}
+.openWebBrowser(
+    isPresented: $showPage,
+    url: "https://skip.dev",
+    mode: .launchBrowser
+)
+```
+
+### Presentation Mode
+
+By default the embedded browser slides up vertically as a modal sheet. Set `presentationMode` to `.navigation` for a horizontal slide transition that feels like a navigation push:
+
+```swift
+Button("Open with Navigation Style") {
+    showPage = true
+}
+.openWebBrowser(
+    isPresented: $showPage,
+    url: "https://skip.dev",
+    mode: .embeddedBrowser(params: EmbeddedParams(
+        presentationMode: .navigation
+    ))
+)
+```
+
+| Mode | iOS | Android |
+| --- | --- | --- |
+| `.sheet` (default) | Full-screen cover (slides up vertically) | [Partial Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/guide-partial-custom-tabs/) bottom sheet (resizable, initially half-screen height). Falls back to full-screen if the browser does not support partial tabs. |
+| `.navigation` | Navigation push (slides in horizontally) | Standard full-screen Chrome Custom Tabs launch |
+
+**Limitations:**
+- **iOS:** The `.navigation` presentation mode requires the calling view to be inside a `NavigationStack` (or `NavigationView`). If the view is not hosted in a navigation container, the modifier will have no effect.
+- **Android:** In `.sheet` mode, if the user's browser does not support the Partial Custom Tabs API, the tab launches full-screen as a fallback.
+
+### Custom Actions
+
+Add custom actions that appear in the share sheet (iOS) or as menu items (Android):
+
+```swift
+Button("Open with Actions") {
+    showPage = true
+}
+.openWebBrowser(
+    isPresented: $showPage,
+    url: "https://skip.dev",
+    mode: .embeddedBrowser(params: EmbeddedParams(
+        customActions: [
+            WebBrowserAction(label: "Copy Link") { url in
+                // handle the action with the current page URL
+            },
+            WebBrowserAction(label: "Bookmark") { url in
+                // save the URL
+            }
+        ]
+    ))
+)
+```
+
+On iOS, custom actions appear as `UIActivity` items in the Safari share sheet. On Android, they appear as menu items in Chrome Custom Tabs (maximum 5 items).
+
+### API Reference
+
+```swift
+/// Controls how the embedded browser is presented.
+public enum WebBrowserPresentationMode {
+    /// Present as a vertically-sliding modal sheet (default).
+    case sheet
+    /// Present as a horizontally-sliding navigation push.
+    case navigation
+}
+
+/// The mode for opening a web page.
+public enum WebBrowserMode {
+    /// Open the URL in the system's default browser application.
+    case launchBrowser
+    /// Open the URL in an embedded browser within the app.
+    case embeddedBrowser(params: EmbeddedParams?)
+}
+
+/// Configuration for the embedded browser.
+public struct EmbeddedParams {
+    public var presentationMode: WebBrowserPresentationMode
+    public var customActions: [WebBrowserAction]
+}
+
+/// A custom action available on a web page.
+public struct WebBrowserAction {
+    public let label: String
+    public let handler: (URL) -> Void
+}
+
+/// View modifier to open a web page.
+extension View {
+    public func openWebBrowser(
+        isPresented: Binding<Bool>,
+        url: String,
+        mode: WebBrowserMode
+    ) -> some View
+}
+```
+
 ## Building
 
 This project is a free Swift Package Manager module that uses the

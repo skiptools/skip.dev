@@ -76,9 +76,22 @@ struct ConfigurableWebView : View {
 
 ```
 
+Profile selection is configured on `WebEngineConfiguration`:
+
+```swift
+let config = WebEngineConfiguration(
+    profile: .named("account-a")
+)
+```
+
 `WebViewNavigator` can keep a warm `WebEngine` and reuse it across view recreation.
 When the same navigator is rebound to an engine that already has content/history, `initialURL`/`initialHTML` are not reloaded.
 This lets apps preserve page state when navigating away and back with the same navigator instance.
+
+Navigation APIs:
+
+- `load(url:)` is fire-and-forget and logs load failures.
+- `loadOrThrow(url:)` is async/throwing and should be used when callers need explicit error handling (including `WebProfileError` preflight failures).
 
 ### JavaScript
 
@@ -252,6 +265,7 @@ SkipWeb validates this contract at popup creation time:
 For iOS parity, return a child created with `platformContext.makeChildWebEngine(...)`.
 By default this mirrors the parent `WebEngineConfiguration` and inspectability on the popup child. Pass an explicit configuration only when you intentionally want the child to diverge.
 This default mirroring is configuration-level. Platform delegate assignments on the returned child (`WKUIDelegate`, `WKNavigationDelegate`) are not automatically copied from the parent, so assign them explicitly if your app depends on that behavior.
+On Android, once a child is returned from the delegate, SkipWeb mirrors key parent web settings and inherits the parent `WebProfile` onto the child; if profile inheritance fails, popup creation is denied.
 
 ### Scroll Delegate
 
@@ -502,6 +516,7 @@ extension View {
 Supporting types:
 
 - `WebCookie` (`name`, `value`, optional `domain`/`path`/`expires`, plus `isSecure`/`isHTTPOnly`)
+- `WebProfile` (`.default`, `.named(String)`)
 - `WebSiteDataType` (`cookies`, `diskCache`, `memoryCache`, `offlineWebApplicationCache`, `localStorage`, `sessionStorage`, `webSQLDatabases`, `indexedDBDatabases`)
 
 Example:
@@ -528,12 +543,17 @@ try await navigator.removeData(
 
 Platform behavior:
 
-- iOS uses the web view's `websiteDataStore.httpCookieStore`.
-- On iOS, cookie scope follows the `WKWebsiteDataStore` attached to that `WKWebView`.
-- In default SkipWeb usage, that is WebKit's shared default data store, so cookies are shared across SkipWeb web views in the app.
-- On iOS, a custom `WKWebView` with a different data store (for example `WKWebsiteDataStore.nonPersistent()`) uses that store instead.
-- Android uses `android.webkit.CookieManager`.
-- On Android, `CookieManager` is a process-wide singleton store shared by all `WebView` instances (not per-`WebView` configurable).
+- Profile mapping:
+
+| `WebProfile` | iOS data store | Android data store |
+| --- | --- | --- |
+| `.default` | `WKWebsiteDataStore.default()` | Default process-wide store |
+| `.named("id")` | `WKWebsiteDataStore(forIdentifier: "id")` | AndroidX WebKit named profile (requires `WebViewFeature.MULTI_PROFILE`) |
+
+- iOS cookie scope follows the `WKWebsiteDataStore` attached to the `WKWebView`.
+- Android `.default` uses `android.webkit.CookieManager` singleton.
+- Android `.named("id")` requires `WebViewFeature.MULTI_PROFILE`; otherwise profile setup fails with `WebProfileError.unsupportedOnAndroid` (no fallback to default).
+- On Android, always check profile support at runtime before using `.named("id")` profiles. You can use `WebEngine.isAndroidMultiProfileSupported()` (or the underlying `WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)` check directly).
 - `cookies(for:)` returns URL-matching cookies; on Android this is best-effort because `CookieManager` reads as a cookie-header string (limited metadata).
 - `setCookie(_:requestURL:)` requires either `cookie.domain` or a `requestURL` host; otherwise it throws `WebCookieError.missingCookieDomain`.
 - `removeData(ofTypes:modifiedSince:)` maps to iOS `WKWebsiteDataStore.removeData`.
