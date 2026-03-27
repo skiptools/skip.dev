@@ -96,6 +96,16 @@ export default defineConfig({
       ],
       // not needed now that we generate correct editUrl for modules and samples
       //routeMiddleware: './src/routeData.ts',
+      head: [
+        { tag: 'meta', attrs: { property: 'og:image', content: 'https://assets.skip.dev/images/og-banner.png' } },
+        { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
+        { tag: 'meta', attrs: { property: 'og:image:height', content: '675' } },
+        { tag: 'meta', attrs: { property: 'og:image:type', content: 'image/png' } },
+        { tag: 'meta', attrs: { property: 'og:site_name', content: 'Skip' } },
+        { tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
+        { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
+        { tag: 'meta', attrs: { name: 'twitter:image', content: 'https://assets.skip.dev/images/og-banner.png' } },
+      ],
       customCss: [
         // Relative path to your custom CSS file
         './src/styles/custom.css',
