@@ -8,6 +8,10 @@ author: Marc Prud'hommeaux
 ---
 
 
+:::note[Update]
+Skip has come a long way since this initial announcement. Skip 1.0 shipped in August 2024, and as of January 2026 Skip is completely free and open source. See [Getting Started](/docs/gettingstarted/) for current setup instructions.
+:::
+
 We're thrilled to announce the tech preview of Skip: dual-platform app development in Swift. 
 
 <img src="https://assets.skip.dev/images/skipdev.png" alt="Screenshot" style="width: 90%"/>

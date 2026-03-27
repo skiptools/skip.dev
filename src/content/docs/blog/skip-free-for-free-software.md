@@ -7,6 +7,10 @@ permalink: /blog/skip-is-free-for-free-software/
 author: the Skip Team
 ---
 
+:::note[Update]
+Skip is now completely free and open source for all projects. The distinction between free/commercial licensing described in this post no longer applies. See [Skip Is Now Free and Open Source](/blog/skip-is-free/).
+:::
+
 Skip brings your iPhone app to Android. With Skip, you can create a modern SwiftUI app with the standard iOS development tools, and Skip transforms it into a Kotlin app for Android. With Skip you can iteratively design, build, test, run, debug, and deploy a single app for both major mobile platforms using a single language (Swift) and a single IDE (Xcode). Watch our [12-minute tour](/tour) for a glimpse of the magic.
 
 Today we are pleased to announce that Skip will be **free** for all free open-source software.

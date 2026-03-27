@@ -7,6 +7,10 @@ permalink: /blog/native-swift-on-android-1/
 author: Marc Prud'hommeaux
 ---
 
+:::note[Update]
+This post describes working with early preview builds of the Swift Android toolchain. As of Swift 6.3, Android is an officially supported Swift platform. See [Official Android support in Swift 6.3](/blog/swift-63-android-support/) for the latest, and the [Getting Started guide](/docs/gettingstarted/) for current setup instructions.
+:::
+
 You may already be familiar with [Skip](/) as a tool for bringing your Swift iOS apps to Android. Skip takes a novel *transpilation* approach, where we integrate with the Xcode build system to convert your Swift code into [Kotlin](https://kotlinlang.org). This allows us to create an Android library for every build of your Swift package, or to launch an Android version of your SwiftUI app on every Xcode `Run`.
 
 We've [discussed the advantages](/blog/bringing-swift-to-android/) of a transpilation-based strategy in the past. But despite the fact that Android is a Java/Kotlin-oriented platform, there are also significant benefits to compiled code. Skip has featured support for integrating with [C code](/blog/sharing-c-between-swift-and-kotlin/) on both Android and iOS for a long time. It only makes sense that our *transpiled* Swift code should also integrate with *compiled* Swift code.

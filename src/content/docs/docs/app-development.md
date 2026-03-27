@@ -89,7 +89,7 @@ If you've chosen to create separate iOS and Android apps that share dual-platfor
 
 Building a dual-platform framework in Xcode builds your iOS code and runs the SkipStone build plugin. It does **not**, however, perform an Android build. Due to limitations on Xcode plugins, the only way to invoke the Android compiler is to run the module's unit test suite against the macOS destination, or to export the framework's build artifacts. For more information, see the [testing](/docs/testing/) and [deployment](/docs/deployment/) documentation.
 
-<img alt="Framework Test Development Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-test-failure.png" style="width: 100%; XXXmax-width: 750px;" />
+<img alt="Framework Test Development Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-test-failure.png" style="width: 100%; max-width: 750px;" />
 
 :::caution
 You must run your tests against a macOS destination in order to perform an Android framework build. Testing against the iOS destination will not run the Android tests.

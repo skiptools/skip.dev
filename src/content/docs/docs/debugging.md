@@ -99,7 +99,7 @@ When you log a message in your app, the `OSLog` messages from the Swift side of 
 
 The location of the Kotlin and Swift source Skip generates during bridging and transpiling differs for app and framework targets. We discuss how to access your generated source in Xcode below. The Cross-Platform Topics documentation covers how to work with your Android code [in Android Studio](/docs/platformcustomization/#android-studio).
 
-<img alt="Framework Transpilation Browse Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-test-browse.png" style="width: 100%; XXXmax-width: 750px;" />
+<img alt="Framework Transpilation Browse Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-test-browse.png" style="width: 100%; max-width: 750px;" />
 
 ### Dual-Platform Apps
 
@@ -117,7 +117,7 @@ The first time you build - and each first re-build after deleting `DerivedData` 
 
 Skip includes the `Create SkipLink` command plugin to link to the plugin output of your framework targets in Xcode. To invoke the command, control-click your Skip-ified package or highlight the package and use the `File → Packages` menu.
 
-<img alt="Framework SkipLink Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-skiplink.png" style="width: 100%; XXXmax-width: 750px;" />
+<img alt="Framework SkipLink Screenshot" src="https://assets.skip.dev/framework-dev/framework-xcode-skiplink.png" style="width: 100%; max-width: 750px;" />
 
 After running the `Create SkipLink` command, the new `SkipLink` Xcode group will allow you to access your framework's Android project and generated source.
 

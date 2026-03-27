@@ -9,7 +9,7 @@ Please include the output of the `skip checkup` command in any communication rel
 
 ## Troubleshooting Common Issues {#troubleshooting}
 
-Skip's architecture relies on recent advances in the plugin system used by Xcode 15 and Swift Package Manager 5.9. When unexpected issues arise, often the best first step is to clean your Xcode build (`Product` → `Clean Build Folder`) and reset packages (`File` → `Packages` → `Reset Package Caches`). Restarting Xcode is sometimes warranted, and trashing the local `DerivedData` folder as well as your app directory's `.build` folder might even be needed. 
+Skip's architecture relies on the Swift Package Manager build plugin system. When unexpected issues arise, often the best first step is to clean your Xcode build (`Product` -> `Clean Build Folder`) and reset packages (`File` -> `Packages` -> `Reset Package Caches`). Restarting Xcode is sometimes warranted, and trashing the local `DerivedData` folder as well as your app directory's `.build` folder might even be needed. 
 
 Specific known error conditions are listed below. Search the [documentation](/docs), [issues](https://source.skip.dev/skip/issues), and [discussions](http://forums.skip.dev) for more information and to report problems.
 

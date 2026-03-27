@@ -196,7 +196,7 @@ The mobile app market is split between iPhone and Android. iPhone leads in reven
 </div>
 
 
-If your app is only available on iOS, it is leaving out a critical segment of the market. Your absence from Android is leaving users behind. Skip is the [only framework](/compare/) that delivers genuinely native apps on both platforms from a single Swift codebase.
+If your app is only available on iOS, it is leaving out an enormous and growing segment of the market. Your absence from Android is leaving users behind. Skip is the [only framework](/compare/) that delivers genuinely native apps on both platforms from a single Swift codebase.
 
 :::tip
 To jump right in and get started, please go straight to the [<u>getting started</u>](/docs/gettingstarted/) guide.

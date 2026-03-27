@@ -1,11 +1,11 @@
 ---
-title: Native Swift Tech Preview
+title: Native Swift on Android
 permalink: /docs/native/
 ---
 
 # Native Swift
 
-Skip has long allowed developers to create cross-platform iOS and Android apps in Swift and SwiftUI by *transpiling* your Swift to Android's native Kotlin language. Now, Skip gives you the ability to use native, **compiled** Swift for cross-platform development as well. Skip's native Swift support is a combination of:
+Skip has long allowed developers to create cross-platform iOS and Android apps in Swift and SwiftUI by *transpiling* your Swift to Android's native Kotlin language. With the [official Swift SDK for Android](https://www.swift.org/blog/swift-6.3-released/#android) shipping in Swift 6.3, Skip also gives you the ability to use native, **compiled** Swift for cross-platform development. Skip's native Swift support is a combination of:
 
 - A native Swift toolchain for Android.
 - Integration of Swift functionality like logging and networking with the Android operating system.

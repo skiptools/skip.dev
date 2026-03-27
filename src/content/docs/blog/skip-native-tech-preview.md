@@ -7,6 +7,10 @@ author: the Skip Team
 permalink: /blog/skip-native-tech-preview/
 ---
 
+:::note[Update]
+Native Swift on Android is now officially supported as of Swift 6.3. The setup described in this post used preview toolchains; see [Getting Started](/docs/gettingstarted/) and the [Fuse mode documentation](/docs/modes/) for current instructions.
+:::
+
 Native Swift on Android, Part 2: Your First Swift Android App
 
 ## Introduction
