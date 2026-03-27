@@ -7,7 +7,7 @@ author: Marc Prud'hommeaux
 draft: false
 ---
 
-With this week's release of [Swift 6.3](https://www.swift.org/blog/swift-6.3-released/#android), support for the Android platform is now official. This is not a preview, not a nightly experiment, not a community fork. The Swift SDK for Android ships alongside the Static Linux and WebAssembly SDKs as a first-class, officially maintained target. For the first time, Swift runs on every major consumer operating system: macOS, iOS, Windows, Linux, and now Android.
+With this week's release of [Swift 6.3](https://www.swift.org/blog/swift-6.3-released/#android), support for the Android platform is now official. The Swift SDK for Android ships alongside the Static Linux and WebAssembly SDKs as a first-class, officially maintained target. For the first time, Swift runs on every major consumer operating system: macOS, iOS, Windows, Linux, and now Android.
 
 For us at Skip, this moment is the culmination of years of work. We have been building on the Swift Android toolchain since its earliest preview builds, and we co-founded the [Swift on Android Working Group](https://forums.swift.org/t/swift-on-android-working-group/77780) that helped shepherd it from prototype to production. Today, the technology that has been powering Skip Fuse apps in the real world is officially part of the Swift project.
 
