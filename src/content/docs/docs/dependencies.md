@@ -45,7 +45,7 @@ let package = Package(
 ```
 
 :::caution
-[Skip Lite](/docs/modes/#fuse) modules cannot use pure SwiftPM packages for Android. A Skip Lite module will see that the dependency does not have a `Skip/skip.yml` file and exclude it from the Android build. 
+[Skip Lite](/docs/modes/#lite) modules cannot use pure SwiftPM packages for Android. A Skip Lite module will see that the dependency does not have a `Skip/skip.yml` file and exclude it from the Android build. 
 :::
 
 ---

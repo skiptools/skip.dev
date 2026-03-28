@@ -60,11 +60,11 @@ We generally recommend the LGPL, which provides a good balance of flexibility an
 
 ### Can Skip Apps be distributed on the Apple App Store and the Google Play Store? {#appstore}
 
-Yes. Applications built with Skip utilize the user interface toolkits recommended by the platform vendors themselves, and thereby follow the guidelines and principles that are unique to each of these two individual platforms. On the iOS side, the [Skip Core Framrwork](#skipstack) modules can be eliminated from the build (with [SkipZero](#skipzero)), resulting in an app submission that contains no trace of any Skip libraries whatsoever.
+Yes. Applications built with Skip utilize the user interface toolkits recommended by the platform vendors themselves, and thereby follow the guidelines and principles that are unique to each of these two individual platforms. On the iOS side, the [Skip Core Framework](#skipstack) modules can be eliminated from the build (with [SkipZero](#skipzero)), resulting in an app submission that contains no trace of any Skip libraries whatsoever.
 
 One example of an app that is distributed on the Apple App Store and the Google Play Store is the [Skip Showcase](/docs/samples/skipapp-showcase/) app.
 
-### What does it mean it be Genuinely Native? {#genuinely_native}
+### What does it mean to be Genuinely Native? {#genuinely_native}
 
 Skip apps are genuinely native, in that they use the vendor-recommended UI toolkits directly, thereby guaranteeing maximum compatibility, accessibility, and performance. They use SwiftUI directly on the iPhone (“<i>SwiftUI is the preferred app-builder technology, because it offers a modern, platform-agnostic approach to building your UI and app infrastructure.</i>” – [developer.apple.com](https://developer.apple.com/ios/planning/#build-the-data-structures-youll-use-in-your-app)) and Compose on Android (“<i>We recommend using Jetpack Compose if you’re looking to build a new app</i>” – [android-developers.googleblog.com](https://android-developers.googleblog.com/2023/02/hundreds-of-thousands-of-developers-are-learning-jetpack-compose.html)).
 
@@ -100,11 +100,11 @@ However, AI tools can be very useful for generating Swift and SwiftUI code, espe
 
 ### What is the minimum iOS version for Skip apps? {#ios_version}
 
-iOS 16+. It is estimated at [developer.apple.com](https://developer.apple.com/support/app-store/) that 96% of all devices introduced in the last four years use iOS 16 or higher, as measured by devices that transacted on the App Store as of February 4, 2024.
+iOS 16+. According to [developer.apple.com](https://developer.apple.com/support/app-store/), the vast majority of active devices run iOS 16 or higher.
 
 ### What is the minimum Android version for Skip apps? {#android_version}
 
-Skip targets Android API level 34 (which is the minimum allowed level for submitting new apps to the Play Store, according to [https://developer.android.com/google/play/requirements/target-sdk](https://developer.android.com/google/play/requirements/target-sdk)) with a minimum supported version of API level 28. Android API 28 ("P"; Android 9) will run on over 95% of active Android devices as of January, 2026, according to the device reach estimate by Android Studio.
+Skip targets Android API level 34, which is the minimum level required for submitting new apps to the [Play Store](https://developer.android.com/google/play/requirements/target-sdk). The minimum supported version is API level 28 (Android 9 "Pie"), which covers over 95% of active Android devices according to Android Studio's device reach estimates.
 
 ### How large are apps that are built using Skip? {#app_size}
 
@@ -301,7 +301,7 @@ Some libraries have Skip-specific bridging implementations, like [SkipAV](/docs/
 
 ### What third-party dependencies will work with Skip Fuse? {#skip_fuse_third_party_deps}
 
-Some packages that rely solely on built-in frameworks like Foundation and the Swift standard library will work "out of the box" with Skip Fuse. For other packages, it is up to the maintainer to add support for Android to their Swift package. In some cases, this can be a trivial matter, and in other cases — especially when the package interacts with low-level operating-system specific nuances — it can be more challenging.
+Some packages that rely solely on built-in frameworks like Foundation and the Swift standard library will work "out of the box" with Skip Fuse. For other packages, it is up to the maintainer to add support for Android to their Swift package. In some cases this can be straightforward, but packages that interact with low-level OS-specific APIs can be more challenging to port.
 
 The [Bringing Swift Packages to Android](/blog/android-native-swift-packages/) post provides more information and some helpful suggestions for package authors who want to ensure their code can be used on Android.
 

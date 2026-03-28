@@ -3,7 +3,7 @@ title: Bridging Reference
 permalink: /docs/bridging/
 ---
 
-Skip's [documentation](/docs/modes/#bridging) describes Skip's technology for bridging between compiled Swift and transpiled Swift or Kotlin and Java. This reference details the Swift language features and types that can be bridged. Bridging capabilities are symmetrical unless otherwise noted. That is, if something is marked as bridgeable, then you can use it whether you are bridging from native Swift to Kotlin/Java, or from transpiled Kotlin/Java to native Swift.
+Skip's [documentation](/docs/modes/#bridging) describes the technology for bridging between compiled Swift and transpiled Swift or Kotlin and Java. This reference details which Swift language features and types can be bridged. Bridging works in both directions (Swift to Kotlin/Java and Kotlin/Java to Swift) with equal capability, except where noted below.
 
 ## Language Features
 

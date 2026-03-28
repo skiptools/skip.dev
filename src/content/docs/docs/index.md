@@ -112,7 +112,7 @@ The mobile app market is split between iPhone and Android. iPhone leads in reven
 }
 
 .bar-android {
-  height: 180px; /* ~3.6B+ users */
+  height: 180px; /* ~3.7B users */
   background-color: var(--android-color);
 }
 
@@ -202,7 +202,7 @@ If your app is only available on iOS, it is leaving out an enormous and growing 
 To jump right in and get started, please go straight to the [<u>getting started</u>](/docs/gettingstarted/) guide.
 :::
 
-With Skip, you write your shared code in Swift and SwiftUI. Your Swift compiles natively for both iOS and Android — no added runtime, no interpreter, no garbage collector on iOS. SwiftUI runs as-is on Apple platforms, and Skip produces native [Jetpack Compose](https://developer.android.com/compose) on Android. Your users get a platform-perfect experience, not a cross-platform approximation.
+With Skip, you write your shared code in Swift and SwiftUI. Your Swift compiles natively for both iOS and Android, with no added runtime, no interpreter, and no garbage collector on iOS. SwiftUI runs as-is on Apple platforms, and Skip produces native [Jetpack Compose](https://developer.android.com/compose) on Android. Your users get a platform-perfect experience, not a cross-platform approximation.
 
 Use Skip for bits of shared logic and UI, for your entire app, or anything in between. Skip makes [integration](/docs/platformcustomization/) between your Swift and Android API as well as your SwiftUI and Compose views a snap, without significant overhead or complex bridging.
 
@@ -238,7 +238,7 @@ Skip eliminates these trade-offs. With Skip, you can:
 - Produce entirely native user interfaces - SwiftUI on iOS and Compose on Android - from common SwiftUI code.
 - Call native API from your shared code whenever you need to.
 
-You write your shared code in Swift and SwiftUI — the same language and frameworks you already use on iOS. On Android, Skip bridges your Swift and SwiftUI to Kotlin and Compose. The result is fully native code on both platforms. And because the resulting code is native, it means:
+You write your shared code in Swift and SwiftUI, the same language and frameworks you already use on iOS. On Android, Skip bridges your Swift and SwiftUI to Kotlin and Compose. The result is fully native code on both platforms. And because the resulting code is native, it means:
 
 1. Your Swift code [integrates perfectly](/docs/platformcustomization/) with the parts of your app you choose to develop separately on iOS and Android.
 1. You are never limited by what Skip does or does not support. You can always implement and call out to platform-specific solutions, just as you would when developing separate iOS and Android apps.
@@ -250,7 +250,7 @@ Skip can save you enormous amounts of time and effort, without requiring you to 
 Skip has many advantages over other cross platform solutions like Flutter and React Native:
 
 - **Genuinely native.** Skip apps don't just “look native”, they *are* native: SwiftUI on iOS and Jetpack Compose on Android. You know the difference, and so do your users. Take full advantage of new platform features and get automatic integration with core functionality like accessibility, which is a requirement for compliance in many fields.
-- **Zero footprint on iOS.** Your iOS app has no dependency on Skip whatsoever — it is pure, unmodified SwiftUI. The Android build depends only on standard open-source libraries.
+- **Zero footprint on iOS.** Your iOS app has no dependency on Skip whatsoever. It is pure, unmodified SwiftUI. The Android build depends only on standard open-source libraries.
 - **Memory efficient.** Skip adds no garbage collector or managed runtime to your iOS app. On Android, Skip Fuse compiles Swift natively, keeping memory usage and battery consumption comparable to hand-written Kotlin.
 - **Your IDE, your workflow.** Develop in Xcode with all your existing tools and workflows. Use Android Studio when you need platform-specific Kotlin.
 - **Thousands of packages.** Skip supports [thousands of cross-platform modules](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid). It also bridges seamlessly with Kotlin and Compose, so integrating Android-specific libraries is straightforward.

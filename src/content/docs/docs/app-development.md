@@ -5,7 +5,7 @@ permalink: /docs/app-development/
 
 Skip allows you to share as much or as little code as you want between the iOS and Android versions of your app. The  [Cross-Platform Topics](/docs/platformcustomization/) chapter details how to integrate Android-specific or iOS-specific code. This chapter focuses on shared dual-platform development.
 
-The following sections do not attempt to teach you iOS development. There are other available resources for that. Rather, we focus on where dual-platform Skip development differs from standard iOS development, including how to use Skip’s tools and what to do when things go wrong.
+The following sections assume you are already familiar with iOS development. We focus on where dual-platform Skip development differs from standard iOS development, including how to use Skip’s tools and what to do when things go wrong.
 
 ## Philosophy
 
@@ -99,9 +99,9 @@ You must run your tests against a macOS destination in order to perform an Andro
 
 ## Coding {#coding}
 
-Writing dual-platform code with Skip resembles coding a standard iOS app, and it can feel magical to see your Swift and SwiftUI run on Android. But in the end Skip is a tool that you work with, and writing for two platforms does introduce complications not found in pure iOS development:
+Writing dual-platform code with Skip resembles coding a standard iOS app, and seeing your Swift and SwiftUI run on Android is a great experience. But writing for two platforms does introduce complications not found in pure iOS development:
 
-1. At some point, you will likely find yourself wanting to use an iOS API, framework, or feature that is not yet supported on Android. Don't give up! [This section](#unsupported-ios-features) discusses your options when you encounter a limitation in dual-platform coverage.
+1. At some point, you will likely want to use an iOS API, framework, or feature that is not yet supported on Android. [This section](#unsupported-ios-features) discusses your options when you encounter a limitation in dual-platform coverage.
 1. Our [porting](/docs/porting/) guide covers some of the common issues you'll run into when compiling cross-platform Swift. Additionally, compiled Swift must use [bridging](/docs/modes/#bridging) to interact with Android's Kotlin and Java APIs.
 1. Writing a dual-platform apps means using dual-platform libraries. Our documentation on [dependencies](/docs/dependencies/) discusses how to use other dual-platform libraries as well as iOS and Android-specific libraries.
 
@@ -174,7 +174,7 @@ This section only applies to [Skip Fuse](/docs/modes/#fuse). A [Skip Lite](/docs
 
 ### SwiftUI
 
-Writing cross-platform SwiftUI and watching it appear on both the iOS simulator and Android emulator can feel magical. It is a wonderful way to share all or parts of your user interface. And because Skip translates your SwiftUI calls to Jetpack Compose on Android, the result is a fully native user interface on both platforms, not an uncanny-valley replica.
+Skip lets you share all or parts of your user interface across both platforms. Because Skip translates your SwiftUI views to Jetpack Compose on Android, the result is a fully native user interface on both platforms, not a cross-platform approximation.
 
 On Android, `import SwiftUI` vends an implementation of the SwiftUI API called `SkipFuseUI` that is bridged to Jetpack Compose. Make sure you also **use default or public visibility for Views and their SwiftUI properties**. Skip cannot access private SwiftUI components on Android. Here is an example of a valid cross-platform SwiftUI view:
 

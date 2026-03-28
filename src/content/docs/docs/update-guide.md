@@ -3,6 +3,8 @@ title: Update Guide
 permalink: /docs/update-guide/
 ---
 
+This page contains migration guides for upgrading between major Skip versions. If you are starting a new project, these guides do not apply to you. See [Getting Started](/docs/gettingstarted/) instead.
+
 ## Skip 0.x to Skip 1.0 Migration {#skip1_0migration}
 
 Both Skip and Swift Package Manager use [semantic versioning](https://semver.org/). While semantic versioning has [many benefits](https://semver.org/#why-use-semantic-versioning), it also means that the jump from Skip 0.x to Skip 1.x is considered a potentially "breaking change", and therefore it requires manual upgrade steps. To migrate your Skip 0.x library or app to Skip 1.x, please do the following:
@@ -94,6 +96,10 @@ plugins {
 ```
 
 ## Kotlin 1.x to Kotlin 2 Migration
+
+:::note
+This section applies to projects created before Skip 0.9.2. For the full standalone guide, see [Kotlin 2 Migration](/docs/kotlin2-migration/).
+:::
 
 Kotlin 2 introduces many improvements to the Kotlin language, as well as integration of the Compose compiler into the Kotlin compiler itself[^1]. Skip 0.9.2 adopts Kotlin 2 as the target language, which involves some changes to the Gradle project that Skip creates[^2]. Internally, this involves changing some of the dependencies that Skip adds to the Android Gradle project.
 

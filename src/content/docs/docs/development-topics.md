@@ -178,9 +178,9 @@ Token | Meaning
 --- | ---
 $@ | String or stringified instance
 %ld or %lld | integer number
-%lf or %llf | floating point number
+%lf or %f | floating point number
 %.3f | formatted floating point number
-%1$@ | maually-specified positional argument
+%1$@ | manually-specified positional argument
 %% | literal escaped percent sign
 
 More information on the Xcode editor for the `xcstrings` format can be found at [https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog).

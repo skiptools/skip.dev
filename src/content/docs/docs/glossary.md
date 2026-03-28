@@ -37,7 +37,7 @@ Skip's modern app development mode that uses native Swift built with the [Swift 
 - [Fully Native Cross-Platform Swift Apps (Skip Blog)](/blog/fully-native-android-swift-apps/)
 
 ### Skip Plugin {#skipstone}
-An [Xcode](#xcode) and [SwiftPM](#swiftpm) plugin — also known as _skipstone_ — that handles the conversion of an iOS project into an Android project. The plugin handles resource conversion and packaging, localization processing, building bridges between Swift and Kotlin in [Skip Fuse](#skip-fuse) mode, and performing Swift to Kotlin [transpilation](#transpiler) in [Skip Lite](#skip-lite) mode. In both modes, the plugin automatically translates [SwiftUI](#swiftui) into [Jetpack Compose](#jetpack-compose) as you develop.
+An [Xcode](#xcode) and [SwiftPM](#swiftpm) plugin (also known as _skipstone_) that handles the conversion of an iOS project into an Android project. The plugin handles resource conversion and packaging, localization processing, building bridges between Swift and Kotlin in [Skip Fuse](#skip-fuse) mode, and performing Swift to Kotlin [transpilation](#transpiler) in [Skip Lite](#skip-lite) mode. In both modes, the plugin automatically translates [SwiftUI](#swiftui) into [Jetpack Compose](#jetpack-compose) as you develop.
 
 **Related Terms:** [Xcode](#xcode), [Transpiler](#transpiler), [SwiftPM](#swiftpm), [Skip Lite](#skip-lite), [Skip Fuse](#skip-fuse), [Skip Bridge](#skip-bridge)
 

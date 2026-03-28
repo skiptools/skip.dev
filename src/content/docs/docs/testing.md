@@ -3,7 +3,7 @@ title: Testing
 permalink: /docs/testing/
 ---
 
-Skip provides several ways to test your code on Android, depending on whether you are working with [Skip Lite](/docs/modes/#lite) (transpiled Swift-to-Kotlin) or [Skip Fuse](/docs/modes/#fuse) (natively compiled Swift). Each approach involves different tradeoffs around speed, API access, and fidelity.
+Skip provides several ways to test your code on Android, depending on whether you are working with [Skip Lite](/docs/modes/#lite) (transpiled Swift-to-Kotlin) or [Skip Fuse](/docs/modes/#fuse) (natively compiled Swift). Each approach involves different tradeoffs around speed, API access, and how closely the test environment matches a real Android device.
 
 <div class="diagram-vector">
 
@@ -15,7 +15,7 @@ Skip provides several ways to test your code on Android, depending on whether yo
 
 Skip Lite transpiles your Swift source into Kotlin, and your XCTest test cases into JUnit tests. This means your tests run as standard JUnit on the Android side, which plugs into the well-established Gradle testing infrastructure.
 
-The transpiled tests are driven by a test harness file called `XCSkipTests.swift`. If your test target does not already contain a file with this name, the Skip build plugin will auto-generate one during the build. This means that for most projects, you do not need to create or maintain this file yourself — just run `swift test` and the harness is created for you.
+The transpiled tests are driven by a test harness file called `XCSkipTests.swift`. If your test target does not already contain a file with this name, the Skip build plugin will auto-generate one during the build. This means that for most projects, you do not need to create or maintain this file yourself. Just run `swift test` and the harness is created for you.
 
 If you need to customize the test harness (for example, to specify a device target or adjust the Gradle task), you can add your own `XCSkipTests.swift` to your test target and the build plugin will use it instead of generating one. A typical custom harness looks like this:
 
@@ -37,7 +37,7 @@ This test harness is what connects Xcode to the Gradle test pipeline. When you r
 Your Swift tests are transpiled into Kotlin JUnit, so they are subject to the same transpilation constraints as the rest of your Skip Lite code. Both XCTest and a subset of Swift Testing are supported:
 
 - **XCTest**: Classes inheriting from `XCTestCase` with `test`-prefixed methods are transpiled into JUnit test classes with `@Test` annotations. Standard `XCTAssert*` functions map to JUnit assertions.
-- **Swift Testing**: Functions annotated with `@Test` and types annotated with `@Suite` are also transpiled into JUnit tests. The `#expect` macro is mapped to assertion functions (`expectEqual`, `expectNotEqual`, `expectTrue`, `expectGreaterThan`, etc.) and `#require` is mapped to `requireNotNil`. Freestanding `@Test` functions (not inside a struct or class) are automatically wrapped in a generated test class. Not all Swift Testing features are supported — parameterized tests, traits, and tags are not currently transpiled.
+- **Swift Testing**: Functions annotated with `@Test` and types annotated with `@Suite` are also transpiled into JUnit tests. The `#expect` macro is mapped to assertion functions (`expectEqual`, `expectNotEqual`, `expectTrue`, `expectGreaterThan`, etc.) and `#require` is mapped to `requireNotNil`. Freestanding `@Test` functions (not inside a struct or class) are automatically wrapped in a generated test class. Not all Swift Testing features are supported; parameterized tests, traits, and tags are not currently transpiled.
 
 ### Local Testing with Robolectric
 

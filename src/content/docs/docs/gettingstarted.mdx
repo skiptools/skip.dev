@@ -61,9 +61,9 @@ Skip requires a macOS 15+ development machine.
     skip create
     ```
     
-    You will be guided through a series of questions about the app you want to create. The first two are especially important:
+    You will be guided through a series of questions about the app you want to create. The two key choices are:
 
-    1. **App or Library?** The App option creates a single Swift and SwiftUI app that uses Skip's Xcode plugin to automatically build for Android. The Library option creates a Swift library that you can use in a unified Skip app, or use as shared business logic in [separate iOS and Android apps](/docs/project-types/#separate-apps). Neither option prevents you from using a combination of Swift and Kotlin, SwiftUI and Compose in your final application.
+    1. **App or Library?** The App option creates a single Swift and SwiftUI app that uses Skip's Xcode plugin to automatically build for Android. The Library option creates a Swift library that you can use in a unified Skip app, or use as shared business logic in [separate iOS and Android apps](/docs/project-types/#separate-apps). Both options allow you to use a combination of Swift and Kotlin, SwiftUI and Compose in your final application.
     2. **Skip Fuse or Skip Lite?** Information about the different modes can be found in the [Native and Transpiled Modes](/docs/modes/) documentation. In this example, we create a Skip Fuse app, which uses the official [Swift SDK for Android](https://www.swift.org/documentation/articles/swift-sdk-for-android-getting-started.html).
 
     If you're new to Skip, we recommend starting your exploration with an App project. An example session for creating a `hello-skip/HelloSkip` project (which generates a project identical to the minimal [Skip Fuse sample app](https://github.com/skiptools/skipapp-howdy) or [Skip Lite sample app](https://github.com/skiptools/skipapp-hello)) might look like:
