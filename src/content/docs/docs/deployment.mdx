@@ -26,9 +26,9 @@ For app projects, the `skip export` command will additionally export `.apk` and 
 
 ## Signing the Exported Android Artifacts {#export-signing}
 
-By default, the exported `.build/skip-export/AppName-debug.apk` file is signed with a single-use temporary signature, which means that you can install it on an Android emulator or simulator but future versions of the app cannot be upgraded without first manually removing the existing app. 
+The debug APK (`.build/skip-export/AppName-debug.apk`) is signed with a temporary key. You can install it on an emulator or device for testing, but you will need to uninstall it before installing a newer version (unlike production apps, which can be upgraded in place).
 
-The release APK at `.build/skip-export/AppName.apk`, on the other hand, is not signed at all by default. Signing the APK is something that you can manage manually however you want (such as by integrating signing into your app's CI workflow), but the default `Android/app/build.gradle.kts` build file will look for the presence of `keystore.properties` and `keystore.jks` files in the `Android/app/` folder.
+The release APK (`.build/skip-export/AppName.apk`) is not signed by default. You must sign it before distributing through the Play Store or installing on a device. You can integrate signing into your CI workflow, or use the built-in support in your project's `Android/app/build.gradle.kts`, which looks for `keystore.properties` and `keystore.jks` files in the `Android/app/` folder.
 
 For complete information on creating and managing Android signing keys, refer to the [Sign your app](https://developer.android.com/studio/publish/app-signing) documentation. But to get started quickly, you can create the `Android/app/keystore.jks` file by running this command from the root of your project and following the prompts:
 
@@ -77,7 +77,7 @@ To release an Android app, you may want to perform the build yourself, either ma
 gradle -p Android/ assemble
 ```
 
-This will run the Gradle project specified in the `Android/gradle.settings.kts` file ([Showcase source code](https://github.com/skiptools/skipapp-showcase/blob/main/Android/settings.gradle.kts)), which will invoke the Swift Package Manager build to for Android. The resulting build artifacts can then be found in the `.build/Android/` folder, like so:
+This will run the Gradle project specified in the `Android/gradle.settings.kts` file ([Showcase source code](https://github.com/skiptools/skipapp-showcase/blob/main/Android/settings.gradle.kts)), which invokes the Swift Package Manager to build the project for Android. The resulting build artifacts can then be found in the `.build/Android/` folder, like so:
 
 ```plaintext
 skiptools/skipapp-showcase % ls -lah .build/Android/app/outputs/apk/*/*.apk

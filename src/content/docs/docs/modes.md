@@ -3,7 +3,12 @@ title: 'Lite and Fuse Modes'
 permalink: /docs/modes/
 ---
 
-Skip supports both a *compiled* "Fuse" mode - in which your Swift is compiled natively for Android - and a *transpiled* "Lite" mode - in which your Swift is transpiled into Kotlin. The mode is specified at the level of a Swift module. We refer to apps that primarily use native mode as **Skip Fuse** apps, and apps that primarily use transpiled mode as **Skip Lite** apps.
+Skip supports two modes for bringing your Swift code to Android:
+
+- **Skip Fuse** (native mode): Your Swift is compiled natively for Android using the [official Swift SDK for Android](https://www.swift.org/blog/swift-6.3-released/#android). You get full Swift language support, the standard library, and Foundation.
+- **Skip Lite** (transpiled mode): Your Swift source code is converted into equivalent Kotlin source code, which is then compiled by the standard Kotlin compiler. This maximizes interoperability with Kotlin and Java libraries.
+
+The mode is chosen per Swift module, so different modules in the same app can use different modes. We refer to apps that primarily use native mode as **Skip Fuse** apps, and apps that primarily use transpiled mode as **Skip Lite** apps.
 
 :::note[Lite/Fuse is not Either/Or]
 It is not uncommon to use both compiled and transpiled modules within a single Swift-on-Android app. With [bridging](#bridging) enabled, a Skip Fuse module can interface with a Skip Lite module and vice versa. In fact, this is how [SkipUI](/docs/modules/skip-ui) and [SkipFuseUI](/docs/modules/skip-fuse-ui) interact.
@@ -30,12 +35,12 @@ The following diagram depicts a native project:
 
 Skip's documentation discusses its [advantages](/docs/#advantages) over writing separate apps or using other cross-platform technologies. But why use native rather than [transpiled](#lite) Swift? Here are several important reasons you might prefer compiled Swift:
 
-- **Full Swift language**. While Skip's intelligent Swift-to-Kotlin transpiler can translate [the vast majority](/docs/swiftsupport/) of the Swift language, there are some language features that cannot be mapped to Kotlin.
-- **Faithful runtime behavior**. Some aspects of Swift's runtime behavior will never be the same when translated to Kotlin and run atop the JVM. For example, Swift's deterministic object deallocation cannot be replicated on the JVM, which uses indeterministic garbage collection to manage memory.
-- **Full stdlib and Foundation**. The [SkipLib](/docs/modules/skip-lib/) and [SkipFoundation](/docs/modules/skip-foundation/) libraries replicate much of the Swift standard library and Foundation in Kotlin. Native Swift on Android, however, has more complete coverage.
-- **Third-party Swift libraries**. [Thousands of Swift packages](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) compile for Android, and it often [isn't difficult](/docs/porting/) to port others. This gives you access to a world of third-party packages without needing to turn them into Skip modules.
-- **Seamless C and C++ integration**. While the [SkipFFI](/docs/modules/skip-ffi/) framework enables transpiled Kotlin to interface with native C code on Android, the process of creating the interface between the two languages can be cumbersome. Native Swift on Android unlocks Swift's excellent integration with the C and C++ languages. 
-- **High performance**. Java on Android is very fast, but it is a garbage-collected and heap-allocated runtime. Swift's value types like structs and enums, which can be stack-allocated, offer the fastest bare-metal performance possible on a device. And deterministic deallocations can keep memory watermarks low and avoid hitches that result from garbage collection pauses.
+- **Full Swift language**. The transpiler supports [most of Swift](/docs/swiftsupport/), but some language features (like certain generic patterns and operator overloads) cannot be mapped to Kotlin. Native mode has no such restrictions.
+- **Faithful runtime behavior**. Swift's deterministic object deallocation cannot be replicated on the JVM, which uses garbage collection. Native mode preserves Swift's memory management semantics on Android.
+- **Full stdlib and Foundation**. The [SkipLib](/docs/modules/skip-lib/) and [SkipFoundation](/docs/modules/skip-foundation/) libraries implement commonly-used Swift standard library and Foundation APIs in Kotlin. Native Swift on Android uses Apple's own Foundation implementation, so coverage is more complete.
+- **Third-party Swift libraries**. [Thousands of Swift packages](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) already compile for Android, and [porting others](/docs/porting/) is often straightforward. You can use these packages directly without converting them into Skip modules.
+- **Seamless C and C++ integration**. Native Swift on Android has direct access to C and C++ libraries through Swift's built-in interop, just like on iOS. The transpiled path requires using the [SkipFFI](/docs/modules/skip-ffi/) framework, which is more limited.
+- **Better performance for compute-heavy code**. Swift's value types (structs and enums) can be stack-allocated, and deallocation is deterministic. This avoids the garbage collection pauses and heap pressure that can affect JVM-based code.
 
 ### Disadvantages
 
@@ -45,11 +50,11 @@ Using native Swift doesn't come without tradeoffs. Here are some notable disadva
 - **Kotlin/Java Bridging**. Transpiled Swift can interact directly with Kotlin and Java API. For this reason, Skip allows your native Swift to [incorporate transpiled code](/docs/platformcustomization/#calling-kotlin-api). But moving data between compiled Swift and Kotlin or Java still requires [bridging](#bridging).
 - **Debugging**. [Debugging](/docs/debugging/) native code on Android is more difficult than debugging generated Kotlin, where you can take full advantage of Android Studio's built-in Kotlin/Java debugging tools.
 - **Build time**. Building and deploying native Swift using the Android toolchain is slower than building using transpilation, due to overhead with the native compilation and packaging of the shared object files into the `.apk`.
-- **Ejectability**. One benefit of purely-transpiled code is that you can always "eject" from Skip and continue to iterate separately on *both* your Swift and transpiled Kotlin code. If you eject Skip when using native mode, only your iOS app would remain fully intact.
+- **Ejectability**. With transpiled code, you can stop using Skip and continue developing your iOS app as Swift and your Android app as the generated Kotlin. With native mode, stopping Skip leaves you with a working iOS app but no standalone Kotlin codebase for Android.
 
 ### Conclusion
 
-We believe that Skip Fuse's advantages outweigh its disadvantages for most use cases, and that even these disadvantages will lessen over time as it matures. We expect, therefore, that most developers will choose to use native mode where possible. Transpiled mode, however, is excellent for cross-platform libraries that must interface intimately with Kotlin/Java API, so many apps will depend on transpiled libraries for using platform services.
+For apps with complex business logic and third-party Swift dependencies, Skip Fuse's advantages typically outweigh its disadvantages. The disadvantages (binary size, build time) are also expected to improve as the Swift Android SDK matures. Transpiled mode remains excellent for libraries that need direct Kotlin/Java API access, and many apps combine both modes: Fuse for business logic and Lite for platform service integration.
 
 ## Transpiled Mode: Skip Lite {#lite}
 

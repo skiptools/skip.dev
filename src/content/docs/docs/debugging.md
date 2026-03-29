@@ -62,7 +62,7 @@ Following is an abridged sample of the Logcat contents when a crash occurs from 
 12-02 14:33:26.663 12146 12146 F DEBUG   :       #18 pc 00000000000020b8  /data/app/~~sl7j-wAIm5OGrYysAOiRvQ==/com.xyz.HelloSwift-l1KlzOX9df6cdVUNJI0-kw==/base.apk (hello.swift.model.ViewModel.save+0)
 ```
 
-To extract a human-readable name from the manged swift function, you can use the `xcrun swift-demangle` command, like so:
+To extract a human-readable name from the mangled Swift function name, you can use the `xcrun swift-demangle` command, like so:
 
 ```
 zap ~ % echo '$s15HelloSwiftModel04ViewC0C9saveItems33_AA1DA8893D92B109DC6527A80C9D3046LLyyF+1244' | xcrun swift-demangle

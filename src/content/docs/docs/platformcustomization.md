@@ -17,7 +17,7 @@ The most common and convenient mechanism for writing iOS or Android-only code is
 #endif
 ```
 
-Use the `os(Android)` condition to create blocks of code that are only compiled into your iOS or Android app. The following code blocks would all print "Android" on Android and "iOS" on iOS:
+Use `#if os(Android)` for Android-only code, and `#if !os(Android)` for iOS-only code. The following examples would print "Android" on Android and "iOS" on iOS:
 
 ```swift
 #if os(Android)
@@ -47,9 +47,39 @@ Text("Hello World")
     #endif
 ```
 
+### `#if os(Android)` vs `#if SKIP` {#os-android-vs-skip}
+
+Skip recognizes two conditional compilation symbols for Android-specific code: `os(Android)` and `SKIP`. They behave differently depending on whether you are using [Skip Fuse](/docs/modes/#fuse) (native compiled) or [Skip Lite](/docs/modes/#lite) (transpiled) mode.
+
+**`#if os(Android)`** marks code that should only run on Android. It works like any other Swift platform check (`#if os(iOS)`, `#if os(Linux)`, etc.). How the code inside is compiled depends on the mode:
+
+- In **Skip Fuse**, the code inside `#if os(Android)` is compiled as native Swift by the Swift Android compiler. It is regular Swift code, just like `#if os(iOS)` code is regular Swift on iOS. You cannot call Kotlin or Java APIs from this block.
+- In **Skip Lite**, the code inside `#if os(Android)` is transpiled to Kotlin, because all Swift in a Lite module is transpiled. In this mode, `#if os(Android)` and `#if SKIP` have the same effect.
+
+**`#if SKIP`** marks code that is always transpiled to Kotlin, regardless of mode. This is the block to use when you need to call Kotlin or Java APIs directly, because the code becomes Kotlin at build time. In both Fuse and Lite modes, `#if SKIP` code is transpiled and can call any Kotlin or Java API.
+
+The following table summarizes the behavior:
+
+| Conditional | Skip Fuse (native) | Skip Lite (transpiled) |
+|---|---|---|
+| `#if os(Android)` | Compiled as **native Swift** for Android | **Transpiled to Kotlin** (same as `#if SKIP`) |
+| `#if SKIP` | **Transpiled to Kotlin** | **Transpiled to Kotlin** |
+| `#if !os(Android)` | iOS only (excluded from Android build) | iOS only (excluded from Android build) |
+| `#if !SKIP` | Compiled as native Swift on **both** iOS and Android | iOS only (excluded from Android build) |
+
+In practice:
+
+- Use **`#if os(Android)`** when you want to write platform-specific Swift that runs only on Android but does not need to call Kotlin/Java APIs. In Fuse mode, this is regular Swift. In Lite mode, it is transpiled like everything else.
+- Use **`#if SKIP`** when you need to call Kotlin or Java APIs directly. This works in both modes because the code is always transpiled.
+- Use **`#if !os(Android)`** to exclude code from Android entirely (iOS only).
+
+:::tip
+In Skip Fuse, `#if !SKIP` is useful for writing native Swift that runs on both iOS and Android without being transpiled. This is the default for all code outside of conditional blocks.
+:::
+
 ## Calling Kotlin and Java API {#calling-kotlin-api}
 
-As we have seen, `os(Android)` blocks allow you to easily customize your code path for Android. But Skip also recognizes another conditional symbol: `SKIP`. And this symbol unlocks a Skip superpower: the ability to directly call Kotlin and Java API. Consider the following code:
+As described above, `#if SKIP` blocks let you write code that will be transpiled to Kotlin on both Fuse and Lite modes. Code inside `#if SKIP` blocks can call Kotlin and Java APIs directly, because Skip converts it to Kotlin at build time. Consider the following code:
 
 ```swift
 func printFormatted(time timeInMills: Int64) { 
@@ -84,7 +114,7 @@ You are not required to use fully-qualified type names. Skip allows you to `impo
 While the example above is rather contrived, consider the broader implications. You can use this mechanism to directly interact with **any** Android libraries, including third-party dependencies or your own custom Kotlin. The ability so easily utilize both iOS-only and Android-only APIs - right inline - differentiates Skip from many other cross-platform solutions, where calling platform-native code can be difficult. [Later](#swiftui-and-compose), we'll see how to take advantage of this to mix SwiftUI and Compose views.
 
 :::tip
-If you are using [Skip Lite](/docs/modes/#lite), *all* of your Swift is transpiled, so you can use `#if SKIP` and `#if os(Android)` interchangeably.
+In [Skip Lite](/docs/modes/#lite), all Swift is transpiled, so `#if SKIP` and `#if os(Android)` have the same effect. In [Skip Fuse](/docs/modes/#fuse), they differ. See [`#if os(Android)` vs `#if SKIP`](#os-android-vs-skip) for details.
 :::
 
 ### Syntax {#kotlin-in-swift-syntax}

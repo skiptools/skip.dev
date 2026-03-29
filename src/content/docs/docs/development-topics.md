@@ -408,7 +408,7 @@ Unlike Darwin platforms, where resources are stored as individual files on disk,
 Skip supports two resource processing modes, configured in your module's `Skip/skip.yml` file:
 
 - **`process`** (default): Resources are flattened into a single output directory. Localization files (`.xcstrings`) are automatically converted into `.lproj` folders with `.strings` and `.stringsdict` files. This is the standard behavior for most resources.
-- **`copy`**: Resources are copied as-is, preserving the original file and directory hierarchy. No special processing is performed — localization files, asset catalogs, and other files are left untouched. This is useful when you need to maintain a specific directory structure that your code navigates at runtime.
+- **`copy`**: Resources are copied as-is, preserving the original file and directory hierarchy. No special processing is performed. Localization files, asset catalogs, and other files are left untouched. This is useful when you need to maintain a specific directory structure that your code navigates at runtime.
 
 :::note
 The Skip build plugin cannot read your `Package.swift` file at build time. Any resource directories declared in `Package.swift` must also be mirrored in the module's `Skip/skip.yml` file so that Skip knows how to handle them on Android.

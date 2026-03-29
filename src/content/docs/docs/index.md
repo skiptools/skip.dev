@@ -9,7 +9,7 @@ Skip lets you write one app in Swift and SwiftUI and ship it natively on both iO
 
 The mobile app market is split between iPhone and Android. iPhone leads in revenue per user, while Android reaches far more people worldwide.[^apprevenue]
 
-[^apprevenue]: Spending Power: iOS users spend $140 annually on apps versus $69 for Android users. iOS also dominates subscription revenue, with 5× higher average revenue per user (ARPU). Source: [iOS vs Android: Subscription Metrics Compared — appenure.com](https://www.appeneure.com/blog/ios-vs-android-subscription-metrics-compared/seobot-blog)
+[^apprevenue]: Spending Power: iOS users spend $140 annually on apps versus $69 for Android users. iOS also dominates subscription revenue, with 5× higher average revenue per user (ARPU). Source: [iOS vs Android: Subscription Metrics Compared, appenure.com](https://www.appeneure.com/blog/ios-vs-android-subscription-metrics-compared/seobot-blog)
 
 <style>
 :root {
@@ -218,14 +218,14 @@ Most teams design for iOS first and port to Android later. Clients ask for an iP
 
 ### Skip versus writing two separate native apps
 
-Every team maintaining separate iOS and Android apps discovers the same thing: you are writing most of your code twice.
+Every team maintaining separate iOS and Android apps discovers the same thing: significant portions of the code are written twice.
 
 - The same model types. They’ll often have to communicate with the same network APIs, serialize to the same JSON format, and have the same persistence capabilities across platforms.
 - The same logic to enforce your business rules.
 - The same unit tests to ensure that your model and business logic are working.
 - The same onboarding screens, settings screens, forms, lists, and other “standard” UI. Parts of your app might need careful tailoring for each mobile OS, but much of the experience may be identical across iOS and Android.
 
-The traditional defense for this duplication is that cross-platform frameworks are not worth the trade-offs. And historically, those trade-offs have been real:
+Historically, developers avoided cross-platform frameworks because the trade-offs were real:
 
 - Training or hiring for a new programming language (JavaScript, Dart, etc.) and set of application frameworks.
 - Bloating the app with an added runtime and/or garbage collector.

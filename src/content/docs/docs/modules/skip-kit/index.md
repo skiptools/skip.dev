@@ -233,6 +233,38 @@ Button("Pick Document") {
 .withDocumentPicker(isPresented: $presentPreview, allowedContentTypes: [.image, .pdf], selectedDocumentURL: $selectedDocument, selectedFilename: $filename, selectedFileMimeType: $mimeType)
 ```
 
+### Security-Scoped URLs on iOS
+
+On iOS, files selected through the system document picker are *security-scoped* — the app is only granted temporary access to read them. The `withDocumentPicker` modifier acquires and releases this access internally during the picker callback, but your `onChange` handler runs **after** the access has already been released. If you need to read or copy the file contents (e.g., importing it into your app's documents directory), you must re-acquire access in your handler:
+
+```swift
+.withDocumentPicker(
+    isPresented: $showPicker,
+    allowedContentTypes: [.epub],
+    selectedDocumentURL: $pickedURL,
+    selectedFilename: $pickedName,
+    selectedFileMimeType: $pickedType
+)
+.onChange(of: pickedURL) { oldURL, newURL in
+    guard let url = newURL else { return }
+    pickedURL = nil
+    Task {
+        #if !SKIP
+        // Re-acquire security-scoped access for the picked file.
+        // Without this, file operations like copy or read will fail
+        // with a "you don't have permission to view it" error.
+        let accessing = url.startAccessingSecurityScopedResource()
+        defer { if accessing { url.stopAccessingSecurityScopedResource() } }
+        #endif
+        await importFile(from: url)
+    }
+}
+```
+
+This is only needed on iOS — Android handles file access differently by copying the selected file to the app's cache directory before returning the URL, so the `#if !SKIP` guard ensures the security-scoped calls are skipped on Android.
+
+If you only need to display the file (e.g., pass it to a `DocumentPreview`) without reading its contents, re-acquiring access may not be necessary.
+
 ## Document Preview
 
 The `View.withDocumentPreview(isPresented: Binding<Bool>, documentURL: URL?, filename: String?, type: String?)` extension function can be used to preview a document available to the app (either selected with the provided `Document Picker` or downloaded locally by the App). 
@@ -378,6 +410,103 @@ extension View {
     ) -> some View
 }
 ```
+
+## HapticFeedback
+
+SkipKit provides a cross-platform haptic feedback API that works identically on iOS and Android. You define patterns using simple, platform-independent types, and SkipKit handles playback using [CoreHaptics](https://developer.apple.com/documentation/corehaptics) on iOS and [VibrationEffect.Composition](https://developer.android.com/reference/android/os/VibrationEffect.Composition) on Android.
+
+### Playing Predefined Patterns
+
+SkipKit includes a set of predefined patterns for common feedback scenarios:
+
+```swift
+import SkipKit
+
+// Light tap for picking up a draggable element
+HapticFeedback.play(.pick)
+
+// Quick double-tick when snapping to a grid
+HapticFeedback.play(.snap)
+
+// Solid tap when placing an element
+HapticFeedback.play(.place)
+
+// Confirmation feedback
+HapticFeedback.play(.success)
+
+// Bouncy celebration for clearing a line or completing a task
+HapticFeedback.play(.celebrate)
+
+// Bigger celebration with escalating intensity
+HapticFeedback.play(.bigCelebrate)
+
+// Warning for an invalid action
+HapticFeedback.play(.warning)
+
+// Error feedback with three descending taps
+HapticFeedback.play(.error)
+
+// Heavy impact for collisions
+HapticFeedback.play(.impact)
+```
+
+### Dynamic Patterns
+
+Some patterns adjust based on parameters. The `combo` pattern escalates in intensity and length with higher streak counts, and finishes with a proportionally heavy thud:
+
+```swift
+// A 2x combo: two quick taps + light thud
+HapticFeedback.play(.combo(streak: 2))
+
+// A 5x combo: five escalating taps + heavy thud
+HapticFeedback.play(.combo(streak: 5))
+
+// Bouncing pattern with 4 taps of decreasing intensity
+HapticFeedback.play(.bounce(count: 4, startIntensity: 0.9))
+```
+
+### Custom Patterns
+
+You can define your own patterns using `HapticEvent` and `HapticPattern`. Each event has a type, intensity (0.0 to 1.0), and delay in seconds relative to the previous event:
+
+```swift
+// A custom "power-up" pattern: rising buzz, pause, two sharp taps
+let powerUp = HapticPattern([
+    HapticEvent(.rise, intensity: 0.6),
+    HapticEvent(.rise, intensity: 1.0, delay: 0.1),
+    HapticEvent(.tap, intensity: 1.0, delay: 0.15),
+    HapticEvent(.tap, intensity: 0.8, delay: 0.06),
+])
+
+HapticFeedback.play(powerUp)
+```
+
+The available event types are:
+
+| Type | Description | iOS | Android |
+|------|-------------|-----|---------|
+| `.tap` | Short, sharp tap | `CHHapticEvent` transient, sharpness 0.7 | `PRIMITIVE_CLICK` |
+| `.tick` | Subtle, light tick | `CHHapticEvent` transient, sharpness 1.0 | `PRIMITIVE_TICK` |
+| `.thud` | Heavy, deep impact | `CHHapticEvent` transient, sharpness 0.1 | `PRIMITIVE_THUD` |
+| `.rise` | Increasing intensity | `CHHapticEvent` continuous | `PRIMITIVE_QUICK_RISE` |
+| `.fall` | Decreasing intensity | `CHHapticEvent` continuous | `PRIMITIVE_QUICK_FALL` |
+| `.lowTick` | Deep, low-frequency tick | `CHHapticEvent` transient, sharpness 0.3 | `PRIMITIVE_LOW_TICK` |
+
+### Android Permissions
+
+To use haptic feedback on Android, your `AndroidManifest.xml` must include the vibrate permission:
+
+```xml
+<uses-permission android:name="android.permission.VIBRATE"/>
+```
+
+The `VibrationEffect.Composition` API requires Android API level 31 (Android 12) or higher. On older devices, haptic calls are silently ignored.
+
+### Platform Details
+
+On iOS, `HapticFeedback` uses a `CHHapticEngine` instance that is created on first use and restarted automatically if the system reclaims it. Each `HapticPattern` is converted to a `CHHapticPattern` with appropriate `CHHapticEvent` types and parameters. For more details, see Apple's [CoreHaptics documentation](https://developer.apple.com/documentation/corehaptics).
+
+On Android, patterns are converted to a `VibrationEffect.Composition` with the corresponding `PRIMITIVE_*` constants and played through the system `Vibrator` obtained from `VibratorManager`. For more details, see Android's [VibrationEffect documentation](https://developer.android.com/reference/android/os/VibrationEffect) and the guide on [custom haptic effects](https://developer.android.com/develop/ui/views/haptics/custom-haptic-effects).
 
 ## Building
 

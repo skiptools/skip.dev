@@ -144,7 +144,7 @@ For examples of the Swift to Kotlin transpilation, see the examples in the [Tran
 
 ### How much runtime overhead does SkipUI add to the Compose side of the app? {#overhead}
 
-Very little. Many of SkipUI's views are very simple shims that bridge from their SwiftUI equivalents into Compose, such as [Divider.swift](https://source.skip.dev/skip-ui/blob/main/Sources/SkipUI/SkipUI/Components/Divider.swift) simply invoking `androidx.compose.material3.Divider`. To support `@Environment` and `@State`, Skip needs to perform some additional book-keeping that may have some runtime cost.
+SkipUI views are thin wrappers around their Compose equivalents. For example, [Divider.swift](https://source.skip.dev/skip-ui/blob/main/Sources/SkipUI/SkipUI/Components/Divider.swift) maps directly to `androidx.compose.material3.Divider`. Skip's `@Environment` and `@State` support adds a small amount of bookkeeping, but the overhead is not noticeable in practice.
 
 ### Why does my Android app feel slow? {#slow_android_app}
 
@@ -152,7 +152,7 @@ There is often a significant difference between Debug and Release build performa
 
 ### What pure Swift libraries can be used by a Skip App? {#compat}
 
-Skip uses Swift Package Manager to handle source code dependency resolution. The [Swift Package Index](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) site tracks the thousands of Swift packages that compile for Android and are available to apps using Skip's native mode. If a dependent module has a `Skip/skip.yml` file and is **not** in native mode, it will be transpiled into Kotlin. You can also use native Swift dependencies from the Swift side of your app only (and seek alternative implementations through the use of `#if os(Android)` blocks or custom Kotlin files; for an example, see the <a href="https://source.skip.dev/skip-motion/blob/main/Sources/SkipMotion/SkipMotion.swift">LottieMotionView</a> implementation). Skip's constellation of [frameworks](/docs/modules/) are expected to provide most functionality that is commonly needed by modern apps, but you are free to develop your own libraries and frameworks, either from scratch, or by forking an existing repository to add Skip support for the library.
+Skip uses Swift Package Manager to handle source code dependency resolution. The [Swift Package Index](https://swiftpackageindex.com/search?query=platform%3Aios%2Candroid) site tracks the thousands of Swift packages that compile for Android and are available to apps using Skip's native mode. If a dependent module has a `Skip/skip.yml` file and is **not** in native mode, it will be transpiled into Kotlin. You can also use iOS-only Swift libraries by providing Android fallbacks with `#if os(Android)` blocks or custom Kotlin files (for an example, see the <a href="https://source.skip.dev/skip-motion/blob/main/Sources/SkipMotion/SkipMotion.swift">LottieMotionView</a> implementation). Skip's constellation of [frameworks](/docs/modules/) are expected to provide most functionality that is commonly needed by modern apps, but you are free to develop your own libraries and frameworks, either from scratch, or by forking an existing repository to add Skip support for the library.
 
 ### How do I add dependencies to my Skip app? {#adddeps}
 
@@ -165,7 +165,7 @@ The Xcode "Add Package Dependencies…" menu should *not* be used to add Swift d
 
 ### How does logging work in Skip? {#logging}
 
-Skip supports the `OSLog` module, so an app can log using a `Logger` instance, which will output log messages to the Xcode console for the iOS side of the app. For the Android side, log messages are passed to `android.util.Log` and can be viewed from the Logcat tab in Android Studio, or by running `adb logcat` from the terminal. Note that the `print()` function does not send any output to Logcat, so `OSLog.Logger` should be the preferred method of logging.
+Skip supports the `OSLog` module, so an app can log using a `Logger` instance, which will output log messages to the Xcode console for the iOS side of the app. For the Android side, log messages are passed to `android.util.Log` and can be viewed from the Logcat tab in Android Studio, or by running `adb logcat` from the terminal. Note that `print()` writes to stdout, not Logcat, so use `OSLog.Logger` for logging on Android.
 
 ### How do resources work in Skip? {#resources}
 
@@ -235,6 +235,14 @@ You should be able to install Skip for an Xcode Cloud build using Homebrew, as p
 
 Swift does not use garbage collection, but Kotlin/Java does. Any Swift code that is transpiled into Kotlin will run in the same managed, garbage collected Android Runtime environment as every other Android app.
 
+### How can I embed custom SwiftUI and Compose views? {#custom_views}
+
+You can use `#if SKIP` blocks to provide platform-specific view implementations — SwiftUI views with Apple frameworks on iOS, and Jetpack Compose composables via `ComposeView` on Android. See the [Embedding Custom SwiftUI and Compose Views](/docs/app-development/#custom-views) section for a full example using MapKit and Google Maps.
+
+### How can I embed legacy UIView and Android XML views? {#legacy_views}
+
+You can wrap UIKit `UIView` subclasses with `UIViewRepresentable` on iOS and traditional Android views with Compose's `AndroidView` inside a `ComposeView` on Android. See the [Embedding Legacy UIKit and Android XML Views](/docs/app-development/#legacy-views) section for a full example using `WKWebView` and `android.webkit.WebView`.
+
 ## Skip Lite FAQs
 
 ### Does Skip Lite's transpiled mode support Swift language feature ________? {#swiftlang}
@@ -277,11 +285,11 @@ With Skip Fuse's ability to use natively compiled Swift, any package that compil
 
 For the end user, the experience of using a Skip Fuse app should be the same as using a Skip Lite app, in that they both present a genuinely native user interface using Jetpack Compose. One downside is that Skip Fuse apps are larger than Skip Lite apps because they need to include the native Swift libraries and all their dependencies as libraries in the .apk.
 
-For developers, developing Skip Fuse apps can exhibit slower build times due to needed to compile all the Swift a second time for Android. Also, debugging tools are currently limited when working with native Swift. 
+For developers, Skip Fuse builds are slower because Swift must be compiled a second time for the Android target architecture. Debugging is also more limited: you cannot set breakpoints in native Swift code from Android Studio the way you can with Kotlin. See the [Debugging](/docs/debugging/) documentation for available options.
 
 ### What is the status of Skip Fuse? {#skip_fuse_status}
 
-Skip Fuse is stable and used in productions apps, but it is not as mature as the transpilation mode used by Skip Lite.
+Skip Fuse is stable and used in production apps. It is built on the [official Swift SDK for Android](https://www.swift.org/blog/swift-6.3-released/#android) shipped with Swift 6.3.
 
 ### What is the minimum Swift version for Skip Fuse apps? {#skip_fuse_min_version}
 
@@ -321,7 +329,7 @@ No. Skip Lite's transpilation layer is used by Skip Fuse compiled apps when it n
 
 [SkipFuse](/docs/modules/skip-fuse/) is the module that handles many of the nuances of adapting your iOS idioms to Android. It handles various miscellaneous features like bridging the OSLog `Logger` class to an implementation to uses Android `adb logcat` system.
 
-Importing the SkipFuse module is also requires when your code uses an `@Observable` because it handles the additional communication that is needed to update any Jetpack Compose components that are tracking the state.
+Importing the SkipFuse module is also required when your code uses `@Observable`, because it handles the communication needed to update Jetpack Compose components that track the state.
 
 ### How can I unit test Skip Fuse code? {#skip_fuse_unit_test}
 
