@@ -56,7 +56,11 @@ Earlier, Skip would require a license key for non-commercial app development. No
 
 ### Which FOSS license is recommended for framework development? {#foss_license_recommendations}
 
-We generally recommend the LGPL, which provides a good balance of flexibility and freedom. LGPL libraries can be embedded in closed-source commercial applications. Many popular software components like WebKit, JavaScriptCore, and Qt are distributed under the LGPL.
+The standard license for all Skip libraries is the [Mozilla Public License 2.0 (MPL-2.0)](https://www.mozilla.org/MPL/). The MPL provides a good balance of flexibility and freedom: MPL-licensed libraries can be embedded in closed-source commercial applications, and the license's file-level copyleft is straightforward for developers to comply with.
+
+:::note
+Prior to 2026, Skip libraries used the GNU Lesser General Public License (LGPL) with a static linking exception. All Skip libraries have since been harmonized to use the MPL-2.0.
+:::
 
 ### Can Skip Apps be distributed on the Apple App Store and the Google Play Store? {#appstore}
 

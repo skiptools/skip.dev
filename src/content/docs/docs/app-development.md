@@ -239,7 +239,7 @@ The key pattern is:
 The following example from the [Skip Showcase app](https://github.com/skiptools/skipapp-showcase/blob/main/Sources/Showcase/MapPlayground.swift) demonstrates this pattern by embedding an Apple MapKit `Map` on iOS and a Google Maps `GoogleMap` composable on Android:
 
 ```swift
-// Copyright 2023–2025 Skip
+// Copyright 2023–2026 Skip
 import SwiftUI
 #if !SKIP
 import MapKit
