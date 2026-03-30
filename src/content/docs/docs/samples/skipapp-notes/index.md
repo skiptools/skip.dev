@@ -31,8 +31,8 @@ and distributed through the [App Fair](https://appfair.org).
 ## Building
 
 This project is both a stand-alone Swift Package Manager module,
-as well as an Xcode project that builds and transpiles the project
-into a Kotlin Gradle project for Android using the Skip plugin.
+as well as an Xcode project that builds and translates the project
+into a Kotlin Gradle project for Android using the skipstone plugin.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

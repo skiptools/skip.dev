@@ -1,6 +1,6 @@
 ---
-title: Camera & Media
-description: Documentation for Camera & Media fetched from GitHub.
+title: App Support
+description: Documentation for App Support fetched from GitHub.
 note: This documentation section is derived from the GitHub README.md source using the scripts/sync-modules.mjs script. Do not make edits to the file here, change it there.
 editUrl: https://github.com/skiptools/skip-kit/edit/main/README.md
 ---

@@ -10,19 +10,13 @@ This framework is available at [github.com/skiptools/skip-marketplace](https://g
 :::
 
 
-This module provide support for interfacing with an app's
-marketplace, such as the Google Play Store for Android
-and the Apple App Store for iOS.
+In-app purchases, subscriptions, app reviews, and update prompts for Skip apps on both iOS and Android.
 
-Currently, the framework provides the ability to request
-a store rating for the app from the user. In the future,
-this framework will provide the ability to perform
-in-app purchases and subscription management.
+On iOS this wraps Apple's [StoreKit](https://developer.apple.com/documentation/storekit) framework. On Android it uses the [Google Play Billing Library](https://developer.android.com/google/play/billing) and [Play Core](https://developer.android.com/guide/playcore) libraries.
 
 ## Setup
 
-To include this framework in your project, add the following
-dependency to your `Package.swift` file:
+Add the dependency to your `Package.swift` file:
 
 ```swift
 let package = Package(
@@ -41,24 +35,174 @@ let package = Package(
 )
 ```
 
-## App Review Requests
+### Android Configuration
 
-You can use this library to request that the app marketplace show a prompt to the user requesting a rating for the app for the given marketplace.
+Add the billing permission to your `AndroidManifest.xml`:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="com.android.vending.BILLING"/>
+</manifest>
+```
+
+## In-App Purchases
+
+:::tip
+SkipMarketplace works best for non-consumable one-time-product entitlements. For subscriptions with server-side management, consider using [RevenueCat](https://www.revenuecat.com/) via the [skip-revenue](/docs/modules/skip-revenue) library.
+:::
+
+### Configure Products
+
+Define your products in [App Store Connect](https://developer.apple.com/help/app-store-connect/manage-in-app-purchases/create-consumable-or-non-consumable-in-app-purchases/) and/or the [Google Play Console](https://support.google.com/googleplay/android-developer/answer/16430488).
+
+### Fetch Products and Prices
 
 ```swift
 import SkipMarketplace
 
-// request that the system show an app review request at most once every month
-Marketplace.current.requestReview(period: .days(31))
+// One-time purchases
+let products = try await Marketplace.current.fetchProducts(
+    for: ["product1", "product2"],
+    subscription: false
+)
+
+for product in products {
+    print("\(product.displayName): \(product.displayPrice ?? "")")
+    print("  Description: \(product.productDescription)")
+    print("  Is subscription: \(product.isSubscription)")
+
+    if let offers = product.oneTimePurchaseOfferInfo {
+        for offer in offers {
+            print("  Price: \(offer.displayPrice) (\(offer.price))")
+        }
+    }
+}
 ```
 
-For guidance on how and when to make these sorts of requests, see the
-relevant documentation for the 
-[Apple App Store](https://developer.android.com/guide/playcore/in-app-review#when-to-request)
-and
-[Google PlayStore](https://developer.apple.com/design/human-interface-guidelines/ratings-and-reviews#Best-practices).
+### Fetch Subscription Products
 
-## Prompting for updates
+```swift
+let subscriptions = try await Marketplace.current.fetchProducts(
+    for: ["sub_monthly", "sub_annual"],
+    subscription: true
+)
+
+for product in subscriptions {
+    print("\(product.displayName): \(product.displayPrice ?? "")")
+
+    if let offers = product.subscriptionOffers {
+        for offer in offers {
+            for phase in offer.pricingPhases {
+                print("  Phase: \(phase.displayPrice)")
+                print("  Period: \(phase.billingPeriod ?? "unknown")")
+                print("  Cycles: \(phase.billingCycleCount)")
+                print("  Mode: \(phase.recurrenceMode)")
+            }
+        }
+    }
+}
+```
+
+### Purchase a Product
+
+```swift
+let product = try await Marketplace.current.fetchProducts(
+    for: ["premium_upgrade"],
+    subscription: false
+).first!
+
+if let transaction = try await Marketplace.current.purchase(item: product) {
+    print("Purchased: \(transaction.products)")
+    print("Order ID: \(transaction.id ?? "unknown")")
+    print("Date: \(transaction.purchaseDate)")
+    print("Quantity: \(transaction.quantity)")
+
+    // Always finish (acknowledge) the transaction
+    try await Marketplace.current.finish(purchaseTransaction: transaction)
+}
+```
+
+### Purchase with an Offer
+
+```swift
+let product = try await Marketplace.current.fetchProducts(
+    for: ["premium_upgrade"],
+    subscription: false
+).first!
+
+if let offer = product.oneTimePurchaseOfferInfo?.first {
+    if let transaction = try await Marketplace.current.purchase(
+        item: product,
+        offer: offer
+    ) {
+        try await Marketplace.current.finish(purchaseTransaction: transaction)
+    }
+}
+```
+
+### Query Entitlements
+
+Check what the user currently owns:
+
+```swift
+let entitlements = try await Marketplace.current.fetchEntitlements()
+for transaction in entitlements {
+    print("Owns: \(transaction.products)")
+    print("  Purchased: \(transaction.purchaseDate)")
+    print("  Acknowledged: \(transaction.isAcknowledged)")
+    if let expiration = transaction.expirationDate {
+        print("  Expires: \(expiration)")
+    }
+    // Finish each transaction to acknowledge receipt
+    try await Marketplace.current.finish(purchaseTransaction: transaction)
+}
+```
+
+### Listen for Transaction Updates
+
+Observe purchase and subscription state changes in real time:
+
+```swift
+Task {
+    for try await transaction in Marketplace.current.getPurchaseTransactionUpdates() {
+        print("Transaction update: \(transaction.products)")
+        try await Marketplace.current.finish(purchaseTransaction: transaction)
+    }
+}
+```
+
+### Testing Purchases
+
+- **iOS**: [Setting up StoreKit testing in Xcode](https://developer.apple.com/documentation/xcode/setting-up-storekit-testing-in-xcode)
+- **Android**: [Test your Google Play Billing Library integration](https://developer.android.com/google/play/billing/test)
+
+## App Review Requests
+
+Prompt the user to rate your app, with built-in throttling:
+
+```swift
+import SkipMarketplace
+
+// Request a review at most once every 31 days
+Marketplace.current.requestReview(period: .days(31))
+
+// Use the default period (31 days)
+Marketplace.current.requestReview()
+
+// Custom review logic
+Marketplace.current.requestReview(period: Marketplace.ReviewRequestDelay(shouldCheckReview: {
+    return launchCount > 5 && hasCompletedOnboarding
+}))
+```
+
+For guidance on when to request reviews, see the documentation for the
+[Apple App Store](https://developer.apple.com/design/human-interface-guidelines/ratings-and-reviews#Best-practices)
+and
+[Google Play Store](https://developer.android.com/guide/playcore/in-app-review#when-to-request).
+
+## App Update Prompts
+
+Automatically prompt users when a newer version is available:
 
 ```swift
 import SkipMarketplace
@@ -71,171 +215,137 @@ struct ContentView: View {
 }
 ```
 
-On iOS, we'll query `https://itunes.apple.com/lookup?bundleId=\(bundleId)` for the current latest version, presenting an [`.appStoreOverlay()`](https://developer.apple.com/documentation/swiftui/view/appstoreoverlay%28ispresented%3Aconfiguration%3A%29) for the current app when a newer version is available to install. The overlay will include an "Update" button which will initiate an update, forcing your app to quit.
+On iOS, this queries `https://itunes.apple.com/lookup?bundleId=...` for the latest version and presents an [`.appStoreOverlay()`](https://developer.apple.com/documentation/swiftui/view/appstoreoverlay%28ispresented%3Aconfiguration%3A%29) when an update is available.
 
-On Android, we'll use the [Google Play In-App Updates Library](https://developer.android.com/guide/playcore/in-app-updates), displaying a dismissable fullscreen "immediate" update. Google provides instructions to [test in-app updates](https://developer.android.com/guide/playcore/in-app-updates/test) using internal app sharing.
+On Android, this uses the [Google Play In-App Updates Library](https://developer.android.com/guide/playcore/in-app-updates) to display a fullscreen "immediate" update flow. See Google's guide to [test in-app updates](https://developer.android.com/guide/playcore/in-app-updates/test).
 
-## Querying App Installation Source
+The prompt is throttled to once per 24 hours by default. Use `forcePrompt: true` to bypass throttling:
 
-Determining which source was used to install the app (Apple App store, Google Play Store, AltStore, F-Droid, etc.) can be useful for determining what billing mechanism to use. This can be done by querying the `Marketplace.current.installationSource` property like:
+```swift
+.appUpdatePrompt(forcePrompt: true)
+```
+
+## Installation Source
+
+Determine where the app was installed from:
 
 ```swift
 switch await Marketplace.current.installationSource {
-case .appleAppStore: canUseNativeBillling = true
-case .googlePlayStore: canUseNativeBillling = true
-case .other(let id): canUseNativeBillling = false // handle other markerplaces here
-default: canUseNativeBillling = false
+case .appleAppStore:
+    print("Installed from Apple App Store")
+case .googlePlayStore:
+    print("Installed from Google Play Store")
+case .testFlight:
+    print("Installed from TestFlight")
+case .marketplace(let bundleId):
+    print("Installed from marketplace: \(bundleId)")
+case .web:
+    print("Installed from the web")
+case .other(let name):
+    print("Installed from: \(name ?? "unknown")")
+case .unknown:
+    print("Installation source unknown")
 }
 ```
 
-## Listing and purchasing in-app purchases
+## API Reference
 
-:::tip
-Managing in-app purchases in SkipMarketplace works best for non-consumable one-time-product entitlements, products that the user buys once and owns forever. You can use it for one-time-product consumables and subscriptions, but it's best to integrate those tightly with a server-side database that tracks purchases, consumptions and expirations. Your server-side web app can also sign promotional offers, accepts webhook notifications from the app stores, etc.
-:::
->
-> Rather than building all of that yourself to integrate with SkipMarketplace, you might prefer to use [RevenueCat](https://www.revenuecat.com/) for this, using the [skip-revenue](/docs/modules/skip-revenue) library. (RevenueCat does cost money; if you want to roll your own subscription-management software, you can do it with SkipMarketplace.)
+### Marketplace
 
-### Android Configuration
+The main entry point, accessed via `Marketplace.current`.
 
-You must set the `com.android.vending.BILLING` permission in your `AndroidManifest.xml` file like so:
+| Method / Property | Description |
+|---|---|
+| `current` | The singleton marketplace instance |
+| `installationSource` | Where the app was installed from (async) |
+| `fetchProducts(for:subscription:)` | Fetch product details by ID |
+| `purchase(item:offer:purchaseOptions:)` | Initiate a purchase |
+| `fetchEntitlements()` | Get all current entitlements |
+| `finish(purchaseTransaction:)` | Acknowledge/finish a transaction |
+| `getPurchaseTransactionUpdates()` | Stream of transaction updates |
+| `requestReview(period:)` | Request an app store review |
 
-```xml
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="com.android.vending.BILLING"/>
-</manifest>
-```
+### ProductInfo
 
-### Start by defining your products in App Store Connect and/or the Google Play Store
+| Property | Description |
+|---|---|
+| `id: String` | Product identifier |
+| `displayName: String` | Localized product name |
+| `productDescription: String` | Localized product description |
+| `displayPrice: String?` | Formatted price string |
+| `isSubscription: Bool` | Whether this is a subscription product |
+| `oneTimePurchaseOfferInfo` | One-time purchase offers (nil for subscriptions) |
+| `subscriptionOffers` | Subscription offers (nil for one-time purchases) |
 
-* One-time products
-    * App Store Connect: [Create consumable or non-consumable In-App Purchases](https://developer.apple.com/help/app-store-connect/manage-in-app-purchases/create-consumable-or-non-consumable-in-app-purchases/)
-    * Google Play Console: [Overview of one-time products](https://support.google.com/googleplay/android-developer/answer/16430488)
-* Subscriptions
-    * App Store Connect: [Offer auto-renewable subscriptions](https://developer.apple.com/help/app-store-connect/manage-subscriptions/offer-auto-renewable-subscriptions)
-    * Google Play Console: [Create and manage subscriptions](https://support.google.com/googleplay/android-developer/answer/140504?hl=en)
+### PurchaseTransaction
 
-### One-Time Purchases: Fetch ProductInfo and Prices
+| Property | Description |
+|---|---|
+| `id: String?` | Order/transaction ID |
+| `products: [String]` | Purchased product identifiers |
+| `purchaseDate: Date` | When the purchase was made |
+| `quantity: Int` | Number of items purchased |
+| `expirationDate: Date?` | Subscription expiration (iOS only) |
+| `isAcknowledged: Bool` | Whether the transaction has been finished |
+| `isAutoRenewing: Bool` | Whether a subscription auto-renews |
+| `revocationDate: Date?` | When the purchase was revoked, if at all (iOS only) |
+| `originalID: String?` | Original transaction ID (for renewals) |
+| `purchaseToken: String?` | Token for server verification (Android only) |
 
-```swift
-do {
-    let productIdentifiers = ["product1", "product2", "product3"]
-    let products: [ProductInfo] = try await Marketplace.current.fetchProducts(
-        for: productIdentifiers,
-        subscription: false
-    )
+### OneTimePurchaseOfferInfo
 
-    for product in products {
-        print("product \(product.id) \(product.displayName)")
-        let oneTimePurchaseOfferInfo: [OneTimePurchaseOfferInfo] = product.oneTimePurchaseOfferInfo!
-        for offer in oneTimePurchaseOfferInfo {
-            // On iOS, there will be only one offer, and its ID will be nil
-            // On GPS, there may be multiple offers, if you configured additional offers in the console
-            print("product \(product.id) offer \(offer.id ?? "nil") \(offer.displayPrice) \(offer.price)")
-        }
-    }
-}
-```
+| Property | Description |
+|---|---|
+| `id: String?` | Offer identifier |
+| `price: Decimal` | Numeric price |
+| `displayPrice: String` | Formatted price string |
+| `fullPrice: Decimal?` | Original price before discount (Android only) |
+| `discountAmount: Decimal?` | Discount value (Android only) |
+| `discountDisplayAmount: String?` | Formatted discount (Android only) |
+| `discountPercentage: Int?` | Discount percentage (Android only) |
 
-### Subscriptions: Fetch ProductInfo and Prices
+### SubscriptionOfferInfo
 
-```swift
-do {
-    let productIdentifiers = ["product1", "product2", "product3"]
-    let products: [ProductInfo] = try await Marketplace.current.fetchProducts(for: productIdentifiers, subscription: true)
+| Property | Description |
+|---|---|
+| `id: String?` | Offer identifier |
+| `pricingPhases: [SubscriptionPricingPhase]` | Pricing phases in this offer |
+| `offerToken: String?` | Offer token for purchase (Android only) |
 
-    for product in products {
-        print("product \(product.id) \(product.displayName)")
-        let subscriptionOffers: [SubscriptionOfferInfo] = product.subscriptionOffers!
-        for offer in subscriptionOffers {
-            #if !SKIP
-            print("product \(product.id) offer \(offer.id ?? "nil") type \(offer.type)")
-            #endif
-            let pricingPhases: [SubscriptionPricingPhase] = offer.pricingPhases
-            for pricingPhase in pricingPhases {
-                print("product \(product.id) offer \(offer.id ?? "nil") \(pricingPhase.displayPrice) \(pricingPhase.price)")
-            }
-        }
-    }
-} catch {
-    print("Error fetching products: \(error)")
-}
-```
+### SubscriptionPricingPhase
 
-### Purchasing (displaying a purchase sheet)
+| Property | Description |
+|---|---|
+| `price: Decimal` | Numeric price for this phase |
+| `displayPrice: String` | Formatted price string |
+| `billingPeriod: String?` | ISO 8601 duration (e.g. "P1M", "P1Y") |
+| `billingCycleCount: Int` | Number of cycles (0 = infinite) |
+| `recurrenceMode: String` | "INFINITE_RECURRING", "FINITE_RECURRING", or "NON_RECURRING" |
 
-```swift
-do {
-    let product: ProductInfo = try await Marketplace.current.fetchProducts(for: ["productIdentifier"], subscription: false).first!
-    if let purchaseTransaction: PurchaseTransaction = try await Marketplace.current.purchase(item: product) {
-        print("Purchased \(purchaseTransaction.products)")
-        // after you've stored the transaction somewhere, you should finish every PurchaseTransaction to acknowledge receipt
-        try await Marketplace.current.finish(purchaseTransaction: purchaseTransaction)
-    }
-} catch {
-    print("Error purchasing product: \(error)")
-}
-```
+### InstallationSource
 
-You can also pass in a purchase offer (with a discounted price).
+| Case | Description |
+|---|---|
+| `.appleAppStore` | Apple App Store |
+| `.googlePlayStore` | Google Play Store |
+| `.testFlight` | TestFlight |
+| `.marketplace(bundleId:)` | Alternative marketplace (EU) |
+| `.web` | Direct web install |
+| `.other(String?)` | Other source (e.g. F-Droid, Amazon) |
+| `.unknown` | Unknown source |
 
-```swift
-do {
-    let product: ProductInfo = try await Marketplace.current.fetchProducts(for: ["productIdentifier"], subscription: false).first!
-    let offer = product.oneTimePurchaseOfferInfo.first!
-    if let purchaseTransaction: PurchaseTransaction = try await Marketplace.current.purchase(item: product, offer: offer) {
-        print("Purchased \(purchaseTransaction.products)")
-        // after you've stored the transaction somewhere, you should finish every PurchaseTransaction to acknowledge receipt
-        try await Marketplace.current.finish(purchaseTransaction: purchaseTransaction)
-    }
-} catch {
-    print("Error purchasing product: \(error)")
-}
-```
+### ReviewRequestDelay
 
-### Querying for entitlements
-
-"Entitlements" ane non-consumable one-time products and subscriptions, something that the user is entitled to because they've currently purchased it.
-
-```swift
-do {
-    let entitlements: [PurchaseTransaction] = try await Marketplace.current.fetchEntitlements()
-    for purchaseTransaction in entitlements {
-        let products: [String] = purchaseTransaction.products
-        print("You own \(products)")
-        // after you've stored the transaction somewhere, you should finish every PurchaseTransaction to acknowledge receipt
-        // it's OK to "finish" the same transaction more than once
-        try await Marketplace.current.finish(purchaseTransaction: purchaseTransaction)
-    }
-} catch {
-    print("Error fetching entitlements: \(error)")
-}
-```
-
-### Handling updates to purchase transactions
-
-```swift
-do {
-    for try await purchaseTransaction in Marketplace.current.getPurchaseTransactionUpdates() {
-        print("Transaction update: \(purchaseTransaction)")
-        // after you've stored the transaction somewhere, you should finish every PurchaseTransaction to acknowledge receipt
-        // it's OK to "finish" the same transaction more than once
-        try await Marketplace.current.finish(purchaseTransaction: purchaseTransaction)
-    }
-} catch {
-    print("Error loading transaction updates: \(error)")
-}
-```
-
-### Testing purchases during development
-
-* iOS: [Setting up StoreKit testing in Xcode](https://developer.apple.com/documentation/xcode/setting-up-storekit-testing-in-xcode)
-* Google Play: [Test your Google Play Billing Library integration](https://developer.android.com/google/play/billing/test)
+| Factory | Description |
+|---|---|
+| `.default` | Once every 31 days |
+| `.days(Int)` | Once every N days |
+| `init(shouldCheckReview:)` | Custom logic |
 
 ## Building
 
-This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+This project is a Swift Package Manager module that uses the
+Skip plugin to build the package for both iOS and Android.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

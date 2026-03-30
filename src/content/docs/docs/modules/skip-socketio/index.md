@@ -10,25 +10,25 @@ This framework is available at [github.com/skiptools/skip-socketio](https://gith
 :::
 
 
-This is a Skip Swift/Kotlin library project that
-abstracts the Socket.io [iOS](https://socket.io/blog/socket-io-on-ios/)
-and [Android](https://socket.io/blog/native-socket-io-and-android/) APIs.
+Real-time bidirectional communication with [Socket.IO](https://socket.io) for Skip apps on both iOS and Android.
 
-## About Socket.io
+## About
 
-[Socket.IO](https://socket.io) is a library for real-time, event-based, bidirectional communication that provides a robust abstraction layer over various transport protocols (primarily WebSocket and HTTP long-polling). 
+SkipSocketIO wraps the native Socket.IO client libraries for each platform:
+- **iOS/macOS**: [socket.io-client-swift](https://github.com/socketio/socket.io-client-swift) (v16+)
+- **Android**: [socket.io-client-java](https://github.com/socketio/socket.io-client-java) (v2.1)
 
-Key features of the Socket.IO library that go beyond the raw WebSocket protocol include: 
+Key features inherited from Socket.IO:
 
-- Automatic reconnection with exponential backoff.
-- Packet buffering and automatic acknowledgments.
-- Event-driven communication with a simplified API (emit and on).
-- Multiplexing through namespaces and broadcasting to rooms. 
+- Automatic reconnection with exponential backoff
+- Packet buffering and automatic acknowledgments
+- Event-driven communication with `emit` and `on`
+- Multiplexing through namespaces
+- Transport fallback (WebSocket with HTTP long-polling fallback)
 
 ## Setup
 
-To include this framework in your project, add the following
-dependency to your `Package.swift` file:
+Add the dependency to your `Package.swift` file:
 
 ```swift
 let package = Package(
@@ -47,43 +47,298 @@ let package = Package(
 )
 ```
 
-## API Compatibility
+## Usage
 
-SkipSocketIO provides a similar API surface as the [SkipSocketIO Swift SDK](https://nuclearace.github.io/Socket.IO-Client-Swift/Classes/SocketIOClient.html) ([source](https://github.com/socketio/socket.io-client-swift)), ensuring a familiar development experience. All methods should behave identically on both iOS and Android platforms, allowing you to write once and deploy everywhere. On Android, the API calls are forwarded to their equivalents in the [Socket.IO Java SDK](https://socketio.github.io/socket.io-client-java/installation.html) ([source](https://github.com/socketio/socket.io-client-java)).
+### Connecting to a Server
 
-## Usage Examples
-
-### Connection
-
+Create a client and connect:
 
 ```swift
+import SkipSocketIO
+
 let socket = SkipSocketIOClient(socketURL: URL(string: "https://example.org")!, options: [
-    .compress,
-    .path("/mypath/"),
-    .secure(false),
-    .forceNew(false),
-    .forcePolling(false),
+    .secure(true),
     .reconnects(true),
     .reconnectAttempts(5),
-    .reconnectWait(2),
-    .reconnectWaitMax(10),
-    .extraHeaders(["X-Custom-Header": "Value"]),
 ])
 
-socket.on("connection") { params in
-    logger.log("socket connection established")
+socket.on(SocketIOEvent.connect) { _ in
+    print("Connected! Socket ID: \(socket.socketId ?? "unknown")")
+}
+
+socket.on(SocketIOEvent.disconnect) { _ in
+    print("Disconnected")
+}
+
+socket.on(SocketIOEvent.connectError) { data in
+    print("Connection error: \(data)")
 }
 
 socket.connect()
+```
 
-socket.on("onUpdate") { params in
-    logger.log("onUpdate event received with parameters: \(params)")
+### Listening for Events
+
+Use `on` for persistent listeners, or `once` for one-time handlers:
+
+```swift
+// Called every time the event fires
+socket.on("chat message") { data in
+    if let message = data.first as? String {
+        print("Received: \(message)")
+    }
 }
 
-socket.emit("update", ["hello", 1, "2", Data()])
-
-socket.disconnect()
+// Called once, then automatically removed
+socket.once("welcome") { data in
+    print("Server welcome: \(data)")
+}
 ```
+
+### Removing Event Handlers
+
+```swift
+// Remove handlers for a specific event
+socket.off("chat message")
+
+// Remove all handlers
+socket.removeAllHandlers()
+```
+
+### Catch-All Handler
+
+Listen for every incoming event:
+
+```swift
+socket.onAny { eventName, data in
+    print("Event '\(eventName)' received with data: \(data)")
+}
+```
+
+### Emitting Events
+
+Send events with data to the server:
+
+```swift
+// Simple string
+socket.emit("chat message", ["Hello, world!"])
+
+// Multiple items of different types
+socket.emit("update", ["status", 42, true])
+
+// With a send completion callback
+socket.emit("save", ["data to save"]) {
+    print("Event sent")
+}
+```
+
+### Acknowledgements
+
+Emit an event and receive an acknowledgement from the server:
+
+```swift
+socket.emitWithAck("get-users", ["room-1"]) { ackData in
+    print("Server responded with: \(ackData)")
+}
+```
+
+### Connection Status
+
+Check the current connection state:
+
+```swift
+if socket.isConnected {
+    print("Socket ID: \(socket.socketId ?? "")")
+}
+
+switch socket.status {
+case .connected:    print("Connected")
+case .connecting:   print("Connecting...")
+case .disconnected: print("Disconnected")
+case .notConnected: print("Never connected")
+}
+```
+
+### Connect with Timeout
+
+```swift
+socket.connect(timeoutAfter: 5.0) {
+    print("Connection timed out after 5 seconds")
+}
+```
+
+### Namespaces
+
+Use `SkipSocketIOManager` to connect to multiple namespaces on the same server:
+
+```swift
+let manager = SkipSocketIOManager(socketURL: URL(string: "https://example.org")!, options: [
+    .reconnects(true),
+    .forceWebsockets(true),
+])
+
+let defaultSocket = manager.defaultSocket()
+let chatSocket = manager.socket(forNamespace: "/chat")
+let adminSocket = manager.socket(forNamespace: "/admin")
+
+chatSocket.on("message") { data in
+    print("Chat message: \(data)")
+}
+
+adminSocket.on("notification") { data in
+    print("Admin notification: \(data)")
+}
+
+defaultSocket.connect()
+chatSocket.connect()
+adminSocket.connect()
+```
+
+### Configuration Options
+
+```swift
+let socket = SkipSocketIOClient(socketURL: URL(string: "https://example.org")!, options: [
+    // Transport
+    .forceWebsockets(true),         // Use only WebSockets (no long-polling fallback)
+    .forcePolling(true),            // Use only HTTP long-polling
+    .compress,                      // Enable WebSocket compression
+    .secure(true),                  // Use secure transports (wss://)
+    .path("/custom-path/"),         // Custom Socket.IO server path
+
+    // Reconnection
+    .reconnects(true),              // Enable auto-reconnection
+    .reconnectAttempts(10),         // Max reconnection attempts (-1 for infinite)
+    .reconnectWait(1),              // Min seconds between reconnection attempts
+    .reconnectWaitMax(30),          // Max seconds between reconnection attempts
+    .randomizationFactor(0.5),      // Jitter factor for reconnection delay
+
+    // Headers and parameters
+    .extraHeaders(["Authorization": "Bearer token123"]),
+    .connectParams(["userId": "abc"]),
+    .auth(["token": "secret"]),
+
+    // Other
+    .forceNew(true),                // Always create a new engine
+    .log(true),                     // Enable debug logging
+    .selfSigned(true),              // Allow self-signed certificates (dev only)
+    .enableSOCKSProxy(false),       // SOCKS proxy support
+])
+```
+
+### SwiftUI Integration
+
+```swift
+import SwiftUI
+import SkipSocketIO
+
+struct ChatView: View {
+    @State var messages: [String] = []
+    @State var inputText: String = ""
+    @State var socket = SkipSocketIOClient(
+        socketURL: URL(string: "https://chat.example.org")!,
+        options: [.reconnects(true)]
+    )
+
+    var body: some View {
+        VStack {
+            List(messages, id: \.self) { message in
+                Text(message)
+            }
+            HStack {
+                TextField("Message", text: $inputText)
+                    .textFieldStyle(.roundedBorder)
+                Button("Send") {
+                    socket.emit("chat message", [inputText])
+                    inputText = ""
+                }
+            }
+            .padding()
+        }
+        .task {
+            socket.on("chat message") { data in
+                if let msg = data.first as? String {
+                    messages.append(msg)
+                }
+            }
+            socket.connect()
+        }
+    }
+}
+```
+
+## API Reference
+
+### SkipSocketIOClient
+
+The primary interface for Socket.IO communication.
+
+| Method / Property | Description |
+|---|---|
+| `init(socketURL:options:)` | Create a client for the given server URL |
+| `connect()` | Connect to the server |
+| `connect(timeoutAfter:handler:)` | Connect with a timeout callback |
+| `disconnect()` | Disconnect from the server |
+| `isConnected: Bool` | Whether the client is currently connected |
+| `socketId: String?` | The server-assigned session ID |
+| `status: SocketIOStatus` | Current connection status |
+| `on(_:callback:)` | Register a persistent event handler |
+| `once(_:callback:)` | Register a one-time event handler |
+| `off(_:)` | Remove all handlers for an event |
+| `removeAllHandlers()` | Remove all event handlers |
+| `onAny(_:)` | Register a catch-all handler for all incoming events |
+| `emit(_:_:completion:)` | Emit an event with data |
+| `emitWithAck(_:_:ackCallback:)` | Emit an event and receive a server acknowledgement |
+
+### SkipSocketIOManager
+
+Manages connections and namespaces for a server.
+
+| Method | Description |
+|---|---|
+| `init(socketURL:options:)` | Create a manager for the given server URL |
+| `defaultSocket()` | Returns a client for the default namespace (`/`) |
+| `socket(forNamespace:)` | Returns a client for the given namespace |
+
+### SocketIOStatus
+
+| Case | Description |
+|---|---|
+| `.notConnected` | Has never been connected |
+| `.connecting` | Connection in progress |
+| `.connected` | Currently connected |
+| `.disconnected` | Was connected, now disconnected |
+
+### SocketIOEvent
+
+Standard event name constants.
+
+| Constant | Value | Description |
+|---|---|---|
+| `SocketIOEvent.connect` | `"connect"` | Fired on successful connection |
+| `SocketIOEvent.disconnect` | `"disconnect"` | Fired on disconnection |
+| `SocketIOEvent.connectError` | `"connect_error"` | Fired on connection error |
+
+### SkipSocketIOClientOption
+
+| Option | Description | Android Support |
+|---|---|---|
+| `.compress` | WebSocket compression | Ignored |
+| `.connectParams([String: Any])` | GET parameters for the connect URL | Ignored |
+| `.extraHeaders([String: String])` | Extra HTTP headers | Supported |
+| `.forceNew(Bool)` | Always create a new engine | Supported |
+| `.forcePolling(Bool)` | HTTP long-polling only | Supported |
+| `.forceWebsockets(Bool)` | WebSockets only | Supported |
+| `.enableSOCKSProxy(Bool)` | SOCKS proxy | Ignored |
+| `.log(Bool)` | Debug logging | Ignored |
+| `.path(String)` | Custom Socket.IO path | Supported |
+| `.reconnects(Bool)` | Auto-reconnection | Supported |
+| `.reconnectAttempts(Int)` | Max reconnection attempts | Supported |
+| `.reconnectWait(Int)` | Min seconds before reconnect | Supported |
+| `.reconnectWaitMax(Int)` | Max seconds before reconnect | Supported |
+| `.randomizationFactor(Double)` | Reconnect jitter | Supported |
+| `.secure(Bool)` | Secure transports | Supported |
+| `.selfSigned(Bool)` | Self-signed certs (dev only) | Ignored |
+| `.auth([String: Any])` | Authentication payload | Ignored |
 
 ## Building
 

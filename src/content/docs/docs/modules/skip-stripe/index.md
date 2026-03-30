@@ -102,7 +102,7 @@ framework instead.
 
 ## Building
 
-This project is a free Swift Package Manager module that uses the
+This project is a Swift Package Manager module that uses the
 Skip plugin to transpile Swift into Kotlin.
 
 Building the module requires that Skip be installed using
