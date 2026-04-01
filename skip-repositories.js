@@ -14,8 +14,8 @@ export const coreFrameworks = [
 
 export const platformFrameworks = [
   { repo: 'skip-kit', name: 'App Support' },
-  { repo: 'skip-authentication-services', name: 'AuthenticationServices' },
-  { repo: 'skip-av', name: 'AVKit' },
+  { repo: 'skip-av', name: 'Audio/Video' },
+  { repo: 'skip-authentication-services', name: 'Authentication' },
   { repo: 'skip-bluetooth', name: 'Bluetooth' },
   { repo: 'skip-calendar', name: 'Calendar' },
   { repo: 'skip-contacts', name: 'Contacts' },
