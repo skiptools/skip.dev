@@ -9,7 +9,7 @@ import rehypeSlug from "rehype-slug";
 import { remarkHeadingId } from "remark-custom-heading-id";
 import yaml from '@rollup/plugin-yaml';
 // shared definitions of the modules and samples
-import { coreFrameworks, integrationFrameworks, sampleApps } from './skip-repositories.js';
+import { coreFrameworks, platformFrameworks, integrationFrameworks, sampleApps } from './skip-repositories.js';
 
 // https://astro.build/config
 export default defineConfig({
@@ -151,12 +151,17 @@ export default defineConfig({
         },
         {
           label: 'Core Frameworks',
-          collapsed: true,
+          collapsed: false,
           items: coreFrameworks.map(item => `docs/modules/${item.repo}`),
         },
         {
+          label: 'Platform Frameworks',
+          collapsed: false,
+          items: platformFrameworks.map(item => `docs/modules/${item.repo}`),
+        },
+        {
           label: 'Integration Frameworks',
-          collapsed: true,
+          collapsed: false,
           items: integrationFrameworks.map(item => `docs/modules/${item.repo}`),
         },
         {

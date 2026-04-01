@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // shared definitions of the modules and samples
-import { coreFrameworks, integrationFrameworks, sampleApps } from '../skip-repositories.js';
+import { coreFrameworks, platformFrameworks, integrationFrameworks, sampleApps } from '../skip-repositories.js';
 
 const replacements = [
     //{ search: '# Skip Lib', replace: '# Introduction to Skip Lib' },
@@ -20,7 +20,10 @@ const replacements = [
 const owner = 'skiptools';
 const branch = 'main';
 
-const allModules = coreFrameworks.concat(integrationFrameworks).concat(sampleApps);
+const allModules = coreFrameworks
+  .concat(platformFrameworks)
+  .concat(integrationFrameworks)
+  .concat(sampleApps);
 
 async function processRepositories() {
   for (const mod of allModules) {

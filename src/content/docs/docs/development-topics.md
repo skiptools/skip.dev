@@ -475,3 +475,25 @@ Skip fully supports iOS and Android system color schemes, as well as SwiftUI sty
 Material SwiftUI modifiers for [Skip Fuse](/docs/modes/#fuse) are a work in progress. They are currently only supported for [Skip Lite](/docs/modes/#lite) apps.
 :::
 
+---
+
+## Opening App Settings {#open-settings}
+
+A common pattern in mobile apps is to direct the user to the system settings page for the app — for example, to grant a permission that was previously denied. On iOS, this opens the Settings app to your app's entry. On Android, it opens the system App Info screen where the user can manage permissions, notifications, storage, and other settings.
+
+Skip supports this with the standard `UIApplication` API:
+
+```swift
+await UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+```
+
+This works on both platforms with no `#if SKIP` conditional required. For example, you might use it in a button that appears when a required permission has been denied:
+
+```swift
+Button("Open Settings") {
+    Task {
+        await UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+    }
+}
+```
+

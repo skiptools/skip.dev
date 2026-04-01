@@ -193,6 +193,16 @@ Skip has a [SkipFirebase framework](/docs/modules/skip-firebase/) module that pr
 
 We have a [SkipMotion framework](/docs/modules/skip-motion/) framework and a [Lottie Demo app](/docs/samples/skipapp-lottiedemo/) available.
 
+### How can I open the system settings for my app? {#open_settings}
+
+You can open your app's system settings page on both iOS and Android using the standard `UIApplication` API:
+
+```swift
+await UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+```
+
+On iOS this opens the Settings app to your app's entry, and on Android it opens the system App Info screen where the user can manage permissions, notifications, storage, and other settings for your app. See [Common Topics](/docs/development-topics/#open-settings) for more details.
+
 ### How can I change the app name as displayed on the home screen? {#appname}
 
 For the iOS side, you can edit the `Darwin/AppName.xcconfig` and set:

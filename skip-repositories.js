@@ -12,31 +12,36 @@ export const coreFrameworks = [
   { repo: 'skip-bridge', name: 'SkipBridge' },
 ];
 
-export const integrationFrameworks = [
+export const platformFrameworks = [
+  { repo: 'skip-kit', name: 'App Support' },
   { repo: 'skip-authentication-services', name: 'AuthenticationServices' },
-  { repo: 'skip-auth0', name: 'Auth0' },
   { repo: 'skip-av', name: 'AVKit' },
   { repo: 'skip-bluetooth', name: 'Bluetooth' },
-  { repo: 'skip-kit', name: 'App Support' },
-  { repo: 'skip-device', name: 'Device Hardware' },
+  { repo: 'skip-calendar', name: 'Calendar' },
+  { repo: 'skip-contacts', name: 'Contacts' },
   { repo: 'skip-ffi', name: 'FFI' },
-  { repo: 'skip-firebase', name: 'Firebase' },
   { repo: 'skip-script', name: 'JavaScriptCore' },
   { repo: 'skip-keychain', name: 'Keychain' },
-  { repo: 'skip-livekit', name: 'WebRTC (LiveKit)' },
-  { repo: 'skip-marketplace', name: 'Marketplace' },
-  { repo: 'skip-motion', name: 'Lottie' },
   { repo: 'skip-nfc', name: 'NFC' },
-  { repo: 'skip-posthog', name: 'PostHog' },
   { repo: 'skip-qrcode', name: 'QR Codes' },
-  { repo: 'skip-revenue', name: 'RevenueCat' },
-  { repo: 'skip-sentry', name: 'Sentry' },
-  { repo: 'skip-socketio', name: 'Socket.IO' },
+  { repo: 'skip-device', name: 'Sensors' },
   { repo: 'skip-sql', name: 'SQLite' },
-  { repo: 'skip-supabase', name: 'Supabase' },
   { repo: 'skip-web', name: 'WebView' },
   { repo: 'skip-xml', name: 'XML' },
   { repo: 'skip-zip', name: 'Zip' },
+];
+
+export const integrationFrameworks = [
+  { repo: 'skip-auth0', name: 'Auth0' },
+  { repo: 'skip-firebase', name: 'Firebase' },
+  { repo: 'skip-livekit', name: 'WebRTC (LiveKit)' },
+  { repo: 'skip-marketplace', name: 'Marketplace' },
+  { repo: 'skip-motion', name: 'Lottie' },
+  { repo: 'skip-posthog', name: 'PostHog' },
+  { repo: 'skip-revenue', name: 'RevenueCat' },
+  { repo: 'skip-sentry', name: 'Sentry' },
+  { repo: 'skip-socketio', name: 'Socket.IO' },
+  { repo: 'skip-supabase', name: 'Supabase' },
 ];
 
 export const sampleApps = [
