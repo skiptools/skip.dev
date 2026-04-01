@@ -7,6 +7,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import { remarkHeadingId } from "remark-custom-heading-id";
+import mermaid from 'astro-mermaid';
 import yaml from '@rollup/plugin-yaml';
 // shared definitions of the modules and samples
 import { coreFrameworks, platformFrameworks, integrationFrameworks, sampleApps } from './skip-repositories.js';
@@ -92,7 +93,6 @@ export default defineConfig({
             words: 'total',
           },
         }),
-
       ],
       // not needed now that we generate correct editUrl for modules and samples
       //routeMiddleware: './src/routeData.ts',
@@ -143,6 +143,7 @@ export default defineConfig({
             'docs/skip-cli',
             'docs/c-development',
             'docs/update-guide',
+            'docs/architecture',
             'docs/help',
             'docs/faq',
             'compare',
@@ -184,5 +185,14 @@ export default defineConfig({
         },
       ],
 		}),
+    mermaid({
+      //theme: 'forest',
+      autoTheme: true,
+      mermaidConfig: {
+        flowchart: {
+          curve: 'basis'
+        }
+      }
+    })
 	],
 });
