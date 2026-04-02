@@ -96,23 +96,18 @@ export default defineConfig({
       ],
       routeMiddleware: './src/routeData.ts',
       head: [
-        { tag: 'meta', attrs: { property: 'og:image', content: 'https://assets.skip.dev/images/og-banner.png' } },
-        { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
-        { tag: 'meta', attrs: { property: 'og:image:height', content: '675' } },
-        { tag: 'meta', attrs: { property: 'og:image:type', content: 'image/png' } },
         { tag: 'meta', attrs: { property: 'og:site_name', content: 'Skip' } },
         { tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
-        { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
-        { tag: 'meta', attrs: { name: 'twitter:image', content: 'https://assets.skip.dev/images/og-banner.png' } },
       ],
       customCss: [
         // Relative path to your custom CSS file
         './src/styles/custom.css',
       ],
-			social: [
+	  social: [
         { icon: 'discourse', label: 'Forums', href: 'https://forums.skip.dev' },
         { icon: 'slack', label: 'Slack', href: '/slack/' },
         { icon: 'mastodon', label: 'Mastodon', href: 'https://mas.to/@skiptools' },
+        { icon: 'twitter', label: 'Twitter', href: 'https://x.com/skiptools' },
         { icon: 'github', label: 'GitHub', href: 'https://github.com/orgs/skiptools' },
       ],
       editLink: {
