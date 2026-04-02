@@ -39,7 +39,9 @@ let package = Package(
 
 1. Create an [Auth0](https://auth0.com) account and tenant.
 2. Create a **Native** application in your Auth0 dashboard.
-3. Note your **Domain**, **Client ID**, and configure the **Allowed Callback URLs** and **Allowed Logout URLs** for both platforms.
+3. Note your **Domain** and **Client ID**.
+4. Configure **Allowed Callback URLs** and **Allowed Logout URLs** for both platforms (see below).
+5. If you plan to use `loginWithCredentials` or `signUp`, enable the **Password** grant type in your application's advanced settings under **Grant Types**.
 
 ### iOS Configuration
 
@@ -152,6 +154,118 @@ Auth0SDK.shared.loginWithCredentials(
 }
 ```
 
+### Sign Up (Register and Login)
+
+Create a new user account and immediately log in to obtain tokens:
+
+```swift
+Auth0SDK.shared.signUp(
+    email: "newuser@example.com",
+    password: "securepassword"
+) { result in
+    switch result {
+    case .success(let credentials):
+        print("Signed up and logged in!")
+        print("Access token: \(credentials.accessToken ?? "")")
+    case .failure(let error):
+        print("Sign up failed: \(error)")
+    }
+}
+```
+
+With additional options:
+
+```swift
+Auth0SDK.shared.signUp(
+    email: "newuser@example.com",
+    password: "securepassword",
+    username: "newuser",            // If your connection requires usernames
+    connection: "Username-Password-Authentication",
+    scope: "openid profile email offline_access",
+    audience: "https://api.example.com"
+) { result in
+    // Handle result...
+}
+```
+
+> **Prerequisites:** The "Password" grant type must be enabled in your Auth0 application settings. The database connection must allow sign-ups (check **Disable Sign Ups** is unchecked in your connection settings).
+
+### Create User (Registration Only)
+
+Create a new user without logging in. Useful when an admin creates accounts or when you want to handle login separately:
+
+```swift
+Auth0SDK.shared.createUser(
+    email: "newuser@example.com",
+    password: "securepassword"
+) { result in
+    switch result {
+    case .success(let user):
+        print("User created: \(user.email)")
+        print("Username: \(user.username ?? "none")")
+        print("Email verified: \(user.emailVerified)")
+    case .failure(let error):
+        print("User creation failed: \(error)")
+    }
+}
+```
+
+### Password Reset
+
+Send a password reset email to the user:
+
+```swift
+Auth0SDK.shared.resetPassword(email: "user@example.com") { result in
+    switch result {
+    case .success:
+        print("Password reset email sent")
+    case .failure(let error):
+        print("Password reset failed: \(error)")
+    }
+}
+```
+
+> **Note:** For security reasons, this method will not fail if the email address does not exist in the database. The user will simply not receive an email.
+
+### User Profile
+
+Fetch the user's profile from the Auth0 `/userinfo` endpoint:
+
+```swift
+Auth0SDK.shared.userInfo(accessToken: credentials.accessToken!) { result in
+    switch result {
+    case .success(let profile):
+        print("User ID: \(profile.sub)")
+        print("Name: \(profile.name ?? "")")
+        print("Email: \(profile.email ?? "")")
+        print("Email verified: \(profile.emailVerified)")
+        print("Picture: \(profile.picture ?? "")")
+        print("Nickname: \(profile.nickname ?? "")")
+    case .failure(let error):
+        print("Failed to fetch profile: \(error)")
+    }
+}
+```
+
+> **Prerequisites:** Requires a valid access token from a login flow. The token must have the `openid` scope to return user claims.
+
+### Token Revocation
+
+Revoke a refresh token to invalidate it server-side:
+
+```swift
+Auth0SDK.shared.revokeToken(refreshToken: savedRefreshToken) { result in
+    switch result {
+    case .success:
+        print("Token revoked")
+    case .failure(let error):
+        print("Revocation failed: \(error)")
+    }
+}
+```
+
+> **Note:** After revocation, the refresh token can no longer be used to obtain new access tokens. Call this during logout for complete session invalidation.
+
 ### Logout
 
 ```swift
@@ -187,13 +301,31 @@ Auth0SDK.shared.renewCredentials(refreshToken: savedRefreshToken) { result in
 
 ### Credentials Manager
 
-Check whether stored credentials are available:
+Store and retrieve credentials using the platform's secure storage (Keychain on iOS, SharedPreferences on Android):
 
 ```swift
+// Save credentials after login
+Auth0SDK.shared.login { result in
+    if case .success(let credentials) = result {
+        Auth0SDK.shared.saveCredentials(credentials)
+    }
+}
+
+// Check whether stored credentials are available
 if Auth0SDK.shared.hasValidCredentials {
     print("User has valid stored credentials")
 } else {
     print("User needs to log in")
+}
+
+// Retrieve stored credentials (auto-renews if expired)
+Auth0SDK.shared.getCredentials { result in
+    switch result {
+    case .success(let credentials):
+        print("Retrieved credentials: \(credentials.accessToken ?? "")")
+    case .failure(let error):
+        print("Failed to retrieve credentials: \(error)")
+    }
 }
 
 // Clear stored credentials
@@ -208,16 +340,23 @@ import SkipAuth0
 
 struct LoginView: View {
     @State var isLoggedIn = false
+    @State var userName: String?
     @State var errorMessage: String?
 
     var body: some View {
         VStack(spacing: 16) {
             if isLoggedIn {
-                Text("You are logged in!")
+                if let userName {
+                    Text("Welcome, \(userName)!")
+                } else {
+                    Text("You are logged in!")
+                }
                 Button("Log Out") {
                     Auth0SDK.shared.logout { result in
                         if case .success = result {
+                            Auth0SDK.shared.clearCredentials()
                             isLoggedIn = false
+                            userName = nil
                         }
                     }
                 }
@@ -226,7 +365,30 @@ struct LoginView: View {
                 Button("Log In") {
                     Auth0SDK.shared.login { result in
                         switch result {
-                        case .success:
+                        case .success(let credentials):
+                            Auth0SDK.shared.saveCredentials(credentials)
+                            isLoggedIn = true
+                            // Fetch user profile
+                            if let token = credentials.accessToken {
+                                Auth0SDK.shared.userInfo(accessToken: token) { profileResult in
+                                    if case .success(let profile) = profileResult {
+                                        userName = profile.name
+                                    }
+                                }
+                            }
+                        case .failure(let error):
+                            errorMessage = error.localizedDescription
+                        }
+                    }
+                }
+                Button("Sign Up") {
+                    Auth0SDK.shared.signUp(
+                        email: "user@example.com",
+                        password: "securepassword"
+                    ) { result in
+                        switch result {
+                        case .success(let credentials):
+                            Auth0SDK.shared.saveCredentials(credentials)
                             isLoggedIn = true
                         case .failure(let error):
                             errorMessage = error.localizedDescription
@@ -240,7 +402,13 @@ struct LoginView: View {
         }
         .padding()
         .onAppear {
-            isLoggedIn = Auth0SDK.shared.hasValidCredentials
+            if Auth0SDK.shared.hasValidCredentials {
+                Auth0SDK.shared.getCredentials { result in
+                    if case .success = result {
+                        isLoggedIn = true
+                    }
+                }
+            }
         }
     }
 }
@@ -258,12 +426,22 @@ The main singleton for all Auth0 operations.
 | `configure(_:)` | Initialize with an `Auth0Config` |
 | `isConfigured: Bool` | Whether the SDK has been configured |
 | `config: Auth0Config?` | The current configuration |
+| **Web Auth** | |
 | `login(scope:audience:presenting:completion:)` | Start Universal Login (browser) |
-| `loginWithCredentials(email:password:scope:audience:completion:)` | Direct email/password login |
 | `logout(federated:presenting:completion:)` | Clear the session |
+| **Authentication API** | |
+| `loginWithCredentials(email:password:scope:audience:completion:)` | Direct email/password login |
+| `signUp(email:password:username:connection:scope:audience:completion:)` | Register a new user and log in |
+| `createUser(email:password:username:connection:completion:)` | Register a new user without logging in |
+| `resetPassword(email:connection:completion:)` | Send a password reset email |
 | `renewCredentials(refreshToken:completion:)` | Refresh an access token |
+| `userInfo(accessToken:completion:)` | Fetch the user profile |
+| `revokeToken(refreshToken:completion:)` | Revoke a refresh token |
+| **Credentials Manager** | |
 | `hasValidCredentials: Bool` | Whether stored credentials exist |
 | `clearCredentials()` | Remove stored credentials |
+| `saveCredentials(_:) -> Bool` | Store credentials in secure storage |
+| `getCredentials(completion:)` | Retrieve stored credentials (auto-renews) |
 
 ### Auth0Config
 
@@ -285,35 +463,65 @@ The main singleton for all Auth0 operations.
 | `expiresAt` | `Date?` | When the access token expires |
 | `scope` | `String?` | Granted OAuth scopes |
 
+### Auth0UserProfile
+
+| Property | Type | Description |
+|---|---|---|
+| `sub` | `String` | The user's unique identifier (the `sub` claim) |
+| `name` | `String?` | Full name |
+| `givenName` | `String?` | Given (first) name |
+| `familyName` | `String?` | Family (last) name |
+| `nickname` | `String?` | Nickname |
+| `email` | `String?` | Email address |
+| `emailVerified` | `Bool` | Whether the email has been verified |
+| `picture` | `String?` | URL of the user's profile picture |
+
+### Auth0DatabaseUser
+
+| Property | Type | Description |
+|---|---|---|
+| `email` | `String` | The user's email address |
+| `username` | `String?` | Username (if the connection requires it) |
+| `emailVerified` | `Bool` | Whether the email has been verified |
+
 ### Auth0Error
 
 | Case | Description |
 |---|---|
 | `.notConfigured` | `configure(_:)` has not been called |
 | `.missingPresenter` | A platform presenter is required |
-| `.webAuthFailed(String)` | The authentication flow failed |
+| `.webAuthFailed(String)` | The web authentication flow failed |
+| `.authenticationFailed(String)` | An authentication API call failed |
+
+## Prerequisites Summary
+
+| Feature | Requirement |
+|---|---|
+| All features | Auth0 account with a **Native** application configured |
+| Universal Login | Callback URLs configured in Auth0 dashboard for both platforms |
+| `loginWithCredentials` | "Password" grant type enabled in application settings |
+| `signUp` / `createUser` | "Password" grant type enabled; sign-ups enabled on the database connection |
+| `resetPassword` | A database connection (e.g. `Username-Password-Authentication`) |
+| `userInfo` | Access token with `openid` scope |
+| `revokeToken` | A valid refresh token (request `offline_access` scope during login) |
+| iOS | `CFBundleURLSchemes` registered in `Info.plist` |
+| Android | `auth0Domain` and `auth0Scheme` manifest placeholders in `skip.yml` |
 
 ## Limitations
 
-:::warning
-The following features are **not yet available** in the Skip cross-platform wrapper:
-:::
-> - **Sign up** (user registration) — Available on iOS via the native Auth0.swift SDK. On Android, use the Auth0 Universal Login which includes sign-up, or call the Auth0 Authentication API directly via `#if SKIP` blocks.
-> - **Password reset** — Use the Universal Login page which includes a "Forgot Password" link, or use the native SDKs directly.
-> - **User profile** (`/userinfo` endpoint) — Not yet wrapped. Use the `idToken` JWT to decode user info client-side, or call the endpoint directly.
-> - **Token revocation** — Not yet wrapped. Use the native SDKs or call the Auth0 API directly.
-> - **Social / OAuth login** — Supported through Universal Login (the browser-based flow handles all identity providers configured in your Auth0 dashboard).
-> - **MFA (Multi-Factor Authentication)** — Handled by Universal Login when configured in your Auth0 dashboard. Programmatic MFA enrollment/verification is not wrapped.
-> - **Credentials persistence** — On Android, `saveCredentials` is not yet supported through the cross-platform API. Use `hasValidCredentials` and `clearCredentials` to manage stored state. On iOS, the full `CredentialsManager` is available via the native Auth0 SDK.
-
 :::note
-On iOS, the full [Auth0.swift](https://github.com/auth0/Auth0.swift) API is available since SkipAuth0 re-exports it. Features like sign up, password reset, user profile, and token revocation work natively on iOS. The limitations above apply only to the cross-platform API surface on Android.
+On iOS, the full [Auth0.swift](https://github.com/auth0/Auth0.swift) API is available since SkipAuth0 re-exports it. The limitations below apply only to the cross-platform API surface.
 :::
+
+- **Social / OAuth login** — Supported through Universal Login (the browser-based flow handles all identity providers configured in your Auth0 dashboard). Direct social token exchange is not wrapped.
+- **MFA (Multi-Factor Authentication)** — Handled by Universal Login when configured in your Auth0 dashboard. Programmatic MFA enrollment/verification is not wrapped.
+- **Passwordless login** (email/SMS codes) — Not yet wrapped. Use the native SDKs directly or Universal Login.
+- **Organizations** — Auth0 Organizations support is available through Universal Login but not wrapped in the cross-platform API.
 
 ## Building
 
-This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+This project is a Swift Package Manager module that uses the
+Skip plugin to build the package for both iOS and Android.
 
 Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.

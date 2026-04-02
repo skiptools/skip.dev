@@ -4,6 +4,7 @@ date:   2024-05-02
 tags: [compose, jetpack-compose, android, swiftui, layout, custom-modifier, skipui, kotlin]
 layout: post
 permalink: /blog/negative-padding-in-compose/
+tableOfContents: false
 author: Abe White
 ---
 

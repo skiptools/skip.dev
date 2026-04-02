@@ -4,6 +4,7 @@ date:   2026-01-21
 tags: [skip, open-source, licensing, announcement, sustainability, cross-platform]
 layout: post
 permalink: /blog/skip-is-free/
+tableOfContents: false
 author: the Skip Team
 ---
 

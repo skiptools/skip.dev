@@ -10,8 +10,10 @@ This framework is available at [github.com/skiptools/skip-device](https://github
 :::
 
 
-The SkipDevice module is a dual-platform Skip framework that provides access to 
-network reachability, location, and device sensor data.
+The SkipDevice module is a dual-platform Skip framework that provides access to
+network reachability, location services, and device sensor data (accelerometer, gyroscope, magnetometer, and barometer).
+
+On iOS, the module wraps [CoreMotion](https://developer.apple.com/documentation/coremotion) and [CoreLocation](https://developer.apple.com/documentation/corelocation). On Android, it wraps the [Sensor](https://developer.android.com/reference/android/hardware/SensorManager) and [Location](https://developer.android.com/reference/android/location/LocationManager) APIs. All sensor providers expose a unified `AsyncThrowingStream` interface that works identically on both platforms.
 
 ## Setup
 
@@ -35,283 +37,435 @@ let package = Package(
 )
 ```
 
-## Network Reachability
+## Usage Pattern
 
-You can check whether the device is currenly able to access the network with:
+All sensor providers follow the same pattern:
+
+1. Create a provider instance (retain it for the lifetime of the monitoring session)
+2. Optionally set `updateInterval` before calling `monitor()`
+3. Iterate the `AsyncThrowingStream` returned by `monitor()`
+4. The stream automatically stops when the task is cancelled or the provider is deallocated
 
 ```swift
-let isReachable: Bool = networkReachability.isNetworkReachable
+let provider = SomeProvider()
+provider.updateInterval = 0.1 // optional, in seconds
+do {
+    for try await event in provider.monitor() {
+        // process event
+    }
+} catch {
+    // handle error
+}
+```
+
+Check `provider.isAvailable` before starting to determine if the hardware is present on the device.
+
+## Network Reachability
+
+Check whether the device currently has network access.
+
+| | iOS | Android |
+|---|---|---|
+| API | [SCNetworkReachability](https://developer.apple.com/documentation/systemconfiguration/scnetworkreachability-g7d) | [ConnectivityManager](https://developer.android.com/reference/android/net/ConnectivityManager) |
+
+```swift
+import SkipDevice
+
+let isReachable = NetworkReachability.isNetworkReachable
 ```
 
 ### Network Reachability Permissions
 
-In order to access the device's photos or media library, you will need to 
-declare the permissions in the app's metadata.
+| Platform | Requirement |
+|---|---|
+| iOS | No permission required |
+| Android | Declare `ACCESS_NETWORK_STATE` in `AndroidManifest.xml` |
 
-On Android, the `app/src/main/AndroidManifest.xml` file will need to be edited to include:
+Android manifest entry:
 
-```
+```xml
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
 ## Location
 
-You can request a single current device location with:
+Access the device's geographic location via GPS, network, and fused providers. Provides latitude, longitude, altitude, speed, course, and accuracy information.
+
+| | iOS | Android |
+|---|---|---|
+| API | [CLLocationManager](https://developer.apple.com/documentation/corelocation/cllocationmanager) | [LocationManager](https://developer.android.com/reference/android/location/LocationManager) (FUSED_PROVIDER) |
+
+### Single Location Request
 
 ```swift
+import SkipDevice
+
 let provider = LocationProvider()
-let location: LocationEvent = try await provider.fetchCurrentLocation()
-logger.log("latitude: \(location.latitude) longitude: \(location.longitude) altitude: \(location.altitude)")
+let location = try await provider.fetchCurrentLocation()
+print("lat: \(location.latitude), lon: \(location.longitude), alt: \(location.altitude)")
 ```
 
-You can also subscribe to a stream of location updates like so:
+### Continuous Location Updates
 
 ```swift
 import SwiftUI
 import SkipKit // for PermissionManager
 import SkipDevice
 
-struct LocationView : View {
+struct LocationView: View {
     @State var event: LocationEvent?
+    @State var errorMessage: String?
 
     var body: some View {
         VStack {
             if let event = event {
-                Text("latitude: \(event.latitude)")
-                Text("longitude: \(event.longitude)")
-                Text("altitude: \(event.altitude)")
-                Text("course: \(event.course)")
-                Text("speed: \(event.speed)")
+                Text("Latitude: \(event.latitude)")
+                Text("Longitude: \(event.longitude)")
+                Text("Altitude: \(event.altitude) m")
+                Text("Speed: \(event.speed) m/s")
+                Text("Course: \(event.course)")
+                Text("Accuracy: \(event.horizontalAccuracy) m")
+            } else if let errorMessage = errorMessage {
+                Text(errorMessage).foregroundStyle(.red)
+            } else {
+                ProgressView()
             }
         }
-        .font(Font.body.monospaced())
         .task {
-            // SkipKit provided PermissionManager, which creates a user-interface to request individual permissions
-            if await PermissionManager.requestLocationPermission(precise: true, always: false).isAuthorized == false {
-                logger.warning("permission refused for ACCESS_FINE_LOCATION")
+            let status = await PermissionManager.requestLocationPermission(precise: true, always: false)
+            guard status.isAuthorized == true else {
+                errorMessage = "Location permission denied"
                 return
             }
 
-            let provider = LocationProvider() // must retain reference
-            provider.updateInterval = 1.0
+            let provider = LocationProvider()
             do {
                 for try await event in provider.monitor() {
                     self.event = event
-                    // if cancelled { break }
                 }
             } catch {
-                logger.error("error updating location: \(error)")
+                errorMessage = "\(error)"
             }
-            provider.stop()
         }
     }
 }
 ```
 
+### LocationEvent Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `latitude` | `Double` | Latitude in degrees |
+| `longitude` | `Double` | Longitude in degrees |
+| `horizontalAccuracy` | `Double` | Horizontal accuracy in meters |
+| `altitude` | `Double` | Altitude (Mean Sea Level) in meters |
+| `ellipsoidalAltitude` | `Double` | Ellipsoidal altitude in meters |
+| `verticalAccuracy` | `Double` | Vertical accuracy in meters |
+| `speed` | `Double` | Speed in meters per second |
+| `speedAccuracy` | `Double` | Speed accuracy in meters per second |
+| `course` | `Double` | Course/bearing in degrees |
+| `courseAccuracy` | `Double` | Course accuracy in degrees |
+| `timestamp` | `TimeInterval` | Event timestamp |
 
 ### Location Permissions
 
-In order to access the device's location, you will need to 
-declare the permissions in the app's metadata.
+Location requires both a metadata declaration and a runtime permission request on both platforms. Use [SkipKit](https://source.skip.tools/skip-kit)'s `PermissionManager` for cross-platform runtime permission handling.
 
-On Android, the `app/src/main/AndroidManifest.xml` file will need to be edited to include one of the
-following permissions:
+| Platform | Requirement |
+|---|---|
+| iOS | Declare `NSLocationWhenInUseUsageDescription` in `Darwin/AppName.xcconfig` |
+| Android | Declare `ACCESS_FINE_LOCATION` and/or `ACCESS_COARSE_LOCATION` in `AndroidManifest.xml` |
+| Both | Request permission at runtime via `PermissionManager.requestLocationPermission()` |
 
-```
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-```
-
-On iOS, you will need to add the `NSLocationWhenInUseUsageDescription` key to your `Darwin/AppName.xcconfig` file:
+iOS xcconfig entry:
 
 ```
 INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to …"
 ```
 
-## Motion
+Android manifest entries:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+```
+
+## Motion Sensors
+
+The accelerometer, gyroscope, magnetometer, and barometer share a common iOS permission requirement and usage pattern. On Android, motion sensors do not require any runtime permissions.
 
 ### Motion Permissions
 
-On iOS, you will need to add the `NSMotionUsageDescription` key to your `Darwin/AppName.xcconfig` file:
+| Platform | Requirement |
+|---|---|
+| iOS | Declare `NSMotionUsageDescription` in `Darwin/AppName.xcconfig` (no runtime request needed) |
+| Android | No permission required for accelerometer, gyroscope, or magnetometer. Barometer requires a `<uses-feature>` declaration. |
+
+iOS xcconfig entry:
 
 ```
-INFOPLIST_KEY_NSMotionUsageDescription = "This app uses your motion information to …"
+INFOPLIST_KEY_NSMotionUsageDescription = "This app uses motion sensors to …"
 ```
-
 
 ## Accelerometer
 
-The `AccelerometerProvider` type provides an `AsyncThrowingStream<AccelerometerEvent, Event>` of device accelerometer changes.
+Measures acceleration force on three axes in G's (gravitational force units, where 1G = 9.81 m/s). At rest face-up, the device reports approximately (0, 0, -1) G.
 
-It can be used in a View like this:
+| | iOS | Android |
+|---|---|---|
+| API | [CMMotionManager.startAccelerometerUpdates](https://developer.apple.com/documentation/coremotion/cmmotionmanager/startaccelerometerupdates(to:withhandler:)) | [Sensor.TYPE_ACCELEROMETER](https://developer.android.com/reference/android/hardware/SensorEvent#sensor.type_accelerometer:) |
+| Units | G's | m/s (converted to G's by SkipDevice) |
 
 ```swift
 import SwiftUI
 import SkipDevice
 
-struct AccelerometerView : View {
+struct AccelerometerView: View {
     @State var event: AccelerometerEvent?
 
     var body: some View {
         VStack {
             if let event = event {
-                Text("x: \(event.x)")
-                Text("y: \(event.y)")
-                Text("z: \(event.z)")
+                Text("X: \(event.x) G")
+                Text("Y: \(event.y) G")
+                Text("Z: \(event.z) G")
             }
         }
         .task {
-            let provider = AccelerometerProvider() // must retain reference
+            let provider = AccelerometerProvider()
+            guard provider.isAvailable else { return }
             provider.updateInterval = 0.1
             do {
                 for try await event in provider.monitor() {
                     self.event = event
-                    // if cancelled { break }
                 }
             } catch {
-                logger.error("error updating accelerometer: \(error)")
+                logger.error("accelerometer error: \(error)")
             }
-            provider.stop()
         }
     }
 }
 ```
 
+### AccelerometerEvent Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `x` | `Double` | X-axis acceleration in G's |
+| `y` | `Double` | Y-axis acceleration in G's |
+| `z` | `Double` | Z-axis acceleration in G's |
+| `timestamp` | `TimeInterval` | Event timestamp (seconds since boot) |
+
 ## Gyroscope
 
-The `GyroscopeProvider` type provides an `AsyncThrowingStream<GyroscopeEvent, Event>` of device gyroscope changes.
+Measures angular rotation rate on three axes in radians per second.
 
-It can be used in a View like this:
+| | iOS | Android |
+|---|---|---|
+| API | [CMMotionManager.startGyroUpdates](https://developer.apple.com/documentation/coremotion/cmmotionmanager/startgyroupdates(to:withhandler:)) | [Sensor.TYPE_GYROSCOPE](https://developer.android.com/reference/android/hardware/SensorEvent#sensor.type_gyroscope:) |
+| Units | rad/s | rad/s |
 
 ```swift
 import SwiftUI
 import SkipDevice
 
-struct GyroscopeView : View {
+struct GyroscopeView: View {
     @State var event: GyroscopeEvent?
 
     var body: some View {
         VStack {
             if let event = event {
-                Text("x: \(event.x)")
-                Text("y: \(event.y)")
-                Text("z: \(event.z)")
+                Text("X: \(event.x) rad/s")
+                Text("Y: \(event.y) rad/s")
+                Text("Z: \(event.z) rad/s")
             }
         }
         .task {
-            let provider = GyroscopeProvider() // must retain reference
+            let provider = GyroscopeProvider()
+            guard provider.isAvailable else { return }
             provider.updateInterval = 0.1
             do {
                 for try await event in provider.monitor() {
                     self.event = event
-                    // if cancelled { break }
                 }
             } catch {
-                logger.error("error updating gyroscope: \(error)")
+                logger.error("gyroscope error: \(error)")
             }
-            provider.stop()
         }
     }
 }
 ```
 
+### GyroscopeEvent Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `x` | `Double` | Angular speed around the x-axis in rad/s |
+| `y` | `Double` | Angular speed around the y-axis in rad/s |
+| `z` | `Double` | Angular speed around the z-axis in rad/s |
+| `timestamp` | `TimeInterval` | Event timestamp (seconds since boot) |
 
 ## Magnetometer
 
-The `MagnetometerProvider` type provides an `AsyncThrowingStream<MagnetometerEvent, Error>` of device magnetometer changes.
+Measures the ambient magnetic field on three axes in microteslas. Returns calibrated values with device bias removed on both platforms. Useful for compass headings and magnetic field detection.
 
-It can be used in a View like this:
+| | iOS | Android |
+|---|---|---|
+| API | [CMDeviceMotion.magneticField](https://developer.apple.com/documentation/coremotion/cmdevicemotion/magneticfield) (calibrated) | [Sensor.TYPE_MAGNETIC_FIELD](https://developer.android.com/reference/android/hardware/SensorEvent#sensor.type_magnetic_field:) (calibrated) |
+| Units | microteslas | microteslas |
+
+Earth's magnetic field strength is typically 25-65 microteslas. Both platforms return calibrated geomagnetic field values with the device's own magnetic bias (hard iron distortion) removed.
 
 ```swift
 import SwiftUI
 import SkipDevice
 
-struct MagnetometerView : View {
+struct MagnetometerView: View {
     @State var event: MagnetometerEvent?
+
+    var heading: Double {
+        guard let event = event else { return 0 }
+        let angle = atan2(event.y, event.x) * 180.0 / .pi
+        return angle < 0 ? angle + 360 : angle
+    }
 
     var body: some View {
         VStack {
             if let event = event {
-                Text("x: \(event.x)") // X-axis magnetic field in microteslas
-                Text("y: \(event.y)") // Y-axis magnetic field in microteslas
-                Text("z: \(event.z)") // Z-axis magnetic field in microteslas
+                Text("X: \(event.x) uT")
+                Text("Y: \(event.y) uT")
+                Text("Z: \(event.z) uT")
+                Text("Heading: \(heading)")
             }
         }
-        .font(Font.body.monospaced())
         .task {
-            let provider = MagnetometerProvider() // must retain reference
+            let provider = MagnetometerProvider()
+            guard provider.isAvailable else { return }
             provider.updateInterval = 0.1
             do {
                 for try await event in provider.monitor() {
                     self.event = event
-                    // if cancelled { break }
                 }
             } catch {
-                logger.error("error updating magnetometer: \(error)")
+                logger.error("magnetometer error: \(error)")
             }
-            provider.stop()
         }
     }
 }
 ```
 
+### MagnetometerEvent Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `x` | `Double` | X-axis magnetic field in microteslas |
+| `y` | `Double` | Y-axis magnetic field in microteslas |
+| `z` | `Double` | Z-axis magnetic field in microteslas |
+| `timestamp` | `TimeInterval` | Event timestamp (seconds since boot) |
 
 ## Barometer
 
-The `BarometerProvider` type provides an `AsyncThrowingStream<BarometerEvent, Event>` of device barometer changes.
+Measures atmospheric pressure in kilopascals (kPa) and tracks relative altitude changes in meters since monitoring began.
 
-It can be used in a View like this:
+| | iOS | Android |
+|---|---|---|
+| API | [CMAltimeter](https://developer.apple.com/documentation/coremotion/cmaltimeter) | [Sensor.TYPE_PRESSURE](https://developer.android.com/reference/android/hardware/SensorEvent#sensor.type_pressure:) |
+| Pressure units | kPa | hPa (converted to kPa by SkipDevice) |
+| Altitude | Relative meters since start | Computed via [SensorManager.getAltitude](https://developer.android.com/reference/android/hardware/SensorManager#getAltitude(float,%20float)) |
+
+Standard atmospheric pressure at sea level is approximately 101.325 kPa.
 
 ```swift
 import SwiftUI
 import SkipDevice
 
-struct BarometerView : View {
+struct BarometerView: View {
     @State var event: BarometerEvent?
 
     var body: some View {
         VStack {
             if let event = event {
-                Text("pressure: \(event.pressure)") // The recorded pressure, in kilopascals.
-                Text("relativeAltitude: \(event.relativeAltitude)") // The change in altitude (in meters) since the first reported event.
+                Text("Pressure: \(event.pressure) kPa")
+                Text("Relative altitude: \(event.relativeAltitude) m")
             }
         }
-        .font(Font.body.monospaced())
         .task {
-            let provider = BarometerProvider() // must retain reference
-            provider.updateInterval = 0.1
+            let provider = BarometerProvider()
+            guard provider.isAvailable else { return }
+            provider.updateInterval = 0.5
             do {
                 for try await event in provider.monitor() {
                     self.event = event
-                    // if cancelled { break }
                 }
             } catch {
-                logger.error("error updating barometer: \(error)")
+                logger.error("barometer error: \(error)")
             }
-            provider.stop()
         }
     }
 }
 ```
 
+### BarometerEvent Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `pressure` | `Double` | Atmospheric pressure in kilopascals (kPa) |
+| `relativeAltitude` | `Double` | Altitude change in meters since monitoring started |
+| `timestamp` | `TimeInterval` | Event timestamp |
+
 ### Barometer Permissions
 
-In order to access the device's barometer, you will need to 
-declare the permissions in the app's metadata.
+| Platform | Requirement |
+|---|---|
+| iOS | `NSMotionUsageDescription` (same as other motion sensors) |
+| Android | Declare sensor feature in `AndroidManifest.xml` |
 
-On Android, the `app/src/main/AndroidManifest.xml` file will need to be edited to include:
+Android manifest entry:
 
+```xml
+<uses-feature android:name="android.hardware.sensor.barometer" android:required="false" />
 ```
-<uses-feature android:name="android.hardware.sensor.barometer" android:required="true" />
-```
 
+Set `android:required="false"` so the app can still be installed on devices without a barometer.
+
+## Permissions Summary
+
+| Sensor | iOS Declaration | iOS Runtime | Android Declaration | Android Runtime |
+|---|---|---|---|---|
+| Network Reachability | None | None | `ACCESS_NETWORK_STATE` | None |
+| Location | `NSLocationWhenInUseUsageDescription` | Yes (via `PermissionManager`) | `ACCESS_FINE_LOCATION` / `ACCESS_COARSE_LOCATION` | Yes (via `PermissionManager`) |
+| Accelerometer | `NSMotionUsageDescription` | None | None | None |
+| Gyroscope | `NSMotionUsageDescription` | None | None | None |
+| Magnetometer | `NSMotionUsageDescription` | None | None | None |
+| Barometer | `NSMotionUsageDescription` | None | `uses-feature` (barometer) | None |
+
+## API Reference
+
+| Provider | Event Type | Key Properties | `isAvailable` | `updateInterval` |
+|---|---|---|---|---|
+| `NetworkReachability` | -- | `.isNetworkReachable: Bool` (static) | -- | -- |
+| `LocationProvider` | `LocationEvent` | latitude, longitude, altitude, speed, course, accuracy | Yes | No (1s default) |
+| `AccelerometerProvider` | `AccelerometerEvent` | x, y, z (G's) | Yes | Yes |
+| `GyroscopeProvider` | `GyroscopeEvent` | x, y, z (rad/s) | Yes | Yes |
+| `MagnetometerProvider` | `MagnetometerEvent` | x, y, z (microteslas) | Yes | Yes |
+| `BarometerProvider` | `BarometerEvent` | pressure (kPa), relativeAltitude (m) | Yes | Yes |
+
+All sensor providers share the same interface:
+
+| Method / Property | Description |
+|---|---|
+| `init()` | Create a provider instance |
+| `isAvailable: Bool` | Whether the sensor hardware is present |
+| `updateInterval: TimeInterval?` | Set before calling `monitor()` |
+| `monitor() -> AsyncThrowingStream` | Start streaming sensor events |
+| `stop()` | Stop monitoring (also called automatically on `deinit` and task cancellation) |
 
 ## Building
 
 This project is a Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
+Skip plugin to build the package for both iOS and Android.
 
-Building the module requires that Skip be installed using 
+Building the module requires that Skip be installed using
 [Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
 This will also install the necessary build prerequisites:
 Kotlin, Gradle, and the Android build tools.

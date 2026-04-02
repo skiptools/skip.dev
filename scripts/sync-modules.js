@@ -57,6 +57,8 @@ async function processRepositories() {
 
       // replace external links to module and sample roots with the local doc
       content = content.replace(/\]\(https:\/\/source\.skip\.dev\/(skip-[^\/]+)[\/]?\)/g, "](/docs/modules/$1)");
+      content = content.replace(/\]\(https:\/\/source\.skip\.dev\/(skip-[^\/]+)\/#([^\/]+)\)/g, "](/docs/modules/$1/#$2)");
+
       content = content.replace(/\]\(https:\/\/source\.skip\.dev\/(skipapp-[^\/]+)[\/]?\)/g, "](/docs/samples/$1)");
 
       // trim everything after the repo license

@@ -4,6 +4,7 @@ date:   2023-11-20
 tags: [skip, open-source, announcement, cross-platform, swift]
 layout: post
 permalink: /blog/skip-is-free-for-free-software/
+tableOfContents: false
 author: the Skip Team
 ---
 

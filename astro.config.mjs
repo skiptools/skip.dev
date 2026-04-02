@@ -94,8 +94,7 @@ export default defineConfig({
           },
         }),
       ],
-      // not needed now that we generate correct editUrl for modules and samples
-      //routeMiddleware: './src/routeData.ts',
+      routeMiddleware: './src/routeData.ts',
       head: [
         { tag: 'meta', attrs: { property: 'og:image', content: 'https://assets.skip.dev/images/og-banner.png' } },
         { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
