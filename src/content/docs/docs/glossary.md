@@ -452,7 +452,7 @@ A tool that automates the process of installing, upgrading, and managing softwar
 **Related Terms:** [SwiftPM](#swiftpm), [Gradle](#gradle)
 
 ### Homebrew {#homebrew}
-A package manager for macOS (and Linux) used to install and manage software packages. The [Skip CLI](#skip-cli) and its prerequisites are distributed via Homebrew using the command `brew install skiptools/skip/skip`.
+A package manager for macOS (and Linux) used to install and manage software packages. The [Skip CLI](#skip-cli) and its prerequisites are distributed via Homebrew on macOS and Linux.
 
 **Related Terms:** [Skip CLI](#skip-cli), [Package Manager](#package-manager)
 

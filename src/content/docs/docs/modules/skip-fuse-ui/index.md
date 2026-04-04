@@ -22,10 +22,10 @@ flowchart LR
     B -->|"Java_view"| C["SkipUI\n(Kotlin/Compose)"]
     C --> D["Jetpack Compose\nUI on Screen"]
 
-    style A fill:#f5f5f5,stroke:#333,color:#fff
-    style B fill:#f0e6ff,stroke:#7b2fbe,color:#fff
-    style C fill:#e6f0ff,stroke:#4a90d9,color:#fff
-    style D fill:#e6ffe6,stroke:#2d8a2d,color:#fff
+    style A fill:#555555,stroke:#333,color:#fff
+    style B fill:#6b3fa0,stroke:#4a2d6e,color:#fff
+    style C fill:#2e6da4,stroke:#1a4a6e,color:#fff
+    style D fill:#2d7a2d,stroke:#1a5c1a,color:#fff
 ```
 
 The key mechanism is the `SkipUIBridging` protocol. Every SkipFuseUI view type conforms to it by exposing a `Java_view` property that returns the equivalent SkipUI Kotlin object. When Compose needs to render your view hierarchy, it walks the tree of `Java_view` references — each one backed by [SkipBridge](/docs/modules/skip-bridge/) JNI calls between Swift and Kotlin.
@@ -64,15 +64,15 @@ flowchart TB
     SB --> SJNI
     SUI --> SM
 
-    style APP fill:#f5f5f5,stroke:#333,color:#fff
-    style SFUI fill:#f0e6ff,stroke:#7b2fbe,color:#fff
-    style SSU fill:#f0e6ff,stroke:#7b2fbe,color:#fff
-    style SB fill:#ffe6e6,stroke:#cc3333,color:#fff
-    style SF fill:#ffe6e6,stroke:#cc3333,color:#fff
-    style SAB fill:#ffe6e6,stroke:#cc3333,color:#fff
-    style SJNI fill:#ffe6e6,stroke:#cc3333,color:#fff
-    style SUI fill:#e6f0ff,stroke:#4a90d9,color:#fff
-    style SM fill:#e6f0ff,stroke:#4a90d9,color:#fff
+    style APP fill:#555555,stroke:#333,color:#fff
+    style SFUI fill:#6b3fa0,stroke:#4a2d6e,color:#fff
+    style SSU fill:#6b3fa0,stroke:#4a2d6e,color:#fff
+    style SB fill:#b33030,stroke:#8a1a1a,color:#fff
+    style SF fill:#b33030,stroke:#8a1a1a,color:#fff
+    style SAB fill:#b33030,stroke:#8a1a1a,color:#fff
+    style SJNI fill:#b33030,stroke:#8a1a1a,color:#fff
+    style SUI fill:#2e6da4,stroke:#1a4a6e,color:#fff
+    style SM fill:#2e6da4,stroke:#1a4a6e,color:#fff
 ```
 
 On iOS, `SkipFuseUI` simply re-exports Apple's `SwiftUI` — the entire SkipSwiftUI layer is compiled away.
@@ -109,9 +109,9 @@ flowchart LR
     K -->|"MutableState"| C["Compose\nRecomposition"]
     C -->|"read triggers\naccess()"| S
 
-    style S fill:#f0e6ff,stroke:#7b2fbe,color:#fff
-    style K fill:#e6f0ff,stroke:#4a90d9,color:#fff
-    style C fill:#e6ffe6,stroke:#2d8a2d,color:#fff
+    style S fill:#6b3fa0,stroke:#4a2d6e,color:#fff
+    style K fill:#2e6da4,stroke:#1a4a6e,color:#fff
+    style C fill:#2d7a2d,stroke:#1a5c1a,color:#fff
 ```
 
 When Swift code writes to a `@State` property, the `BridgedStateBox` notifies Compose's `MutableState`, triggering recomposition. When Compose reads the value, it calls back into Swift via the bridge. This two-way sync ensures that SwiftUI's declarative state model works identically on Android.

@@ -37,6 +37,7 @@ First, ensure that you are on a macOS 14+ machine with Xcode 16, [Android Studio
 Next, open Terminal and type the following commands to install Skip and the native Android toolchain.
 
 ```
+brew tap skiptools/skip
 brew install skiptools/skip/skip
 skip android sdk install
 ```

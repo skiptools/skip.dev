@@ -571,13 +571,8 @@ with features and fixes that you create, as this benefits the entire Skip commun
 
 ## Building
 
-This project is a free Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
-
-Building the module requires that Skip be installed using 
-[Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
-This will also install the necessary build prerequisites:
-Kotlin, Gradle, and the Android build tools.
+This project is a Swift Package Manager module that uses the
+Skip plugin to build the package for both iOS and Android.
 
 ## Testing
 

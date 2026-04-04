@@ -82,7 +82,7 @@ No, and no. The Skip build plugin runs locally on your macOS machine as part of 
 
 ### How is Skip distributed? {#distribution}
 
-The SkipStone build plugin is distributed as a binary executable artifact and driven by the Skip plugin hosted at [https://source.skip.tools/skip.git](https://source.skip.tools/skip.git). In addition, the `skip` command-line tool must be installed using the [Homebrew](https://brew.sh) command: `brew install skiptools/skip/skip`. This will install the `skip` utility that can be used to create projects and run tests, as well as the prerequisites for being able to perform local Android testing: `gradle`, `openjdk`, `android-platform-tools`, and `android-commandlinetools`.
+The `skipstone` build plugin is distributed as a binary executable artifact and driven by the Skip plugin hosted at [https://source.skip.tools/skip.git](https://source.skip.tools/skip.git). In addition, the `skip` command-line tool must be installed using the [Homebrew](https://brew.sh) commands: `brew tap skiptools/skip` and `brew install skiptools/skip/skip`. This will install the `skip` utility that can be used to create projects and run tests, as well as the prerequisites for being able to perform local Android testing: `gradle`, `openjdk`, `android-platform-tools`, and `android-commandlinetools`.
 
 ### Do Skip or any of the Skip frameworks collect data for the purposes of user tracking? {#tracking}
 
