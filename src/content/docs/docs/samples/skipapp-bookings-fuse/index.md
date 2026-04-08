@@ -19,14 +19,6 @@ This project is both a stand-alone Swift Package Manager module,
 as well as an Xcode project that builds and generates a Kotlin Gradle
 project for Android using the Skip plugin.
 
-Building the module requires that Skip be installed using
-[Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
-
-This will also install the necessary transpiler prerequisites:
-Kotlin, Gradle, and the Android build tools.
-
-Installation prerequisites can be confirmed by running `skip checkup`.
-
 ## Running
 
 Xcode and Android Studio must be downloaded and installed in order to

@@ -35,7 +35,7 @@ as well as an Xcode project that builds and translates the project
 into a Kotlin Gradle project for Android using the skipstone plugin.
 
 Building the module requires that Skip be installed using
-[Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
+[Homebrew](https://brew.sh) with `brew install skip`.
 
 This will also install the necessary transpiler prerequisites:
 Kotlin, Gradle, and the Android build tools.

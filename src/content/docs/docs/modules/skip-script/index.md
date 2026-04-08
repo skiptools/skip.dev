@@ -71,12 +71,7 @@ Android, on the other hand, does not ship JSC as part of the operating system, a
 ## Building
 
 This project is a Swift Package Manager module that uses the
-Skip plugin to transpile Swift into Kotlin.
-
-Building the module requires that Skip be installed using 
-[Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
-This will also install the necessary build prerequisites:
-Kotlin, Gradle, and the Android build tools.
+Skip plugin to build the package for both iOS and Android.
 
 ## Testing
 

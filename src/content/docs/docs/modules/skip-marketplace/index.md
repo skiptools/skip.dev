@@ -347,11 +347,6 @@ The main entry point, accessed via `Marketplace.current`.
 This project is a Swift Package Manager module that uses the
 Skip plugin to build the package for both iOS and Android.
 
-Building the module requires that Skip be installed using
-[Homebrew](https://brew.sh) with `brew install skiptools/skip/skip`.
-This will also install the necessary build prerequisites:
-Kotlin, Gradle, and the Android build tools.
-
 ## Testing
 
 The module can be tested using the standard `swift test` command

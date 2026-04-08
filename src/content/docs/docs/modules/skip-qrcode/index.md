@@ -288,6 +288,7 @@ This project uses the Skip plugin with native compilation mode.
 
 Install Skip using [Homebrew](https://brew.sh):
 ```bash
+brew tap skiptools/skip
 brew install skiptools/skip/skip
 ```
 

@@ -23,6 +23,7 @@ export const platformFrameworks = [
   { repo: 'skip-script', name: 'JavaScriptCore' },
   { repo: 'skip-keychain', name: 'Keychain' },
   { repo: 'skip-nfc', name: 'NFC' },
+  { repo: 'skip-notify', name: 'Push Notifications' },
   { repo: 'skip-qrcode', name: 'QR Codes' },
   { repo: 'skip-device', name: 'Sensors' },
   { repo: 'skip-sql', name: 'SQLite' },
