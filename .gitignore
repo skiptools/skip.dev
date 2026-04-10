@@ -4,7 +4,7 @@ dist/
 .astro/
 
 # derived content on startup
-src/content/docs/docs/modules
+#src/content/docs/docs/modules/*/
 
 # dependencies
 node_modules/

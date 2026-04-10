@@ -108,6 +108,46 @@ This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github
       console.error(`❌ Error syncing ${mod.name}:`, err.message);
     }
   }
+
+  // Generate the modules index page
+  const modulesIndexDir = './src/content/docs/docs/modules';
+  if (!fs.existsSync(modulesIndexDir)) fs.mkdirSync(modulesIndexDir, { recursive: true });
+
+  const modTable = (mods) => {
+    return `| Module | Version |\n| :--- | :--- |\n` + 
+      mods.map(m => `| [${m.name}](/docs/modules/${m.repo}/) | <a href='https://github.com/${owner}/${m.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${m.repo}.svg?style=flat' /></a> |`).join('\n');
+  }
+
+  const modulesIndexContent = `---
+title: Skip Modules
+description: Documentation for Skip core, platform, and integration modules.
+---
+
+Skip provides a wide range of modules that bring Swift and SwiftUI APIs to Android, as well as integration frameworks for popular third-party services.
+
+## Core Frameworks
+
+These frameworks provide the foundation for Skip apps, including the Swift standard library, Foundation, and SwiftUI support.
+
+${modTable(coreFrameworks)}
+
+## Platform Frameworks
+
+These frameworks provide access to Android platform features using familiar Swift-like APIs.
+
+${modTable(platformFrameworks)}
+
+## Integration Frameworks
+
+These frameworks provide unified APIs for popular third-party services on both iOS and Android.
+
+${modTable(integrationFrameworks)}
+
+<!-- This list is automatically generated from the [skip-repositories.js](https://github.com/skiptools/skip.dev/blob/main/skip-repositories.js) configuration. -->
+`;
+
+  fs.writeFileSync(path.join(modulesIndexDir, 'index.md'), modulesIndexContent);
+  console.log(`✅ Generated modules index at ${path.join(modulesIndexDir, 'index.md')}`);
 }
 
 processRepositories();
