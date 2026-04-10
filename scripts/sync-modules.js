@@ -91,7 +91,7 @@ This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github
 
       // Save file
       const folderPath = path.join(outputDir, mod.repo);
-      if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+      if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath, { recursive: true });
 
       const filePath = path.join(folderPath, 'index.md');
       // If file exists, make it writable so we can overwrite it
