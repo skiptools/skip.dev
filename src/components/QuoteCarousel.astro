@@ -1,0 +1,144 @@
+---
+import quotes from '../content/quotes.yaml';
+
+// To create a seamless infinite scroll, we duplicate the quotes array.
+const duplicatedQuotes = [...quotes, ...quotes];
+---
+
+<div class="carousel-container" id="quote-carousel">
+  <div class="carousel-track" id="quote-track">
+    {duplicatedQuotes.map((q) => (
+      <div class="quote-card">
+        <p class="quote">“{q.quote}”</p>
+        <a href={q.url} target="_blank" rel="noopener noreferrer" class="handle">
+          {q.handle}
+        </a>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // JavaScript-driven animation for smooth velocity transitions and infinite loop
+  const container = document.getElementById('quote-carousel');
+  const track = document.getElementById('quote-track');
+  
+  if (container && track) {
+    let currentX = 0;
+    const targetVelocity = 0.04; // Pixels per millisecond (~24px/sec)
+    let velocity = targetVelocity;
+    let isPaused = false;
+    let lastTime = performance.now();
+
+    function animate(currentTime) {
+      const deltaTime = currentTime - lastTime;
+      lastTime = currentTime;
+
+      // Smoothly transition velocity
+      if (isPaused) {
+        velocity *= Math.pow(0.9, deltaTime / 16); // Decelerate (approx 0.9 per frame at 60fps)
+        if (velocity < 0.0001) velocity = 0;
+      } else {
+        // Accelerate back to target velocity
+        const acceleration = 0.0005 * deltaTime;
+        if (velocity < targetVelocity) {
+          velocity = Math.min(targetVelocity, velocity + acceleration);
+        }
+      }
+
+      if (velocity > 0 || !isPaused) {
+        currentX -= velocity * deltaTime;
+        
+        // Use the actual width of the track. Since we duplicated the items,
+        // we loop back when we've scrolled half the total width.
+        const halfWidth = track.offsetWidth / 2;
+        
+        if (currentX <= -halfWidth) {
+          currentX += halfWidth;
+        }
+        
+        // Use translate3d for GPU acceleration and to avoid subpixel "snapping"
+        track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+      }
+      
+      requestAnimationFrame(animate);
+    }
+
+    container.addEventListener('mouseenter', () => {
+      isPaused = true;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isPaused = false;
+    });
+
+    // Start the loop
+    requestAnimationFrame(animate);
+  }
+</script>
+
+<style>
+  .carousel-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+    position: relative;
+    /* Smooth fade at the edges */
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 1) 15%,
+      rgba(0, 0, 0, 1) 85%,
+      rgba(0, 0, 0, 0)
+    );
+    cursor: default;
+  }
+
+  .carousel-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .quote-card {
+    flex: 0 0 350px;
+    margin: 0 1rem;
+    padding: 1.5rem;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--sl-shadow-sm);
+    /* Prevent text selection while scrolling/hovering */
+    user-select: none;
+  }
+
+  .quote {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--sl-color-text);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .handle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--sl-color-accent-high);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .handle:hover {
+    color: var(--sl-color-accent);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .quote-card {
+      flex: 0 0 280px;
+    }
+  }
+</style>
