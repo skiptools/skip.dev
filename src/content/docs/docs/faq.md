@@ -289,6 +289,10 @@ let isDebugBuild: Bool = {
 
 Skip Fuse enables the creation of apps and libraries for Android using compiled Swift rather than Swift that is transpiled to Kotlin.
 
+### How do I switch an existing project between Skip Lite and Skip Fuse? {#switch_modes}
+
+Switching between modes involves updating your `Package.swift` dependencies (e.g., from `skip-ui.git` to `skip-fuse-ui.git`), changing the `mode` in your `skip.yml` file, and performing a clean re-build. Detailed instructions can be found in the [Lite and Fuse Modes](/docs/modes/#migration) documentation.
+
 ### What are the advantages of using native Skip Fuse over transpiled Skip Lite? {#skip_fuse_advantages}
 
 One limitation of Skip Lite's transpiled mode is that any package dependencies need to be "Skip aware" if they are to be used in the Android side of the app. This effectively locked away the massive Swift package ecosystem from being used across both platforms in a Skip app.

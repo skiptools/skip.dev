@@ -616,7 +616,67 @@ The combination of transpiled bridging and `AnyDynamicObject` allows you to prov
 
 ## Migrating Between Modes {#migration}
 
-Whether you are using native or transpiled modes, you are writing your code in Swift. Migrating between them, therefore, is much easier than moving between different programming languages - in fact it is often trivial. This is particularly true when migrating from transpiled to native mode, given that transpiled mode supports only a subset of native mode's Swift syntax, and native mode offers far more third-party libraries. 
+Whether you are using native or transpiled modes, you are writing your code in Swift. Migrating between them, therefore, is much easier than moving between different programming languages - in fact it is often trivial. This is particularly true when migrating from transpiled to native mode, given that transpiled mode supports only a subset of native mode's Swift syntax, and native mode offers far more third-party libraries.
 
-The first step in migration is to update your `skip.yml` and `Package.swift` files, as described in the [Configuration](#configuration) section. Then it is a matter of migrating any code that behaves differently under each mode. See the chapters on [Development](/docs/app-development/) and [Cross-Platform Topics](/docs/platformcustomization/) in particular.
+### Prerequisites
+
+Before switching a project to Skip Fuse (native mode), ensure that your system has the necessary native build tools installed. Run the following commands to install the Swift SDK for Android and verify your environment:
+
+```bash
+skip android sdk install
+skip checkup --native
+```
+
+### Switching an App
+
+To switch an entire app between Skip Lite and Skip Fuse, you must update the dependencies in your `Package.swift` and the configuration in your `skip.yml` files.
+
+#### 1. Update Package.swift
+
+A Skip Lite app typically depends on `skip-ui.git`, while a Skip Fuse app depends on `skip-fuse-ui.git`. You must also update the target dependencies from `SkipUI` to `SkipFuseUI`.
+
+**For Skip Lite (transpiled):**
+```swift title="Package.swift"
+dependencies: [
+    .package(url: "https://source.skip.tools/skip-ui.git", from: "1.0.0"),
+    // ...
+],
+targets: [
+    .target(name: "MyApp", dependencies: [
+        .product(name: "SkipUI", package: "skip-ui")
+    ], ...)
+]
+```
+
+**For Skip Fuse (native):**
+```swift title="Package.swift"
+dependencies: [
+    .package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.0.0"),
+    // ...
+],
+targets: [
+    .target(name: "MyApp", dependencies: [
+        .product(name: "SkipFuseUI", package: "skip-fuse-ui")
+    ], ...)
+]
+```
+
+#### 2. Update skip.yml
+
+Change the `mode` in your module's `Skip/skip.yml` file:
+
+```yml title="skip.yml"
+skip:
+  mode: 'native' # change to 'transpiled' for Skip Lite
+```
+
+#### 3. Clean Re-build
+
+Switching between modes changes the underlying build architecture significantly. After making these changes, you **must** perform a clean re-build of your project to ensure all artifacts are correctly generated for the new mode:
+
+1. In Xcode: **Product** > **Clean Build Folder** (Command-Shift-K).
+2. Delete the `Android/.gradle` and `Android/app/build` directories if you encounter persistent build issues.
+3. Re-run the build.
+
+See the chapters on [Development](/docs/app-development/) and [Cross-Platform Topics](/docs/platformcustomization/) for more information on migrating code that behaves differently under each mode.
 
