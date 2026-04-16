@@ -4,11 +4,44 @@ permalink: /docs/development-topics/
 
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 This chapter covers how to perform a variety of common development tasks across platforms with Skip. 
 
 ## Configuration with `Skip.env`
 
 Skip app customization should be primarily done by directly editing the included `Skip.env` file, rather than changing the app's settings in Xcode. Only properties that are set in the `Skip.env` file, such as `PRODUCT_NAME`, `PRODUCT_BUNDLE_IDENTIFIER` and `MARKETING_VERSION`, will carry through to both `HelloSkip.xcconfig` and `AndroidManifest.xml`. This is how a subset of the app's metadata can be kept in sync between the iOS and Android versions, but it requires that you forgo using the Xcode Build Settings interface (which does not modify the `.xcconfig` file, but instead overrides the settings in the local `.xcodeproj/` folder).
+
+---
+
+## Customizing Module Package Name {#package-name}
+
+
+By default, Skip generates a Java/Kotlin package name for your module based on its Swift name, by simply de-camel-casing and dot-separating the module name (e.g. `MyAppModule` becomes `my.app.module`). You may want to customize this package name if you need to match a specific naming convention or when integrating with third-party Android libraries that expect a particular package structure.
+
+You can customize this package name by editing the module's `Skip/skip.yml` file and adding a `package` property under the `skip` group.  You must also update your project's `Skip.env` file to specify the new package name in the `ANDROID_PACKAGE_NAME` variable. This ensures that the generated `AndroidManifest.xml` and other project metadata correctly reference your new package.
+
+<Tabs>
+  <TabItem label="Sources/MyAppModule/Skip/skip.yml">
+    ```yaml
+    # The Skip configuration for MyAppModule
+    skip:
+      package: 'my.custom.package.name'
+    ```
+  </TabItem>
+  <TabItem label="Skip.env">
+    ```text
+    // The package name for the Android entry point, referenced by the AndroidManifest.xml
+    ANDROID_PACKAGE_NAME = my.custom.package.name
+    ```
+  </TabItem>
+  <TabItem label="Android/app/src/main/kotlin/Main.kt">
+    ```kotlin
+    // the Kotlin Main.kt entry point to the Android app
+    package my.custom.package.name
+    ```
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -62,40 +95,6 @@ The result is that by updating this single file, you can localize your app into 
 <img alt="Localization screenshot" src="https://assets.skip.dev/hello/ja/android/welcome_light_framed.png" />
 <img alt="Localization screenshot" src="https://assets.skip.dev/hello/zh/android/welcome_dark_framed.png" />
 </div>
-
-<!-- 
-<div class="localization-screenshot-container">
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/en/ios/home_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/fr/ios/home_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/es/ios/home_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/ja/ios/home_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/zh/ios/home_light_framed.png" />
-</div>
-<div class="localization-screenshot-container">
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/en/android/home_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/fr/android/home_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/es/android/home_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/ja/android/home_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/zh/android/home_dark_framed.png" />
-</div>
- -->
- 
-<!-- 
-<div class="localization-screenshot-container">
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/en/ios/settings_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/fr/ios/settings_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/es/ios/settings_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/ja/ios/settings_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/zh/ios/settings_light_framed.png" />
-</div>
-<div class="localization-screenshot-container">
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/en/android/settings_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/fr/android/settings_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/es/android/settings_dark_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/ja/android/settings_light_framed.png" />
-<img alt="Localization screenshot" src="https://assets.skip.dev/hello/zh/android/settings_dark_framed.png" />
-</div>
- -->
 
 ### The `xcstrings` Format {#xcstrings}
 

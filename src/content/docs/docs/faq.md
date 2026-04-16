@@ -166,6 +166,9 @@ Swift dependencies are added by editing the `Package.swift` to add dependent pac
 The Xcode "Add Package Dependencies…" menu should *not* be used to add Swift dependencies, as it will not update the `Package.swift` file that Skip needs to build the dependencies for Android. Dependencies must be added directly to the `Package.swift` file.
 :::
 
+### How do I change the Java/Kotlin package name for my app or module? {#package-name}
+
+The Java/Kotlin package name can be customized by adding a `package: 'my.module.name'` property to the `skip` group in your module's `Skip/skip.yml` file. See the [Customizing Module Package Name](/docs/development-topics/#package-name) documentation for more details and important instructions for top-level application modules.
 
 ### How does logging work in Skip? {#logging}
 
