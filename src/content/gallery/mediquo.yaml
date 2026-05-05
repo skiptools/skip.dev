@@ -1,0 +1,49 @@
+# PROVENANCE
+# - Skip-built: confirmed privately by the Skip team (skip.dev), 2026-05-05.
+#   No public announcement or open-source repo links MediQuo to Skip; the
+#   app's source is not public. MediQuo's GitHub org publishes separate
+#   native iOS, Android, and Flutter SDKs for third-party integration, but
+#   that is unrelated to the implementation of the consumer app itself.
+# - Skip mode: not specified by the developer; omitted so no mode badge is
+#   rendered in the gallery card. Update if/when the team confirms which
+#   Skip mode (Lite / Fuse / Bridge / partial) is in use.
+name: "MediQuo Medical Chat"
+developer: Medipremium
+tagline: 24/7 chat with licensed doctors across dozens of medical specialties
+description: |
+  MediQuo is a telemedicine app from Barcelona-based Medipremium that connects users with licensed healthcare professionals through real-time chat. Specialists cover gynecology, pediatrics, general medicine, psychology, nutrition, dermatology, cardiology, urology, and more.
+
+  Users can send photos, video, lab results, and clinical reports directly to specialists, and a Premium subscription unlocks unlimited consultations across the full panel of doctors. The app is widely used across Spain and Latin America, with over a million Play Store installs.
+category: Medical
+mode: SkipFuse
+featured: true
+releaseYear: 2018
+tags:
+  - Telemedicine
+  - Health
+  - Chat
+  - Doctors
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/31/b6/ab/31b6abc5-2d51-8df9-a773-f203ea880f00/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/app/mediquo-chat-consulta-medica/id1320968041
+  playStore: https://play.google.com/store/apps/details?id=com.mediquo.main
+  website: https://www.mediquo.com
+ratings:
+  appStore:
+    score: 4.6
+    count: 52
+  playStore:
+    score: 4.5
+    count: 11786
+    downloads: "1M+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/74/2f/fc/742ffc77-bf06-66cf-db70-bdfda6c79dfe/pr_source.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/91/b6/ce/91b6ce4c-b10d-b336-da3d-020a15f0d409/pr_source.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/54/5a/6b/545a6b44-99db-c49a-20d3-f5bbcd6f6deb/pr_source.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/da/a3/9f/daa39fff-5002-1ce6-ddd3-3b5e2f184f89/pr_source.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/6-GbRE9ihYBSFJhcoZXnYV0gdY3y-WOd4iGnH5bWg-7MDHEnyfYeBevTNcfdkBqOdCs=w526-h296
+    - url: https://play-lh.googleusercontent.com/8P6MhfALEvHBevNRYnUItJTYCtklj1RiwBNoqULFl1IiwsywWK345Q4lUT9Fk2mIU4JA=w526-h296
+    - url: https://play-lh.googleusercontent.com/jFx42Ovkm6aNBcucc2qBKTRzlf8GuMINYaT3Yuzk9YtyRHdK7I4TL1zAqzGaQB9kYOQ=w526-h296
+    - url: https://play-lh.googleusercontent.com/JLiqeBuf2W8E7zLbJSVAMJquBlipWsMi_UolPq3MbBjh86wuTu9v2VUQaoQPAs07uTYf=w526-h296

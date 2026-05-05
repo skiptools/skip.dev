@@ -1,0 +1,48 @@
+# PROVENANCE
+# - Skip-built: listed in the "Recent App Releases" section of
+#   https://skip.tools/news/ alongside other public Skip-built apps
+#   (ServiceM8, Naturitas, MediQuo, Veloni, Smarta, Daily Prompt, RouteMe).
+#   Press assets:
+#   - https://assets.skip.tools/press/intellicharge.png
+#   - https://assets.skip.tools/press/intellicharge-apps.jpg
+# - Skip mode: not publicly stated by the developer. Mode is omitted so no
+#   badge is rendered; update if/when Grid Elevated confirms which Skip mode
+#   (Lite / Fuse / Bridge / partial) is in use.
+name: "IntelliCharge"
+developer: Grid Elevated
+tagline: Smart EV charging that balances grid load and renewable supply
+description: |
+  IntelliCharge is the mobile app for Grid Elevated's smart EV charging network. Drivers arrive at a station, scan its QR code, and submit a charge request with their current state-of-charge and intended departure time. The platform then throttles power delivery across active vehicles to balance grid load and renewable supply. Live progress and the projected end-of-charge state are visible on the app dashboard.
+
+  Grid Elevated is a University of Utah spinout focused on grid modernization, with EV charging among its consumer-facing products.
+category: Utilities
+releaseYear: 2022
+tags:
+  - EV Charging
+  - Electric Vehicle
+  - Energy
+  - Smart Grid
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/52/77/d6/5277d6a6-4ab4-aba7-7ddf-e7c574ecd861/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/intellicharge/id6443588362
+  playStore: https://play.google.com/store/apps/details?id=com.gridelevated.intellicharge
+  website: https://gridelevated.com/intellicharge
+ratings:
+  appStore:
+    score: 4.2
+    count: 5
+  playStore:
+    downloads: "100+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/fa/3e/02/fa3e02c6-d6ad-6900-ed82-7a289bb0d008/final_1260x2736_noalpha.jpg/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/a4/94/fd/a494fd76-528a-975b-cab9-9d485d2f8768/final_2_1260x2736_noalpha.jpg/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/be/20/ee/be20ee13-87ef-3e7d-8613-5dde79dafe12/final_3_1260x2736_noalpha.jpg/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/72/35/1f/72351fd4-31bd-0b1c-c87f-3f322585b2dc/final_4_1260x2736_noalpha.jpg/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/08/33/2e/08332eb1-81c1-f1f3-1a5a-6007e918bf15/final_5_1260x2736_noalpha.jpg/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/Yy7V8LAdn6v7fDKmwzu_KCy55S0NNDitIamIlFh3gsRuuQPHOgFs3evtgg9_7jiLrlG-i1D1ePy8IFSujhgtrw=w526-h296
+    - url: https://play-lh.googleusercontent.com/d6adPr9wCNQtkMuEGRB0_MwjRaAYfixu89KxMLnwNK6QOh1uMTtw7Xd9uquGr4VGzMYMwkwzSkYlpfb39sT4HNA=w526-h296
+    - url: https://play-lh.googleusercontent.com/P4TtNQClUD9OyhX2Q8KzyRDz7lV4y9au3wwTnddw_XdbjxcVSz7dvzJ2bBfbpnWiPup7--rLjUGWLkoJult2Tw=w526-h296
+    - url: https://play-lh.googleusercontent.com/5KCXJefa2ewQZeUshOkES96-1yn1GB8wiqZWyYfb5WEJcweMvABvsWqKHPxQCNx0FRbyRU2UkTJjLWLYXeWxmw=w526-h296
+    - url: https://play-lh.googleusercontent.com/vEwB_t0ger2P95m6R2yGuVvkNzvLaz5xwXsVC8NFkK62TuQkNEMFwu1waYNcGL_IdbL7VwYSqah_2kMSKVsO=w526-h296

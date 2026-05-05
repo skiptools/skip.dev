@@ -86,7 +86,7 @@ body:
   - type: textarea
     id: skip-evidence
     attributes:
-      label: Evidence the app is built with Skip
+      label: Demonstration that the app is built with Skip
       description: |
         A link, quote, or screenshot showing the app uses Skip. Examples:
         - A line in the project's README or Package.swift referencing skip.dev or skiptools
@@ -94,7 +94,7 @@ body:
         - Bundle ID conventions (e.g. `*.skip` suffix on the Play Store package)
         If the app is open source, the README is usually enough.
     validations:
-      required: true
+      required: false
 
   - type: input
     id: developer-website
