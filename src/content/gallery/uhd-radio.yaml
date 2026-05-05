@@ -1,0 +1,43 @@
+# PROVENANCE
+# - Skip-built: developer Phil (imacguru) announced this as "My First Skip
+#   App" in the Skip community Show-and-Tell discussion #652, March 30, 2026:
+#   "My first Skip app is available free in the Google Play store... The app
+#   originated in Xcode and SwiftUI. Getting a working Android app out of
+#   that feels like magic!"
+#   https://github.com/orgs/skiptools/discussions/652
+# - Skip mode: SkipLite (likely, unconfirmed by developer). Skip co-founder
+#   marcprux replied in the same thread: "I'm guessing you built it with
+#   Skip Lite". The developer did not confirm or deny. Treat the mode as a
+#   reasonable guess until the developer states it explicitly.
+name: UHD Radio
+developer: Emmers Ventures Ltd.
+tagline: Ultra-high-fidelity internet radio at very low bitrates
+description: |
+  UHD Radio features five radio stations streaming with xHE-AAC, an advanced audio codec that delivers high-fidelity sound at impossibly low bitrates — 48 kbps for mobile use, plus 128 kbps and 320 kbps options for the highest audio quality. The HLS streams synchronize album art and ID tags with the music for a polished, cohesive listening experience.
+
+  The Android version is built with Skip from the same Swift codebase as the iOS app, using ExoPlayer for the underlying media playback. The author shipped the Android port at just 13 MB.
+category: Music
+mode: SkipLite
+releaseYear: 2023
+tags:
+  - Music
+  - Streaming
+  - Radio
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bd/a5/f1/bda5f1f1-914b-e3db-4413-940d1e828bfc/AppIcon-0-0-1x_U007epad-0-1-85-220.jpeg/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/ca/app/uhd-radio/id1664939503
+  playStore: https://play.google.com/store/apps/details?id=ca.emmers.uhdradio
+  source: https://github.com/orgs/skiptools/discussions/652
+ratings:
+  appStore:
+    score: 5.0
+    count: 1
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ed/6f/01/ed6f014b-2c0c-0cef-d48e-cc05566fa173/Screenshot1.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/5a/37/ce/5a37cec8-a735-12a4-c434-423a2a010b16/Screenshot2.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/07/71/64/07716464-6f9a-b3d6-8b62-42f37769f3f2/Screenshot3.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/-Z-NSFbcvfd7b_m8iMO8K2wRUEY6N9_4c-zikVaeJ3o6ZQrSA1ucZgqSnIiWXm91dUVGnz1Je0a6cEd07RtMMCc=w526-h296
+notes: |
+  Featured in the Skip community Show-and-Tell discussion as "My First Skip App".

@@ -1,0 +1,626 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('gallery');
+  return apps.map((app) => ({
+    params: { slug: app.id },
+    props: { app },
+  }));
+}
+
+const { app } = Astro.props;
+const data = app.data;
+const slug = app.id;
+
+// All apps for the "More from the gallery" section.
+const allApps = await getCollection('gallery');
+const otherApps = allApps
+  .filter((a) => a.id !== slug)
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 4);
+
+const hasIosShots = data.screenshots?.ios && data.screenshots.ios.length > 0;
+const hasAndroidShots = data.screenshots?.android && data.screenshots.android.length > 0;
+
+// Parse Play Store download badges like "1+", "100+", "10K+", "500K+", "1M+".
+// Show the badge only when the implied minimum exceeds 100.
+function downloadsOver100(s) {
+  const m = s?.match(/^([\d.]+)\s*([KM]?)/);
+  if (!m) return false;
+  const mult = m[2] === 'K' ? 1_000 : m[2] === 'M' ? 1_000_000 : 1;
+  return parseFloat(m[1]) * mult >= 100;
+}
+const showDownloads = downloadsOver100(data.ratings?.playStore?.downloads);
+
+// Combined shot list: iOS first, then Android, capped at 8 for layout.
+const allShots = [
+  ...(data.screenshots?.ios || []).map((s) => ({ ...s, platform: 'iOS' })),
+  ...(data.screenshots?.android || []).map((s) => ({ ...s, platform: 'Android' })),
+].slice(0, 8);
+---
+
+<StarlightPage frontmatter={{
+  title: data.name,
+  description: data.tagline || `${data.name} — built with Skip`,
+  tableOfContents: false,
+  template: 'splash',
+}}>
+  <a class="gallery-detail-back" href="/gallery/">
+    <span class="gallery-detail-back-icon" aria-hidden="true"></span>
+    All apps
+  </a>
+
+  <header class="gallery-detail-header">
+    {data.icon && <img class="gallery-detail-icon" src={data.icon} alt={`${data.name} icon`} />}
+    <div class="gallery-detail-titles">
+      <h1>{data.name}</h1>
+      <p class="gallery-detail-dev">{data.developer}</p>
+      {data.tagline && <p class="gallery-detail-tagline">{data.tagline}</p>}
+    </div>
+  </header>
+
+  <div class="gallery-detail-meta-row">
+    {data.category && <span class="gallery-detail-chip">{data.category}</span>}
+    {data.mode && <span class="gallery-detail-chip" data-mode={data.mode}>{data.mode}</span>}
+    {data.releaseYear && <span class="gallery-detail-chip">Since {data.releaseYear}</span>}
+    {data.tags.map((tag) => <span class="gallery-detail-chip gallery-detail-tag">{tag}</span>)}
+  </div>
+
+  <div class="gallery-detail-actions">
+    {data.links.appStore && (
+      <a class="gallery-detail-store-link" href={data.links.appStore} target="_blank" rel="noopener">
+        <img src="https://assets.skip.dev/badges/apple-app-store.svg" alt="Download on the App Store" height="56" />
+      </a>
+    )}
+    {data.links.playStore && (
+      <a class="gallery-detail-store-link" href={data.links.playStore} target="_blank" rel="noopener">
+        <img src="https://assets.skip.dev/badges/google-play-store.svg" alt="Get it on Google Play" height="56" />
+      </a>
+    )}
+    {data.links.website && (
+      <a class="gallery-detail-link" href={data.links.website} target="_blank" rel="noopener">Website ↗</a>
+    )}
+    {data.links.source && (
+      <a class="gallery-detail-link" href={data.links.source} target="_blank" rel="noopener">Source ↗</a>
+    )}
+    {data.links.article && (
+      <a class="gallery-detail-link" href={data.links.article} target="_blank" rel="noopener">Press ↗</a>
+    )}
+  </div>
+
+  {!data.available && (
+    <aside class="gallery-detail-notice">
+      <strong>Note:</strong> This app may not be currently available in the stores.
+      {data.notes}
+    </aside>
+  )}
+
+  {allShots.length > 0 && (
+    <section class="gallery-detail-shots">
+      <h2 class="gallery-detail-section-title">Screenshots</h2>
+      <div class="gallery-detail-shot-rail">
+        {allShots.map((shot) => (
+          <figure class="gallery-detail-shot" data-platform={shot.platform.toLowerCase()}>
+            <div class="gallery-detail-shot-frame">
+              <img src={shot.url} alt={shot.caption || `${data.name} screenshot`} referrerpolicy="no-referrer" />
+            </div>
+            <figcaption>
+              <span class="gallery-detail-shot-platform" data-platform={shot.platform.toLowerCase()}>{shot.platform}</span>
+              {shot.caption && <span class="gallery-detail-shot-caption"> — {shot.caption}</span>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="gallery-detail-grid">
+    <article class="gallery-detail-description">
+      <h2 class="gallery-detail-section-title">About this app</h2>
+      {data.description.split(/\n\n+/).map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+    </article>
+
+    <aside class="gallery-detail-sidebar">
+      <h3>At a glance</h3>
+      <dl>
+        <dt>Developer</dt>
+        <dd>{data.developer}</dd>
+
+        {data.category && (<><dt>Category</dt><dd>{data.category}</dd></>)}
+
+        {data.mode && (<><dt>Skip mode</dt><dd>{data.mode}</dd></>)}
+
+        {data.releaseYear && (<><dt>Released</dt><dd>{data.releaseYear}</dd></>)}
+
+        {data.ratings?.appStore?.score && (
+          <>
+            <dt><span class="gallery-detail-platform-icon" data-icon="iphone" aria-hidden="true"></span>App Store</dt>
+            <dd>
+              <span class="gallery-detail-star" aria-hidden="true"></span>
+              <span>{data.ratings.appStore.score.toFixed(1)}</span>
+              {data.ratings.appStore.count && (
+                <span class="gallery-detail-secondary"> ({data.ratings.appStore.count.toLocaleString()})</span>
+              )}
+            </dd>
+          </>
+        )}
+
+        {data.ratings?.playStore?.score && (
+          <>
+            <dt><span class="gallery-detail-platform-icon" data-icon="android" aria-hidden="true"></span>Play Store</dt>
+            <dd>
+              <span class="gallery-detail-star" aria-hidden="true"></span>
+              <span>{data.ratings.playStore.score.toFixed(1)}</span>
+              {data.ratings.playStore.count && (
+                <span class="gallery-detail-secondary"> ({data.ratings.playStore.count.toLocaleString()})</span>
+              )}
+            </dd>
+          </>
+        )}
+
+        {showDownloads && (
+          <>
+            <dt><span class="gallery-detail-platform-icon" data-icon="download" aria-hidden="true"></span>Downloads</dt>
+            <dd>{data.ratings.playStore.downloads}</dd>
+          </>
+        )}
+      </dl>
+    </aside>
+  </section>
+
+  {otherApps.length > 0 && (
+    <section class="gallery-detail-more">
+      <h2 class="gallery-detail-section-title">More from the gallery</h2>
+      <div class="gallery-detail-more-grid">
+        {otherApps.map((other) => (
+          <a class="gallery-detail-more-card" href={`/gallery/${other.id}/`}>
+            {other.data.icon && <img src={other.data.icon} alt={`${other.data.name} icon`} />}
+            <div>
+              <strong>{other.data.name}</strong>
+              <span>{other.data.developer}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="gallery-detail-more-link"><a href="/gallery/">Browse all apps →</a></p>
+    </section>
+  )}
+</StarlightPage>
+
+<style>
+  /* Hide the splash-template page title; the rich header below is the page title. */
+  :global(.content-panel:has(h1#_top)) {
+    display: none;
+  }
+
+  .gallery-detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+    color: var(--sl-color-gray-3);
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .gallery-detail-back:hover {
+    color: var(--sl-color-accent-high);
+  }
+
+  .gallery-detail-back-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    -webkit-mask: url(/icons/arrow_back.svg) center / contain no-repeat;
+    mask: url(/icons/arrow_back.svg) center / contain no-repeat;
+  }
+
+  /* Star and platform icons in the sidebar */
+  .gallery-detail-star {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: #fbbf24;
+    -webkit-mask: url(/icons/star.svg) center / contain no-repeat;
+    mask: url(/icons/star.svg) center / contain no-repeat;
+    margin-right: 0.25rem;
+    vertical-align: -2px;
+  }
+
+  .gallery-detail-platform-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: var(--sl-color-gray-3);
+    margin-right: 0.4rem;
+    vertical-align: -2px;
+  }
+
+  .gallery-detail-platform-icon[data-icon="iphone"] {
+    -webkit-mask: url(/icons/phone_iphone.svg) center / contain no-repeat;
+    mask: url(/icons/phone_iphone.svg) center / contain no-repeat;
+  }
+
+  .gallery-detail-platform-icon[data-icon="android"] {
+    -webkit-mask: url(/icons/android.svg) center / contain no-repeat;
+    mask: url(/icons/android.svg) center / contain no-repeat;
+  }
+
+  .gallery-detail-platform-icon[data-icon="download"] {
+    -webkit-mask: url(/icons/download.svg) center / contain no-repeat;
+    mask: url(/icons/download.svg) center / contain no-repeat;
+  }
+
+  /* Header */
+  .gallery-detail-header {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+  }
+
+  .gallery-detail-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 22%;
+    flex-shrink: 0;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  :root[data-theme='light'] .gallery-detail-icon {
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.05),
+      0 8px 24px rgba(0,0,0,0.10);
+  }
+
+  .gallery-detail-titles h1 {
+    margin: 0;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .gallery-detail-dev {
+    margin: 0.25rem 0 0;
+    font-size: 1rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .gallery-detail-tagline {
+    margin: 0.75rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--sl-color-gray-1);
+  }
+
+  :root[data-theme='light'] .gallery-detail-tagline {
+    color: var(--sl-color-gray-2);
+  }
+
+  /* Chips row */
+  .gallery-detail-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .gallery-detail-chip {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+  }
+
+  :root[data-theme='light'] .gallery-detail-chip {
+    color: var(--sl-color-gray-3);
+  }
+
+  .gallery-detail-chip[data-mode="SkipFuse"] { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .gallery-detail-chip[data-mode="SkipLite"] { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .gallery-detail-chip[data-mode="SkipBridge"] { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .gallery-detail-chip[data-mode="partial"] { background: rgba(192,132,252,0.15); color: #c084fc; }
+
+  :root[data-theme='light'] .gallery-detail-chip[data-mode="SkipFuse"] { color: #16a34a; }
+  :root[data-theme='light'] .gallery-detail-chip[data-mode="SkipLite"] { color: #b45309; }
+  :root[data-theme='light'] .gallery-detail-chip[data-mode="SkipBridge"] { color: #2563eb; }
+  :root[data-theme='light'] .gallery-detail-chip[data-mode="partial"] { color: #9333ea; }
+
+  .gallery-detail-tag {
+    background: transparent;
+    border: 1px solid var(--sl-color-gray-5);
+  }
+
+  /* Action row */
+  .gallery-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.875rem;
+    margin: 0 0 2rem;
+  }
+
+  .gallery-detail-store-link img {
+    height: 56px;
+    object-fit: contain;
+    transition: transform 0.15s ease;
+  }
+
+  .gallery-detail-store-link:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery-detail-link {
+    padding: 0.7rem 1.1rem;
+    border-radius: 0.6rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-white);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .gallery-detail-link:hover {
+    border-color: var(--sl-color-accent);
+    background: var(--sl-color-gray-5);
+  }
+
+  /* Notice */
+  .gallery-detail-notice {
+    padding: 0.875rem 1rem;
+    margin: 0 0 2rem;
+    border-radius: 0.6rem;
+    background: rgba(251, 191, 36, 0.10);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    color: var(--sl-color-gray-1);
+    font-size: 0.9rem;
+  }
+
+  :root[data-theme='light'] .gallery-detail-notice {
+    color: var(--sl-color-gray-2);
+  }
+
+  /* Section titles */
+  .gallery-detail-section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--sl-color-white);
+  }
+
+  /* Screenshot rail (horizontally scrollable on small screens, wrapped on wide screens) */
+  .gallery-detail-shots {
+    margin: 0 0 3rem;
+  }
+
+  .gallery-detail-shot-rail {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding: 0.5rem 0.25rem 1.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gallery-detail-shot-rail::-webkit-scrollbar { height: 8px; }
+  .gallery-detail-shot-rail::-webkit-scrollbar-track { background: var(--sl-color-gray-6); border-radius: 4px; }
+  .gallery-detail-shot-rail::-webkit-scrollbar-thumb { background: var(--sl-color-gray-4); border-radius: 4px; }
+
+  /* Every screenshot figure renders at the same fixed size — chosen small
+     enough that low-resolution Play Store screenshots are downscaled rather
+     than upscaled (the latter causes blurring). Images are centered and
+     fit-contained within the frame, so portrait phone shots and landscape
+     marketing shots both look intentional. */
+  .gallery-detail-shot {
+    flex: 0 0 auto;
+    width: 180px;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+
+  .gallery-detail-shot-frame {
+    width: 180px;
+    height: 320px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--sl-color-gray-5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 12px 28px rgba(0,0,0,0.30);
+  }
+
+  :root[data-theme='light'] .gallery-detail-shot-frame {
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.05),
+      0 12px 28px rgba(0,0,0,0.12);
+  }
+
+  .gallery-detail-shot img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    image-rendering: auto;
+  }
+
+  .gallery-detail-shot figcaption {
+    margin-top: 0.625rem;
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .gallery-detail-shot-platform {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+
+  .gallery-detail-shot-platform[data-platform="ios"] {
+    background: rgba(96, 165, 250, 0.12);
+    color: #93c5fd;
+  }
+  .gallery-detail-shot-platform[data-platform="android"] {
+    background: rgba(74, 222, 128, 0.12);
+    color: #86efac;
+  }
+  :root[data-theme='light'] .gallery-detail-shot-platform[data-platform="ios"] { color: #2563eb; }
+  :root[data-theme='light'] .gallery-detail-shot-platform[data-platform="android"] { color: #16a34a; }
+
+  /* Description + sidebar */
+  .gallery-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 0 0 3rem;
+  }
+
+  @media (min-width: 900px) {
+    .gallery-detail-grid {
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  .gallery-detail-description p {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--sl-color-gray-1);
+  }
+
+  :root[data-theme='light'] .gallery-detail-description p {
+    color: var(--sl-color-gray-2);
+  }
+
+  .gallery-detail-sidebar {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    align-self: start;
+  }
+
+  .gallery-detail-sidebar h3 {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--sl-color-white);
+  }
+
+  .gallery-detail-sidebar dl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem 1rem;
+    margin: 0;
+  }
+
+  .gallery-detail-sidebar dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    color: var(--sl-color-gray-3);
+    display: flex;
+    align-items: center;
+  }
+
+  .gallery-detail-sidebar dd {
+    margin: 0.125rem 0 0.5rem;
+    font-size: 0.95rem;
+    color: var(--sl-color-gray-1);
+  }
+
+  :root[data-theme='light'] .gallery-detail-sidebar dd {
+    color: var(--sl-color-gray-2);
+  }
+
+  .gallery-detail-secondary {
+    color: var(--sl-color-gray-3);
+    font-size: 0.85em;
+  }
+
+  /* "More from the gallery" */
+  .gallery-detail-more {
+    margin: 3rem 0 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+  }
+
+  .gallery-detail-more-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.875rem;
+    margin: 1rem 0;
+  }
+
+  .gallery-detail-more-card {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem;
+    border-radius: 0.625rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .gallery-detail-more-card:hover {
+    border-color: var(--sl-color-accent);
+    transform: translateY(-2px);
+  }
+
+  .gallery-detail-more-card img {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .gallery-detail-more-card div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .gallery-detail-more-card strong {
+    color: var(--sl-color-white);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gallery-detail-more-card span {
+    color: var(--sl-color-gray-3);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gallery-detail-more-link {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+</style>

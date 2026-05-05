@@ -1,0 +1,42 @@
+# PROVENANCE
+# - Skip-built: official Skip team app — repo skiptools/Skip-Notes
+#   https://github.com/skiptools/Skip-Notes
+#   README: "Skip notes is a Skip Fuse dual-platform note taking app built
+#   using Skip and distributed through the App Fair." The app is also a
+#   reference for SkipBridge.
+# - Skip mode: SkipBridge — the project pairs a transpiled SwiftUI module
+#   (Sources/SkipNotes/Skip/skip.yml: `mode: 'transpiled'`) with a model
+#   module that demonstrates Skip's bidirectional bridging between
+#   transpiled-Swift and natively-compiled Swift. The README explicitly
+#   names this the SkipBridge demo app.
+name: Skip Notes
+developer: The App Fair Project Inc
+tagline: Secure on-device notes, demonstrating SkipBridge
+description: |
+  Skip Notes is a simple, secure note-taking app that keeps your notes encrypted on-device. The app demonstrates SkipBridge — Skip's bidirectional Swift/Kotlin bridging system — by sharing a Swift model layer between a SwiftUI iOS app and a Jetpack Compose Android UI.
+
+  Free, open source, and distributed via App Fair on both stores.
+category: Utilities
+mode: SkipBridge
+releaseYear: 2025
+tags:
+  - Notes
+  - Open source
+  - SkipBridge
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/04/ac/e2/04ace265-4667-b2f9-b65c-7c3975ed414c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/skip-notes/id6740916318
+  playStore: https://play.google.com/store/apps/details?id=org.appfair.app.SkipNotes
+  source: https://github.com/skiptools/Skip-Notes
+ratings:
+  appStore:
+    score: 5.0
+    count: 1
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/3a/a1/3d/3aa13d08-0a14-c658-6e99-5b16d05ee6f9/1_en-US.png/460x1022bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2e/2d/51/2e2d5153-8f45-4682-4e88-aa06a970b910/2_en-US.png/460x1022bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/_UrWyoAS98BG2gOi6itK5OrVMM7PFfvsmZd4b3QxEd1eRcCv1DqflBc283umGa3JtBs=w526-h296
+    - url: https://play-lh.googleusercontent.com/-1m7X24UwucSVHMVeuKpgXbmT8L0nwyvzFOJJyuQWX3z404WB20T4QMt7Xv2Xhil6A=w526-h296
+    - url: https://play-lh.googleusercontent.com/7Yg01c5nH_A2RFPD03XmLLi9zftTEcxUVtzyCnHhjKcgypwsenRbbM5mpXB1SaOiEsc=w526-h296

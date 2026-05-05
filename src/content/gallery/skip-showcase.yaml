@@ -1,0 +1,50 @@
+# PROVENANCE
+# - Skip-built: official Skip team app — repo skiptools/skipapp-showcase-fuse
+#   https://github.com/skiptools/skipapp-showcase-fuse
+# - Skip mode: SkipFuse — repo name itself ends in "-fuse" (the "-fuse" suffix
+#   is the canonical signal that an App Fair / skiptools sample is the
+#   native-Fuse variant of the app, paired with `skipapp-showcase` for Lite).
+#   The Play Store package `org.appfair.app.Showcase` corresponds to the Fuse
+#   build.
+name: Skip Showcase
+developer: The App Fair Project Inc
+tagline: Interactive SwiftUI catalog for iOS and Android
+description: |
+  Skip Showcase is an interactive catalog of SwiftUI components built with Skip — the cross-platform tool that lets a single Swift codebase ship as native apps on both iOS and Android. On iOS the app runs as a normal SwiftUI app; on Android the same Swift source compiles with the official Swift Android SDK while SkipUI translates SwiftUI views into Jetpack Compose.
+
+  The app exercises UI controls, layout, navigation, graphics, state management, text and media, plus platform integrations like haptics, ShareLink, Map, SQL, Keychain, and WebView. Install on both platforms side-by-side to compare rendering. Open source.
+category: Utilities
+mode: SkipFuse
+featured: true
+releaseYear: 2024
+tags:
+  - SwiftUI
+  - Jetpack Compose
+  - Reference
+  - Open source
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7a/cd/b1/7acdb15b-3b68-7733-d630-8a3e857fa1c6/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/skip-showcase/id6474885022
+  playStore: https://play.google.com/store/apps/details?id=org.appfair.app.Showcase
+  source: https://github.com/skiptools/skipapp-showcase-fuse
+ratings:
+  appStore:
+    score: 5.0
+    count: 2
+  playStore:
+    downloads: "500+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9a/e7/25/9ae7257f-e2e9-6c2f-adf6-300651cc83ec/7a0ff5ab-8f9f-4153-aba5-64187432529c_Simulator_Screenshot_-_iPhone_8_Plus_-_2024-06-05_at_06.32.34.png/392x696bb.png
+      caption: Component browser
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/44/9a/c0/449ac09d-bcb5-866f-b316-2d5c276d7e02/062d948e-71ac-4caa-8754-fd7556b3a3e4_Simulator_Screenshot_-_iPhone_8_Plus_-_2024-06-05_at_06.32.39.png/392x696bb.png
+      caption: Layout examples
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/83/28/44/832844ab-e48f-929a-db5d-1552619b5703/e4736000-a8ed-44c6-ad68-378d793f92bd_Simulator_Screenshot_-_iPhone_8_Plus_-_2024-06-05_at_06.32.42.png/392x696bb.png
+      caption: Controls and inputs
+  android:
+    - url: https://play-lh.googleusercontent.com/qjHzPlJ2hZs-6zJsjuX0MlDf6LpXtc9KSARIqIZSJouEYyVHZnLlVMZBgrMIvkK0AR9G=w526-h296
+      caption: Same UI on Android
+    - url: https://play-lh.googleusercontent.com/YXksAoW6phSNbgQPIWDqhk8bwOzRuik9ZkTkL4RZbUJGTENFEmH5frlV_CT8qJOWHGI=w526-h296
+      caption: Native Material 3
+    - url: https://play-lh.googleusercontent.com/8l-fF9Yx9UmB3LlLK-y2dbOvJHAT11ngfxGfENiYamQ_uJzdauIDTerOyavjU8VazDs=w526-h296
+      caption: Graphics and animations

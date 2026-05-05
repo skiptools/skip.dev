@@ -1,0 +1,56 @@
+# PROVENANCE
+# - Skip-built: Skip blog post "Official Android support in Swift 6.3"
+#   describes Naturitas's adoption pattern explicitly: "It is the technique
+#   that was adopted by Naturitas and other platforms, as discussed in the
+#   excellent 'Android Doesn't Deserve Swift—But We Did It Anyway!' talk."
+#   https://skip.dev/blog/swift-6.3-android-support/
+#   Talk: https://www.youtube.com/watch?v=EIGl6GOo210
+# - Skip mode: partial — the same blog post describes the pattern as
+#   "Shared business logic: Use the Swift SDK directly to cross-compile your
+#   model layer for Android, and keep the UI native on each platform." This
+#   is the partial-Skip pattern (Skip Fuse for the model only, native UI on
+#   each platform). The Naturitas Android app is closed-source so the
+#   specific Skip configuration cannot be inspected directly.
+name: "Naturitas: Natural Health"
+developer: Naturitas
+tagline: Spain's natural health superstore in your pocket
+description: |
+  Naturitas brings a catalog of more than 30,000 natural health products into a single mobile shopping experience for both iOS and Android. The catalog spans supplements, organic food, natural cosmetics and hygiene, sports nutrition, mom and baby, home and garden, with featured ranges across vitamins and minerals, probiotics, omega oils, phytotherapy, and natural cosmetics.
+
+  The company sources exclusively from European suppliers under strict sanitary regulations and works directly with brands like Solgar, Lamberts, Solaray, Nutergia, and Weleda. Orders ship in 24-72 hours with 14-day returns, and an expert customer-service team is available for product questions.
+
+  With over 500,000 downloads on the Play Store and a 4.6 average rating from nearly 30,000 reviewers, Naturitas is the largest production deployment publicly known to use Skip technology in its mobile app.
+category: Shopping
+mode: partial
+featured: true
+releaseYear: 2021
+tags:
+  - E-commerce
+  - Health
+  - Wellness
+  - Production-scale
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/35/10/d0/3510d03b-fa4c-1fb5-4418-d7cc3663fc95/app-icon-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/app/naturitas-natural-health/id1523025531
+  playStore: https://play.google.com/store/apps/details?id=com.naturitas.android
+  website: https://www.naturitas.es
+  article: https://www.youtube.com/watch?v=EIGl6GOo210
+ratings:
+  appStore:
+    score: 4.79
+    count: 802
+  playStore:
+    score: 4.6
+    count: 29874
+    downloads: "500K+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/1c/cf/e1/1ccfe108-d685-a094-301d-eb7f130f3abb/89463514-a97b-4181-b289-76a3cc834544_0_APP_IPHONE_65_0.jpeg/314x680bb.jpg
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a6/0f/35/a60f351d-1db9-1df3-c82a-fe3b383dee74/81cc5c87-32d0-407f-a5e1-4bd9b3baf87c_1_APP_IPHONE_65_1.jpeg/314x680bb.jpg
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/2a/9c/75/2a9c7536-0215-c312-8b6b-2334c35522f7/3a317539-73eb-440c-9bb2-1518f25a5085_3_APP_IPHONE_65_3.jpeg/314x680bb.jpg
+  android:
+    - url: https://play-lh.googleusercontent.com/Ta7vqO4Bxv3lys0ccBCvnl69GrYIM4_YkzNsMbYeZJpWaNpsJiCTduGkwcJSp2VE9mo0=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/FMZwcXwiXd7hIq9-8kINJdYa5cHnYgycZprbAgMKgvPCXmLl-_W1fj_9sPdAEivHqcI=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/8EcJBfkvaSVQljfsgXxW0vHp8aZCADy_vJfGdhzykmsVuBW5UdLXSfOVW5ggK8q4VMTB=w526-h296-rw
+notes: |
+  Naturitas uses Skip in the "shared business logic" pattern: the model layer is cross-compiled to Android via the Swift SDK, while each platform's UI remains native. See the talk "Android Doesn't Deserve Swift—But We Did It Anyway!".

@@ -1,0 +1,39 @@
+# PROVENANCE
+# - Skip-built: open-source App Fair Project app — repo
+#   Stanza-Redux/Stanza-Redux. Package.swift depends on
+#   `https://source.skip.tools/skip.git` and ships the SkipStone build plugin.
+#   https://github.com/Stanza-Redux/Stanza-Redux
+# - Skip mode: SkipLite — both modules' Sources/<module>/Skip/skip.yml omit
+#   `mode: 'native'` (and Skip's convention is that the absence of that
+#   setting means the module is transpiled). Package.swift uses `skip-ui` and
+#   `skip-model`, not `skip-fuse-ui` / `skip-fuse`. The Readium SDK is brought
+#   in as a Kotlin Gradle dependency on the Android side and as the Swift
+#   `swift-toolkit` package on iOS.
+name: Stanza Redux
+developer: The App Fair Project Inc
+tagline: A free open-source ebook reader for iOS and Android
+description: |
+  Stanza Redux is a free, open-source EPUB reader that brings your ebook library to life on both iOS and Android. Import books from your device, browse and download titles from public-domain catalogs like Standard Ebooks and Project Gutenberg, and read with customizable typography, themes, and bookmarks.
+
+  A revival of the classic Stanza ebook reader, built from a single Swift codebase using Skip Lite. The Readium toolkit is wired in via platform-specific bindings — Swift package on iOS, Kotlin Gradle dependency on Android.
+category: Books
+mode: SkipLite
+releaseYear: 2026
+tags:
+  - Ebooks
+  - EPUB
+  - Open source
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/af/6f/31/af6f3127-261c-5e18-cf4b-f45bead70a7a/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/stanza-redux/id1639831676
+  playStore: https://play.google.com/store/apps/details?id=org.appfair.app.Stanza_Redux
+  source: https://github.com/Stanza-Redux/Stanza-Redux
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/87/fe/d9/87fed908-f521-2137-c2b1-e8fa42a6bcc1/Simulator_Screenshot_-_iPhone_Air_-_2026-03-19_at_22.17.02.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/15/c0/9a/15c09a8f-7fe3-7512-ec7b-dd8372101e3a/Simulator_Screenshot_-_iPhone_Air_-_2026-03-19_at_22.21.18.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/45/34/9a/45349a60-1d53-512a-9e90-68265bd3d9ef/Simulator_Screenshot_-_iPhone_Air_-_2026-03-19_at_22.21.25.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/DNXeOOoDHLG9VbXIuzy8Yqt7JYfkkYEXVd4D74EqGcDh34Kxytpx6BXNOVEVuxElJE8=w526-h296
+    - url: https://play-lh.googleusercontent.com/dtyBfxvFNolyqHUJN-Vx_fa5svVe_1c-Ctqv7Alj6Ul7c2UdSy7lD75rFHd-QEEXRRk=w526-h296
+    - url: https://play-lh.googleusercontent.com/fgrhJAcsz4J0zij2sqV5dK72dmtNP7cMwjNSxU2R19ku1QSOvZhaTBNvr8jEe7NYSw=w526-h296

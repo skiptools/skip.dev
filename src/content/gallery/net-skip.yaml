@@ -1,0 +1,38 @@
+# PROVENANCE
+# - Skip-built: open-source App Fair Project app — repo Net-Skip/Net-Skip.
+#   Package.swift depends on `https://source.skip.tools/skip.git` and uses the
+#   SkipStone build plugin. https://github.com/Net-Skip/Net-Skip
+# - Skip mode: SkipLite — Sources/NetSkip/Skip/skip.yml and
+#   Sources/NetSkipModel/Skip/skip.yml have no `mode: 'native'` setting, and
+#   the Package.swift dependency list uses `skip-ui` (the transpiled UI
+#   bridge) rather than `skip-fuse-ui`. Web-view content is bridged through
+#   `skip-web` in transpiled-Swift.
+name: Net Skip
+developer: The App Fair Project Inc
+tagline: A minimalist, ad-free, tracking-free web browser
+description: |
+  Net Skip is a minimal and tasteful web browser focused on speed and privacy. With no ads, no tracking, and no telemetry, the browser delivers a fast, distraction-free browsing experience on both iOS and Android.
+
+  Free, open source, and distributed via App Fair. Built from a single Swift codebase that ships natively on both platforms with Skip.
+category: Utilities
+mode: SkipLite
+releaseYear: 2024
+tags:
+  - Browser
+  - Privacy
+  - Open source
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/75/f6/d3/75f6d347-3ba9-1e38-0801-6302501958bc/AppIcon-0-0-1x_U007emarketing-0-0-0-5-0-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/app/net-skip/id1640618584
+  playStore: https://play.google.com/store/apps/details?id=org.appfair.app.Net_Skip
+  source: https://github.com/Net-Skip/Net-Skip
+ratings:
+  appStore:
+    score: 3.3
+    count: 3
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0c/dc/38/0cdc3868-780b-a84e-4b7e-fe82045aab40/2d2471be-ac9b-407d-a691-f0fe93b55f27_0_APP_IPHONE_55_0.png/392x696bb.png
+  android:
+    - url: https://play-lh.googleusercontent.com/jps3j6tjQUUZkT0ejBRhBIR65FPf0iK3GNHyc8U6aFOoQYwdxHew4Z9l2i1yrrjvjTX9=w526-h296
+    - url: https://play-lh.googleusercontent.com/wCwLbB_B4fYHGgGBD6eu4QLA9WaREQHaYPIzkeEJVt7Tq4n_8zBsqEzuNQ2076jdpjA=w526-h296

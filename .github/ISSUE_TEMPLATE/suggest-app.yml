@@ -1,0 +1,113 @@
+name: Suggest an app for the gallery
+description: Tell us about an app built with Skip that's published on both the App Store and the Play Store, and we'll consider adding it to skip.dev/gallery.
+title: "[Gallery] <App name>"
+labels: ["gallery"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an app! The Skip gallery features apps that are
+        **publicly available on both the Apple App Store and the Google Play
+        Store**, and that are built — at least in part — with Skip. Apps that
+        are only on one store, in beta, or unreleased can be suggested here as
+        well; we'll add them once they're live on both stores.
+
+        Please fill in as much as you can. The fields marked required are the
+        minimum we need to evaluate the suggestion.
+
+  - type: input
+    id: app-name
+    attributes:
+      label: App name
+      description: The name as it appears in the App Store / Play Store.
+      placeholder: e.g. "exhivision" or "UHD Radio"
+    validations:
+      required: true
+
+  - type: input
+    id: developer
+    attributes:
+      label: Developer / publisher
+      description: The legal entity or person publishing the app.
+      placeholder: e.g. "Areo Info LLC" or "Kazuya Ueoka"
+    validations:
+      required: true
+
+  - type: input
+    id: app-store-url
+    attributes:
+      label: App Store URL
+      description: Full https://apps.apple.com/... URL.
+      placeholder: https://apps.apple.com/us/app/example/id1234567890
+    validations:
+      required: true
+
+  - type: input
+    id: play-store-url
+    attributes:
+      label: Play Store URL
+      description: Full https://play.google.com/store/apps/details?id=... URL.
+      placeholder: https://play.google.com/store/apps/details?id=com.example.app
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: One- or two-sentence description
+      description: What does the app do? We'll use this as a starting point for the gallery card text.
+      placeholder: |
+        e.g. "A free internet radio app streaming high-fidelity xHE-AAC audio. Available on iOS and Android, with a 13 MB Android footprint."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skip-mode
+    attributes:
+      label: Skip mode
+      description: Which Skip mode does the app use? If you're not sure, choose "I'm not sure".
+      options:
+        - SkipFuse (Swift compiled natively for Android)
+        - SkipLite (Swift transpiled to Kotlin)
+        - SkipBridge (mixed transpiled UI + native model)
+        - partial (Skip used only for shared business logic, native UI on each platform)
+        - I'm not sure
+    validations:
+      required: true
+
+  - type: input
+    id: source-url
+    attributes:
+      label: Source repository (optional)
+      description: If the app is open source, the GitHub / GitLab / etc URL.
+      placeholder: e.g. https://github.com/example/example-app
+
+  - type: textarea
+    id: skip-evidence
+    attributes:
+      label: Evidence the app is built with Skip
+      description: |
+        A link, quote, or screenshot showing the app uses Skip. Examples:
+        - A line in the project's README or Package.swift referencing skip.dev or skiptools
+        - A tweet, blog post, or talk where the developer mentions Skip
+        - Bundle ID conventions (e.g. `*.skip` suffix on the Play Store package)
+        If the app is open source, the README is usually enough.
+    validations:
+      required: true
+
+  - type: input
+    id: developer-website
+    attributes:
+      label: Developer website (optional)
+      description: Marketing site, blog, or company page.
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: The app is **currently live** on both the App Store and the Play Store (or I've noted in the description that one or both listings are pending).
+          required: true
+        - label: I have permission to suggest this app for the gallery (developer, employee of the publishing company, or the suggestion comes from a publicly available source like a community announcement).
+          required: true

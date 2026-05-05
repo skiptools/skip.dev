@@ -1,0 +1,39 @@
+# PROVENANCE
+# - Skip-built: open-source third-party app — repo
+#   fromkk/PhotoExhibition-skip. README: "The photo exhibition app with
+#   skip.tools... transpiled to Kotlin so that the app can run natively on
+#   iOS and Android." https://github.com/fromkk/PhotoExhibition-skip
+# - Skip mode: SkipLite — Sources/PhotoExhibition/Skip/skip.yml has no
+#   mode setting, and Sources/PhotoExhibitionModel/Skip/skip.yml has its
+#   `mode: 'native'` and `bridging: true` lines explicitly commented out
+#   (i.e., the project is currently configured as transpiled). The
+#   Package.swift does pull in both `skip-ui` and `skip-fuse`, but per the
+#   active skip.yml configuration the build is Skip Lite.
+name: exhivision
+developer: Kazuya Ueoka
+tagline: Your own photo exhibition in the palm of your hand
+description: |
+  exhivision is an "online exhibition space" designed especially for people who love taking and viewing photographs. Unlike social media, exhivision lets you focus purely on your photographs — free from distractions, comments, and noise.
+
+  The app makes it easy to curate and host a personal photo exhibition for friends or the public, with Firebase-backed authentication, storage, and sharing. Built from a single Swift codebase that ships natively to both iOS and Android with Skip.
+category: Photo & Video
+mode: SkipLite
+releaseYear: 2025
+tags:
+  - Photography
+  - Firebase
+  - Curation
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/4d/28/f6/4d28f611-9dc3-4543-adb6-a7cc97897619/AppIcon-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/exhivision/id6743517041
+  playStore: https://play.google.com/store/apps/details?id=me.fromkk.PhotoExhibition
+  source: https://github.com/fromkk/PhotoExhibition-skip
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/30/f2/2c/30f22c29-1780-b751-b1aa-b9efb57483a0/1.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/99/c5/d4/99c5d44f-c0a5-fa27-91c4-0a88e97c4df0/2.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/13/56/b2/1356b299-e641-b3c0-6d6e-ad6dd9eab718/3.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/4D76fYFHRa3ZB53pfiuRkupphe9lkeFJvx6OVQh9PwxYdI1ISdt8KSpTBQJSyy5EM4KS=w526-h296
+    - url: https://play-lh.googleusercontent.com/69N72i7lUbKtoacVijknzjC8PgU9bdKB0qUJIT1JOGVsPrVrffjTKkCEF3YCD1XLXfU=w526-h296
+    - url: https://play-lh.googleusercontent.com/aQfWgoeOTVxFELnJCNcaZBRdFbdbM7PWF3yjYXOTnRvZ5VxL599mnvo5ZXGZqmEPBsi5=w526-h296

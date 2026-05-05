@@ -1,0 +1,40 @@
+# PROVENANCE
+# - Skip-built: developer Holger Isenberg confirmed Skip-Lite use on Bluesky:
+#   "I used skip.dev to bring the original iPhone app with only minor code
+#   changes to Android. With their Skip-Lite variant, it just-in-time
+#   transpiles Swift and SwiftUI code to Kotlin."
+#   https://bsky.app/profile/areoinfo.bsky.social
+# - Skip mode: SkipLite — explicitly named by the developer in the post
+#   above. Source repo is not public; mode is taken from the developer's
+#   own statement.
+name: areoHDR
+developer: Areo Info LLC
+tagline: Real Mars images in true high dynamic range
+description: |
+  areoHDR shows images taken only hours ago on the surface of Mars by NASA's Perseverance rover, currently driving in and around Jezero Crater. The app is the first to render the rover's photographs in true high dynamic range and with color calibration tuned for human vision — bringing the experience that human explorers on Mars would have themselves to your iPhone, iPad, or Android device.
+
+  The Android version was ported from the original SwiftUI iOS app with only minor changes using Skip Lite, which transpiles the same Swift codebase to Kotlin and Jetpack Compose.
+category: Reference
+mode: SkipLite
+releaseYear: 2024
+tags:
+  - Mars
+  - Astronomy
+  - HDR
+  - NASA
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f9/14/06/f91406d3-30f9-3e07-a234-12548172dced/AppIcon-0-0-1x_U007epad-0-1-P3-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/areohdr/id6738591240
+  playStore: https://play.google.com/store/apps/details?id=info.areo.areohdr
+ratings:
+  appStore:
+    score: 5.0
+    count: 4
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/62/6d/40/626d40d9-39b2-4b64-4732-b9839b14031e/v130_iphone_portrait.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/48/8b/36/488b364d-bd88-8359-fbb1-c4463ef0df78/v142_iphone_calendar.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/_4ZJW40nWie2egimck9IWfl2CfhZRZTGvXRSto--urdQH_qi_REGXXJIX_ju3vSI8-R1wo-3xhMtDxoCXN2aq1Q=w526-h296
+    - url: https://play-lh.googleusercontent.com/-rRyXaB1KCfkTzk0hF_sY42AcG--qbcHCRKn30OyYC09enoqIgLwY3pio_pEI7V5vin8Xv3dqH6VF3oiE132=w526-h296
+    - url: https://play-lh.googleusercontent.com/4VHy4ffKRG2lBvnydQpL8yGKAUDA5WYceUGMY0YUSASXoqdSudO6YUWsvmIgYr_R8DossqaJWLpk2R9VVYmI=w526-h296

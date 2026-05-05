@@ -1,0 +1,42 @@
+# PROVENANCE
+# - Skip-built: the Android edition was the new addition to the existing
+#   iOS-only Daily Prompt service in 2024 (the iOS app dates to 2019, the
+#   Android Play Store listing was published Sept 9, 2024). The Skip-built
+#   nature of the Android port was identified in the Skip team's curated
+#   list of community apps shared with the gallery editor.
+# - Skip mode: not publicly disclosed. The Android app is closed-source so
+#   no skip.yml is observable. Mode badge omitted.
+name: "Daily Prompt: Writing Prompts"
+developer: Daily Prompt Ltd
+tagline: A daily writing prompt to build a creative habit
+description: |
+  Daily Prompt delivers a fresh writing prompt every day across fiction, poetry, short stories, and non-fiction so users can build a steady writing habit in just 15 minutes a day. Premium subscribers unlock 2,000+ prompts, novel-writing tools, unlimited word counts, writing competitions with cash prizes, and the ability to export their work.
+
+  A built-in community lets writers share pieces, leave feedback, and join challenges. Work syncs across iPhone, iPad, Mac, and the web. The Android edition is built with Skip, sharing a Swift codebase with the established iOS app.
+category: Education
+releaseYear: 2024
+tags:
+  - Writing
+  - Productivity
+  - Community
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b9/7f/26/b97f2662-d2a2-0620-a25c-8358532a52ef/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/daily-prompt-writing-prompts/id1448668946
+  playStore: https://play.google.com/store/apps/details?id=com.dailyprompt.android
+ratings:
+  appStore:
+    score: 4.7
+    count: 2204
+  playStore:
+    score: 3.2
+    count: 58
+    downloads: "10K+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/de/34/32/de3432d7-1522-78f7-ec71-fd8ef6f9a8fc/c252fbf4-c296-4bcf-9c11-e3b3364c3090_1-1.jpg/392x696bb.jpg
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/48/27/7f/48277ff2-1282-ca04-69e4-5f1a422ec7a2/c12530e3-8621-4e45-a8fa-dbf5ab545a36_2.jpg/392x696bb.jpg
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/7e/54/44/7e544400-3b49-2fb4-e286-22c894791e4d/f4d65ca0-c311-4c20-bd8c-7243e32f58ce_3.jpg/392x696bb.jpg
+  android:
+    - url: https://play-lh.googleusercontent.com/4U_BBeNmrRS3M-HDAQd4-33kvczbEXh-PMbRidJTyQwE2e6B82befLixbnrX_2WPh-BbryRIVuILxX8DK-oBGg=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/x27YExcfIi4oamMGWsBnBovgCcpPs5ppCbZyM9BLd5hBxJyfIWTz3ZI_iAh3pWMurtQJEMsx9NUKk16rPxcG0Hg=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/ld67mmOEGjTdO0y8qlSzV1RyLTA5AwzKXHdDmKSPJr1ajp_sxtytg9riKsPGjUpXTvySRnX7F5m5Iz1ALiBijg=w526-h296-rw

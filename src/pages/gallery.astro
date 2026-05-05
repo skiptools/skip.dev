@@ -1,51 +1,255 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
-// Directly import the YAML file
-import showcaseData from '../content/gallery/apps.yaml';
+import { getCollection } from 'astro:content';
+import GalleryCard from '../components/GalleryCard.astro';
 
-const apps = showcaseData; // showcaseData will be the array of app objects
+const allApps = await getCollection('gallery');
+
+// Featured apps first, then the rest sorted by name.
+const apps = allApps.sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  return a.data.name.localeCompare(b.data.name);
+});
+
+const total = apps.length;
 ---
 
-<StarlightPage frontmatter={{ title: "Showcase", description: "Showcase of apps built with Skip", tableOfContents: false, template: 'splash' }}>
-  <p>Explore applications built with Skip.</p>
+<StarlightPage frontmatter={{
+  title: 'Apps Built with Skip',
+  description: 'Apps in the Apple App Store and Google Play Store built with Skip',
+  tableOfContents: false,
+  template: 'splash',
+}}>
+  <section class="gallery-hero">
+    <p class="gallery-hero-tagline">
+    <small>A small selection of Skip-built cross-platform iOS and Android apps that
+        ship from a single Swift codebase.</small>
+    </p>
+  </section>
 
-  <div class="showcase-grid">
-    {apps.map((app) => ( // Iterate over the 'apps' array
-      <div class="showcase-card">
-        <h2>{app.appName}</h2>
-        <p>Developer: {app.developer}</p>
-        <p>{app.description}</p>
-        {app.screenshots.android && (
-          <img src={app.screenshots.android} alt={`${app.appName} Android screenshot`} />
-        )}
-        {app.screenshots.ios && (
-          <img src={app.screenshots.ios} alt={`${app.appName} iOS screenshot`} />
-        )}
-        {app.appStoreLinks.android && (
-        <a href={app.appStoreLinks.android} style="display: inline-block;"><img src="https://assets.skip.dev/badges/google-play-store.svg" alt="Download on the Google Play Store" style="height: 60px; vertical-align: middle; object-fit: contain;"></a>
-        )}
-        {app.appStoreLinks.ios && (
-        <a href={app.appStoreLinks.ios} style="display: inline-block;"><img src="https://assets.skip.dev/badges/apple-app-store.svg" alt="Download on the Apple App Store" style="height: 60px; vertical-align: middle; object-fit: contain;"></a>
-        )}
-      </div>
-    ))}
-  </div>
-</Layout>
+  <section class="gallery-grid">
+    {apps.map((app) => <GalleryCard app={app} />)}
+  </section>
+
+  <section class="gallery-cta">
+    <h2>Built something with Skip?</h2>
+    <p>
+      We'd love to feature your app here.
+      <a href="https://github.com/skiptools/skip.dev/issues/new?template=suggest-app.yml" target="_blank" rel="noopener">Open a "Suggest an app" issue on GitHub</a>
+      with a link to your App Store and Play Store listings, and we'll add it to the gallery.
+    </p>
+  </section>
+</StarlightPage>
 
 <style>
-  .showcase-grid {
+  /* Restyle the splash-template page H1 with a gradient */
+  :global(h1#_top) {
+    text-align: center;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--sl-color-accent-high), var(--sl-color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Hero */
+  .gallery-hero {
+    margin: 0 auto 3rem;
+    max-width: 720px;
+    text-align: center;
+  }
+
+  .gallery-hero-tagline {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--sl-color-gray-2);
+    margin: 0;
+  }
+
+  :root[data-theme='light'] .gallery-hero-tagline {
+    color: var(--sl-color-gray-3);
+  }
+
+  /* Grid */
+  .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin: 0 0 4rem;
   }
-  .showcase-card {
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
+
+  @media (min-width: 1100px) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
   }
-  .showcase-card img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
+
+  @media (max-width: 480px) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.875rem;
+    }
+  }
+
+  /* Card */
+  :global(.gallery-card) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.75rem 1.25rem 1.5rem;
+    border-radius: 1rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    text-decoration: none !important;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    gap: 0.75rem;
+    height: 100%;
+  }
+
+  :global(.gallery-card:hover) {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30);
+    border-color: var(--sl-color-accent);
+  }
+
+  :root[data-theme='light'] :global(.gallery-card:hover) {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.10);
+  }
+
+  /* Icon wrap (relative for the featured badge) */
+  :global(.gallery-card-iconwrap) {
+    position: relative;
+    margin-bottom: 0.25rem;
+  }
+
+  :global(.gallery-card-icon) {
+    width: 96px;
+    height: 96px;
+    border-radius: 22%;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 12px 24px rgba(0, 0, 0, 0.25),
+      0 4px 8px rgba(0, 0, 0, 0.10);
+    transition: transform 0.25s ease;
+  }
+
+  :root[data-theme='light'] :global(.gallery-card-icon) {
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.05),
+      0 12px 24px rgba(0, 0, 0, 0.10),
+      0 4px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  :global(.gallery-card:hover .gallery-card-icon) {
+    transform: scale(1.04);
+  }
+
+  :global(.gallery-card-icon-placeholder) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--sl-color-accent), var(--sl-color-accent-low));
+    color: var(--sl-color-white);
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  :global(.gallery-card-featured) {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    padding: 0.18rem 0.5rem;
+    background: var(--sl-color-accent);
+    color: var(--sl-color-white);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Name */
+  :global(.gallery-card-name) {
+    margin: 0;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--sl-color-white);
+    letter-spacing: -0.01em;
+  }
+
+  /* Tagline */
+  :global(.gallery-card-tagline) {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--sl-color-gray-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  :root[data-theme='light'] :global(.gallery-card-tagline) {
+    color: var(--sl-color-gray-3);
+  }
+
+  /* Skip-mode badge */
+  :global(.gallery-card-mode) {
+    margin-top: auto;
+    align-self: center;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  :global(.gallery-card-mode[data-mode="SkipFuse"])    { background: rgba(74,222,128,0.15);  color: #4ade80; }
+  :global(.gallery-card-mode[data-mode="SkipLite"])    { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  :global(.gallery-card-mode[data-mode="SkipBridge"])  { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  :global(.gallery-card-mode[data-mode="partial"])     { background: rgba(192,132,252,0.15); color: #c084fc; }
+
+  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="SkipFuse"])   { color: #16a34a; }
+  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="SkipLite"])   { color: #b45309; }
+  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="SkipBridge"]) { color: #2563eb; }
+  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="partial"])    { color: #9333ea; }
+
+  /* CTA */
+  .gallery-cta {
+    margin: 4rem 0 2rem;
+    padding: 2.25rem 1.5rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(0, 113, 167, 0.08), transparent 70%), var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    text-align: center;
+  }
+
+  .gallery-cta h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.5rem;
+    color: var(--sl-color-white);
+  }
+
+  .gallery-cta p {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  :root[data-theme='light'] .gallery-cta p {
+    color: var(--sl-color-gray-3);
   }
 </style>

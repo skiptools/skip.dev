@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  app: CollectionEntry<'gallery'>;
+}
+
+const { app } = Astro.props;
+const data = app.data;
+const slug = app.id;
+const initial = data.name.replace(/[^A-Za-z]/, '').slice(0, 1).toUpperCase() || 'S';
+---
+
+<a class="gallery-card" href={`/gallery/${slug}/`}>
+  <div class="gallery-card-iconwrap">
+    {data.icon ? (
+      <img class="gallery-card-icon" src={data.icon} alt="" loading="lazy" />
+    ) : (
+      <div class="gallery-card-icon gallery-card-icon-placeholder">{initial}</div>
+    )}
+    {data.featured && <span class="gallery-card-featured">Featured</span>}
+  </div>
+
+  <h3 class="gallery-card-name">{data.name}</h3>
+  {data.tagline && <p class="gallery-card-tagline">{data.tagline}</p>}
+
+  {data.mode && (
+    <span class="gallery-card-mode" data-mode={data.mode}>
+      {data.mode}
+    </span>
+  )}
+</a>

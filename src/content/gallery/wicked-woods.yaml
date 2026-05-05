@@ -1,0 +1,49 @@
+# PROVENANCE
+# - Skip-built: the Wicked Woods festival app is the production deployment
+#   of the open-source `OpenMusicEvent` framework, authored by Woody Melling
+#   (`woodymelling`) — a regular contributor to the Skip community
+#   discussions (e.g., "Observation Support" thread #661). The
+#   OpenMusicEvent framework's README explicitly states: "This is a Skip
+#   dual-platform app project."
+#   https://github.com/ometools/open-music-event
+#   Marketing site: https://openmusicevent.live
+# - Skip mode: SkipFuse — the upstream OpenMusicEvent project's
+#   Sources/OpenMusicEvent/Skip/skip.yml carries `mode: 'native'`, and the
+#   Package.swift uses `skip-fuse-ui` and `skip-bridge`. The Wicked Woods
+#   Play Store package (`com.Festivl.WickedWoods`) is a custom build atop
+#   the same upstream codebase, so the mode reasonably applies.
+name: Wicked Woods
+developer: Wicked Woods Music Festival
+tagline: The official Wicked Woods festival companion
+description: |
+  The Wicked Woods app is the official festival companion for Wicked Woods Music Festival in Fairmont, BC. It contains the lineup with set times for each stage, lets users build a personalized schedule, and supports alarm reminders so attendees never miss a favorite artist.
+
+  Real-time festival updates keep attendees informed as events unfold, and built-in maps help navigate the festival and camping grounds — locating vendors, water ports, showers, ANKORS, the Sanctuary women's safe zone, and other amenities.
+category: Entertainment
+mode: SkipFuse
+releaseYear: 2022
+tags:
+  - Festival
+  - Music
+  - Schedule
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0d/00/b3/0d00b336-a9ff-3eb5-1858-a6f2cd463e12/wicked-woods-2026-liquid-glass-0-0-1x_U007ephone-0-1-sRGB-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/app/wicked-woods/id1622500423
+  playStore: https://play.google.com/store/apps/details?id=com.Festivl.WickedWoods
+  website: https://openmusicevent.live
+  source: https://github.com/ometools/open-music-event
+ratings:
+  appStore:
+    score: 5.0
+    count: 1
+  playStore:
+    downloads: "500+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/06/99/b6/0699b64a-c184-6720-876f-b356c85ff575/Simulator_Screenshot_-_iPhone_16_Pro_-_2025-08-12_at_22.57.10.png/314x680bb.jpg
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ae/43/a8/ae43a82f-8b47-629e-c7b7-9709996730f6/Simulator_Screenshot_-_iPhone_16_Pro_-_2025-08-12_at_23.02.59.png/314x680bb.jpg
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e2/d8/2f/e2d82f54-0d8a-5537-922d-15bfcdbb1ebf/Simulator_Screenshot_-_iPhone_16_Pro_-_2025-08-12_at_23.05.11.png/314x680bb.jpg
+  android:
+    - url: https://play-lh.googleusercontent.com/gLwuCJenjlCpZELzw4YGK9Ih_010AITzuvYhanRbIetFPkNojA_0XW9dQGeZOBllpzDam-eVGVY3FKQekLfjRQ=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/XiyxskWHi9A61nlvEsKwDfB5ZTSbTXCErV0DBjSrA_zSb5wkRHXHbgmyvfcMH31yuMPct79aVaVKlMiK2Ky-Bg=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/w4IyRpEUqQoR_v4Ekp1z1f2tu_ff4CTDEU4cb11FKHRAGw6VU2CY6dcjr5sx057XAAayP78N3D9kgZ439gc6=w526-h296-rw

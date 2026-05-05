@@ -1,0 +1,36 @@
+# PROVENANCE
+# - Skip-built: identified as a Skip app in the Skip team's curated list of
+#   community apps shared with the gallery editor. App Store and Play Store
+#   listings were published within two weeks of each other in summer 2025
+#   (App Store 2025-06-22, Play Store 2025-07-06). Source repo is not
+#   public; no developer statement of mode could be located.
+# - Skip mode: not publicly disclosed. Mode badge omitted.
+name: RouteMe
+developer: RouteMe Teknoloji Anonim Sirketi
+tagline: Discover, share, and follow travel routes
+description: |
+  RouteMe is a social platform for discovering, creating, and sharing complete travel routes — not just individual spots — that string together a full experience. Build your own custom routes with photos and descriptions, follow favorite creators, and explore a personalized Discover feed of trending paths and category filters.
+
+  Routes can be exported to your preferred navigation app for turn-by-turn directions, and a guest mode lets you browse the community without signing in.
+category: Social Networking
+releaseYear: 2025
+tags:
+  - Travel
+  - Social
+  - Discovery
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/5b/57/d5/5b57d5f2-e37a-5804-8257-ca9c6e6afab5/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/app/routeme-discover-your-city/id6745787636
+  playStore: https://play.google.com/store/apps/details?id=com.routeme.routemeapp
+ratings:
+  playStore:
+    downloads: "100+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/30/d1/29/30d1291e-5af6-6013-8e11-ec4dc98d01bc/screenshot-1.png/314x680bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/81/6a/10/816a1014-72cc-ba17-b994-0f797c5ef931/screenshot-2.png/314x680bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/6c/0a/05/6c0a05be-2df3-a0e8-9eb4-8248415e34fb/screenshot-3.png/314x680bb.png
+  android:
+    - url: https://play-lh.googleusercontent.com/AjLNUFL-uk-E3xvuilQUNMMySzFLLUSQeJECEn64neKHeZtFku6q4nk8gllxbgCwaIHVZrxK47PhlNWuCaekaAE=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/HhO_42QcqOkbbl2Hn5sKl5a5Z11yYA-mkdGiKPqTMaom7otXaWaPYr4vtIEBb-FImYfhCETvWEr-tEx__AV3bQ=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/msNH7hPau8J6RPNmfK1C7k0mozDSzpC_cYwdeJye1RYqUXy1GLdlUUmcrcLg8_xPv2lWqkwsSa2oTsTCKRD_0_w=w526-h296-rw

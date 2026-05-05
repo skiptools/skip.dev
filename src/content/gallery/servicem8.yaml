@@ -1,0 +1,46 @@
+# PROVENANCE
+# - Skip-built: the ServiceM8 Lite Android app uses Play Store package
+#   `com.servicem8.skip` — the `.skip` suffix is the convention ServiceM8
+#   chose to distinguish their Skip-built Android companion from the older
+#   native-Kotlin app. (The `.skip` suffix is a developer-chosen tag, not a
+#   Skip-defined convention; the ServiceM8 case is the strongest example.)
+# - Skip mode: not publicly disclosed. The Android app is closed-source so
+#   no skip.yml is observable. Mode is omitted here.
+name: ServiceM8
+developer: ServiceM8 (Eroldawn Pty Ltd)
+tagline: Job management for trade contractors and field service teams
+description: |
+  ServiceM8 is job-management software for trade contractors and home-service businesses, including plumbers, electricians, HVAC, locksmiths, cleaners, and gardeners. The full iOS and iPad app handles digital job cards, scheduling, quotes, on-the-way texts, electronic signatures, time tracking, invoicing, online payments, custom forms, and asset history, with Xero and QuickBooks Online integrations.
+
+  ServiceM8 Lite for Android is the Skip-built companion designed for field staff, subcontractors, and temporary workers who only need the essentials — schedule, job cards, checklists, navigation, photos, and notes — without the full management surface.
+category: Business
+featured: true
+releaseYear: 2024
+tags:
+  - Business
+  - Productivity
+  - Field service
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/5e/aa/41/5eaa41df-3b82-60c7-91b0-558a2daf0e5a/AppIcon-0-0-1x_U007emarketing-0-0-0-8-0-0-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/servicem8-field-service-app/id378062736
+  playStore: https://play.google.com/store/apps/details?id=com.servicem8.skip
+  website: https://www.servicem8.com
+ratings:
+  appStore:
+    score: 4.6
+    count: 717
+  playStore:
+    score: 3.6
+    count: 525
+    downloads: "10K+"
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/af/3a/2b/af3a2b9d-4d53-f84b-b07e-c0cb1436a996/923046e0-bd1f-4893-82c9-852515ccfec9_Mobile_-_USA__U2013_Final_-_5.5_inch_iPhone_-_1_-_Fixed@3x.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/6b/84/20/6b842084-5e80-f5cd-dfd2-3219ef3e1990/d3b18c50-3841-45e3-9c3c-9e65ff90686e_Mobile_-_USA__U2013_Final_-_5.5_inch_iPhone_-_2_-_Fixed@3x.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/d3/2e/9b/d32e9bd9-a42a-4ede-bf55-bc55ea581c6c/33af376a-8f91-4946-a063-ceb0dc8238a5_Mobile_-_USA__U2013_Final_-_5.5_inch_iPhone_-_3@3x.png/392x696bb.png
+  android:
+    - url: https://play-lh.googleusercontent.com/h8aCmiM_FUPYZrA7c0tuVeLar5-yr1wMSKX0hp4908Kmv48B6SUiPI6n5z4R2FNi_9A=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/-_XF68l6LW3jLJpA8xWOIjMEGtDCrd9mY12Au2C9drGLumXpdvI9h41mWkHkfoAcvg=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/pIAKrXjkMcfKkaPeykspXrvluwQl1y8HHyK7TZRlt4pf_VjB8JuyyBYzya5md7xP3A=w526-h296-rw
+notes: |
+  The Android app at com.servicem8.skip is the Skip-built ServiceM8 Lite companion. The iOS app pre-dates Skip and is included here for parity; field staff working between platforms see the same core data on both devices.
