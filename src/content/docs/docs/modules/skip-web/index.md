@@ -12,7 +12,7 @@ This framework is available at [github.com/skiptools/skip-web](https://github.co
 
 SkipWeb provides two ways to display web content in Skip Lite apps:
 
-- **[WebView](#webview-customizable-embedded-web-browser)** — A fully customizable embedded browser for app-integrated web content. Supports JavaScript execution, navigation control, scroll delegates, snapshots, popups, and content blockers. Backed by `WKWebView` on iOS and `android.webkit.WebView` on Android.
+- **[WebView](#webview-customizable-embedded-web-browser)** — A fully customizable embedded browser for app-integrated web content. Supports JavaScript execution, script messages, navigation control, scroll delegates, snapshots, popups, persistent tab engines, cookies/storage, profiles, and content blockers. Backed by `WKWebView` on iOS and `android.webkit.WebView` on Android.
 
 - **[WebBrowser](#webbrowser-lightweight-in-app-browser)** — A lightweight View modifier that opens a URL in the platform's native in-app browser (`SFSafariViewController` on iOS, Chrome Custom Tabs on Android). Ideal for external links where you want a polished browsing experience with minimal code.
 
@@ -29,6 +29,15 @@ SkipWeb provides two ways to display web content in Skip Lite apps:
 
 Use `openWebBrowser` when you want to send the user to a web page with minimal code and maximum platform-native UX. Use `WebView` when you need to embed web content as part of your app's UI with programmatic control.
 
+## Requirements
+
+The package currently targets Apple platforms starting at iOS 17, macOS 14, tvOS 17, watchOS 10, and Mac Catalyst 17.
+
+Current package dependencies are:
+
+- `skip` from `1.8.9`
+- `skip-ui` from `1.51.3`
+- when `SKIP_BRIDGE` is enabled, `skip-bridge` in `0.0.0..<2.0.0` and `skip-fuse-ui` from `1.14.5`
 
 ## WebView: Customizable Embedded Web Browser
 
@@ -65,15 +74,50 @@ import SwiftUI
 import SkipWeb
 
 struct ConfigurableWebView : View {
-    let navigator: WebViewNavigator = WebViewNavigator(initialURL: URL("https://skip.dev")!)
-    @ObservedObject var configuration: WebEngineConfiguration
-    @Binding var state: WebViewState
+    @State private var configuration = WebEngineConfiguration()
+    @State private var navigator = WebViewNavigator(initialURL: URL(string: "https://skip.dev")!)
+    @State private var state = WebViewState()
 
     var body: some View {
         WebView(configuration: configuration, navigator: navigator, state: $state)
     }
 }
 
+```
+
+The main configuration knobs are:
+
+```swift
+let config = WebEngineConfiguration(
+    javaScriptEnabled: true,
+    javaScriptCanOpenWindowsAutomatically: false,
+    allowsBackForwardNavigationGestures: true,
+    allowsPullToRefresh: true,
+    allowsInlineMediaPlayback: true,
+    dataDetectorsEnabled: true,
+    isScrollEnabled: true,
+    pageZoom: 1.0,
+    isOpaque: true,
+    customUserAgent: nil,
+    profile: .default,
+    userScripts: [],
+    scriptMessageHandlerNames: [],
+    scriptMessageDelegate: nil,
+    schemeHandlers: [:],
+    uiDelegate: nil,
+    navigationDelegate: nil,
+    contentBlockers: nil
+)
+```
+
+`messageHandlers` is still accepted for source compatibility, but it is deprecated. Prefer `scriptMessageHandlerNames` plus `scriptMessageDelegate` for new code.
+
+`WebViewState.url` is the preferred typed URL state. `pageURL` is still present for source compatibility, but is deprecated:
+
+```swift
+if let currentURL = state.url {
+    print(currentURL.absoluteString)
+}
 ```
 
 Profile selection is configured on `WebEngineConfiguration`:
@@ -84,9 +128,57 @@ let config = WebEngineConfiguration(
 )
 ```
 
+Use `.ephemeral` when the web view should avoid the normal persistent website data store:
+
+```swift
+let config = WebEngineConfiguration(
+    profile: .ephemeral
+)
+```
+
+On iOS this uses `WKWebsiteDataStore.nonPersistent()`. On Android this requires AndroidX WebKit
+`WebViewFeature.MULTI_PROFILE`; SkipWeb creates a generated named profile for the engine so
+cookies and storage do not share the default WebView store.
+
 `WebViewNavigator` can keep a warm `WebEngine` and reuse it across view recreation.
 When the same navigator is rebound to an engine that already has content/history, `initialURL`/`initialHTML` are not reloaded.
 This lets apps preserve page state when navigating away and back with the same navigator instance.
+
+### Managing multiple live tabs
+
+If you are building a tabbed browser, `persistentWebViewID` is the mechanism you need to manage multiple live tabs.
+
+Think of it as a stable parking spot for one browser engine. Each tab gets its own ID, and `SkipWeb`
+reuses the same cached `WebEngine` whenever a `WebView` is mounted again with that ID.
+
+```swift
+WebView(
+    configuration: configuration,
+    navigator: navigator,
+    url: tab.url,
+    state: $state,
+    persistentWebViewID: tab.id.uuidString
+)
+```
+
+Use a stable per-tab identifier when engine identity should be tied to a tab ID instead of only
+to a `WebViewNavigator` instance. A stable navigator can still preserve one warm engine across
+view recreation; `persistentWebViewID` is for managing multiple live engines by explicit tab ID.
+
+`SkipWeb` only provides the reuse and eviction primitives. The host browser feature should decide how many
+tab engines stay warm, when engines are created lazily, and when to purge them.
+
+When a tab closes or a background tab should no longer keep its engine alive, remove it explicitly:
+
+```swift
+WebView.removePersistentWebView(id: tab.id.uuidString)
+```
+
+For bulk purges, such as memory pressure or session changes, use:
+
+```swift
+WebView.removePersistentWebViews(ids: tabIDs.map(\.uuidString))
+```
 
 Content blockers are also configured on `WebEngineConfiguration`:
 
@@ -166,9 +258,60 @@ fragmentary (that is, a top-level string or number, null, or array), so care
 should be taken when attempting to deserialize it.
 
 **Note**: since the browser's JavaScript engines are quite different
-(V8 and Blink on Android versus JavaScript Core and WebKit on iOS), resuts
+(V8 and Blink on Android versus JavaScriptCore and WebKit on iOS), results
 from script execution are expected to vary somewhat depending on the different
 quirks of the implementations.
+
+### User Scripts and Script Messages
+
+Use `WebViewUserScript` for scripts that should run as pages load:
+
+```swift
+let config = WebEngineConfiguration(
+    userScripts: [
+        WebViewUserScript(
+            source: "window.appReady = true",
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        )
+    ]
+)
+```
+
+On iOS this maps to `WKUserScript`. On Android, SkipWeb uses AndroidX document-start scripts when `WebViewFeature.DOCUMENT_START_SCRIPT` is available. If that feature is unavailable, document-start scripts are injected from `onPageStarted` and document-end scripts are injected from `onPageFinished`, so timing is best-effort.
+
+For JavaScript-to-native messages, register handler names and provide a `WebViewScriptMessageDelegate`:
+
+```swift
+@MainActor
+final class ScriptSink: WebViewScriptMessageDelegate {
+    func webEngine(_ webEngine: WebEngine, didReceiveScriptMessage message: WebViewScriptMessage) {
+        print("handler=\(message.name), body=\(message.bodyJSON)")
+    }
+}
+
+let scriptSink = ScriptSink()
+let config = WebEngineConfiguration(
+    scriptMessageHandlerNames: ["native"],
+    scriptMessageDelegate: scriptSink
+)
+```
+
+JavaScript can then post through the familiar WebKit shape on both platforms:
+
+```javascript
+window.webkit.messageHandlers.native.postMessage({
+  kind: "ready",
+  href: window.location.href
+})
+```
+
+Think of `WebViewScriptMessage` as the portable envelope around the message:
+
+- `name` is the registered handler name.
+- `bodyJSON` is the canonical payload. SkipWeb JSON-encodes posted values before crossing the Swift/Kotlin bridge.
+- `sourceURL` is the sending frame URL when available.
+- `isMainFrame` tells you whether the message came from the top frame when available.
 
 A full example of a browser that can evaluate JavaScript and display
 the results in a sheet can be implemented with the following View:
@@ -579,7 +722,7 @@ extension View {
 Supporting types:
 
 - `WebCookie` (`name`, `value`, optional `domain`/`path`/`expires`, plus `isSecure`/`isHTTPOnly`)
-- `WebProfile` (`.default`, `.named(String)`)
+- `WebProfile` (`.default`, `.named(String)`, `.ephemeral`)
 - `WebSiteDataType` (`cookies`, `diskCache`, `memoryCache`, `offlineWebApplicationCache`, `localStorage`, `sessionStorage`, `webSQLDatabases`, `indexedDBDatabases`)
 
 Example:
@@ -612,11 +755,14 @@ Platform behavior:
 | --- | --- | --- |
 | `.default` | `WKWebsiteDataStore.default()` | Default process-wide store |
 | `.named("id")` | `WKWebsiteDataStore(forIdentifier: "id")` | AndroidX WebKit named profile (requires `WebViewFeature.MULTI_PROFILE`) |
+| `.ephemeral` | `WKWebsiteDataStore.nonPersistent()` | Generated AndroidX WebKit named profile (requires `WebViewFeature.MULTI_PROFILE`) |
 
 - iOS cookie scope follows the `WKWebsiteDataStore` attached to the `WKWebView`.
 - Android `.default` uses `android.webkit.CookieManager` singleton.
 - Android `.named("id")` requires `WebViewFeature.MULTI_PROFILE`; otherwise profile setup fails with `WebProfileError.unsupportedOnAndroid` (no fallback to default).
-- On Android, always check profile support at runtime before using `.named("id")` profiles. You can use `WebEngine.isAndroidMultiProfileSupported()` (or the underlying `WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)` check directly).
+- Android `.ephemeral` also requires `WebViewFeature.MULTI_PROFILE`; otherwise profile setup fails with `WebProfileError.unsupportedOnAndroid` instead of falling back to the default store.
+- Each Android `.ephemeral` engine receives a generated named profile. Popup child engines inherit the parent's resolved generated profile so opener and child share the same isolated store.
+- On Android, always check profile support at runtime before using `.named("id")` or `.ephemeral` profiles. You can use `WebEngine.isAndroidMultiProfileSupported()` (or the underlying `WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)` check directly).
 - `cookies(for:)` returns URL-matching cookies; on Android this is best-effort because `CookieManager` reads as a cookie-header string (limited metadata).
 - `setCookie(_:requestURL:)` requires either `cookie.domain` or a `requestURL` host; otherwise it throws `WebCookieError.missingCookieDomain`.
 - `removeData(ofTypes:modifiedSince:)` maps to iOS `WKWebsiteDataStore.removeData`.
@@ -652,6 +798,7 @@ with features and fixes that you create, as this benefits the entire Skip commun
 
 This project is a Swift Package Manager module that uses the
 Skip plugin to build the package for both iOS and Android.
+The package manifest is the source of truth for dependency versions; see [Requirements](#requirements) for the current values.
 
 ## Testing
 

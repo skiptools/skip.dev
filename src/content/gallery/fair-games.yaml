@@ -1,0 +1,46 @@
+# PROVENANCE
+# - Skip-built: distributed by the App Fair Project, source at
+#   https://github.com/Faire-Games/Faire-Games. The Play Store and App Store
+#   listings both state the app is "built with Skip", and the repo's
+#   Package.swift depends on https://source.skip.tools/skip.git.
+# - Skip mode: SkipLite — Sources/FaireGamesModel/Skip/skip.yml declares
+#   `mode: 'transpiled'`, and the Package.swift does not depend on
+#   skip-fuse or skip-fuse-ui.
+name: Fair Games
+developer: The App Fair Project Inc
+tagline: Six classic puzzle and arcade games in one app
+description: |
+  Fair Games is a free, open-source collection of six classic puzzle and arcade games: Block Blast, Sirtet (a falling-block game), Flappy Bird, Breakout, Sudoku, and 2048. Each game ships with haptic feedback, high score tracking, auto-save, and a dark theme designed for comfortable play.
+
+  No ads, no in-app purchases, and no tracking. Distributed through App Fair and built with Skip Lite, transpiling a single SwiftUI codebase to Kotlin and Jetpack Compose for Android.
+category: Games
+mode: SkipLite
+releaseYear: 2026
+tags:
+  - Games
+  - Puzzle
+  - Arcade
+  - Open source
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c2/17/b1/c217b114-dbc1-aea9-22ee-c3f186fb5e05/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/fair-games/id6761661340
+  playStore: https://play.google.com/store/apps/details?id=org.appfair.app.Faire_Games
+  source: https://github.com/Faire-Games/Faire-Games
+  website: https://appfair.net/en/apps/Faire-Games/
+ratings:
+  appStore:
+    score: 5.0
+    count: 1
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/3e/72/f9/3e72f925-2beb-d78b-53e5-9892cc1391c7/1_en-US.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/7d/f7/23/7df7237b-81e7-b5fb-b023-2d93766b2340/2_en-US.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f6/fe/78/f6fe782d-8f44-e0c8-861d-7d84cff3ae2c/3_en-US.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/84/09/93/84099333-3755-b1b0-f416-d7e8d08de686/4_en-US.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/4a/9f/b9/4a9fb935-6250-3505-ec0d-c87daa7a9b3c/5_en-US.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/D5KsCtOXsfmPjdXZPP0MMcDZHZ3gSASnQ7yqBKHsfnlVdVeKoNvUQb0aGtalv3I_LA=w526-h296
+    - url: https://play-lh.googleusercontent.com/PCCxQPmc93gusPuMmxVySnwL_8BRjHZdHq8N2YTucPeAKHjtsDdg6jctQ-93ehfZPro=w526-h296
+    - url: https://play-lh.googleusercontent.com/F_Aad3Icc096LZ1V9hArqoHWwxRS2GbCK5n995O_qJ75fxVNE2DzN7Y-g_dcJ25dwSw=w526-h296
+    - url: https://play-lh.googleusercontent.com/Ns2ydA_NZwAQXu3imrhGX14mY2uYYY5uQSEscXNqJ3-nFfHOkXRq_56x6I7pm246JKE=w526-h296
+    - url: https://play-lh.googleusercontent.com/cWzBxA2LP2XUarCPEgUvd2UsS_kZ9lBJYEy2To_M0MmRvQxkBGXt9Q1PwKNdFZM8VO4h=w526-h296

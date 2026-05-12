@@ -39,13 +39,23 @@ let package = Package(
 
 Our implementation of `WebAuthenticationSession` is built on top of Google's [Auth Tab](https://developer.chrome.com/docs/android/custom-tabs/guide-auth-tab), which is designed to work in Chrome browser versions 137 and later. Chrome 137 was released in May 2025; not all of your users may have updated to it, especially users on older versions of Android.
 
-In that case, the code includes a "fallback" to launch a [Custom Tab](https://developer.android.com/develop/ui/views/layout/webapps/overview-of-android-custom-tabs). To make that fallback work, you'll need to add an `<intent-filter>` to your `AndroidManifest.xml` file, like this:
+In that case, the code includes a "fallback" to launch a [Custom Tab](https://developer.android.com/develop/ui/views/layout/webapps/overview-of-android-custom-tabs). To make that fallback work, you'll need to add:
+
+1. An `<intent-filter>` so your app can receive the callback URL.
+2. A `<queries>` entry so `CustomTabsClient` can discover installed Custom Tabs providers.
+
+Example `AndroidManifest.xml`:
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- ... -->
-    <applicatio>
+    <queries>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
+    <application>
         <!-- ... -->
         <activity>
             <intent-filter>
@@ -74,12 +84,7 @@ Be sure to test `WebAuthenticationSession` on the oldest version of Android that
 :::
 
 ```swift
-#if os(Android)
 import SkipAuthenticationServices
-#else
-import AuthenticationServices
-#endif
-
 import SwiftUI
 
 struct ContentView: View {

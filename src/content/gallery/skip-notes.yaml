@@ -27,7 +27,7 @@ icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/04/ac/e2/04ace265-46
 links:
   appStore: https://apps.apple.com/us/app/skip-notes/id6740916318
   playStore: https://play.google.com/store/apps/details?id=org.appfair.app.SkipNotes
-  source: https://github.com/skiptools/Skip-Notes
+  source: https://github.com/Skip-Notes/Skip-Notes
 ratings:
   appStore:
     score: 5.0
