@@ -22,7 +22,6 @@ On iOS this wraps Apple's [StoreKit](https://developer.apple.com/documentation/s
 - [App Update Prompts](#app-update-prompts)
 - [Installation Source](#installation-source)
 - [API Reference](#api-reference)
-- [Building](#building) / [Testing](#testing) / [License](#license)
 
 ## Setup
 
