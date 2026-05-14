@@ -11,9 +11,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.37.6",
+    "@astrojs/starlight": "^0.39.2",
     "@expressive-code/plugin-collapsible-sections": "^0.41.6",
-    "astro": "^5.17.2",
+    "astro": "^6.3.3",
     "astro-mermaid": "^2.0.1",
     "astro-og-canvas": "^0.11.0",
     "mermaid": "^10.9.5",
@@ -24,8 +24,8 @@
     "rehype-slug": "^6.0.0",
     "remark-custom-heading-id": "^2.0.0",
     "sharp": "^0.34.5",
-    "starlight-blog": "^0.25.2",
-    "starlight-links-validator": "^0.19.2"
+    "starlight-blog": "^0.26.1",
+    "starlight-links-validator": "^0.24.0"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2"

@@ -167,7 +167,7 @@ export default defineConfig({
         {
           label: 'Component Gallery',
           collapsed: true,
-          autogenerate: { directory: 'docs/components' },
+          items: [{ autogenerate: { directory: 'docs/components' } }],
           // Alternatively, manual mapping if autogenerate isn't desired:
           /*
           items: [

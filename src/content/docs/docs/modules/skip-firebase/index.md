@@ -27,6 +27,49 @@ which is also mirrored in the division of the Firebase Kotlin Android gradle mod
 See the `Package.swift` files in the
 [FiresideFuse](/docs/samples/skipapp-fireside-fuse) and [Fireside](/docs/samples/skipapp-fireside) apps for examples of integrating Firebase dependencies.
 
+## Module Coverage
+
+`skip-firebase` exposes Swift API parity with the Firebase iOS SDK for the most common use cases on Android. The Android-side implementation lives in each `Sources/SkipFirebase*` Swift file (transpiled to Kotlin) and forwards calls to the official Firebase Android SDK. The table below summarizes, per module, the approximate share of the iOS API surface that has been bridged, along with the major gaps.
+
+| Module | iOS API Coverage | Highlights | Notable Gaps |
+|---|:---:|---|---|
+| `SkipFirebaseCore` | ~80% | `FirebaseApp.configure` (default + named + custom `FirebaseOptions`), app lifecycle, `Timestamp`, deep Kotlin↔Swift value conversion helpers | Custom `FirebaseLogger`, advanced data-collection toggles |
+| `SkipFirebaseFirestore` | ~80% | Collections, documents, batched writes, queries, `Filter.and`/`.or` composition, `FieldPath`, aggregate queries (`count`/`average`/`sum`), snapshot listeners, `FieldValue` sentinels, `LoadBundleTaskProgress`, errors mapped to `NSError` with `FirestoreErrorDomain`/`FirestoreErrorCode` | `runTransaction` (`Transaction` is currently a passthrough wrapper), `Codable` document encoding/decoding, `GeoPoint`, `FirestoreSettings`/cache configuration, `InputStream`-based bundle loading |
+| `SkipFirebaseAuth` | ~60% | Email/password sign-in, anonymous sign-in, email-link sign-in, interactive OAuth provider sign-in (Activity-based), state-change listener, ID-token retrieval, profile changes, account linking, reauthentication, `fetchSignInMethods`, `ActionCodeSettings`, partial `AuthErrorCode` mapping | Phone auth (`PhoneAuthProvider`, SMS verification), multi-factor (`MultiFactor`/`MultiFactorResolver`), `applyActionCode`/`checkActionCode`/`confirmPasswordReset`/`verifyPasswordResetCode`, custom-token sign-in, `GameCenterAuthProvider`, language/tenant configuration, `updateEmail`/`updatePassword` |
+| `SkipFirebaseStorage` | ~80% | Bucket and reference resolution, upload (`putFile`/`putData` in both callback and `async` forms), download (`getData`/`write(toFile:)`), `StorageMetadata` read/write, `downloadURL`, `delete`, pause/resume/cancel on uploads, `list`/`listAll` with pagination (`pageToken`), live `Progress` snapshot observers on uploads and file downloads | Full `StorageError` code mapping, `putStream`/`putString` |
+| `SkipFirebaseMessaging` | ~70% | FCM token retrieval + auto-refresh, topic subscribe/unsubscribe, `MessagingDelegate`, `MessagingService` integrating with iOS-style `UNUserNotificationCenterDelegate`, intent routing, localized `loc_key`/`loc_args` title/body, `RemoteMessage` → `UNNotification` translation | Per-sender FCM token APIs and notification-service-extension helpers (`populateNotificationContent`, `exportDeliveryMetricsToBigQuery`) are stubbed out as `@available(*, unavailable)` |
+| `SkipFirebaseAnalytics` | ~70% | `logEvent`, user properties/ID, consent (`setConsent` with `ConsentType`/`ConsentStatus`), session ID, `setSessionTimeoutInterval`, `setDefaultEventParameters`, `appInstanceID`, all standard event/parameter/user-property name constants, SwiftUI `.analyticsScreen` modifier | `initiateOnDeviceConversionMeasurement` (email/phone variants), `handleEvents(forSession:)`, deep-link helpers |
+| `SkipFirebaseRemoteConfig` | ~70% | `fetch`/`activate`/`fetchAndActivate`, `ensureInitialized`, value retrieval, keys-by-prefix, `RemoteConfigSettings` (intervals + timeout), defaults, `RemoteConfigValue` (string/bool/number/data/json/source) | `addOnConfigUpdateListener` (real-time config updates), `setCustomSignals` |
+| `SkipFirebaseAppCheck` | ~60% | Token retrieval (`token(forcingRefresh:)`, `limitedUseToken`), token-change listener bridged through `NotificationCenter`, debug provider factory, `AppCheckErrorCode` | iOS-only `DeviceCheckProviderFactory`/`AppAttestProviderFactory` (no Android equivalent), custom `AppCheckProvider` implementations |
+| `SkipFirebaseCrashlytics` | ~75% | `log`, `setCustomValue`/`setCustomKeysAndValues`, `setUserID`, `didCrashDuringPreviousExecution`, `checkForUnsentReports`/`sendUnsentReports`/`deleteUnsentReports`, `record(error:userInfo:)`, `recordExceptionModel`, `FIRExceptionModel`/`FIRStackFrame` | `logWithFormat` and `checkAndUpdateUnsentReports` are marked `@available(*, unavailable)`; no per-`FirebaseApp` instance accessor |
+| `SkipFirebaseFunctions` | ~45% | Default/regional/emulator instance, `httpsCallable(_:)`, completion-based `call`, automatic Kotlin→Swift result conversion via `deepSwift` | `async`/`await` `call` signatures, streaming RPCs, per-call options (`HTTPSCallableOptions`), explicit call timeouts |
+| `SkipFirebaseDatabase` | ~5% | `Database.database()` / `Database.database(app:)` singleton accessors | Effectively the entire API: `DatabaseReference`, `child`/`push`/`setValue`/`updateChildValues`/`removeValue`, `observe`/`observeSingleEvent`, queries, `DataSnapshot`, `ServerValue`, online/offline toggle |
+| `SkipFirebaseInstallations` | ~20% | Singleton accessor, `installationID()` | `authTokenForcingRefresh`, `delete()`, `installationIDDidChangeNotification` |
+
+**Overall coverage across the twelve modules: roughly 60% of the iOS API surface.** The most production-used modules — Core, Firestore, Auth, Storage, Messaging, Analytics, Crashlytics, and RemoteConfig — sit in the 60–80% range and cover the standard read/write/sign-in/log/notify paths. `SkipFirebaseDatabase` (Realtime Database) and `SkipFirebaseInstallations` are mostly stubs.
+
+### What is working well
+
+- **Firestore** is the most complete module: all common CRUD, queries (including `Filter` combinators and `FieldPath` predicates), snapshot listeners (with `MetadataChanges` support), batched writes, aggregate queries, and `FieldValue` sentinels round-trip correctly between Swift and the Firestore Android SDK. Errors are mapped to `NSError` with `FirestoreErrorDomain`/`FirestoreErrorCode` so error handling looks the same on both platforms.
+- **Auth** covers the most common sign-in flows (email/password, anonymous, interactive OAuth via the system browser, email-link) and exposes a familiar `User` API with profile changes, account linking, reauthentication, ID-token retrieval, and a state-change listener.
+- **Messaging** handles the full FCM lifecycle: token retrieval and auto-refresh, topic subscribe/unsubscribe, `RemoteMessage` → `UNNotification` translation (including localized `loc_key`/`loc_args` substitution from the app's `Localizable.strings`), and a `MessagingService` that integrates with iOS-style `UNUserNotificationCenterDelegate`.
+- **Storage** supports both data-based and file-based uploads/downloads in callback and `async` forms, plus full `StorageMetadata` read/write.
+- **Analytics**, **RemoteConfig**, **AppCheck**, and **Crashlytics** all expose the workhorse APIs that apps need day-to-day, including a SwiftUI `.analyticsScreen` modifier and a `NotificationCenter`-backed AppCheck token-change listener.
+
+### What still needs to be implemented
+
+- **Realtime Database** (`SkipFirebaseDatabase`) is currently only a stub. `DatabaseReference`, `observe`/`observeSingleEvent`, queries, and writes have not been bridged. Apps that rely on the Realtime Database should use Firestore instead or contribute the missing wrappers.
+- **Phone-number authentication and multi-factor flows** in `SkipFirebaseAuth` are not bridged. Apps requiring SMS verification or MFA need to drop into `#if SKIP` blocks and call the Android Firebase SDK directly.
+- **`runTransaction`** in Firestore is not implemented — the `Transaction` class is currently a passthrough wrapper with no operations. Multi-document atomic reads-then-writes need to be expressed as `WriteBatch` commits or as Kotlin-side code today.
+- **`SkipFirebaseFunctions`** lacks `async`/`await` call signatures, streaming RPCs, and per-call options. Only completion-based callback calls are supported.
+- **`SkipFirebaseRemoteConfig`** does not yet expose `addOnConfigUpdateListener` (real-time config updates) or custom signals.
+- **`SkipFirebaseAppCheck`** ships only the `Debug` provider factory; custom provider implementations are not yet bridgeable.
+- **`SkipFirebaseInstallations`** is essentially a no-op beyond fetching the installation ID.
+
+### Firebase modules not yet wrapped
+
+The following Firebase iOS SDK products do not yet have a `SkipFirebase*` counterpart in this package: `FirebaseABTesting`, `FirebaseAI` / Vertex AI, `FirebaseAppDistribution`, `FirebaseDataConnect`, `FirebaseDynamicLinks` (deprecated upstream), `FirebaseInAppMessaging`, `FirebaseMLModelDownloader`, and `FirebasePerformance`. Pull requests adding any of these are welcome.
+
 <!--
 An example of a Skip Lite app projects using the `Firestore` API at the model layer and the `Messaging` API at the app layer can be seen from the command:
 
@@ -112,12 +155,7 @@ For concrete examples, see the [FireSideFuse Sample](/docs/samples/skipapp-fires
 Once Firebase has been added to your project, you need to configure the `FirebaseApp` on app startup. This is typically done in the `onInit()` callback of the `*AppDelegate` in your `*App.swift` file. Here is a snippet from the FireSideFuse sample app:
 
 ```swift
-#if os(Android)
 import SkipFirebaseCore
-#else
-import FirebaseCore
-#endif
-
 ...
 
 /* SKIP @bridge */public final class FireSideFuseAppDelegate : Sendable {
@@ -142,11 +180,7 @@ imported Firebase modules. For example, the following actor uses the `Firestore`
 ```swift
 // Sources/FireSideFuse/FireSideFuseApp.swift
 
-#if os(Android)
 import SkipFirebaseFirestore
-#else
-import FirebaseFirestore
-#endif
 
 ...
 
@@ -197,11 +231,7 @@ After [setting up](#setup) your app to use Firebase, enabling push notifications
 
 ```swift
 import SwiftFuseUI
-#if os(Android)
 import SkipFirebaseMessaging
-#else
-import FirebaseMessaging
-#endif
 
 final class NotificationDelegate : NSObject, UNUserNotificationCenterDelegate, Sendable {
     public func requestPermission() {
@@ -252,11 +282,7 @@ final class NotificationDelegate : NSObject, UNUserNotificationCenterDelegate, S
 ```swift
 // Sources/FireSideFuse/FireSideFuseApp.swift
 
-#if os(Android)
 import SkipFirebaseCore
-#else
-import FirebaseCore
-#endif
 
 ...
 
