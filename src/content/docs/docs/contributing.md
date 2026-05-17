@@ -12,7 +12,7 @@ Skip welcomes community contributions in all forms. There are many ways to contr
 
 ## Local Skip Libraries {#local-libraries}
 
-If you'd like to make local changes to Skip's libraries while working on an app - such as by improving [SkipUI](/docs/modules/skip-ui/) or [SkipFuseUI](/docs/modules/skip-fuse-ui/) and exercising your changes with its [ShowcaseFuse app](/docs/samples/skipapp-showcase-fuse/) - you will want to configure Xcode to use local library versions rather than the current Skip distributions. This is easily accomplished with an Xcode Workspace.
+If you'd like to make local changes to Skip's libraries while working on an app - such as by improving [SkipUI](/docs/modules/skip-ui/) or [SkipFuseUI](/docs/modules/skip-fuse-ui/) and exercising your changes with its [Showcase app](/docs/samples/skipapp-showcase/) - you will want to configure Xcode to use local library versions rather than the current Skip distributions. This is easily accomplished with an Xcode Workspace.
 
 1. Clone the [repositories](https://github.com/skiptools) you'd like to work on. We find it most convenient to make the clone directory a peer of your app directory.
 
@@ -62,20 +62,19 @@ Most contributions to the libraries, whether they are [Core Frameworks](/docs/mo
 
 Some improvements to `SkipUI`, such as fixing bugs with Compose implementations, can be done in just the [`skip-ui`](https://github.com/skiptools/skip-ui) repository. But if the improvement involves additional API that is being made available or any other changes to the `SwiftUI` surface, and PRs will need to be paired with a PR against the [`skip-fuse-ui`](https://github.com/skiptools/skip-fuse-ui) repository.
 
-In addition, when adding new features or otherwise changing behavior, it is always good to test it out in the Showcase apps, both the [`skipapp-showcase`](https://github.com/skiptools/skipapp-showcase) Skip Lite app and the equivalent [`skipapp-showcase-fuse`](https://github.com/skiptools/skipapp-showcase-fuse) app. This both serves as a way to test out your new feature, ensure that it doesn't break anything else, and provide a demonstration for other developers of how your improvement works.
+In addition, when adding new features or otherwise changing behavior, it is always good to test it out in the [`skipapp-showcase`](https://github.com/skiptools/skipapp-showcase) app, which can run in either Skip Lite or Skip Fuse mode. This both serves as a way to test out your new feature, ensure that it doesn't break anything else, and provide a demonstration for other developers of how your improvement works.
 
 So a sample workflow making a contribution would look like this:
 
 1. Fork SkipUI: [https://github.com/skiptools/skip-ui/fork](https://github.com/skiptools/skip-ui/fork)
 2. Fork SkipFuseUI: [https://github.com/skiptools/skip-fuse-ui/fork](https://github.com/skiptools/skip-fuse-ui/fork)
-3. Fork Showcase Lite: [https://github.com/skiptools/skipapp-showcase/fork](https://github.com/skiptools/skipapp-showcase/fork)
-4. Fork Showcase Fuse: [https://github.com/skiptools/skipapp-showcase-fuse/fork](https://github.com/skiptools/skipapp-showcase-fuse/fork)
-5. Clone each of the forked repositories to a local folder
-6. Create an Xcode workspace that incorporates both the `skip-ui` and `skip-fuse-ui` packages as well as the `skipapp-showcase/Darwin/Showcase.xcodeproj` and `skipapp-showcase-fuse/Darwin/ShowcaseFuse.xcodeproj` projects
-7. Run each of the `ShowcaseLite App` and `ShowcaseFuse App` targets to ensure they work
-8. Start implementing changes to `SkipUI`, testing them out by launching the `ShowcaseLite App` target
-9. When you are happy with the changes, begin implementing the equivalent functionality in the `SkipFuseUI` module, and test those out by launching the `ShowcaseFuse App` target
-10. When everything is working, push your changes to your local forks and submit 4 separate PRs to each of the upstream repositories.
+3. Fork Showcase: [https://github.com/skiptools/skipapp-showcase/fork](https://github.com/skiptools/skipapp-showcase/fork)
+4. Clone each of the forked repositories to a local folder
+5. Create an Xcode workspace that incorporates both the `skip-ui` and `skip-fuse-ui` packages as well as the `skipapp-showcase/Darwin/Showcase.xcodeproj` project
+6. Run both the `ShowcaseLite App` and `ShowcaseFuse App` targets to ensure they work
+7. Start implementing changes to `SkipUI`, testing them out by launching the `ShowcaseLite App` target
+8. When you are happy with the changes, begin implementing the equivalent functionality in the `SkipFuseUI` module, and test those out by launching the `ShowcaseFuse App` target
+9. When everything is working, push your changes to your local forks and submit PRs to each of the upstream repositories.
 
 :::note
 If the PRs involve changing the API surface (including removing `@unavailable` annotations), then the CI will likely fail on everything except the `SkipUI` changes due to the fact that the other packages are only built against the most recent release tags of `SkipUI` rather than the `main` branch. That's OK: when the PRs are reviewed, they will all be reviewed together and once merged and included in a new release, the CI will become green again.
@@ -87,8 +86,7 @@ An example of a series of pull requests that demonstrates the workflow of adding
 
 1. Add `View.contextMenu` modifier: https://github.com/skiptools/skip-ui/pull/356
 2. Support `View.contextMenu` modifier: https://github.com/skiptools/skip-fuse-ui/pull/93
-3. Add ContextMenuPlayground to demonstrate SkipUI `View.contextMenu`: https://github.com/skiptools/skipapp-showcase/pull/74
-4. Add ContextMenuPlayground to demonstrate SkipFuseUI `View.contextMenu`: https://github.com/skiptools/skipapp-showcase-fuse/pull/50
+3. Add ContextMenuPlayground to demonstrate `View.contextMenu`: https://github.com/skiptools/skipapp-showcase/pull/74
 
 
 ## Integration Frameworks

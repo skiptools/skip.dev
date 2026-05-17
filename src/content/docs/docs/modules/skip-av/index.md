@@ -268,7 +268,7 @@ Support levels:
       </td>
     </tr>
     <tr>
-      <td>🟠</td>
+      <td>🟡</td>
       <td>
           <details>
               <summary><code>AVPlayer</code></summary>
@@ -279,6 +279,21 @@ Support levels:
                   <li><code>func play()</code></li>
                   <li><code>func pause()</code></li>
                   <li><code>func seek(to time: CMTime)</code></li>
+                  <li><code>func seek(to time: CMTime, completionHandler: @escaping (Bool) -&gt; Void)</code></li>
+                  <li><code>func seek(to time: CMTime, toleranceBefore: CMTime, toleranceAfter: CMTime)</code></li>
+                  <li><code>func seek(to time: CMTime, toleranceBefore: CMTime, toleranceAfter: CMTime, completionHandler: @escaping (Bool) -&gt; Void)</code></li>
+                  <li><code>func currentTime() -&gt; CMTime</code></li>
+                  <li><code>func replaceCurrentItem(with item: AVPlayerItem?)</code></li>
+                  <li><code>var currentItem: AVPlayerItem?</code></li>
+                  <li><code>var volume: Float</code></li>
+                  <li><code>var rate: Float</code></li>
+                  <li><code>var isMuted: Bool</code></li>
+                  <li><code>var status: AVPlayer.Status</code></li>
+                  <li><code>var error: Error?</code></li>
+                  <li><code>var actionAtItemEnd: AVPlayer.ActionAtItemEnd</code></li>
+                  <li><code>var automaticallyWaitsToMinimizeStalling: Bool</code></li>
+                  <li><code>var timeControlStatus: AVPlayer.TimeControlStatus</code></li>
+                  <li><code>var reasonForWaitingToPlay: AVPlayer.WaitingReason?</code></li>
               </ul>
           </details> 
       </td>
@@ -290,6 +305,45 @@ Support levels:
               <summary><code>AVPlayerItem</code></summary>
               <ul>
                   <li><code>init(url: URL)</code></li>
+                  <li><code>init(asset: AVAsset)</code></li>
+                  <li><code>var asset: AVAsset</code></li>
+                  <li><code>var duration: CMTime</code></li>
+              </ul>
+          </details> 
+      </td>
+    </tr>
+   <tr>
+      <td>🟠</td>
+      <td>
+          <details>
+              <summary><code>AVAsset</code></summary>
+              <ul>
+                  <li><code>init(url: URL)</code></li>
+                  <li><code>var url: URL?</code></li>
+                  <li><code>var duration: CMTime</code></li>
+              </ul>
+          </details> 
+      </td>
+    </tr>
+   <tr>
+      <td>🟢</td>
+      <td>
+          <details>
+              <summary><code>CMTime</code> / <code>CMTimeRange</code></summary>
+              <ul>
+                  <li><code>init(value: CMTimeValue, timescale: CMTimeScale)</code></li>
+                  <li><code>init(seconds: Double, preferredTimescale: CMTimeScale)</code></li>
+                  <li><code>init(value: CMTimeValue, timescale: CMTimeScale, flags: CMTimeFlags, epoch: CMTimeEpoch)</code></li>
+                  <li><code>var seconds: Double</code></li>
+                  <li><code>var isValid: Bool</code></li>
+                  <li><code>var isIndefinite: Bool</code></li>
+                  <li><code>var isPositiveInfinity: Bool</code></li>
+                  <li><code>var isNegativeInfinity: Bool</code></li>
+                  <li><code>var isNumeric: Bool</code></li>
+                  <li><code>static let zero, invalid, indefinite, positiveInfinity, negativeInfinity</code></li>
+                  <li><code>CMTimeGetSeconds, CMTimeMake, CMTimeMakeWithSeconds, CMTimeAdd, CMTimeSubtract, CMTimeCompare, CMTimeMinimum, CMTimeMaximum</code></li>
+                  <li><code>CMTimeRange { start, duration, end, containsTime }</code></li>
+                  <li><code>CMTimeRangeMake, CMTimeRangeGetEnd, CMTimeRangeContainsTime</code></li>
               </ul>
           </details> 
       </td>

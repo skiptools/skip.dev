@@ -61,6 +61,9 @@ async function processRepositories() {
 
       content = content.replace(/\]\(https:\/\/source\.skip\.dev\/(skipapp-[^\/]+)[\/]?\)/g, "](/docs/samples/$1)");
 
+      // skipapp-showcase-fuse has been consolidated into skipapp-showcase; redirect site paths to the canonical one
+      content = content.replaceAll('/docs/samples/skipapp-showcase-fuse', '/docs/samples/skipapp-showcase');
+
       // trim everything after the repo license
       content = content.replace(/## License[\s\S]*/i, '');
 

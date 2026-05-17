@@ -42,11 +42,12 @@ See the `Package.swift` files in the
 | `SkipFirebaseRemoteConfig` | ~70% | `fetch`/`activate`/`fetchAndActivate`, `ensureInitialized`, value retrieval, keys-by-prefix, `RemoteConfigSettings` (intervals + timeout), defaults, `RemoteConfigValue` (string/bool/number/data/json/source) | `addOnConfigUpdateListener` (real-time config updates), `setCustomSignals` |
 | `SkipFirebaseAppCheck` | ~60% | Token retrieval (`token(forcingRefresh:)`, `limitedUseToken`), token-change listener bridged through `NotificationCenter`, debug provider factory, `AppCheckErrorCode` | iOS-only `DeviceCheckProviderFactory`/`AppAttestProviderFactory` (no Android equivalent), custom `AppCheckProvider` implementations |
 | `SkipFirebaseCrashlytics` | ~75% | `log`, `setCustomValue`/`setCustomKeysAndValues`, `setUserID`, `didCrashDuringPreviousExecution`, `checkForUnsentReports`/`sendUnsentReports`/`deleteUnsentReports`, `record(error:userInfo:)`, `recordExceptionModel`, `FIRExceptionModel`/`FIRStackFrame` | `logWithFormat` and `checkAndUpdateUnsentReports` are marked `@available(*, unavailable)`; no per-`FirebaseApp` instance accessor |
-| `SkipFirebaseFunctions` | ~45% | Default/regional/emulator instance, `httpsCallable(_:)`, completion-based `call`, automatic Kotlin→Swift result conversion via `deepSwift` | `async`/`await` `call` signatures, streaming RPCs, per-call options (`HTTPSCallableOptions`), explicit call timeouts |
+| `SkipFirebaseFunctions` | ~75% | Default/regional/emulator instance, `httpsCallable(_:)` and `httpsCallable(_:options:)` (name and URL-based), `HTTPSCallableOptions` with `requireLimitedUseAppCheckTokens`, `async`/`await` `call`, completion-based `call`, `timeoutInterval`, automatic Kotlin→Swift result conversion via `deepSwift` | Streaming RPCs (`stream`), `Callable<Request, Response>` Codable wrapper, `customDomain`-based factory |
 | `SkipFirebaseDatabase` | ~5% | `Database.database()` / `Database.database(app:)` singleton accessors | Effectively the entire API: `DatabaseReference`, `child`/`push`/`setValue`/`updateChildValues`/`removeValue`, `observe`/`observeSingleEvent`, queries, `DataSnapshot`, `ServerValue`, online/offline toggle |
-| `SkipFirebaseInstallations` | ~20% | Singleton accessor, `installationID()` | `authTokenForcingRefresh`, `delete()`, `installationIDDidChangeNotification` |
+| `SkipFirebaseInstallations` | ~75% | Singleton accessor (`installations()`/`installations(app:)`), `installationID()`, `authToken()`, `authTokenForcingRefresh(_:)`, `delete()`, `InstallationsAuthTokenResult` (`authToken`, `expirationDate`) | `installationIDDidChangeNotification`, per-`FirebaseApp` notification keys |
+| `SkipFirebasePerformance` | ~65% | `Performance.sharedInstance()`, `isDataCollectionEnabled`, `trace(name:)`, `HTTPMetric(url:httpMethod:)`, full `Trace` API (start/stop, `incrementMetric`, `valueForMetric`, attributes), full `HTTPMetric` API (start/stop, `responseCode`, payload sizes, content type, attributes), `HTTPMethod` enum | `isInstrumentationEnabled` (no Android equivalent, marked unavailable), `Performance.startTrace(name:)` static convenience, per-`FirebaseApp` instance accessor |
 
-**Overall coverage across the twelve modules: roughly 60% of the iOS API surface.** The most production-used modules — Core, Firestore, Auth, Storage, Messaging, Analytics, Crashlytics, and RemoteConfig — sit in the 60–80% range and cover the standard read/write/sign-in/log/notify paths. `SkipFirebaseDatabase` (Realtime Database) and `SkipFirebaseInstallations` are mostly stubs.
+**Overall coverage across the fourteen modules: roughly 60% of the iOS API surface.** The most production-used modules — Core, Firestore, Auth, Storage, Messaging, Analytics, Crashlytics, and RemoteConfig — sit in the 60–80% range and cover the standard read/write/sign-in/log/notify paths. `SkipFirebaseDatabase` (Realtime Database) is mostly a stub.
 
 ### What is working well
 
@@ -61,14 +62,14 @@ See the `Package.swift` files in the
 - **Realtime Database** (`SkipFirebaseDatabase`) is currently only a stub. `DatabaseReference`, `observe`/`observeSingleEvent`, queries, and writes have not been bridged. Apps that rely on the Realtime Database should use Firestore instead or contribute the missing wrappers.
 - **Phone-number authentication and multi-factor flows** in `SkipFirebaseAuth` are not bridged. Apps requiring SMS verification or MFA need to drop into `#if SKIP` blocks and call the Android Firebase SDK directly.
 - **`runTransaction`** in Firestore is not implemented — the `Transaction` class is currently a passthrough wrapper with no operations. Multi-document atomic reads-then-writes need to be expressed as `WriteBatch` commits or as Kotlin-side code today.
-- **`SkipFirebaseFunctions`** lacks `async`/`await` call signatures, streaming RPCs, and per-call options. Only completion-based callback calls are supported.
+- **`SkipFirebaseFunctions`** does not support streaming RPCs (`stream`). The Firebase Android SDK has no SSE/streaming equivalent to the iOS `AsyncThrowingStream`-based `stream` API — Android Functions calls are always one-shot request/response. Any code that iterates over `.stream(...)` on iOS will not compile on Android. The `Callable<Request, Response>` Codable convenience wrapper is also not bridged; use `call(_ data: Any?)` directly and decode the result manually on Android.
 - **`SkipFirebaseRemoteConfig`** does not yet expose `addOnConfigUpdateListener` (real-time config updates) or custom signals.
 - **`SkipFirebaseAppCheck`** ships only the `Debug` provider factory; custom provider implementations are not yet bridgeable.
-- **`SkipFirebaseInstallations`** is essentially a no-op beyond fetching the installation ID.
+- **`SkipFirebaseInstallations`** cannot bridge the `InstallationIDDidChange` notification or the `InstallationIDDidChangeAppNameKey` userInfo key. The Firebase Android SDK has no equivalent push-notification mechanism for installation ID changes — it exposes no broadcast, callback, or listener that fires when the ID rotates. As a result, any code that observes `NotificationCenter.default.publisher(for: .InstallationIDDidChange)` on iOS will compile on Android but never receive an event. If your app relies on this to, for example, re-upload the installation ID to your backend after it changes, you will need an alternative strategy on Android (such as fetching the ID on every app foreground, or polling after Firebase SDK upgrades).
 
 ### Firebase modules not yet wrapped
 
-The following Firebase iOS SDK products do not yet have a `SkipFirebase*` counterpart in this package: `FirebaseABTesting`, `FirebaseAI` / Vertex AI, `FirebaseAppDistribution`, `FirebaseDataConnect`, `FirebaseDynamicLinks` (deprecated upstream), `FirebaseInAppMessaging`, `FirebaseMLModelDownloader`, and `FirebasePerformance`. Pull requests adding any of these are welcome.
+The following Firebase iOS SDK products do not yet have a `SkipFirebase*` counterpart in this package: `FirebaseABTesting`, `FirebaseAI` / Vertex AI, `FirebaseAppDistribution`, `FirebaseDataConnect`, `FirebaseDynamicLinks` (deprecated upstream), `FirebaseInAppMessaging`, and `FirebaseMLModelDownloader`. Pull requests adding any of these are welcome.
 
 <!--
 An example of a Skip Lite app projects using the `Firestore` API at the model layer and the `Messaging` API at the app layer can be seen from the command:
@@ -422,6 +423,7 @@ import SkipFirebaseMessaging
 import SkipFirebaseCrashlytics
 import SkipFirebaseRemoteConfig
 import SkipFirebaseInstallations
+import SkipFirebasePerformance
 
 let appName = "myapp"
 let options = FirebaseOptions(googleAppID: "1:GCM:ios:HASH", gcmSenderID: "GCM")

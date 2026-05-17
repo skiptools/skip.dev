@@ -1,11 +1,8 @@
 # PROVENANCE
-# - Skip-built: official Skip team app — repo skiptools/skipapp-showcase-fuse
-#   https://github.com/skiptools/skipapp-showcase-fuse
-# - Skip mode: SkipFuse — repo name itself ends in "-fuse" (the "-fuse" suffix
-#   is the canonical signal that an App Fair / skiptools sample is the
-#   native-Fuse variant of the app, paired with `skipapp-showcase` for Lite).
-#   The Play Store package `org.appfair.app.Showcase` corresponds to the Fuse
-#   build.
+# - Skip-built: official Skip team app — repo skiptools/skipapp-showcase
+#   https://github.com/skiptools/skipapp-showcase
+# - Skip mode: SkipFuse — the Play Store package `org.appfair.app.Showcase`
+#   corresponds to the Fuse build.
 name: Skip Showcase
 developer: The App Fair Project Inc
 tagline: Interactive SwiftUI catalog for iOS and Android
@@ -26,7 +23,7 @@ icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7a/cd/b1/7acdb15b-3b
 links:
   appStore: https://apps.apple.com/us/app/skip-showcase/id6474885022
   playStore: https://play.google.com/store/apps/details?id=org.appfair.app.Showcase
-  source: https://github.com/skiptools/skipapp-showcase-fuse
+  source: https://github.com/skiptools/skipapp-showcase
 ratings:
   appStore:
     score: 5.0

@@ -70,7 +70,7 @@ On Android, however, the `SkipFuseUI` module bridges the SwiftUI API onto [Jetpa
 
 ![Diagram of Skip's Swift-on-Android build process](https://assets.skip.dev/diagrams/skip-diagrams-skip-fuse-ui-bridge.svg)
 
-Consult the `SkipUI` module's [documentation](/docs/modules/skip-ui/#supported-swiftui) for a listing of currently-supported SwiftUI constructs on Android. You can also examine the [ShowcaseFuse](https://github.com/skiptools/skipapp-showcase-fuse/tree/main/Sources/ShowcaseFuse) cross-platform sample app, which displays and exercises most supported SwiftUI components:
+Consult the `SkipUI` module's [documentation](/docs/modules/skip-ui/#supported-swiftui) for a listing of currently-supported SwiftUI constructs on Android. You can also examine the [Showcase](https://github.com/skiptools/skipapp-showcase) cross-platform sample app, which displays and exercises most supported SwiftUI components:
 
 <div class="centered">
 <img src="https://assets.skip.dev/videos/showcase.gif" alt="Screen recording" style="max-width: 600px"/>
@@ -157,7 +157,7 @@ Skip's unique ability to directly call both Swift and Kotlin/Java APIs separates
 
 ### Skip Showcase
 
-As a demonstration and validation of this technology, we have published one of our sample apps, [Skip Showcase](https://github.com/skiptools/skipapp-showcase-fuse), to both the Google Play Store and Apple App Store. This fully native Swift app demonstrates parity between SwiftUI components on iOS and Android.
+As a demonstration and validation of this technology, we have published one of our sample apps, [Skip Showcase](https://github.com/skiptools/skipapp-showcase), to both the Google Play Store and Apple App Store. This fully native Swift app demonstrates parity between SwiftUI components on iOS and Android.
 
 <div align="center">
   <a href="https://play.google.com/store/apps/details?id=org.appfair.app.Showcase" style="display: inline-block;"><img src="https://appfair.org/assets/badges/google-play-store.svg" alt="Download on the Google Play Store" style="height: 60px; vertical-align: middle; object-fit: contain;"></a>

@@ -37,7 +37,7 @@ As mentioned, Skip is currently using our own preview release build of this SDK 
 
 Note that this SDK is not just theoretical, but is in active use _today_ in many Skip-powered applications. Our own Skip Showcase[^showcase] app has been running using this SDK, and provides a comprehensive sample of what is possible when you combine native Swift with Skip's SwiftUI implementation for Android.
 
-[^showcase]: Skip Showcase [/docs/samples/skipapp-showcase-fuse/](/docs/samples/skipapp-showcase-fuse/)
+[^showcase]: Skip Showcase [/docs/samples/skipapp-showcase/](/docs/samples/skipapp-showcase/)
 
 ## The Future for Swift on Android
 

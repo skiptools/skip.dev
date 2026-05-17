@@ -39,7 +39,7 @@ This is not a small thing. It removes the single largest concern we have heard f
 
 ### Skip Fuse on the official SDK
 
-We have already transitioned Skip's native Fuse mode to the final 6.3 SDK, and the [Skip Showcase](https://github.com/skiptools/skipapp-showcase-fuse) app built on this toolchain has been published to both the Google Play Store and the Apple App Store.
+We have already transitioned Skip's native Fuse mode to the final 6.3 SDK, and the [Skip Showcase](https://github.com/skiptools/skipapp-showcase) app built on this toolchain has been published to both the Google Play Store and the Apple App Store.
 
 <div align="center">
   <a href="https://assets.skip.dev/screens/swift-sdk-for-android-in-action-showcase.png" target="_blank"><img alt="Screenshot of Skip Showcase native app" src="https://assets.skip.dev/screens/swift-sdk-for-android-in-action-showcase.png" style="width: 100%; max-width: 1200px;" /></a>

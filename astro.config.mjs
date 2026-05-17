@@ -16,6 +16,9 @@ import { coreFrameworks, platformFrameworks, integrationFrameworks, sampleApps }
 export default defineConfig({
   site: 'https://skip.dev',
   //trailingSlash: 'always', // aspirational
+  redirects: {
+    '/docs/samples/skipapp-showcase-fuse': '/docs/samples/skipapp-showcase',
+  },
   markdown: {
     remarkPlugins: [remarkHeadingId],
     rehypePlugins: [[rehypeExternalLinks, {

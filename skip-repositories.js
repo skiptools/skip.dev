@@ -46,8 +46,7 @@ export const integrationFrameworks = [
 ];
 
 export const sampleApps = [
-  { repo: 'skipapp-showcase-fuse', name: 'Showcase (Fuse)' },
-  { repo: 'skipapp-showcase', name: 'Showcase (Lite)' },
+  { repo: 'skipapp-showcase', name: 'Showcase' },
   { repo: 'skipapp-hello', name: 'Hello Skip (Lite)' },
   { repo: 'skipapp-howdy', name: 'Howdy Skip (Fuse)' },
   { repo: 'skipapp-ahoy', name: 'Ahoy Skipper (Split Fuse)' },

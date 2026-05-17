@@ -3234,7 +3234,7 @@ Other forms of contributions such as test cases, comments, and documentation are
 
 ## Tests
 
-The most common way to test SkipUI's support for a SwiftUI component is through the [Skip Showcase](/docs/samples/skipapp-showcase) and [Skip Showcase Fuse](/docs/samples/skipapp-showcase-fuse) apps. Whenever you add or update support for a visible element of SwiftUI, make sure there is a showcase view that exercises the element. This not only gives us a mechanism to test appearance and behavior, but the showcase app becomes a demonstration of supported SwiftUI components on Android over time.
+The most common way to test SkipUI's support for a SwiftUI component is through the [Skip Showcase](/docs/samples/skipapp-showcase) and [Skip Showcase Fuse](/docs/samples/skipapp-showcase) apps. Whenever you add or update support for a visible element of SwiftUI, make sure there is a showcase view that exercises the element. This not only gives us a mechanism to test appearance and behavior, but the showcase app becomes a demonstration of supported SwiftUI components on Android over time.
 
 ## Implementation Strategy
 
