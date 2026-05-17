@@ -7,7 +7,7 @@
 #   `mode: 'transpiled'`, and the Package.swift does not depend on
 #   skip-fuse or skip-fuse-ui.
 name: Fair Games
-developer: The App Fair Project Inc
+developer: The App Fair Project
 tagline: Six classic puzzle and arcade games in one app
 description: |
   Fair Games is a free, open-source collection of six classic puzzle and arcade games: Block Blast, Sirtet (a falling-block game), Flappy Bird, Breakout, Sudoku, and 2048. Each game ships with haptic feedback, high score tracking, auto-save, and a dark theme designed for comfortable play.

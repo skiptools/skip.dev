@@ -8,7 +8,7 @@
 #   bridge) rather than `skip-fuse-ui`. Web-view content is bridged through
 #   `skip-web` in transpiled-Swift.
 name: Net Skip
-developer: The App Fair Project Inc
+developer: The App Fair Project
 tagline: A minimalist, ad-free, tracking-free web browser
 description: |
   Net Skip is a minimal and tasteful web browser focused on speed and privacy. With no ads, no tracking, and no telemetry, the browser delivers a fast, distraction-free browsing experience on both iOS and Android.

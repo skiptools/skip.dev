@@ -10,7 +10,7 @@
 #   transpiled-Swift and natively-compiled Swift. The README explicitly
 #   names this the SkipBridge demo app.
 name: Skip Notes
-developer: The App Fair Project Inc
+developer: The App Fair Project
 tagline: Secure on-device notes, demonstrating SkipBridge
 description: |
   Skip Notes is a simple, secure note-taking app that keeps your notes encrypted on-device. The app demonstrates SkipBridge — Skip's bidirectional Swift/Kotlin bridging system — by sharing a Swift model layer between a SwiftUI iOS app and a Jetpack Compose Android UI.

@@ -10,7 +10,7 @@
 #   in as a Kotlin Gradle dependency on the Android side and as the Swift
 #   `swift-toolkit` package on iOS.
 name: Stanza Redux
-developer: The App Fair Project Inc
+developer: The App Fair Project
 tagline: A free open-source ebook reader for iOS and Android
 description: |
   Stanza Redux is a free, open-source EPUB reader that brings your ebook library to life on both iOS and Android. Import books from your device, browse and download titles from public-domain catalogs like Standard Ebooks and Project Gutenberg, and read with customizable typography, themes, and bookmarks.

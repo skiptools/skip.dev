@@ -4,7 +4,7 @@
 # - Skip mode: SkipFuse — the Play Store package `org.appfair.app.Showcase`
 #   corresponds to the Fuse build.
 name: Skip Showcase
-developer: The App Fair Project Inc
+developer: The App Fair Project
 tagline: Interactive SwiftUI catalog for iOS and Android
 description: |
   Skip Showcase is an interactive catalog of SwiftUI components built with Skip — the cross-platform tool that lets a single Swift codebase ship as native apps on both iOS and Android. On iOS the app runs as a normal SwiftUI app; on Android the same Swift source compiles with the official Swift Android SDK while SkipUI translates SwiftUI views into Jetpack Compose.
