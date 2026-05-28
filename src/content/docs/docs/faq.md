@@ -54,6 +54,10 @@ Skip does have limited support for Linux (and Windows via WSL). The `skip` tool 
 
 Earlier, Skip would require a license key for non-commercial app development. No longer: Skip is now completely free and open-source, but please do consider [supporting](/sponsor/) the project.
 
+### How can I change or cancel my sponsorship? {#manage_sponsorship}
+
+Visit the [Manage Your Sponsorship](/sponsor/manage/) page to update your payment details, view past invoices, change your tier, or cancel your sponsorship. Individual sponsorships are managed through GitHub Sponsors, and the corporate tiers are managed through the Stripe billing portal.
+
 ### Which FOSS license is recommended for framework development? {#foss_license_recommendations}
 
 The standard license for all Skip libraries is the [Mozilla Public License 2.0 (MPL-2.0)](https://www.mozilla.org/MPL/). The MPL provides a good balance of flexibility and freedom: MPL-licensed libraries can be embedded in closed-source commercial applications, and the license's file-level copyleft is straightforward for developers to comply with.

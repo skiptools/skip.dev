@@ -10,111 +10,72 @@ This sample app is available at [github.com/skiptools/skipapp-hiya](https://gith
 :::
 
 
-This is a Skip dual-platform app project
-that demonstrates the integration between a native Swift model
-layer compiled for Android connected to a transpiled SwiftUI
-user interface. For more information on using natively-compiled
-Swift on Android, see the
-[native swift documentation](/docs/native).
+This is a Skip dual-platform sample app: from a single Swift
+and SwiftUI codebase it builds a native app for both iOS and Android. `HiyaSkip`
+demonstrates a **mixed-mode** app that connects a natively-compiled Swift model
+to a transpiled SwiftUI user interface. It contains three modules:
 
-This is the exact project with will be output when running the command:
+1. `HiyaSkip` — the SwiftUI app, **transpiled** to Jetpack Compose on Android (Skip Lite).
+2. `HiyaSkipModel` — an `@Observable` model layer, **compiled natively** for both platforms (Skip Fuse). It is used directly on iOS, and on Android it is bridged to the transpiled UI via [SkipFuse](/docs/modules/skip-fuse) and [SkipBridge](/docs/modules/skip-bridge).
+3. `HiyaSkipLogic` — a pure-Swift, cross-platform module (no bridging) that `HiyaSkipModel` depends on.
 
-```
-skip init --native-model --appid=hiya.skip skipapp-hiya HiyaSkip HiyaSkipModel HiyaSkipLogic
-```
+See the [native Swift on Android](/docs/native) documentation for
+more on natively-compiled modules.
 
-The package will contain three modules:
+It is one of four Skip sample apps that share the same
+[conventional Skip app project layout](/docs/project-types/#samples)
+but differ in their module structure and Skip mode, as shown below.
 
-1. A top-level `HiyaSkip` target that uses SwiftUI that will be transpiled to Jetpack Compose on Android to make up the user interface portion of the app
-2. A `HiyaSkipModel` model layer that will be compiled natively for both Android and iOS. It contains an `@Observable ViewModel` that will be used directly on iOS, and on Android will be bridged to the transpiled user-interface layer using [SkipFuse](/docs/modules/skip-fuse) and [SkipBridge](/docs/modules/skip-bridge).
-3. A pure swift cross-platform `HiyaSkipLogic` module that does not use any bridging, and is depended on by `HiyaSkipModel`
+## The sample apps
 
+| Sample | Modules | Skip mode |
+| --- | --- | --- |
+| [skipapp-hello](/docs/samples/skipapp-hello) | `HelloSkip` | fully transpiled — Skip Lite |
+| [skipapp-howdy](/docs/samples/skipapp-howdy) | `HowdySkip` | fully native — Skip Fuse |
+| [skipapp-ahoy](/docs/samples/skipapp-ahoy) | `AhoySkipper`, `SkipperModel` | fully native — Skip Fuse |
+| [skipapp-hiya](/docs/samples/skipapp-hiya) | `HiyaSkip`, `HiyaSkipModel`, `HiyaSkipLogic` | mixed — native model bridged to a transpiled UI |
 
-The project structure looks like:
+In **transpiled** ("Skip Lite") modules, Swift is converted to Kotlin and
+SwiftUI to Jetpack Compose. In **native** ("Skip Fuse") modules, Swift is
+compiled directly for Android with the Swift toolchain and bridged to
+Kotlin/Jetpack Compose; see [Native and Transpiled Modes](/docs/modes/)
+for the distinction. `skipapp-hello`, `skipapp-ahoy`, and `skipapp-hiya` include
+unit tests that run on both platforms; `skipapp-howdy` omits them.
 
-```
-skipapp-hiya/
-├── Android
-│   ├── app
-│   │   ├── build.gradle.kts
-│   │   ├── proguard-rules.pro
-│   │   └── src
-│   │       └── main
-│   │           ├── AndroidManifest.xml
-│   │           └── kotlin
-│   │               └── hiya
-│   │                   └── skip
-│   │                       └── Main.kt
-│   ├── gradle.properties
-│   └── settings.gradle.kts
-├── Darwin
-│   ├── Assets.xcassets
-│   │   ├── AccentColor.colorset
-│   │   │   └── Contents.json
-│   │   └── Contents.json
-│   ├── Entitlements.plist
-│   ├── HiyaSkip.xcconfig
-│   ├── HiyaSkip.xcodeproj
-│   │   └── project.pbxproj
-│   ├── Info.plist
-│   └── Sources
-│       └── HiyaSkipAppMain.swift
-├── Package.swift
-├── README.md
-├── Skip.env
-├── Sources
-│   ├── HiyaSkip
-│   │   ├── ContentView.swift
-│   │   ├── HiyaSkipApp.swift
-│   │   ├── Resources
-│   │   │   ├── Localizable.xcstrings
-│   │   │   └── Module.xcassets
-│   │   │       └── Contents.json
-│   │   └── Skip
-│   │       └── skip.yml
-│   ├── HiyaSkipLogic
-│   │   └── HiyaSkipLogic.swift
-│   └── HiyaSkipModel
-│       ├── Resources
-│       │   └── Localizable.xcstrings
-│       ├── Skip
-│       │   └── skip.yml
-│       └── ViewModel.swift
-└── Tests
-    ├── HiyaSkipModelTests
-    │   ├── HiyaSkipModelTests.swift
-    │   ├── Resources
-    │   │   └── TestData.json
-    │   ├── Skip
-    │   │   └── skip.yml
-    │   └── XCSkipTests.swift
-    └── HiyaSkipTests
-        ├── HiyaSkipTests.swift
-        ├── Resources
-        │   └── TestData.json
-        ├── Skip
-        │   └── skip.yml
-        └── XCSkipTests.swift
+## Re-creating this project
+
+This repository is exactly what `skip init` produces — its CI verifies that it
+stays identical to the generated template — so it can be re-created with:
 
 ```
-
-
+skip init --no-build --native-model --module-tests --appid=hiya.skip --version 1.0.0 skipapp-hiya HiyaSkip HiyaSkipModel HiyaSkipLogic
+```
 
 ## Building
 
-This project is both a stand-alone Swift Package Manager module,
-as well as an Xcode project that builds and translates the project
-into a Kotlin Gradle project for Android using the skipstone plugin.
+This project is both a stand-alone Swift Package Manager package and an Xcode
+project that builds the iOS app and, using the skipstone plugin, generates and
+builds the equivalent Kotlin Gradle project for Android.
 
 ## Testing
 
-The module can be tested using the standard `swift test` command
-or by running the test target for the macOS destination in Xcode,
-which will run the Swift tests as well as the transpiled
-Kotlin JUnit tests in the Robolectric Android simulation environment.
+The app can be tested with the standard `swift test` command, or by running the
+test target for the macOS destination in Xcode, which runs the Swift tests as
+well as the transpiled Kotlin JUnit tests in the Robolectric Android simulation
+environment. Parity testing can be performed with `skip test`, which outputs a
+table comparing the test results on both platforms.
 
-Parity testing can be performed with `skip test`,
-which will output a table of the test results for both platforms.
+## Running
+
+Xcode and Android Studio must both be installed to run the app in the iOS
+simulator and the Android emulator. Start an Android emulator first (for example,
+from Android Studio's Device Manager).
+
+Open `Project.xcworkspace` in Xcode and run the "HiyaSkip App" scheme. A build
+phase runs the "Launch Android APK" script, which deploys the app to a running
+Android emulator or connected device alongside the iOS build. iOS logs appear in
+the Xcode console; Android logs appear in Android Studio's Logcat tab (or via
+`adb logcat`).
 
 ## Contributing
 
@@ -128,17 +89,3 @@ The general flow for contributing to this and any other Skip package is:
 4. Push your changes to your fork and ensure the CI checks all pass in the Actions tab
 5. Add your name to the Skip [Contributor Agreement](https://source.skip.dev/clabot-config)
 6. Open a Pull Request from your fork with a description of your changes
-
-## Running
-
-Xcode and Android Studio must be downloaded and installed in order to
-run the app in the iOS simulator / Android emulator.
-An Android emulator must already be running, which can be launched from 
-Android Studio's Device Manager.
-
-To run both the Swift and Kotlin apps simultaneously, 
-launch the HiyaSkipApp target from Xcode.
-A build phases runs the "Launch Android APK" script that
-will deploy the transpiled app a running Android emulator or connected device.
-Logging output for the iOS app can be viewed in the Xcode console, and in
-Android Studio's logcat tab for the transpiled Kotlin app.

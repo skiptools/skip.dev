@@ -10,52 +10,77 @@ This sample app is available at [github.com/skiptools/skipapp-ahoy](https://gith
 :::
 
 
-This is a [Skip](https://skip.tools) dual-platform app project.
+This is a Skip dual-platform sample app: from a single Swift
+and SwiftUI codebase it builds a native app for both iOS and Android.
+`AhoySkipper` is a **natively-compiled** app ([Skip Fuse](/docs/modes/)
+mode) split into two modules — the `AhoySkipper` app and a separate
+`SkipperModel` model layer, both compiled natively for Android — with unit tests
+for each module.
 
+It is one of four Skip sample apps that share the same
+[conventional Skip app project layout](/docs/project-types/#samples)
+but differ in their module structure and Skip mode, as shown below.
 
-<!-- TODO: add iOS screenshots to fastlane metadata
-## iPhone Screenshots
+## The sample apps
 
-<img alt="iPhone Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Darwin/fastlane/screenshots/en-US/1_en-US.png" style="width: 18%" /> <img alt="iPhone Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Darwin/fastlane/screenshots/en-US/2_en-US.png" style="width: 18%" /> <img alt="iPhone Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Darwin/fastlane/screenshots/en-US/3_en-US.png" style="width: 18%" /> <img alt="iPhone Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Darwin/fastlane/screenshots/en-US/4_en-US.png" style="width: 18%" /> <img alt="iPhone Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Darwin/fastlane/screenshots/en-US/5_en-US.png" style="width: 18%" />
--->
+| Sample | Modules | Skip mode |
+| --- | --- | --- |
+| [skipapp-hello](/docs/samples/skipapp-hello) | `HelloSkip` | fully transpiled — Skip Lite |
+| [skipapp-howdy](/docs/samples/skipapp-howdy) | `HowdySkip` | fully native — Skip Fuse |
+| [skipapp-ahoy](/docs/samples/skipapp-ahoy) | `AhoySkipper`, `SkipperModel` | fully native — Skip Fuse |
+| [skipapp-hiya](/docs/samples/skipapp-hiya) | `HiyaSkip`, `HiyaSkipModel`, `HiyaSkipLogic` | mixed — native model bridged to a transpiled UI |
 
-<!-- TODO: add Android screenshots to fastlane metadata
-## Android Screenshots
+In **transpiled** ("Skip Lite") modules, Swift is converted to Kotlin and
+SwiftUI to Jetpack Compose. In **native** ("Skip Fuse") modules, Swift is
+compiled directly for Android with the Swift toolchain and bridged to
+Kotlin/Jetpack Compose; see [Native and Transpiled Modes](/docs/modes/)
+for the distinction. `skipapp-hello`, `skipapp-ahoy`, and `skipapp-hiya` include
+unit tests that run on both platforms; `skipapp-howdy` omits them.
 
-<img alt="Android Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Android/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" style="width: 18%" /> <img alt="Android Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Android/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" style="width: 18%" /> <img alt="Android Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Android/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" style="width: 18%" /> <img alt="Android Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Android/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" style="width: 18%" /> <img alt="Android Screenshot" src="https://raw.githubusercontent.com/skiptools/skipapp-ahoy/main/Android/fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" style="width: 18%" />
--->
+## Re-creating this project
+
+This repository is exactly what `skip init` produces — its CI verifies that it
+stays identical to the generated template — so it can be re-created with:
+
+```
+skip init --no-build --native-app --module-tests --appid=ahoy.skipper --version 1.0.0 skipapp-ahoy AhoySkipper SkipperModel
+```
 
 ## Building
 
-This project is both a stand-alone Swift Package Manager module,
-as well as an Xcode project that builds and translates the project
-into a Kotlin Gradle project for Android using the skipstone plugin.
-
-## Running
-
-Xcode and Android Studio must be downloaded and installed in order to
-run the app in the iOS simulator / Android emulator.
-An Android emulator must already be running, which can be launched from
-Android Studio's Device Manager.
-
-The project can be opened and run in Xcode from
-`Project.xcworkspace`, which also enabled parallel
-development of any Skip libary dependencies.
-
-To run both the Swift and Kotlin apps simultaneously,
-launch the "AhoySkipper App" target from Xcode.
-A build phases runs the "Launch Android APK" script that
-will deploy the Skip app to a running Android emulator or connected device.
-Logging output for the iOS app can be viewed in the Xcode console, and in
-Android Studio's logcat tab for the transpiled Kotlin app, or
-using `adb logcat` from a terminal.
+This project is both a stand-alone Swift Package Manager package and an Xcode
+project that builds the iOS app and, using the skipstone plugin, generates and
+builds the equivalent Kotlin Gradle project for Android.
 
 ## Testing
 
-The module can be tested using the standard `swift test` command
-or by running the test target for the macOS destination in Xcode,
-which will run the Swift tests as well as the transpiled
-Kotlin JUnit tests in the Robolectric Android simulation environment.
+The app can be tested with the standard `swift test` command, or by running the
+test target for the macOS destination in Xcode, which runs the Swift tests as
+well as the transpiled Kotlin JUnit tests in the Robolectric Android simulation
+environment. Parity testing can be performed with `skip test`, which outputs a
+table comparing the test results on both platforms.
 
-Parity testing can be performed with `skip test`,
-which will output a table of the test results for both platforms.
+## Running
+
+Xcode and Android Studio must both be installed to run the app in the iOS
+simulator and the Android emulator. Start an Android emulator first (for example,
+from Android Studio's Device Manager).
+
+Open `Project.xcworkspace` in Xcode and run the "AhoySkipper App" scheme. A build
+phase runs the "Launch Android APK" script, which deploys the app to a running
+Android emulator or connected device alongside the iOS build. iOS logs appear in
+the Xcode console; Android logs appear in Android Studio's Logcat tab (or via
+`adb logcat`).
+
+## Contributing
+
+We welcome contributions to this package in the form of enhancements and bug fixes.
+
+The general flow for contributing to this and any other Skip package is:
+
+1. Fork this repository and enable actions from the "Actions" tab
+2. Check out your fork locally
+3. When developing alongside a Skip app, add the package to a [shared workspace](/docs/contributing) to see your changes incorporated in the app
+4. Push your changes to your fork and ensure the CI checks all pass in the Actions tab
+5. Add your name to the Skip [Contributor Agreement](https://source.skip.dev/clabot-config)
+6. Open a Pull Request from your fork with a description of your changes

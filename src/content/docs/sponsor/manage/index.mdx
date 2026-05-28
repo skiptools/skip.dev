@@ -1,0 +1,57 @@
+---
+title: Manage Your Sponsorship
+description: Manage your Skip sponsorship — update payment, change tier, view invoices, or cancel.
+template: splash
+editUrl: false
+hero:
+  tagline: Update your payment details, change your tier, view past invoices, or cancel your sponsorship.
+---
+import SponsorCard from '../../../../components/SponsorCard.astro';
+
+<style>{`.sl-anchor-link { display: none; }`}</style>
+
+## Where to manage your sponsorship
+
+Where you manage your sponsorship depends on the tier you signed up under. If you are not sure which applies, the email receipts you received at sign-up indicate whether your sponsorship was processed by GitHub or Stripe.
+
+<div class="sponsor-grid">
+
+  <SponsorCard title="Individual Tier" icon="person" color="blue">
+    ### GitHub Sponsors
+
+    If you signed up for the **Individual** tier, your sponsorship is billed through GitHub Sponsors.
+
+    From the GitHub Sponsors page you can:
+    - Update your payment method
+    - View past sponsorship payments
+    - Change or cancel your sponsorship
+
+    <div class="sponsor-cta">
+      <a href="https://github.com/sponsors/skiptools" class="sponsor-button">
+        Manage on GitHub Sponsors
+      </a>
+    </div>
+  </SponsorCard>
+
+  <SponsorCard title="Corporate Tiers" icon="business" color="amber">
+    ### Stripe Billing Portal
+
+    If you signed up for the **Supporter**, **Ambassador**, or **Partner** tier, your sponsorship is billed through Stripe.
+
+    From the Stripe billing portal you can:
+    - Update your payment method and billing details
+    - Download past invoices
+    - Change or cancel your sponsorship
+
+    <div class="sponsor-cta">
+      <a href="https://billing.stripe.com/p/login/dRm6oH1pz6HnbxEfy0fAc00" class="sponsor-button">
+        Manage on Stripe
+      </a>
+    </div>
+  </SponsorCard>
+
+</div>
+
+## Need help?
+
+If you cannot locate your sponsorship, want to switch tiers, or have any other questions, contact us at [sponsor@skip.tools](mailto:sponsor@skip.tools) and we will be happy to help.

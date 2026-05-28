@@ -10,113 +10,69 @@ This sample app is available at [github.com/skiptools/skipapp-howdy](https://git
 :::
 
 
-This is a Skip dual-platform app project.
-It builds a native app for both iOS and Android.
+This is a Skip dual-platform sample app: from a single Swift
+and SwiftUI codebase it builds a native app for both iOS and Android. `HowdySkip`
+has a single module that is **compiled natively** for Android with the Swift
+toolchain rather than transpiled ([Skip Fuse](/docs/modes/)
+mode) — the native counterpart to the fully-transpiled
+[skipapp-hello](/docs/samples/skipapp-hello).
 
-This is a fully-native compiled Swift app, in contrast
-with the [skipapp-hello](/docs/samples/skipapp-hello)
-sample, which is a fully-transpiled sample app.
+It is one of four Skip sample apps that share the same
+[conventional Skip app project layout](/docs/project-types/#samples)
+but differ in their module structure and Skip mode, as shown below.
 
-To learn about the distinction, see the
-[Native and Transpiled Modes](/docs/modes/)
-documentaton.
+## The sample apps
 
-This repository contains the exact project with will be output when running the command:
+| Sample | Modules | Skip mode |
+| --- | --- | --- |
+| [skipapp-hello](/docs/samples/skipapp-hello) | `HelloSkip` | fully transpiled — Skip Lite |
+| [skipapp-howdy](/docs/samples/skipapp-howdy) | `HowdySkip` | fully native — Skip Fuse |
+| [skipapp-ahoy](/docs/samples/skipapp-ahoy) | `AhoySkipper`, `SkipperModel` | fully native — Skip Fuse |
+| [skipapp-hiya](/docs/samples/skipapp-hiya) | `HiyaSkip`, `HiyaSkipModel`, `HiyaSkipLogic` | mixed — native model bridged to a transpiled UI |
+
+In **transpiled** ("Skip Lite") modules, Swift is converted to Kotlin and
+SwiftUI to Jetpack Compose. In **native** ("Skip Fuse") modules, Swift is
+compiled directly for Android with the Swift toolchain and bridged to
+Kotlin/Jetpack Compose; see [Native and Transpiled Modes](/docs/modes/)
+for the distinction. `skipapp-hello`, `skipapp-ahoy`, and `skipapp-hiya` include
+unit tests that run on both platforms; `skipapp-howdy` omits them.
+
+## Re-creating this project
+
+This repository is exactly what `skip init` produces — its CI verifies that it
+stays identical to the generated template — so it can be re-created with:
 
 ```
-skip init --native-app --appid=skip.howdy.App skipapp-howdy HowdySkip
+skip init --no-build --native-app --appid=howdy.skip --version 1.0.0 skipapp-howdy HowdySkip
 ```
-
-The project structure looks like this:
-
-```
-skipapp-howdy
-├── Android
-│   ├── app
-│   │   ├── build.gradle.kts
-│   │   ├── proguard-rules.pro
-│   │   └── src
-│   │       └── main
-│   │           ├── AndroidManifest.xml
-│   │           ├── kotlin
-│   │           │   └── Main.kt
-│   │           └── res
-│   │               ├── mipmap-anydpi
-│   │               │   └── ic_launcher.xml
-│   │               └── mipmap-hdpi
-│   │                   ├── ic_launcher_background.png
-│   │                   ├── ic_launcher_foreground.png
-│   │                   ├── ic_launcher_monochrome.png
-│   │                   └── ic_launcher.png
-│   ├── gradle
-│   │   └── wrapper
-│   │       └── gradle-wrapper.properties
-│   ├── gradle.properties
-│   └── settings.gradle.kts
-├── Darwin
-│   ├── Assets.xcassets
-│   │   ├── AccentColor.colorset
-│   │   │   └── Contents.json
-│   │   ├── AppIcon.appiconset
-│   │   │   ├── AppIcon@2x.png
-│   │   │   ├── AppIcon@3x.png
-│   │   │   └── Contents.json
-│   │   └── Contents.json
-│   ├── Entitlements.plist
-│   ├── HowdySkip.xcconfig
-│   ├── HowdySkip.xcodeproj
-│   │   ├── project.pbxproj
-│   │   ├── project.xcworkspace
-│   │   │   └── contents.xcworkspacedata
-│   │   └── xcshareddata
-│   │       └── xcschemes
-│   │           └── HowdySkip App.xcscheme
-│   ├── Info.plist
-│   └── Sources
-│       └── Main.swift
-├── Package.swift
-├── README.md
-├── Skip.env
-└── Sources
-    └── HowdySkip
-        ├── ContentView.swift
-        ├── HowdySkipApp.swift
-        ├── Resources
-        │   ├── Localizable.xcstrings
-        │   └── Module.xcassets
-        │       └── Contents.json
-        ├── Skip
-        │   └── skip.yml
-        └── ViewModel.swift
-```
-
 
 ## Building
 
-This project is both a stand-alone Swift Package Manager module,
-as well as an Xcode project that builds and translates the project
-into a Kotlin Gradle project for Android using the skipstone plugin.
-
-## Testing
-
-The module can be tested using the standard `swift test` command
-or by running the test target for the macOS destination in Xcode,
-which will run the Swift tests as well as the transpiled
-Kotlin JUnit tests in the Robolectric Android simulation environment.
-
-Parity testing can be performed with `skip test`,
-which will output a table of the test results for both platforms.
+This project is both a stand-alone Swift Package Manager package and an Xcode
+project that builds the iOS app and, using the skipstone plugin, generates and
+builds the equivalent Kotlin Gradle project for Android.
 
 ## Running
 
-Xcode and Android Studio must be downloaded and installed in order to
-run the app in the iOS simulator / Android emulator.
-An Android emulator must already be running, which can be launched from
-Android Studio's Device Manager.
+Xcode and Android Studio must both be installed to run the app in the iOS
+simulator and the Android emulator. Start an Android emulator first (for example,
+from Android Studio's Device Manager).
 
-To run both the Swift and Kotlin apps simultaneously,
-launch the HowdySkipApp target from Xcode.
-A build phases runs the "Launch Android APK" script that
-will deploy the transpiled app a running Android emulator or connected device.
-Logging output for the iOS app can be viewed in the Xcode console, and in
-Android Studio's logcat tab for the transpiled Kotlin app.
+Open `Project.xcworkspace` in Xcode and run the "HowdySkip App" scheme. A build
+phase runs the "Launch Android APK" script, which deploys the app to a running
+Android emulator or connected device alongside the iOS build. iOS logs appear in
+the Xcode console; Android logs appear in Android Studio's Logcat tab (or via
+`adb logcat`).
+
+## Contributing
+
+We welcome contributions to this package in the form of enhancements and bug fixes.
+
+The general flow for contributing to this and any other Skip package is:
+
+1. Fork this repository and enable actions from the "Actions" tab
+2. Check out your fork locally
+3. When developing alongside a Skip app, add the package to a [shared workspace](/docs/contributing) to see your changes incorporated in the app
+4. Push your changes to your fork and ensure the CI checks all pass in the Actions tab
+5. Add your name to the Skip [Contributor Agreement](https://source.skip.dev/clabot-config)
+6. Open a Pull Request from your fork with a description of your changes
