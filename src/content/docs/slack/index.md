@@ -27,6 +27,8 @@ comment: Go to https://skiptools.slack.com/admin/invites / Invite Links / Edit l
   flex-direction: column;
   border: 1px solid var(--sl-color-gray-5);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  /* Override Starlight's adjacent-sibling top margin so cards in the grid have equal heights. */
+  margin-top: 0;
 }
 
 .slack-card:hover {
