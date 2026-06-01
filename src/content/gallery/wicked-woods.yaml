@@ -36,6 +36,8 @@ ratings:
   appStore:
     score: 5.0
     count: 1
+  playStore:
+    downloads: 500
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/06/99/b6/0699b64a-c184-6720-876f-b356c85ff575/Simulator_Screenshot_-_iPhone_16_Pro_-_2025-08-12_at_22.57.10.png/314x680bb.jpg

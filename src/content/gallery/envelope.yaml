@@ -1,0 +1,51 @@
+# PROVENANCE
+# - Skip-built: submitted by Josh Cockrell of Envelope Money, Inc. via the
+#   Skip gallery suggestion form (issue #23 on skiptools/skip.dev). The
+#   submission included the app's `Package.swift`, which declares
+#   `// This is a Skip (https://skip.tools) package` and depends on
+#   `source.skip.tools/skip.git` (1.8.5), `skip-ui` (1.51.0), and
+#   `skip-marketplace` (0.3.0), plus iOS-only frameworks (Stripe, Stytch,
+#   Apollo, Plaid, VGS, Sentry) wired in alongside `skip-firebase`.
+# - Skip mode: SkipLite (declared by the developer; the Package.swift uses
+#   `skip-ui` rather than `skip-fuse-ui`, consistent with transpiled mode).
+# - iOS bundle id and Android applicationId both `com.envelopemoney.prod`.
+name: Envelope
+developer: Envelope Money, Inc.
+tagline: Envelope budgeting with built-in checking and debit cards
+description: |
+  Envelope is a budgeting app with built-in checking and debit cards — like YNAB or Monarch if it were also your bank. It is built for people who want their budget to control spending before it happens, not just track transactions after the money is gone. Envelope combines digital envelopes, joint accounts, debit cards, and envelope-based spending controls into one checking account, with early direct deposit, mobile check deposit, ATM access, and a waivable annual fee.
+
+  The cross-platform mobile app is built with Skip Lite from a single Swift codebase, with iOS-native frameworks for payments and identity (Stripe, Stytch, Plaid, VGS, Sentry) integrated alongside the shared budgeting and banking flows.
+category: Finance
+mode: SkipLite
+releaseYear: 2023
+tags:
+  - Budgeting
+  - Banking
+  - Personal finance
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/78/32/7e/78327e7e-d8b5-8598-89c5-0d03012a2f4c/alt-icon-glass-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/envelope-money/id6444296251
+  playStore: https://play.google.com/store/apps/details?id=com.envelopemoney.prod
+  website: https://envelopebudgeting.com
+ratings:
+  appStore:
+    score: 4.7
+    count: 360
+  playStore:
+    downloads: 1000
+    score: 3.8
+    count: 10
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/29/c6/21/29c62113-388a-745c-58d0-9e886609f5fd/01b.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/16/94/f3/1694f333-48c0-202a-3f01-eb1da676f458/02b.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/16/9a/fb/169afb81-8e0b-8bbe-91d3-243a8c43caf1/07b.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/bf/fc/b5/bffcb5b6-5838-afda-37f3-c831b3139de7/07b-1.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/ec/d7/31/ecd731f9-acee-7db6-204c-443623b0c58f/06b.png/392x696bb.png
+  android:
+    - url: https://play-lh.googleusercontent.com/Y7ErbRKSQOAoxfGq-2FYgdr9Jj9CPFFlKdD1EibcpGYZAZsvdcIrW4jUKycwGU9EJrY=w480-h960
+    - url: https://play-lh.googleusercontent.com/h9uIY0OVCvuGnnJbPnUHjQ6jf5mBwxMpJ6X_abPoxRHkWWV1cYAMHEfDsD-6FQv2vAAG=w526-h296
+    - url: https://play-lh.googleusercontent.com/I5PIj0nZD__a2rVw0_xOnQKEMoaVA1htFrc4_S-5i8SWuGzwDokLbU20RxpHu8GMfBc=w526-h296
+    - url: https://play-lh.googleusercontent.com/j2iyDBgOEayQW-jHNt0JdrB-I2CJ-5A9ZAzYAWaUOIz2TwSsIGbPQFetks5rEzynhwQ=w526-h296
+    - url: https://play-lh.googleusercontent.com/UpvWvCV-2TsiS4MPS759ttfo5d3BRpgQcOECl3SrcK-nkndwMjajUkGUbJQWdrNUw1U=w526-h296

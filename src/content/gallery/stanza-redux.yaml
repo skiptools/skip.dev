@@ -28,6 +28,9 @@ links:
   appStore: https://apps.apple.com/us/app/stanza-redux/id1639831676
   playStore: https://play.google.com/store/apps/details?id=org.appfair.app.Stanza_Redux
   source: https://github.com/Stanza-Redux/Stanza-Redux
+ratings:
+  playStore:
+    downloads: 10
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/87/fe/d9/87fed908-f521-2137-c2b1-e8fa42a6bcc1/Simulator_Screenshot_-_iPhone_Air_-_2026-03-19_at_22.17.02.png/460x998bb.webp

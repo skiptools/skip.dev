@@ -23,6 +23,9 @@ links:
   appStore: https://apps.apple.com/app/catcoach-train-your-cat/id6748276464
   playStore: https://play.google.com/store/apps/details?id=com.twobirdstalk.catcoach
   website: https://catcoach.app
+ratings:
+  playStore:
+    downloads: 500
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/96/41/e7/9641e71e-5cc7-ed22-20c0-c04d942aacf0/iPhone_16_Pro_Max_-_6.png/314x680bb.png

@@ -28,6 +28,7 @@ ratings:
     score: 4.7
     count: 2204
   playStore:
+    downloads: 10000
     score: 3.2
     count: 58
 screenshots:

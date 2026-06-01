@@ -18,7 +18,6 @@ const initial = data.name.replace(/[^A-Za-z]/, '').slice(0, 1).toUpperCase() || 
     ) : (
       <div class="gallery-card-icon gallery-card-icon-placeholder">{initial}</div>
     )}
-    {data.featured && <span class="gallery-card-featured">Featured</span>}
   </div>
 
   <h3 class="gallery-card-name">{data.name}</h3>

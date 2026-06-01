@@ -1,0 +1,49 @@
+# PROVENANCE
+# - Skip-built: open-source student-chapter project. The dual-platform mobile
+#   client lives at `apps/conclave-skip` in https://github.com/ACM-VIT/conclave.
+#   Its `Package.swift` is annotated `// This is a Skip (https://skip.tools)
+#   package.` and depends on `source.skip.tools/skip.git`, `skip-ui`,
+#   `skip-fuse`, `skip-model`, and `skip-kit`. The iOS bundle ID
+#   (`com.acmvit.conclave`) matches the Android applicationId and the Skip.env
+#   `PRODUCT_BUNDLE_IDENTIFIER`.
+# - Skip mode: SkipLite — `Sources/Conclave/Skip/skip.yml` sets
+#   `skip: { mode: 'transpiled' }`. (SkipFuse is imported only to provide the
+#   `@Observable` bridging required by Compose; the module itself is
+#   transpiled.) Platform-specific dependencies (Socket.IO, mediasoup) are
+#   wired in via SwiftPM `condition: .when(platforms: [.iOS])` on the iOS
+#   side and equivalent Gradle implementations declared in skip.yml on the
+#   Android side.
+name: Conclave by ACM-VIT
+developer: ACM-VIT
+tagline: Student-built, in-house video conferencing platform
+description: |
+  Conclave is ACM-VIT's fully in-house video conferencing platform, designed, built, and maintained by the student chapter to support communication needs across one-on-one discussions and large group meetings. Sign in with Google or Apple, or join as a guest by meeting code or link. Features include high-quality audio and video, in-meeting chat, host controls, meeting lock, waiting-room moderation, and text-to-speech accessibility.
+
+  The mobile client is a single Skip Lite Swift codebase shipping to both iOS and Android, with platform-specific media bindings (Socket.IO and mediasoup) bridged through `skip-kit` and Gradle on the Android side. Conclave is open source at github.com/ACM-VIT/conclave.
+category: Productivity
+mode: SkipLite
+releaseYear: 2026
+tags:
+  - Video conferencing
+  - Communication
+  - Open source
+  - Student-built
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ca/e2/fe/cae2fece-4850-3c65-00f5-b2114a2140bb/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/conclave-by-acm-vit/id6758411334
+  playStore: https://play.google.com/store/apps/details?id=com.acmvit.conclave
+  source: https://github.com/ACM-VIT/conclave
+ratings:
+  playStore:
+    downloads: 50
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/b9/46/11/b94611ab-d87d-8d67-593f-6cd052d350e2/Simulator_Screenshot_-_iPhone_17_-_2026-01-29_at_20.36.08.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/13/3e/bc/133ebcc5-428a-8cff-0546-8baf137995f4/Simulator_Screenshot_-_iPhone_17_-_2026-01-30_at_21.25.06.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8d/cd/b0/8dcdb0d3-0826-8a96-44d7-92b0e46bcffe/Simulator_Screenshot_-_iPhone_17_-_2026-01-29_at_20.36.28.png/460x996bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/Kjo1GErFRGaHMYyOeKrVnOysxSlqU9kRgybR3NBcCDyb1ASeZsW0k6cbSKRIgv-NJLhYckEptPTTt1O6r32Cr44=w480-h960
+    - url: https://play-lh.googleusercontent.com/2hbkrGnoiC_Bv3onXLUGxCc3AJGmuU7KddmbwOsYx8dB7oYd8KnVrRgMXcPt47iojcNVbvwoGRhkvQMEfibI_Q=w526-h296
+    - url: https://play-lh.googleusercontent.com/9xFsD4RnE2tljRn7ZJhoGbZ1mr9RXe_36BZmY7uOlrNK-tp28xLykBDz9FrUHtmwbuK6R5vcCS9_4cMAdqz1Mw=w526-h296
+    - url: https://play-lh.googleusercontent.com/Ek50pxCJ2xtVlPzs_0v0wLCGaQvZDr137DaPovTAYtahviBTiOHB0yBsTB8q3LObH3YzYNZhorXN4mXOgvf2vA=w526-h296
+    - url: https://play-lh.googleusercontent.com/me5B9nS-DSpJNOK_U8PisHORzAXkr2nxi-fyQ1Zk4kUBQ331coZST-Mhbgca9tjxiGjZuGAycapr_0UlHZbbZA=w526-h296

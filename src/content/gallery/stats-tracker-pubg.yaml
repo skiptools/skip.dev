@@ -10,7 +10,6 @@
 name: Stats Tracker for PUBG
 developer: Tom Lake
 tagline: PUBG stats and match analytics for Xbox, PlayStation, and PC players
-featured: true
 description: |
   Stats Tracker for PUBG is a companion app for casual and competitive PUBG players on Xbox, PlayStation, and PC. Track wins, kills, K/D ratios, weapon accuracy, loot usage, and match-by-match breakdowns; view season and lifetime stats; and review detailed results for every recent match. Other features include live loot loadout tracking, a redesigned match list, per-weapon accuracy, Team Deathmatch round-by-round results, friend comparisons, and a 2D match replay tool.
 
@@ -29,6 +28,8 @@ ratings:
   appStore:
     score: 4.8
     count: 7449
+  playStore:
+    downloads: 100
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/84/49/3d/84493dfd-fb38-54a0-6471-bffe8f15fadb/Simulator_Screenshot_-_iPhone_17_Pro_Max_-_2026-01-08_at_20.46.20.png/460x998bb.webp

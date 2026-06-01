@@ -23,6 +23,9 @@ links:
   appStore: https://apps.apple.com/app/thermik-pro/id6756184023
   playStore: https://play.google.com/store/apps/details?id=com.n3xt.thermikpro
   website: https://thermik.cloud
+ratings:
+  playStore:
+    downloads: 500
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/9e/47/b3/9e47b3c5-9e48-0b1b-ed5c-26a1f12f84c1/01.png/314x680bb.jpg

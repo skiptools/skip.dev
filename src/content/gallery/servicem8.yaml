@@ -14,7 +14,6 @@ description: |
 
   ServiceM8 Lite for Android is the Skip-built companion designed for field staff, subcontractors, and temporary workers who only need the essentials — schedule, job cards, checklists, navigation, photos, and notes — without the full management surface.
 category: Business
-featured: true
 releaseYear: 2024
 tags:
   - Business
@@ -30,6 +29,7 @@ ratings:
     score: 4.6
     count: 717
   playStore:
+    downloads: 10000
     score: 3.6
     count: 525
 screenshots:

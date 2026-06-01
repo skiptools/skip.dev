@@ -5,11 +5,37 @@ import GalleryCard from '../components/GalleryCard.astro';
 
 const allApps = await getCollection('gallery');
 
-// Featured apps first, then the rest sorted by name.
-const apps = allApps.sort((a, b) => {
-  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+// Average of the App Store and Play Store star ratings. Apps missing one side
+// fall back to whichever is present; apps missing both score 0 (used only as a
+// tiebreaker when downloads are equal).
+function avgStars(app) {
+  const a = app.data.ratings?.appStore?.score;
+  const p = app.data.ratings?.playStore?.score;
+  const vals = [a, p].filter((v) => typeof v === 'number');
+  if (vals.length === 0) return 0;
+  return vals.reduce((s, v) => s + v, 0) / vals.length;
+}
+
+// Natural order: Play Store download floor desc, then average star rating desc,
+// then name (final stable tiebreaker so the order is deterministic).
+const natural = allApps.slice().sort((a, b) => {
+  const da = a.data.ratings?.playStore?.downloads ?? 0;
+  const db = b.data.ratings?.playStore?.downloads ?? 0;
+  if (db !== da) return db - da;
+  const sa = avgStars(a), sb = avgStars(b);
+  if (sb !== sa) return sb - sa;
   return a.data.name.localeCompare(b.data.name);
 });
+
+// Apply explicit `rank` overrides: split out ranked apps, then re-insert each
+// at its 1-indexed slot (lowest rank first so multiple overrides compose).
+const ranked = natural.filter((a) => typeof a.data.rank === 'number')
+  .sort((a, b) => a.data.rank - b.data.rank);
+const apps = natural.filter((a) => typeof a.data.rank !== 'number');
+for (const app of ranked) {
+  const slot = Math.min(Math.max(app.data.rank - 1, 0), apps.length);
+  apps.splice(slot, 0, app);
+}
 
 const total = apps.length;
 ---
@@ -122,9 +148,7 @@ const total = apps.length;
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.10);
   }
 
-  /* Icon wrap (relative for the featured badge) */
   :global(.gallery-card-iconwrap) {
-    position: relative;
     margin-bottom: 0.25rem;
   }
 
@@ -160,21 +184,6 @@ const total = apps.length;
     font-size: 2.25rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-  }
-
-  :global(.gallery-card-featured) {
-    position: absolute;
-    top: -6px;
-    right: -10px;
-    padding: 0.18rem 0.5rem;
-    background: var(--sl-color-accent);
-    color: var(--sl-color-white);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-radius: 999px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
   }
 
   /* Name */

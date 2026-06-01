@@ -28,6 +28,9 @@ links:
   appStore: https://apps.apple.com/us/app/exhivision/id6743517041
   playStore: https://play.google.com/store/apps/details?id=me.fromkk.PhotoExhibition
   source: https://github.com/fromkk/PhotoExhibition-skip
+ratings:
+  playStore:
+    downloads: 5
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/30/f2/2c/30f22c29-1780-b751-b1aa-b9efb57483a0/1.png/460x998bb.webp

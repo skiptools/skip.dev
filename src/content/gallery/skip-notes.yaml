@@ -32,6 +32,8 @@ ratings:
   appStore:
     score: 5.0
     count: 1
+  playStore:
+    downloads: 100
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/3a/a1/3d/3aa13d08-0a14-c658-6e99-5b16d05ee6f9/1_en-US.png/460x1022bb.webp

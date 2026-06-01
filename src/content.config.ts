@@ -35,6 +35,9 @@ const i18n = defineCollection({
 const ratingSchema = z.object({
   score: z.number().min(0).max(5).optional(),
   count: z.number().int().nonnegative().optional(),
+  // Floor of the Play Store download badge ("10K+" → 10000). Used for sorting,
+  // not displayed in the UI.
+  downloads: z.number().int().nonnegative().optional(),
 }).optional();
 
 const screenshotSchema = z.object({
@@ -51,7 +54,9 @@ const gallery = defineCollection({
     description: z.string(),
     category: z.string().optional(),
     mode: z.enum(['SkipFuse', 'SkipLite', 'SkipBridge', 'partial']).optional(),
-    featured: z.boolean().default(false),
+    // Explicit 1-indexed slot in the gallery list, overriding the natural sort
+    // (by downloads desc, then average star rating desc).
+    rank: z.number().int().positive().optional(),
     icon: z.string().url().optional(),
     releaseYear: z.number().int().optional(),
     tags: z.array(z.string()).default([]),

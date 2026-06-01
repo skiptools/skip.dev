@@ -16,7 +16,6 @@ description: |
   Users can send photos, video, lab results, and clinical reports directly to specialists, and a Premium subscription unlocks unlimited consultations across the full panel of doctors. The app is widely used across Spain and Latin America, with over a million Play Store installs.
 category: Medical
 mode: SkipFuse
-featured: true
 releaseYear: 2018
 tags:
   - Telemedicine
@@ -33,6 +32,7 @@ ratings:
     score: 4.6
     count: 52
   playStore:
+    downloads: 1000000
     score: 4.5
     count: 11786
 screenshots:

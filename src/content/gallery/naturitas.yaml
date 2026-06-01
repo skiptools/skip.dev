@@ -22,7 +22,6 @@ description: |
   With over 500,000 downloads on the Play Store and a 4.6 average rating from nearly 30,000 reviewers, Naturitas is the largest production deployment publicly known to use Skip technology in its mobile app.
 category: Shopping
 mode: SkipFuse
-featured: true
 releaseYear: 2021
 tags:
   - E-commerce
@@ -40,6 +39,7 @@ ratings:
     score: 4.79
     count: 802
   playStore:
+    downloads: 500000
     score: 4.6
     count: 29874
 screenshots:
