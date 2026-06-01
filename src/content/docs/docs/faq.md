@@ -104,6 +104,25 @@ No, Skip is a purely offline tool with predictable behavior.
 
 However, AI tools can be very useful for generating Swift and SwiftUI code, especially for getting started with the outline of an iOS app. This code will generally be compatible with SkipUI and the other Skip libraries, which can be a great aid in getting a dual-platform app started quickly.
 
+### Are there AI agent skills for working with Skip? {#ai_skills}
+
+Yes. The Skip team maintains an official collection of agent skills at [github.com/skiptools/skills](https://github.com/skiptools/skills). These are plain-markdown `SKILL.md` files that an agent (such as [Claude Code](https://claude.com/claude-code), Cursor, or any agent that supports file-based context) loads on demand to get Skip-specific guidance.
+
+The skills are organized into two plugins:
+
+- **`skip-app-design`** — scaffolding a new project (`skip init`), building SwiftUI views that transpile to Compose, navigating Skip Lite's transpilation rules and Skip Fuse's bridging model, adding optional frameworks (SkipSQL, SkipFirebase, etc.), the Material Symbols `.symbolset` workflow for icons that render on both platforms, and translating an app via `Localizable.xcstrings` and fastlane storefront metadata.
+- **`skip-testing-deployment`** — running tests with `swift test`, `skip test`, and `skip android test`, driving the running app on both simulators together with `skip app launch` plus [Maestro](https://maestro.dev) flows, and exporting, signing, and shipping with `skip export` and `skip verify`.
+
+To install in [Claude Code](https://claude.com/claude-code):
+
+```text
+/plugin marketplace add skiptools/skills
+/plugin install skip-app-design
+/plugin install skip-testing-deployment
+```
+
+For Cursor and other agents, see the repository [README](https://github.com/skiptools/skills) for the equivalent setup. The repository also includes a worked example that walks through building a small TODO app end-to-end using the skills.
+
 ## Development FAQs
 
 ### What is the minimum iOS version for Skip apps? {#ios_version}

@@ -50,8 +50,10 @@ SUBCOMMANDS:
   init                    Initialize a new Skip project
   verify                  Verify Skip project
   icon                    Create and manage app icons
+  app                     Build, run, and manage Skip apps
   android                 Build, run, and test Swift packages for Android
   export                  Export the Gradle project and built artifacts
+  meta                    App metadata and SBOM tools
   devices                 List connected devices and emulators/simulators
   test                    Run parity tests and generate reports
 ```
@@ -192,6 +194,82 @@ skip export --module ModuleName
 # Export to a custom output folder
 skip export --dir output/
 ```
+
+### skip app launch {#app-launch}
+
+Build and launch a conventional Skip app on the booted iOS Simulator and a running Android emulator together in one step. Reads `PRODUCT_NAME` and `PRODUCT_BUNDLE_IDENTIFIER` from `Skip.env`, then drives `xcodebuild`, `xcrun simctl install`, and `xcrun simctl launch` for iOS while letting the Skip build plugin handle the Android Gradle build and install via `adb`.
+
+```shell
+# Build and launch on both iOS simulator and Android emulator (default)
+skip app launch
+
+# Build and launch a release build
+skip app launch --configuration release
+
+# Build and launch only the iOS app on the booted simulator
+skip app launch --ios
+
+# Build and launch only the Android app via the Skip plugin
+skip app launch --android
+```
+
+Pre-flight:
+
+- The project must be a conventional Skip app project, meaning it contains a `Project.xcworkspace`, a `Skip.env` configuration file, and `Darwin/` and `Android/` folders alongside `Package.swift`. `skip init --transpiled-app` and `skip init --native-app` produce projects in this shape.
+- You must boot an iOS Simulator yourself (`xcrun simctl boot <UDID>`; `open -a Simulator`) and start an Android emulator (`emulator -avd <name>` or `skip android emulator launch`). `skip app launch` does not start either for you. If no simulator is booted the iOS install step fails; if no emulator is running the Android install step fails.
+
+| Flag | Purpose |
+|------|---------|
+| `-c, --configuration <config>` | Build configuration, `debug` (default) or `release`. |
+| `--ios` | Build and launch only the iOS app. Sets `SKIP_ACTION=none` in the xcodebuild environment so the build plugin skips the Android phase. |
+| `--android` | Build and launch only the Android app. iOS is built but not installed or launched. |
+| `--project <dir>` | Project folder. Defaults to the current directory. |
+
+When you have both a USB-connected Android device and a running emulator, scope the install to the emulator with the standard `ANDROID_SERIAL` environment variable:
+
+```shell
+ANDROID_SERIAL=emulator-5554 skip app launch
+```
+
+`skip app launch` has no `--android-serial` flag; the env var is the documented way to target a specific Android device.
+
+---
+
+## Metadata Commands {#meta}
+
+The `skip meta` subcommands generate metadata catalogs and Software Bill of Materials (SBOM) documents for Skip apps.
+
+### skip meta index {#meta-index}
+
+Generate a structured JSON catalog containing all user-facing metadata for a Skip app. The catalog merges:
+
+- Localized titles, subtitles, descriptions, keywords, and release notes from `Darwin/fastlane/metadata/` (App Store) and `Android/fastlane/metadata/android/` (Google Play).
+- iOS app permissions and their localized descriptions from `Darwin/Info.plist` and `Darwin/InfoPlist.xcstrings`.
+- Android permissions and manifest metadata from `Android/app/src/main/AndroidManifest.xml`.
+- Version, build number, bundle id, and store ids from `Skip.env`.
+- Icons and phone screenshots from both platform trees.
+- Source repository URL and license from `.git/config` and the project's `LICENSE` file.
+
+```shell
+# Print catalog JSON to stdout
+skip meta index
+
+# Write the catalog to a file
+skip meta index -O appindex.json
+
+# Include an SBOM for both platforms in the output
+skip meta index --sbom -O appindex.json
+```
+
+| Flag | Purpose |
+|------|---------|
+| `-O, --catalog-output <path>` | Write the catalog JSON to the given file instead of stdout. |
+| `--sbom` | Include a Software Bill of Materials for both platforms in the catalog. |
+| `--project <dir>` | Project folder. Defaults to the current directory. |
+
+The output uses BCP 47 canonical locale codes (`zh-Hans`, `pt`, `fr`) regardless of which fastlane convention the source directories used (`zh-CN` vs `zh-Hans`, `pt-PT` vs `pt`, `fr-FR` vs `fr`). Shared metadata fields that appear in both platforms with identical content are promoted to a top-level `app` dictionary; per-platform overrides remain under `platforms.ios` / `platforms.android`.
+
+Use `skip meta index` before submitting to App Store Connect or Google Play to confirm the metadata can be assembled cleanly, that no platform is missing a required field, and that localized assets are present in both stores.
 
 ---
 
