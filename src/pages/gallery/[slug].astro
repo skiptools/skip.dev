@@ -24,16 +24,6 @@ const otherApps = allApps
 const hasIosShots = data.screenshots?.ios && data.screenshots.ios.length > 0;
 const hasAndroidShots = data.screenshots?.android && data.screenshots.android.length > 0;
 
-// Parse Play Store download badges like "1+", "100+", "10K+", "500K+", "1M+".
-// Show the badge only when the implied minimum exceeds 100.
-function downloadsOver100(s) {
-  const m = s?.match(/^([\d.]+)\s*([KM]?)/);
-  if (!m) return false;
-  const mult = m[2] === 'K' ? 1_000 : m[2] === 'M' ? 1_000_000 : 1;
-  return parseFloat(m[1]) * mult >= 100;
-}
-const showDownloads = downloadsOver100(data.ratings?.playStore?.downloads);
-
 // Combined shot list: iOS first, then Android, capped at 8 for layout.
 const allShots = [
   ...(data.screenshots?.ios || []).map((s) => ({ ...s, platform: 'iOS' })),
@@ -161,13 +151,6 @@ const allShots = [
             </dd>
           </>
         )}
-
-        {showDownloads && (
-          <>
-            <dt><span class="gallery-detail-platform-icon" data-icon="download" aria-hidden="true"></span>Downloads</dt>
-            <dd>{data.ratings.playStore.downloads}</dd>
-          </>
-        )}
       </dl>
     </aside>
   </section>
@@ -249,11 +232,6 @@ const allShots = [
   .gallery-detail-platform-icon[data-icon="android"] {
     -webkit-mask: url(/icons/android.svg) center / contain no-repeat;
     mask: url(/icons/android.svg) center / contain no-repeat;
-  }
-
-  .gallery-detail-platform-icon[data-icon="download"] {
-    -webkit-mask: url(/icons/download.svg) center / contain no-repeat;
-    mask: url(/icons/download.svg) center / contain no-repeat;
   }
 
   /* Header */

@@ -12,7 +12,6 @@ description: |
   The app exercises UI controls, layout, navigation, graphics, state management, text and media, plus platform integrations like haptics, ShareLink, Map, SQL, Keychain, and WebView. Install on both platforms side-by-side to compare rendering. Open source.
 category: Utilities
 mode: SkipFuse
-featured: true
 releaseYear: 2024
 tags:
   - SwiftUI
@@ -28,8 +27,6 @@ ratings:
   appStore:
     score: 5.0
     count: 2
-  playStore:
-    downloads: "500+"
 screenshots:
   ios:
     - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9a/e7/25/9ae7257f-e2e9-6c2f-adf6-300651cc83ec/7a0ff5ab-8f9f-4153-aba5-64187432529c_Simulator_Screenshot_-_iPhone_8_Plus_-_2024-06-05_at_06.32.34.png/392x696bb.png

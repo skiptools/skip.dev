@@ -1,0 +1,46 @@
+# PROVENANCE
+# - Skip-built: confirmed by the developer (Tom Lake) in a message to the Skip
+#   team
+# - Skip mode: not specified by the developer; omitted so no mode badge is
+#   rendered in the gallery card. The iOS app was fully rebuilt in SwiftUI
+#   before being brought to Android via Skip, with a single native Android
+#   feature (2D Replay) supplementing the cross-platform Swift codebase.
+# - Source: not public; the iOS app is a long-standing closed-source product
+#   (released August 2018) and the Android port was shipped in 2026.
+name: Stats Tracker for PUBG
+developer: Tom Lake
+tagline: PUBG stats and match analytics for Xbox, PlayStation, and PC players
+featured: true
+description: |
+  Stats Tracker for PUBG is a companion app for casual and competitive PUBG players on Xbox, PlayStation, and PC. Track wins, kills, K/D ratios, weapon accuracy, loot usage, and match-by-match breakdowns; view season and lifetime stats; and review detailed results for every recent match. Other features include live loot loadout tracking, a redesigned match list, per-weapon accuracy, Team Deathmatch round-by-round results, friend comparisons, and a 2D match replay tool.
+
+  Originally released for iOS in 2018 as a UIKit/Storyboards app, Stats Tracker for PUBG was fully rebuilt in SwiftUI and brought to Android seven years later via Skip from the same Swift codebase. The 2D Replay view is the only feature implemented natively for Android; everything else is shared cross-platform.
+category: Utilities
+releaseYear: 2018
+tags:
+  - Gaming
+  - PUBG
+  - Stats
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/98/28/9a/98289a22-a197-ffa2-4c58-f446c8c37c7b/AppIcon-0-0-1x_U007epad-0-1-0-0-sRGB-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/stats-tracker-for-pubg/id1397103813
+  playStore: https://play.google.com/store/apps/details?id=com.tomlake.statstrackerskip
+ratings:
+  appStore:
+    score: 4.8
+    count: 7449
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/84/49/3d/84493dfd-fb38-54a0-6471-bffe8f15fadb/Simulator_Screenshot_-_iPhone_17_Pro_Max_-_2026-01-08_at_20.46.20.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/d3/43/79/d34379ec-8040-2f47-6de6-51ad55fc3c8c/Simulator_Screenshot_-_iPhone_17_Pro_Max_-_2026-01-08_at_22.09.46.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/69/58/61/69586156-4abe-dfd4-0c1d-328446a91b21/Simulator_Screenshot_-_iPhone_17_Pro_Max_-_2026-01-08_at_22.10.20.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e6/d1/6d/e6d16d6c-d9aa-5ed8-5fb0-a1209bff0b9b/Simulator_Screenshot_-_iPhone_17_Pro_Max_-_2026-01-08_at_22.11.07.png/460x998bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/20/03/46/20034647-d105-adc5-94fb-d5e31ec04290/Simulator_Screenshot_-_iPhone_17_Pro_Max_-_2026-01-08_at_22.12.32.png/460x998bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/2VcLdWZX0JYO0pyBQZ-hldQB5J1fWIpu3VwybUdTk_av8m4MCimWky4Brf-PbBZXscMJIDnpkLaIKLwiG1Na=w526-h296
+    - url: https://play-lh.googleusercontent.com/6gFd1n48eaC3cprPvw8yrNgHQaiOnT8sPG1hXYBCi5OpbVbg8KVQNFwS4Zhi9_1SbE68MC5K0YTnN05pJmevB6U=w526-h296
+    - url: https://play-lh.googleusercontent.com/eXWIu-IuTKUng-H3lSMIcMh5NpYYUG55fg4CBOB6MZB85nJnAzZBCAYTYoJtfZa7ZsXbTqOAJMulX1TNPKN9ZA=w526-h296
+    - url: https://play-lh.googleusercontent.com/pIkiwsBGY1J-QalyghkPlrL4VDzHKgWBcyd-1yBECNS1F-zKb8EtmbNkcO31DDdLnjIgrxQ77V5PJfAFohPb=w526-h296
+    - url: https://play-lh.googleusercontent.com/tHOxh3GEcOJrGWyXgapGcejQuK0pL04INVM3tow1KTYiJyDfZrA79z-VSa8ZUz_bHaTXLqnBXIshb_Io1x8h0Kk=w526-h296
+notes: |
+  Long-running iOS app (August 2018), brought to Android via Skip in 2026 with a single native Android feature (2D Replay).

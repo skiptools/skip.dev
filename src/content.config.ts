@@ -35,7 +35,6 @@ const i18n = defineCollection({
 const ratingSchema = z.object({
   score: z.number().min(0).max(5).optional(),
   count: z.number().int().nonnegative().optional(),
-  downloads: z.string().optional(),
 }).optional();
 
 const screenshotSchema = z.object({
