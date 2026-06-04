@@ -1,0 +1,303 @@
+---
+// Custom site footer. Renders the default Starlight per-page footer (edit
+// link, prev/next pagination) and then a full-width site footer with column
+// links and social icons. The site footer breaks out of the column-bounded
+// content panel via 100vw + a translateX so it spans the full page width.
+import Default from '@astrojs/starlight/components/Footer.astro';
+import { Icon } from '@astrojs/starlight/components';
+
+const year = new Date().getFullYear();
+
+const columns: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
+  {
+    heading: 'Project',
+    links: [
+      { label: 'Documentation', href: '/docs/' },
+      { label: 'Modules', href: '/docs/modules/' },
+      { label: 'Sample Apps', href: '/docs/samples/' },
+      { label: 'Gallery', href: '/gallery/' },
+    ],
+  },
+  {
+    heading: 'Learn',
+    links: [
+      { label: 'Getting Started', href: '/docs/gettingstarted/' },
+      { label: 'Blog', href: '/blog/' },
+      { label: 'FAQ', href: '/docs/faq/' },
+      { label: 'Comparison', href: '/compare/' },
+    ],
+  },
+  {
+    heading: 'Community',
+    links: [
+      { label: 'Slack', href: '/slack/' },
+      { label: 'Forums', href: 'https://forums.skip.dev', external: true },
+      { label: 'Sponsor', href: '/sponsor/' },
+      { label: 'Talks', href: '/talks/fosdem2026/' },
+    ],
+  },
+  {
+    heading: 'Resources',
+    links: [
+      { label: 'Release Notes', href: '/releases/' },
+      { label: 'Feeds', href: '/feeds/' },
+      { label: 'Privacy', href: '/privacy/' },
+      { label: 'About', href: '/about/' },
+    ],
+  },
+];
+
+const socials: { name: string; href: string; icon: string }[] = [
+  { name: 'GitHub', href: 'https://github.com/orgs/skiptools', icon: 'github' },
+  { name: 'Mastodon', href: 'https://mas.to/@skiptools', icon: 'mastodon' },
+  { name: 'Twitter', href: 'https://x.com/skiptools', icon: 'twitter' },
+  { name: 'Slack', href: '/slack/', icon: 'slack' },
+  { name: 'Forums', href: 'https://forums.skip.dev', icon: 'discourse' },
+  { name: 'RSS', href: '/feeds/', icon: 'rss' },
+];
+---
+
+<Default><slot /></Default>
+
+<footer class="site-footer not-content">
+  <div class="site-footer-inner">
+    <div class="site-footer-grid">
+      <div class="site-footer-brand">
+        <a href="/" class="site-footer-logo" aria-label="Skip home">
+          <img src="/favicon.svg" alt="" width="36" height="36" />
+          <span>Skip</span>
+        </a>
+        <p class="site-footer-tagline">
+        Build native iOS and Android apps from a single Swift codebase.
+        </p>
+        <ul class="site-footer-socials" aria-label="Social links">
+          {socials.map((s) => (
+            <li>
+              <a href={s.href} aria-label={s.name} target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                <Icon name={s.icon as any} size="1.25rem" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {columns.map((col) => (
+        <nav class="site-footer-col" aria-label={col.heading}>
+          <h2>{col.heading}</h2>
+          <ul>
+            {col.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                >{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Break the site footer out of the page's content column so it spans the
+     full viewport width, but keep the inner content centered with a max width
+     that lines up with the rest of the site. */
+  .site-footer {
+    margin-top: 4rem;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+    background: linear-gradient(180deg, transparent, var(--sl-color-gray-7) 30%);
+    border-top: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+    padding: 3rem 1.5rem 2rem;
+    box-sizing: border-box;
+  }
+
+  /* Hide the site footer on docs pages that have the left Starlight sidebar.
+     The fixed sidebar and TOC would overlap the footer and cause horizontal
+     overflow; suppressing it on those pages is the cleanest fix. */
+  :global(html[data-has-sidebar]) .site-footer {
+    display: none;
+  }
+
+  :root[data-theme='light'] .site-footer {
+    background: linear-gradient(180deg, transparent, var(--sl-color-gray-7) 30%);
+    color: var(--sl-color-gray-3);
+  }
+
+  .site-footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .site-footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(4, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  /* Stack vertically on narrow screens; the brand column gets full width on
+     mobile so the tagline and socials sit at the top. */
+  @media (max-width: 900px) {
+    .site-footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+    }
+    .site-footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .site-footer {
+      padding: 2.5rem 1.25rem 1.5rem;
+    }
+    .site-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+  }
+
+  /* ── Brand column ── */
+  .site-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 18rem;
+  }
+
+  .site-footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    text-decoration: none;
+    color: var(--sl-color-white);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .site-footer-logo img {
+    border-radius: 8px;
+  }
+
+  .site-footer-tagline {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--sl-color-gray-3);
+  }
+
+  .site-footer-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+    transition: color 0.15s, border-color 0.15s, transform 0.15s, background 0.15s;
+  }
+
+  .site-footer-socials a:hover {
+    color: var(--sl-color-white);
+    border-color: var(--sl-color-accent);
+    background: var(--sl-color-gray-5);
+    transform: translateY(-2px);
+  }
+
+  /* ── Link columns ── */
+  .site-footer-col h2 {
+    margin: 0 0 0.875rem;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sl-color-white);
+    font-weight: 700;
+  }
+
+  .site-footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .site-footer-col a {
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.15s;
+  }
+
+  .site-footer-col a:hover {
+    color: var(--sl-color-accent-high);
+  }
+
+  :root[data-theme='light'] .site-footer-col a {
+    color: var(--sl-color-gray-3);
+  }
+  :root[data-theme='light'] .site-footer-col a:hover {
+    color: var(--sl-color-accent);
+  }
+
+  /* ── Bottom row ── */
+  .site-footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sl-color-gray-5);
+    font-size: 0.82rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .site-footer-bottom p {
+    margin: 0;
+  }
+
+  .site-footer-legal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .site-footer-legal a {
+    color: var(--sl-color-gray-3);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .site-footer-legal a:hover {
+    color: var(--sl-color-white);
+  }
+
+  :root[data-theme='light'] .site-footer-legal a:hover {
+    color: var(--sl-color-gray-1);
+  }
+
+  .site-footer-legal span {
+    opacity: 0.4;
+  }
+</style>

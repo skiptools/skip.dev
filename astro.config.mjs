@@ -82,6 +82,8 @@ export default defineConfig({
       components: {
         // Override the default Header component
         Header: './src/components/CustomHeader.astro',
+        // Wraps the default Footer and appends a site-wide mini sitemap.
+        Footer: './src/components/CustomFooter.astro',
       },
       plugins: [
         starlightLinksValidator({

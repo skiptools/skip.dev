@@ -5,7 +5,6 @@ tags: [skip, swift, android, talk, meetup, compose-multiplatform, kotlin-multipl
 layout: post
 permalink: /blog/swift-on-android-iosoho-meetup/
 author: Marc Prud'hommeaux
-draft: true
 ---
 
 Last month I gave a talk on Swift on Android at the [iOSoho meetup](https://www.meetup.com/iosoho/events/314173946/) in New York. Capital One hosted the event at their 19th Street offices, Runway kept everyone fed, and the recording is now live.
@@ -22,7 +21,7 @@ If you want a single place to see how all of these layers fit together, this is 
 
 <iframe width="100%" height="400" src="https://www.youtube.com/embed/KPf2QTZAIZY?start=2229" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-Turnout was strong both in person and on the simulcast, which went out to the New York Android, DC Android, DC iOS, and Dallas iOS Developers groups, each running its own watch party. Pulling off a four-way live broadcast on a single evening takes serious coordination, and huge credit goes to Paul Miard for organizing iOSoho and to Madona Wambua at New York Android Engineers, Scott Luxenberg at DC iOS, and Jared at DC Android for keeping their sites in lockstep. Running one good meetup is hard. Running four at once, with a shared stream and a shared audience, is no small feat.
+Turnout was strong both in person and on the simulcast, which went out to the New York Android, DC Android, DC iOS, and Dallas iOS Developers groups, each running its own watch party. Pulling off a four-way live broadcast on a single evening takes serious coordination, and huge credit goes to Paul Miard for organizing iOSoho and to Madona Wambua at New York Android Engineers, Scott Luxenberg at DC iOS, and Jared at DC Android for keeping their meetings and talks synchronized.
 
 The audience came with thoughtful questions about debugging, packaging, third-party Swift packages on Android, and how Skip Fuse fits alongside the official SDK. I wish Q&A had run longer, but the after-hours conversation that spilled over into [Old Town Bar](https://www.oldtownbar.com/) more than made up for it.
 

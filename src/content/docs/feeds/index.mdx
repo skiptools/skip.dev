@@ -1,0 +1,137 @@
+---
+title: Feeds
+description: RSS and Atom feeds to follow Skip in your reader of choice.
+template: splash
+editUrl: false
+tableOfContents: false
+hero:
+  tagline: Track Skip in your feed reader of choice. Every Skip update — new blog posts, framework releases, tooling changes — is published as an RSS or Atom feed.
+---
+
+<style>{`.sl-anchor-link { display: none; }`}</style>
+
+<div class="feed-cards not-content">
+  <div class="feed-card">
+    <div class="feed-card-head">
+      <span class="feed-card-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4.44V7.5C12.84 7.5 20 14.66 20 23.5h3.06C23.06 12.97 14.53 4.44 4 4.44zm0 7.5v3.06c4.61 0 8.5 3.89 8.5 8.5H15.56C15.56 16.97 10.6 12 4 12zm2 7.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+      </span>
+      <h3>Blog</h3>
+    </div>
+    <p>Announcements, deep dives, and the monthly Skip newsletter. Every post on the Skip blog is delivered as RSS.</p>
+    <span class="feed-card-url">https://skip.dev/blog/rss.xml</span>
+    <a class="feed-card-cta" href="/blog/rss.xml">Subscribe <span aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="feed-card">
+    <div class="feed-card-head">
+      <span class="feed-card-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4.44V7.5C12.84 7.5 20 14.66 20 23.5h3.06C23.06 12.97 14.53 4.44 4 4.44zm0 7.5v3.06c4.61 0 8.5 3.89 8.5 8.5H15.56C15.56 16.97 10.6 12 4 12zm2 7.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+      </span>
+      <h3>Releases</h3>
+    </div>
+    <p>A single interleaved feed of every framework and tooling release — same data as the <a href="/releases/">Release Notes</a> page. Covers core, platform, and integration frameworks plus the <code>skip</code> and <code>skipstone</code> tooling repos.</p>
+    <span class="feed-card-url">https://skip.dev/releases/index.atom</span>
+    <a class="feed-card-cta" href="/releases/index.atom">Subscribe <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+## How to subscribe
+
+Paste either URL into any feed reader — NetNewsWire, Reeder, Inoreader, Feedly, Miniflux, or whatever else you use. Most readers will pick up the feed icon and title automatically.
+
+The release feed publishes `<icon>` and `<logo>` pointing at the Skip favicon, so it appears with the right avatar in your reader.
+
+<style>{`
+  .feed-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 3rem;
+  }
+  .feed-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border-radius: 1rem;
+    background: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    color: var(--sl-color-gray-2);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .feed-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--sl-color-accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+  .feed-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.875rem;
+  }
+  .feed-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.625rem;
+    background: rgba(255, 102, 0, 0.12);
+    color: #ff6600;
+    flex-shrink: 0;
+  }
+  .feed-card-head h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--sl-color-white);
+  }
+  .feed-card p {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--sl-color-gray-2);
+    flex: 1;
+  }
+  .feed-card p a {
+    color: var(--sl-color-accent-high);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .feed-card-url {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--sl-color-gray-3);
+    word-break: break-all;
+    font-family: var(--__sl-font-mono);
+  }
+  :root[data-theme='light'] .feed-card-url {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  .feed-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    align-self: flex-start;
+    padding: 0.55rem 1.1rem;
+    border-radius: 0.5rem;
+    background: var(--sl-color-accent);
+    color: var(--sl-color-white) !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: filter 0.15s ease, transform 0.1s ease;
+  }
+  .feed-card-cta:hover {
+    filter: brightness(1.15);
+  }
+  .feed-card-cta:active {
+    transform: translateY(1px);
+  }
+`}</style>
