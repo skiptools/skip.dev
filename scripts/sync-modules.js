@@ -117,13 +117,14 @@ This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github
   if (!fs.existsSync(modulesIndexDir)) fs.mkdirSync(modulesIndexDir, { recursive: true });
 
   const modTable = (mods) => {
-    return `| Module | Version |\n| :--- | :--- |\n` + 
+    return `| Module | Version |\n| :--- | :--- |\n` +
       mods.map(m => `| [${m.name}](/docs/modules/${m.repo}/) | <a href='https://github.com/${owner}/${m.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${m.repo}.svg?style=flat' /></a> |`).join('\n');
   }
 
   const modulesIndexContent = `---
 title: Skip Modules
 description: Documentation for Skip core, platform, and integration modules.
+editUrl: false
 ---
 
 Skip provides a wide range of modules that bring Swift and SwiftUI APIs to Android, as well as integration frameworks for popular third-party services.
@@ -151,6 +152,31 @@ ${modTable(integrationFrameworks)}
 
   fs.writeFileSync(path.join(modulesIndexDir, 'index.md'), modulesIndexContent);
   console.log(`✅ Generated modules index at ${path.join(modulesIndexDir, 'index.md')}`);
+
+  // Generate the samples index page
+  const samplesIndexDir = './src/content/docs/docs/samples';
+  if (!fs.existsSync(samplesIndexDir)) fs.mkdirSync(samplesIndexDir, { recursive: true });
+
+  const sampleTable = (apps) => {
+    return `| Sample | Version |\n| :--- | :--- |\n` +
+      apps.map(a => `| [${a.name}](/docs/samples/${a.repo}/) | <a href='https://github.com/${owner}/${a.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${a.repo}.svg?style=flat' /></a> |`).join('\n');
+  }
+
+  const samplesIndexContent = `---
+title: Skip Sample Apps
+description: A catalog of open-source sample apps demonstrating Skip features and patterns.
+editUrl: false
+---
+
+Skip ships a catalog of open-source sample apps. They illustrate the framework features, demonstrate cross-platform UI patterns, and serve as starting points for your own apps. Each sample builds for both iOS and Android from a single Swift codebase.
+
+${sampleTable(sampleApps)}
+
+<!-- This list is automatically generated from the [skip-repositories.js](https://github.com/skiptools/skip.dev/blob/main/skip-repositories.js) configuration. -->
+`;
+
+  fs.writeFileSync(path.join(samplesIndexDir, 'index.md'), samplesIndexContent);
+  console.log(`✅ Generated samples index at ${path.join(samplesIndexDir, 'index.md')}`);
 }
 
 processRepositories();

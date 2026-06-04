@@ -3,8 +3,9 @@ dist/
 # generated types
 .astro/
 
-# derived content on startup
-#src/content/docs/docs/modules/*/
+# these are auto-generated at site creation time by scripts/sync-modules.js
+src/content/docs/docs/modules/
+src/content/docs/docs/samples/
 
 # dependencies
 node_modules/
