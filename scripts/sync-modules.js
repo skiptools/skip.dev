@@ -49,9 +49,9 @@ const atomBuilder = new XMLBuilder({
 });
 
 // Parse a GitHub releases.atom feed. Returns { entries: [...] }.
-// Each entry exposes { raw, updated, title, link, contentHtml }.
-//   raw         — a self-contained <entry>…</entry> XML fragment, suitable
-//                 for splicing into the merged feed.
+// Each entry exposes { node, updated, title, link, contentHtml }.
+//   node        — the parsed entry object; mutate + pass to atomBuilder to
+//                 re-emit a self-contained <entry>…</entry> XML fragment.
 //   updated     — ISO-8601 timestamp of the release.
 //   title       — release title (typically the version tag, e.g. "1.9.2").
 //   link        — URL of the GitHub release page.
@@ -61,18 +61,35 @@ function parseAtomFeed(xml) {
   const feed = parsed.feed;
   if (!feed || !Array.isArray(feed.entry)) return { entries: [] };
 
-  const entries = feed.entry.map(en => {
-    const title = en.title ?? '';
-    const updated = en.updated ?? '';
-    const links = en.link || [];
+  const entries = feed.entry.map(node => {
+    const title = node.title ?? '';
+    const updated = node.updated ?? '';
+    const links = node.link || [];
     const altLink = links.find(l => l['@_rel'] === 'alternate') || links[0];
     const link = altLink ? altLink['@_href'] : '';
-    const content = en.content;
+    const content = node.content;
     const contentHtml = typeof content === 'string' ? content : (content?.['#text'] ?? '');
-    const raw = atomBuilder.build({ entry: en });
-    return { raw, updated, title, link, contentHtml };
+    return { node, updated, title, link, contentHtml };
   });
   return { entries };
+}
+
+// Re-serialize a parsed entry node, optionally rewriting the title and
+// prepending a header to the HTML content. Used by the merged feed builder
+// to disambiguate releases from different repos.
+function buildEntryXml(node, { title, contentPrefixHtml } = {}) {
+  // Clone so we don't mutate the shared parsed object.
+  const clone = JSON.parse(JSON.stringify(node));
+  if (title !== undefined) clone.title = title;
+  if (contentPrefixHtml) {
+    if (typeof clone.content === 'string') {
+      clone.content = contentPrefixHtml + clone.content;
+    } else if (clone.content) {
+      const existing = clone.content['#text'] ?? '';
+      clone.content['#text'] = contentPrefixHtml + existing;
+    }
+  }
+  return atomBuilder.build({ entry: clone });
 }
 
 // Fetch and parse a repo's releases.atom feed. Returns [] on any failure
@@ -329,18 +346,31 @@ ${omnibusBody}
   console.log(`✅ Generated omnibus release notes at ${path.join(releasesDir, 'index.md')} (${omnibusReleases.length} entries)`);
 
   // ── Merged Atom feed ──
-  // The feed is the raw interleaved entries wrapped in a single <feed> envelope.
-  // Each entry's original <id>/<link> identifies its source repo unambiguously.
+  // Each entry's <title> is rewritten to "<repo> <version>" and a "Repository:"
+  // header is prepended to the HTML body so feed readers can disambiguate
+  // releases coming from different repositories. <icon>/<logo> point at the
+  // site's SVG favicon so readers don't auto-detect the og:image as the feed
+  // avatar.
   const feedUpdated = omnibusReleases[0]?.updated || new Date().toISOString();
+  const mergedEntries = omnibusReleases.map(e => {
+    const repoLink = `https://github.com/${owner}/${e.repo}`;
+    const repoHeader = `<p><strong>Repository:</strong> <a href="${repoLink}">${owner}/${e.repo}</a></p>\n`;
+    return buildEntryXml(e.node, {
+      title: `${e.repo} ${e.title}`,
+      contentPrefixHtml: repoHeader,
+    });
+  });
   const mergedAtomContent = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
   <id>tag:skip.dev,2024:releases/merged</id>
   <link type="text/html" rel="alternate" href="https://skip.dev/releases/"/>
   <link type="application/atom+xml" rel="self" href="https://skip.dev/releases/index.atom"/>
-  <title>Skip — Merged Release Notes</title>
+  <title>Skip Release Notes</title>
   <subtitle>Releases interleaved across all Skip framework and tooling repositories.</subtitle>
+  <icon>https://skip.dev/favicon.svg</icon>
+  <logo>https://skip.dev/favicon.svg</logo>
   <updated>${feedUpdated}</updated>
-  ${omnibusReleases.map(e => '  ' + e.raw.replace(/\n/g, '\n  ')).join('\n')}
+  ${mergedEntries.map(raw => '  ' + raw.replace(/\n/g, '\n  ')).join('\n')}
 </feed>
 `;
 
