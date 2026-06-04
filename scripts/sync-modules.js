@@ -117,8 +117,8 @@ This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github
   if (!fs.existsSync(modulesIndexDir)) fs.mkdirSync(modulesIndexDir, { recursive: true });
 
   const modTable = (mods) => {
-    return `| Module | Version |\n| :--- | :--- |\n` +
-      mods.map(m => `| [${m.name}](/docs/modules/${m.repo}/) | <a href='https://github.com/${owner}/${m.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${m.repo}.svg?style=flat' /></a> |`).join('\n');
+    return `| Module | Version | Source Code |\n| :--- | :--- | ---: |\n` +
+      mods.map(m => `| [${m.name}](/docs/modules/${m.repo}/) | <a href='https://github.com/${owner}/${m.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${m.repo}.svg?style=flat' /></a> | <a href='https://github.com/${owner}/${m.repo}/'><img alt='CI' src='https://github.com/${owner}/${m.repo}/actions/workflows/ci.yml/badge.svg' /></a> |`).join('\n');
   }
 
   const modulesIndexContent = `---
@@ -158,8 +158,8 @@ ${modTable(integrationFrameworks)}
   if (!fs.existsSync(samplesIndexDir)) fs.mkdirSync(samplesIndexDir, { recursive: true });
 
   const sampleTable = (apps) => {
-    return `| Sample | Version |\n| :--- | :--- |\n` +
-      apps.map(a => `| [${a.name}](/docs/samples/${a.repo}/) | <a href='https://github.com/${owner}/${a.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${a.repo}.svg?style=flat' /></a> |`).join('\n');
+    return `| Sample | Version | Source Code |\n| :--- | :--- | ---: |\n` +
+      apps.map(a => `| [${a.name}](/docs/samples/${a.repo}/) | <a href='https://github.com/${owner}/${a.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${a.repo}.svg?style=flat' /></a> | <a href='https://github.com/${owner}/${a.repo}/'><img alt='CI' src='https://github.com/${owner}/${a.repo}/actions/workflows/skipapp.yml/badge.svg' /></a> |`).join('\n');
   }
 
   const samplesIndexContent = `---
