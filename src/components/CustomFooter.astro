@@ -117,16 +117,49 @@ const socials: { name: string; href: string; icon: string }[] = [
     box-sizing: border-box;
   }
 
-  /* Zero the bottom padding of the ancestors (Starlight's `<main>` and
-     `.content-panel`) when this footer is present, so the footer sits flush
-     with the bottom of the page. Scoped to pages without a sidebar — that's
-     exactly the set of pages where the footer is visible (see the
-     `display: none` rule below). */
+  /* Make the footer flush with the bottom of the viewport on pages where it's
+     visible (splash/non-sidebar pages — see the `display: none` rule below).
+     The page is a column flex container with `min-height: 100vh`, but
+     Starlight doesn't grow `.main-frame` to fill it, so short pages leave a
+     gap below `<main>`. We:
+       1. zero the bottom padding of `<main>` and the enclosing `.content-panel`
+          so they don't push content above the footer's bottom edge,
+       2. make `.main-frame` → `.main-pane` → `<main>` → `.content-panel` each
+          stretch via flex column, and
+       3. give `.site-footer` `margin-top: auto` so it lands at the bottom of
+          the column when the content above it is shorter than the viewport. */
   :global(html:not([data-has-sidebar]) main:has(> .content-panel > .sl-container > .site-footer)) {
     padding-bottom: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   :global(html:not([data-has-sidebar]) .content-panel:has(> .sl-container > .site-footer)) {
     padding-bottom: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  :global(html:not([data-has-sidebar]) .content-panel:has(> .sl-container > .site-footer) > .sl-container) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  :global(html:not([data-has-sidebar]) .main-frame:has(.site-footer)),
+  :global(html:not([data-has-sidebar]) .main-frame:has(.site-footer) > div) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  :global(html:not([data-has-sidebar]) .main-pane:has(.site-footer)) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-footer {
+    margin-top: auto;
   }
 
   /* Hide the site footer on docs pages that have the left Starlight sidebar.

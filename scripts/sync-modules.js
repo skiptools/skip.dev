@@ -231,6 +231,7 @@ This ${modType} is available at [github.com/${owner}/${mod.repo}](https://github
 title: Skip Modules
 description: Documentation for Skip core, platform, and integration modules.
 editUrl: false
+tableOfContents: false
 ---
 
 Skip provides a wide range of modules that bring Swift and SwiftUI APIs to Android, as well as integration frameworks for popular third-party services.
@@ -263,15 +264,26 @@ ${modTable(integrationFrameworks)}
   const samplesIndexDir = './src/content/docs/docs/samples';
   if (!fs.existsSync(samplesIndexDir)) fs.mkdirSync(samplesIndexDir, { recursive: true });
 
+  // Most sample apps publish their CI badge from a shared `skipapp.yml`
+  // workflow. A handful use a differently-named workflow file in their repo.
+  const sampleCiWorkflow = (repo) => {
+    switch (repo) {
+      case 'skipapp-showcase':            return 'showcase-fuse.yml';
+      case 'skipapp-travelposters-native': return 'ci.yml';
+      default:                             return 'skipapp.yml';
+    }
+  };
+
   const sampleTable = (apps) => {
     return `| Sample | Version | Source Code |\n| :--- | :--- | ---: |\n` +
-      apps.map(a => `| [${a.name}](/docs/samples/${a.repo}/) | <a href='https://github.com/${owner}/${a.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${a.repo}.svg?style=flat' /></a> | <a href='https://github.com/${owner}/${a.repo}/'><img alt='CI' src='https://github.com/${owner}/${a.repo}/actions/workflows/skipapp.yml/badge.svg' /></a> |`).join('\n');
+      apps.map(a => `| [${a.name}](/docs/samples/${a.repo}/) | <a href='https://github.com/${owner}/${a.repo}/releases'><img alt='Release' src='https://img.shields.io/github/v/release/${owner}/${a.repo}.svg?style=flat' /></a> | <a href='https://github.com/${owner}/${a.repo}/'><img alt='CI' src='https://github.com/${owner}/${a.repo}/actions/workflows/${sampleCiWorkflow(a.repo)}/badge.svg' /></a> |`).join('\n');
   }
 
   const samplesIndexContent = `---
 title: Skip Sample Apps
 description: A catalog of open-source sample apps demonstrating Skip features and patterns.
 editUrl: false
+tableOfContents: false
 ---
 
 Skip ships a catalog of open-source sample apps. They illustrate the framework features, demonstrate cross-platform UI patterns, and serve as starting points for your own apps. Each sample builds for both iOS and Android from a single Swift codebase.

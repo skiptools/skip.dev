@@ -53,6 +53,21 @@
 	--sl-color-black: #ffffff;
 }
 
+/* Body text uses SF Pro Text (with system fallbacks). The
+   `--typography-html-font` variable allows downstream consumers to override
+   the entire stack with a single token. Headings switch to SF Pro Display
+   below for a more inviting display face. */
+html,
+body {
+	font-family: var(--typography-html-font, "SF Pro Text", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica", "Arial", sans-serif);
+	font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--typography-html-font, "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica", "Arial", sans-serif);
+	font-weight: 600;
+}
+
 /* Override hero for when there is no image */
 .hero {
   grid-template-columns: 1fr;
