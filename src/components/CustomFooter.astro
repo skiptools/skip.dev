@@ -117,6 +117,18 @@ const socials: { name: string; href: string; icon: string }[] = [
     box-sizing: border-box;
   }
 
+  /* Zero the bottom padding of the ancestors (Starlight's `<main>` and
+     `.content-panel`) when this footer is present, so the footer sits flush
+     with the bottom of the page. Scoped to pages without a sidebar — that's
+     exactly the set of pages where the footer is visible (see the
+     `display: none` rule below). */
+  :global(html:not([data-has-sidebar]) main:has(> .content-panel > .sl-container > .site-footer)) {
+    padding-bottom: 0;
+  }
+  :global(html:not([data-has-sidebar]) .content-panel:has(> .sl-container > .site-footer)) {
+    padding-bottom: 0;
+  }
+
   /* Hide the site footer on docs pages that have the left Starlight sidebar.
      The fixed sidebar and TOC would overlap the footer and cause horizontal
      overflow; suppressing it on those pages is the cleanest fix. */
