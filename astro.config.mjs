@@ -145,6 +145,7 @@ export default defineConfig({
             'docs/faq',
             'compare',
             'docs/glossary',
+            'releases',
           ],
         },
         {

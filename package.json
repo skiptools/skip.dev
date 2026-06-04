@@ -28,6 +28,7 @@
     "starlight-links-validator": "^0.24.0"
   },
   "devDependencies": {
-    "@rollup/plugin-yaml": "^4.1.2"
+    "@rollup/plugin-yaml": "^4.1.2",
+    "fast-xml-parser": "^5.8.0"
   }
 }

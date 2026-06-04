@@ -6,6 +6,10 @@ dist/
 # these are auto-generated at site creation time by scripts/sync-modules.js
 src/content/docs/docs/modules/
 src/content/docs/docs/samples/
+src/content/docs/releases
+
+# generated RSS release atom feed
+public/releases/
 
 # dependencies
 node_modules/
