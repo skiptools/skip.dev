@@ -215,6 +215,60 @@ To import everything in a Kotlin package, use `import com.xyz.__` instead of Kot
 
 To use a Kotlin or Java package in *compiled* Swift, you have to use [bridging](/docs/modes/#bridging).
 
+---
+
+## Overriding Dependency Versions {#overrides}
+
+The Skip frameworks pin specific versions of their underlying Android libraries through a Gradle [version catalog](https://docs.gradle.org/current/userguide/version_catalogs.html) that the build plugin aggregates into `settings.gradle.kts`. To use a different version of one of those libraries — for example, to pull in a newer Jetpack Compose release before Skip itself adopts it — re-declare the matching `version("…")` entry in your own module's `Skip/skip.yml`. Your value takes precedence over the framework default.
+
+As a concrete example, [SkipModel](https://source.skip.tools/skip-model/blob/main/Sources/SkipModel/Skip/skip.yml) pins the Jetpack Compose BOM (Bill of Materials) like this:
+
+```yml
+settings:
+  contents:
+    - block: 'dependencyResolutionManagement'
+      contents:
+        - block: 'versionCatalogs'
+          contents:
+            - block: 'create("libs")'
+              contents:
+                - 'version("androidx-compose-bom", "2026.05.01")'
+                - 'library("androidx-compose-bom", "androidx.compose", "compose-bom").versionRef("androidx-compose-bom")'
+```
+
+To pin a different Compose BOM version in your app, add a matching `version("androidx-compose-bom", …)` entry to your app module's `Skip/skip.yml`:
+
+```yml
+settings:
+  contents:
+    - block: 'dependencyResolutionManagement'
+      contents:
+        - block: 'versionCatalogs'
+          contents:
+            - block: 'create("libs")'
+              contents:
+                - 'version("androidx-compose-bom", "2026.07.00")'
+```
+
+The version you specify in the override will take precedence: every Compose library that resolves through `libs.androidx.compose.bom` picks up the new BOM. You only need to redeclare the `version(…)` you want to change; the matching `library(…)` entry from the framework keeps working because it references the alias by name.
+
+The same pattern works for any alias declared by a Skip framework. For instance, to raise or lower the default `minSdk` and `compileSdk` levels declared in [SkipUnit](https://source.skip.tools/skip-unit/blob/main/Sources/SkipUnit/Skip/skip.yml):
+
+```yml
+settings:
+  contents:
+    - block: 'dependencyResolutionManagement'
+      contents:
+        - block: 'versionCatalogs'
+          contents:
+            - block: 'create("libs")'
+              contents:
+                - 'version("android-sdk-min", "26")'
+                - 'version("android-sdk-compile", "35")'
+```
+
+Browse the `Skip/skip.yml` file for each Skip framework ([SkipUnit](https://source.skip.tools/skip-unit/blob/main/Sources/SkipUnit/Skip/skip.yml), [SkipModel](https://source.skip.tools/skip-model/blob/main/Sources/SkipModel/Skip/skip.yml), [SkipUI](https://source.skip.tools/skip-ui/blob/main/Sources/SkipUI/Skip/skip.yml), and so on) to find the version aliases available for override (e.g. `kotlin`, `kotlin-coroutines`, `android-gradle-plugin`, and the various AndroidX libraries).
+
 ## Dependencies on Separate iOS and Android Libraries {#implementation}
 
 You often want to use functionality that has existing libraries for both iOS and Android, but does not yet have a cross-platform library available. Most popular third-party frameworks publish both iOS and Android versions, and a plethora of other common functionality is available from independent developers on both platforms. To access this functionality, you have several options:
