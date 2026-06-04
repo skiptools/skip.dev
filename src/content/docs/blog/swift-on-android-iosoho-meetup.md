@@ -11,7 +11,7 @@ Last month I gave a talk on Swift on Android at the [iOSoho meetup](https://www.
 
 The evening was a Kotlin and Swift cross-platform doubleheader. Clinton Teegarden, a Distinguished Engineer at Capital One, opened with a deep dive into Kotlin Multiplatform and Compose Multiplatform. He built a Flappy Bird style game from scratch to walk through how shared UI rendering works in CMP, with detours through iOS interop and architectural gotchas. Hearing how the JetBrains stack tackles the cross-platform problem made for a useful contrast with the Swift-first approach we take at Skip.
 
-My segment came next, and the talk traced the path of Swift on Android from its earliest community origins through to the official [Swift SDK for Android](https://www.swift.org/blog/swift-6.3-released/#android) that shipped with [Swift 6.3](/blog/swift-6.3-android-support/), the culmination of over ten years of community effort. I worked through the full stack:
+My segment came next, and the talk traced the path of Swift on Android from its earliest community origins through to the official [Swift SDK for Android](https://www.swift.org/blog/swift-6.3-released/#android) that shipped with [Swift 6.3](/blog/swift-63-android-support/), the culmination of over ten years of community effort. I worked through the full stack:
 
 - the lowest-level manual native interaction with the Android NDK and SDK
 - the synthesized Java bindings produced by the [swift-java](https://github.com/swiftlang/swift-java) project
