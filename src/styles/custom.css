@@ -68,6 +68,79 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 600;
 }
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Blockquotes
+   Make block quotes read like actual quotations from other sources rather
+   than indented paragraphs: a large decorative opening quotation mark, a
+   serif italic body, generous padding, accent-coloured left rule, and a
+   soft tinted background. Scoped to `.sl-markdown-content` so it does not
+   affect Starlight asides or other components that happen to use
+   <blockquote>.
+   ────────────────────────────────────────────────────────────────────────── */
+.sl-markdown-content blockquote:not(:where(.not-content *)) {
+	position: relative;
+	margin: 1.75rem 0;
+	padding: 1.25rem 1.5rem 1.25rem 2.75rem;
+	border-inline-start: 4px solid var(--sl-color-accent);
+	border-radius: 0 0.5rem 0.5rem 0;
+	background: color-mix(in srgb, var(--sl-color-accent) 6%, transparent);
+	color: var(--sl-color-gray-1);
+	font-style: italic;
+	font-family: Georgia, "Times New Roman", "Iowan Old Style", "Apple Garamond", "Palatino", serif;
+	font-size: 1.0625em;
+	line-height: 1.6;
+}
+
+/* Large decorative opening quote mark in the upper-left, behind the text. */
+.sl-markdown-content blockquote:not(:where(.not-content *))::before {
+	content: "\201C"; /* LEFT DOUBLE QUOTATION MARK */
+	position: absolute;
+	top: -0.25rem;
+	left: 0.5rem;
+	font-family: Georgia, "Times New Roman", serif;
+	font-style: normal;
+	font-size: 3.75rem;
+	line-height: 1;
+	color: var(--sl-color-accent);
+	opacity: 0.35;
+	pointer-events: none;
+}
+
+/* The paragraph(s) inside should sit cleanly without paragraph margins on
+   the first/last child so the padding above controls the spacing. */
+.sl-markdown-content blockquote:not(:where(.not-content *)) > :first-child {
+	margin-top: 0;
+}
+.sl-markdown-content blockquote:not(:where(.not-content *)) > :last-child {
+	margin-bottom: 0;
+}
+
+/* Inline code and links inside a quote still read clearly — strip the
+   italic where it would look wrong. */
+.sl-markdown-content blockquote:not(:where(.not-content *)) :is(code, kbd, samp) {
+	font-style: normal;
+}
+
+/* Footer-style attribution: any `<cite>` element inside the quote becomes a
+   right-aligned "— Author, Source" line. */
+.sl-markdown-content blockquote:not(:where(.not-content *)) cite {
+	display: block;
+	margin-top: 0.75rem;
+	font-style: normal;
+	font-family: var(--typography-html-font, "SF Pro Text", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif);
+	font-size: 0.875em;
+	text-align: end;
+	color: var(--sl-color-gray-3);
+}
+.sl-markdown-content blockquote:not(:where(.not-content *)) cite::before {
+	content: "— ";
+}
+
+:root[data-theme='light'] .sl-markdown-content blockquote:not(:where(.not-content *)) {
+	background: color-mix(in srgb, var(--sl-color-accent) 8%, transparent);
+	color: var(--sl-color-gray-2);
+}
+
 /* Override hero for when there is no image */
 .hero {
   grid-template-columns: 1fr;
