@@ -1,0 +1,49 @@
+# PROVENANCE
+# - Skip-built: added at the direction of the Skip team, 2026-06-11. No
+#   public announcement or open-source repo links LiveTrackz to Skip; the
+#   app's source is not public.
+# - Skip mode: not publicly disclosed. Mode badge omitted. Update if/when
+#   the team confirms which Skip mode (Lite / Fuse / Bridge / partial) is
+#   in use.
+# - iOS app first released August 2019 (bundle id com.AdedejiToki.LiveTrackz);
+#   Android applicationId is com.livetrackz.android.
+name: LiveTrackz
+developer: Four-Four Software Inc.
+tagline: Loops & clicktracks for your live sets
+description: |
+  LiveTrackz gives performing musicians a library of more than 2,000 loops and click tracks for their live sets. Built with worship teams and live bands in mind, the app acts as a reliable timing reference that keeps the whole band in sync, with multitrack control for adjusting individual instrument levels and tailoring the sound of every loop.
+
+  Musicians can create and share setlists with bandmates in real time, join teams through invite links, and submit free requests for loops they can't find in the library. Genre-filtered search and tap-to-start playback make it practical to use on stage, and subscribers can upload their own loops.
+category: Music
+releaseYear: 2019
+tags:
+  - Loops
+  - Click tracks
+  - Live performance
+  - Worship
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/00/1b/ee/001bee34-a256-72de-f9ab-b7fe77ef6adb/AppIcon-V2-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/livetrackz/id1469949984
+  playStore: https://play.google.com/store/apps/details?id=com.livetrackz.android
+  website: https://livetrackz.com
+ratings:
+  appStore:
+    score: 4.9
+    count: 407
+  playStore:
+    score: 4.2
+    count: 134
+    downloads: 10000
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/12/8a/b2/128ab2b4-13c5-eb84-4805-162b4968cbf7/a527408a-5b71-4641-be71-519f558aa1c1_0.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/e9/af/e1/e9afe1fe-e397-e0c7-e15e-fb4c3e3ef5ad/17fb2cd5-8dbb-4c31-9604-0f52ef01bf61_iphone_5.5_1.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/02/a8/fe/02a8feb7-f5de-a724-8041-2795d5fbe3d4/f5539bd6-65fa-4f27-9be6-8f7e96694304_2.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f0/ad/ac/f0adacad-d630-ddd6-890d-dd719160e9e4/67945ada-4fac-4e1d-9906-5f688faeb52d_3.png/392x696bb.png
+    - url: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/60/4d/17/604d17f8-a25b-a569-3c82-eb45e0055b6c/538c20c5-311f-4402-bf94-bdf54f907f2c_4.png/392x696bb.png
+  android:
+    - url: https://play-lh.googleusercontent.com/V6KV8OvOCXpr9offOWgHWGKuh4l7xSt17nQjX3e-3LjVuK4G3qF4okdb9Z07VJFBJUIM=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/1PQibj9OtQ1TRWFlXoNz8bihYxS2g9jdzJK_p0G4V-r3QJb_FR5oA3IGkkLvr4wxbBeC=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/8jA6aVd0i2w88RsWqZLm88tStZlQH5Cc9K_GD290bLItLTEAZl-dmyUG2xCaTAB73oM=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/7L0R7L9AvB_r8MtwXlTShdZ4MJi4L75Y9PdFbdaCJQGe5lYkxTkqXx18H5MdyVGUQT9k=w526-h296-rw
+    - url: https://play-lh.googleusercontent.com/W2UOJ0P08UUHqIuJPrJ4q0YLMstpCmii12xNV3rKobnkU7QBG5vQtOhcd2USbH8UdUg=w526-h296-rw
