@@ -213,28 +213,6 @@ const total = apps.length;
     color: var(--sl-color-gray-3);
   }
 
-  /* Skip-mode badge */
-  :global(.gallery-card-mode) {
-    margin-top: auto;
-    align-self: center;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  :global(.gallery-card-mode[data-mode="SkipFuse"])    { background: rgba(74,222,128,0.15);  color: #4ade80; }
-  :global(.gallery-card-mode[data-mode="SkipLite"])    { background: rgba(251,191,36,0.15); color: #fbbf24; }
-  :global(.gallery-card-mode[data-mode="SkipBridge"])  { background: rgba(96,165,250,0.15); color: #60a5fa; }
-  :global(.gallery-card-mode[data-mode="partial"])     { background: rgba(192,132,252,0.15); color: #c084fc; }
-
-  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="SkipFuse"])   { color: #16a34a; }
-  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="SkipLite"])   { color: #b45309; }
-  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="SkipBridge"]) { color: #2563eb; }
-  :root[data-theme='light'] :global(.gallery-card-mode[data-mode="partial"])    { color: #9333ea; }
-
   /* CTA */
   .gallery-cta {
     margin: 4rem 0 2rem;

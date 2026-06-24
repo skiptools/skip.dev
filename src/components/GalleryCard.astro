@@ -22,10 +22,4 @@ const initial = data.name.replace(/[^A-Za-z]/, '').slice(0, 1).toUpperCase() || 
 
   <h3 class="gallery-card-name">{data.name}</h3>
   {data.tagline && <p class="gallery-card-tagline">{data.tagline}</p>}
-
-  {data.mode && (
-    <span class="gallery-card-mode" data-mode={data.mode}>
-      {data.mode}
-    </span>
-  )}
 </a>

@@ -53,7 +53,6 @@ const allShots = [
 
   <div class="gallery-detail-meta-row">
     {data.category && <span class="gallery-detail-chip">{data.category}</span>}
-    {data.mode && <span class="gallery-detail-chip" data-mode={data.mode}>{data.mode}</span>}
     {data.releaseYear && <span class="gallery-detail-chip">Since {data.releaseYear}</span>}
     {data.tags.map((tag) => <span class="gallery-detail-chip gallery-detail-tag">{tag}</span>)}
   </div>
@@ -121,8 +120,6 @@ const allShots = [
         <dd>{data.developer}</dd>
 
         {data.category && (<><dt>Category</dt><dd>{data.category}</dd></>)}
-
-        {data.mode && (<><dt>Skip mode</dt><dd>{data.mode}</dd></>)}
 
         {data.releaseYear && (<><dt>Released</dt><dd>{data.releaseYear}</dd></>)}
 
@@ -303,16 +300,6 @@ const allShots = [
   :root[data-theme='light'] .gallery-detail-chip {
     color: var(--sl-color-gray-3);
   }
-
-  .gallery-detail-chip[data-mode="SkipFuse"] { background: rgba(74,222,128,0.15); color: #4ade80; }
-  .gallery-detail-chip[data-mode="SkipLite"] { background: rgba(251,191,36,0.15); color: #fbbf24; }
-  .gallery-detail-chip[data-mode="SkipBridge"] { background: rgba(96,165,250,0.15); color: #60a5fa; }
-  .gallery-detail-chip[data-mode="partial"] { background: rgba(192,132,252,0.15); color: #c084fc; }
-
-  :root[data-theme='light'] .gallery-detail-chip[data-mode="SkipFuse"] { color: #16a34a; }
-  :root[data-theme='light'] .gallery-detail-chip[data-mode="SkipLite"] { color: #b45309; }
-  :root[data-theme='light'] .gallery-detail-chip[data-mode="SkipBridge"] { color: #2563eb; }
-  :root[data-theme='light'] .gallery-detail-chip[data-mode="partial"] { color: #9333ea; }
 
   .gallery-detail-tag {
     background: transparent;

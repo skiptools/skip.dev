@@ -1,0 +1,52 @@
+# PROVENANCE
+# - Skip-built: added at the direction of the Skip team, 2026-06-24. No
+#   public announcement or open-source repo links Polymarket to Skip; the
+#   app's source is not public.
+# - Skip mode: not publicly disclosed. Mode badge omitted. Update if/when
+#   the team confirms which Skip mode (Lite / Fuse / Bridge / partial) is
+#   in use.
+# - iOS app first released 2024-09-24 (App Store id 6648798962, seller
+#   Blockratize Inc); Android applicationId is com.polymarket.android.
+name: Polymarket
+developer: Polymarket
+tagline: Trade sports, politics, & more
+description: |
+  Polymarket is a prediction market where people trade on the outcomes of real-world events across sports, politics, news, tech, and culture. Prices track the odds — buy shares in an outcome you believe in for as little as a few cents, trade out at any time, or hold to settlement and cash in if you're right.
+
+  The app brings live in-game trading, real-time prices, the tightest spreads, and instant cash-outs to iPhone and Android. Polymarket is CFTC-regulated and available to adults across the United States.
+category: Finance
+releaseYear: 2024
+tags:
+  - Prediction markets
+  - Trading
+  - Sports
+  - Politics
+icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/50/6f/46/506f465f-9acd-1389-978f-1b52bc075de2/AppIcon2-0-1x_U007ephone-0-1-0-sRGB-85-220-0.png/512x512bb.jpg
+links:
+  appStore: https://apps.apple.com/us/app/polymarket/id6648798962
+  playStore: https://play.google.com/store/apps/details?id=com.polymarket.android
+  website: https://polymarket.com
+ratings:
+  appStore:
+    score: 4.6
+    count: 36298
+  playStore:
+    score: 3.8
+    count: 7435
+    downloads: 500000
+screenshots:
+  ios:
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/44/7a/b3/447ab34b-2746-4272-6f89-d89e9dd63147/1._Trade.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f8/3b/a1/f83ba12e-4289-3951-09f8-55f3bc2650ad/2._Offer.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/ee/04/85/ee048530-3c7a-33ef-4716-a4bc078a9cce/3._Live.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f4/40/be/f440be1e-b067-1887-4191-0a2b4dd87fcb/4._Markets.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/a4/44/7f/a4447fb2-2d47-ff13-bbb0-bdc2f18a79fa/5._Cash_out.png/460x996bb.webp
+    - url: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/5a/d6/44/5ad644ac-47a1-e006-af19-5209c7dfd1d5/6._Legal.png/460x996bb.webp
+  android:
+    - url: https://play-lh.googleusercontent.com/eX8dcIwZAQkMDt9gzBepYiJMcXeICNb0F4-pu31h1Mx9zGdy3ZG-jkDRe9HfrVnIDt5Jzq93lcATnusbJvfMWQ=w526-h296
+    - url: https://play-lh.googleusercontent.com/KxAZzFqax4BCFnkXej-O4K7NXWTdoSEhhNvHpLWZyryR9QIIwIto8cO32NFa6U83whnqfvgV8HusD7JUnWdvAzE=w526-h296
+    - url: https://play-lh.googleusercontent.com/M5R47GjruQQ2uUqMlWbuFzvExpynCw-8K7_Xto5KQVSL0JRqKRjNW8t1NEW0qM2Fi07VyjoYyyYAZ3k1pmUBSw0=w526-h296
+    - url: https://play-lh.googleusercontent.com/qOvdhCuO_hImjv0w1pCqwFESmNwpRsPUdAfKj6ehjFCLybTIY24VchjeDOKZHu4HzwdLEn_GLhrY8VCkz_tT=w526-h296
+    - url: https://play-lh.googleusercontent.com/rC5wtQezqTO3FxDbDzMCvkBQnfqX-Cfuzn0N_ExRu8kwxicjcYjFOoSBHU-OwrQAFaZqMw0jQ1osKtOkt7GD=w526-h296
+    - url: https://play-lh.googleusercontent.com/uPWNNYejLTU_tiBcDX3WRypf_fOHB4SH031yLXgnWoyfabd07jBYbia4XljGu4t_dHR7Lh53w3jLbtnVCGxX4Jk=w526-h296
+    - url: https://play-lh.googleusercontent.com/VJmn4lU_H6w_8weSMUHEn-YBjPOn8ssatMjGAefbnjmStVREYUappiIvQm61me0i1e7SMyz26wKnGOc6FILX=w526-h296
