@@ -69,15 +69,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Blockquotes
+   Blockquotes — opt-in "fancy quote" styling
    Make block quotes read like actual quotations from other sources rather
    than indented paragraphs: a large decorative opening quotation mark, a
    serif italic body, generous padding, accent-coloured left rule, and a
-   soft tinted background. Scoped to `.sl-markdown-content` so it does not
-   affect Starlight asides or other components that happen to use
-   <blockquote>.
+   soft tinted background.
+
+   OPT-IN: this only applies to blockquotes inside a `.fancy-quotes` container,
+   so ordinary markdown blockquotes (e.g. documentation callouts, which should
+   use Starlight asides instead) are left unstyled. To use it, wrap the relevant
+   markdown content in a div (blank lines around the markdown are required so the
+   blockquote inside is still parsed):
+
+       <div class="fancy-quotes">
+
+       > a real quotation …
+
+       </div>
    ────────────────────────────────────────────────────────────────────────── */
-.sl-markdown-content blockquote:not(:where(.not-content *)) {
+.fancy-quotes blockquote:not(:where(.not-content *)) {
 	position: relative;
 	margin: 1.75rem 0;
 	padding: 1.25rem 1.5rem 1.25rem 2.75rem;
@@ -92,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Large decorative opening quote mark in the upper-left, behind the text. */
-.sl-markdown-content blockquote:not(:where(.not-content *))::before {
+.fancy-quotes blockquote:not(:where(.not-content *))::before {
 	content: "\201C"; /* LEFT DOUBLE QUOTATION MARK */
 	position: absolute;
 	top: -0.25rem;
@@ -108,22 +118,22 @@ h1, h2, h3, h4, h5, h6 {
 
 /* The paragraph(s) inside should sit cleanly without paragraph margins on
    the first/last child so the padding above controls the spacing. */
-.sl-markdown-content blockquote:not(:where(.not-content *)) > :first-child {
+.fancy-quotes blockquote:not(:where(.not-content *)) > :first-child {
 	margin-top: 0;
 }
-.sl-markdown-content blockquote:not(:where(.not-content *)) > :last-child {
+.fancy-quotes blockquote:not(:where(.not-content *)) > :last-child {
 	margin-bottom: 0;
 }
 
 /* Inline code and links inside a quote still read clearly — strip the
    italic where it would look wrong. */
-.sl-markdown-content blockquote:not(:where(.not-content *)) :is(code, kbd, samp) {
+.fancy-quotes blockquote:not(:where(.not-content *)) :is(code, kbd, samp) {
 	font-style: normal;
 }
 
 /* Footer-style attribution: any `<cite>` element inside the quote becomes a
    right-aligned "— Author, Source" line. */
-.sl-markdown-content blockquote:not(:where(.not-content *)) cite {
+.fancy-quotes blockquote:not(:where(.not-content *)) cite {
 	display: block;
 	margin-top: 0.75rem;
 	font-style: normal;
@@ -132,11 +142,11 @@ h1, h2, h3, h4, h5, h6 {
 	text-align: end;
 	color: var(--sl-color-gray-3);
 }
-.sl-markdown-content blockquote:not(:where(.not-content *)) cite::before {
+.fancy-quotes blockquote:not(:where(.not-content *)) cite::before {
 	content: "— ";
 }
 
-:root[data-theme='light'] .sl-markdown-content blockquote:not(:where(.not-content *)) {
+:root[data-theme='light'] .fancy-quotes blockquote:not(:where(.not-content *)) {
 	background: color-mix(in srgb, var(--sl-color-accent) 8%, transparent);
 	color: var(--sl-color-gray-2);
 }

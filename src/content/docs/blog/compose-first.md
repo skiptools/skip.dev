@@ -7,6 +7,8 @@ author: the Skip Team
 permalink: /blog/compose-first/
 ---
 
+<div class="fancy-quotes">
+
 ## Compose-First Android Development
 
 Last week at Google I/O, the Android team announced (to audience cheers[^wniavid]) that _all_ new Android UI will be Jetpack Compose going forward. The [_Android is Compose-first_](https://developer.android.com/develop/ui/compose/first) page on the developer site now states[^composefirst]:
@@ -84,3 +86,5 @@ We at Skip have always said:
 These two declarative state-driven reactive toolkits are aligned in theory, they just happen to be drastically different in implementation. At its essence, all Skip does is bridge the divide, allowing you to create a single unified codebase that targets both native toolkits without having to write — and maintain — your app twice.
 
 We are excited about what is coming. We will be watching the keynote and "State of the Union" with the rest of you, and we will be ready to write about whatever lands. The one thing we will _not_ have to write about is "when will Skip support this." We already have the answer: day one, now and forever.
+
+</div>

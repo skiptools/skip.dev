@@ -3,7 +3,7 @@ title: Testing
 permalink: /docs/testing/
 ---
 
-Skip provides several ways to test your code on Android, depending on whether you are working with [Skip Lite](/docs/modes/#lite) (transpiled Swift-to-Kotlin) or [Skip Fuse](/docs/modes/#fuse) (natively compiled Swift). Each approach involves different tradeoffs around speed, API access, and how closely the test environment matches a real Android device.
+Skip builds and runs your Swift tests on both platforms from a single command, letting you confirm that your code behaves the same on Apple platforms and on Android. The primary command is **`skip test`**, and it works the same way for both [Skip Lite](/docs/modes/#lite) (Swift transpiled to Kotlin) and [Skip Fuse](/docs/modes/#fuse) (Swift compiled natively for Android) modules.
 
 <div class="diagram-vector">
 
@@ -11,13 +11,76 @@ Skip provides several ways to test your code on Android, depending on whether yo
 
 </div>
 
-## Skip Lite Testing
+## `skip test`
 
-Skip Lite transpiles your Swift source into Kotlin, and your XCTest test cases into JUnit tests. This means your tests run as standard JUnit on the Android side, which plugs into the well-established Gradle testing infrastructure.
+From your package directory, run:
 
-The transpiled tests are driven by a test harness file called `XCSkipTests.swift`. If your test target does not already contain a file with this name, the Skip build plugin will auto-generate one during the build. This means that for most projects, you do not need to create or maintain this file yourself. Just run `swift test` and the harness is created for you.
+```shell
+skip test
+```
 
-If you need to customize the test harness (for example, to specify a device target or adjust the Gradle task), you can add your own `XCSkipTests.swift` to your test target and the build plugin will use it instead of generating one. A typical custom harness looks like this:
+Skip runs your test suite on both sides — natively on the host (typically your Mac, shown as **Darwin (macOS)**; Linux is also supported, e.g. in CI) and on Android — and prints a side-by-side parity report:
+
+```
+| Test       | Case         | Darwin (macOS) | Android (Robolectric) |
+| ---------- | ------------ | -------------- | --------------------- |
+| MathTests  | testAdd()    | PASS (0.00s)   | PASS (0.01s)          |
+| MathTests  | testDivide() | PASS (0.01s)   | PASS (0.02s)          |
+|            |              | 100%           | 100%                  |
+```
+
+Each test is matched across platforms and reported with its result and run time, so a portability bug — a test that passes on Darwin but fails on Android — stands out immediately.
+
+The same `skip test` command works for every module mode:
+
+- **Skip Lite** modules have their XCTest and Swift Testing cases transpiled into Kotlin/JUnit and run on the JVM.
+- **Skip Fuse** modules — including `mode: native` modules — have their test cases compiled natively for Android and run directly, driven through the same Gradle test pipeline.
+
+:::note
+**Native module testing now works through `skip test`.** Testing a natively-compiled Skip Fuse module used to require the separate `skip android test` command. That is no longer necessary for most projects: `skip test` builds and runs native test targets on Android for you. The older command is described under [Direct on-device testing with `skip android test`](#direct-on-device-testing-with-skip-android-test) at the end of this page.
+:::
+
+In Xcode, the same tests run from the standard test action (which invokes `swift test` under the hood), so the results appear as ordinary XCTest outcomes in the test navigator and in CI.
+
+### Where the Android tests run
+
+By default, the Android side runs locally on the host with [Robolectric](https://developer.android.com/training/testing/local-tests/robolectric), which simulates an Android environment on the host JVM. No emulator or device is involved, which makes it the fastest option and the right default for everyday development. Robolectric provides many framework APIs (`Context`, `SharedPreferences`, resources, and so on) — enough for the large majority of unit tests.
+
+For higher fidelity, run against a connected emulator or device by setting `ANDROID_SERIAL`:
+
+```shell
+ANDROID_SERIAL=emulator-5554 skip test
+```
+
+Skip then runs the tests as [instrumented tests](https://developer.android.com/training/testing/instrumented-tests) on a real Android runtime, with the full framework available. This is slower than Robolectric but is the most accurate representation of production behavior. Use `adb devices` to list device IDs, and you can set `ANDROID_SERIAL` in your Xcode scheme's Run action.
+
+![Configuring running tests on emulator in Xcode](https://assets.skip.dev/screens/xcode-testing-scheme-emulator.png)
+
+Robolectric is close to Android but not identical. Notably, `#if os(Android)` is `false` under Robolectric because the code runs on the host JVM; Skip defines a `ROBOLECTRIC` symbol so you can take the Android path in every Android-like environment:
+
+```swift
+#if os(Android) || ROBOLECTRIC
+// runs on a device and under Robolectric
+#endif
+```
+
+### Test frameworks
+
+Which test frameworks you can use depends on the module mode:
+
+- **Skip Lite** modules support both **XCTest** and **Swift Testing** — both are transpiled to Kotlin/JUnit alongside the rest of your code.
+- **Skip Fuse** native modules support **Swift Testing only** — they run the native Swift Testing runtime directly (via its `swt` entry point), and XCTest cases are not executed.
+
+If your code is (or may become) a native Fuse module, write your tests with Swift Testing.
+
+- **XCTest** — `XCTestCase` subclasses with `test`-prefixed methods; `XCTAssert*` functions map to the corresponding Android assertions. *(Skip Lite only.)*
+- **Swift Testing** — `@Test` functions and `@Suite` types, with the `#expect` and `#require` macros. Freestanding `@Test` functions (not nested in a type) are wrapped automatically.
+
+For Skip Lite modules, transpiled test cases are subject to the same rules as the rest of your Lite code, and a few Swift Testing features (parameterized tests, traits, and tags) are not yet transpiled. Skip Fuse native modules run the real Swift Testing runtime, so those constraints do not apply.
+
+### The test harness
+
+The Android side of the run is driven by a generated harness, `XCSkipTests.swift`. You normally never touch it — the Skip build plugin generates one for you during the build. If you need to customize it (for example, to change the Gradle task), add your own to your test target and the plugin will use it instead:
 
 ```swift
 #if os(macOS) // Skip transpiled tests only run on macOS targets
@@ -32,100 +95,21 @@ final class XCSkipTests: XCTestCase, XCGradleHarness {
 #endif
 ```
 
-This test harness is what connects Xcode to the Gradle test pipeline. When you run tests against the **macOS** destination in Xcode (or via `swift test` on the command line), `testSkipModule()` triggers the full transpilation and Gradle build, runs the JUnit tests, and reports the results back as XCTest outcomes. The net effect is that you get parity testing across both platforms from a single test run.
-
-Your Swift tests are transpiled into Kotlin JUnit, so they are subject to the same transpilation constraints as the rest of your Skip Lite code. Both XCTest and a subset of Swift Testing are supported:
-
-- **XCTest**: Classes inheriting from `XCTestCase` with `test`-prefixed methods are transpiled into JUnit test classes with `@Test` annotations. Standard `XCTAssert*` functions map to JUnit assertions.
-- **Swift Testing**: Functions annotated with `@Test` and types annotated with `@Suite` are also transpiled into JUnit tests. The `#expect` macro is mapped to assertion functions (`expectEqual`, `expectNotEqual`, `expectTrue`, `expectGreaterThan`, etc.) and `#require` is mapped to `requireNotNil`. Freestanding `@Test` functions (not inside a struct or class) are automatically wrapped in a generated test class. Not all Swift Testing features are supported; parameterized tests, traits, and tags are not currently transpiled.
-
-### Local Testing with Robolectric
-
-By default, Skip Lite runs your transpiled JUnit tests locally on your Mac using [Robolectric](https://developer.android.com/training/testing/local-tests/robolectric). This is the fastest way to test because no emulator or device is involved: Gradle runs the JUnit tests on the host JVM with Robolectric providing a simulated Android environment.
-
-Robolectric gives you access to many Android framework APIs (Context, SharedPreferences, resources, etc.) without needing a real Android runtime. This is enough for the vast majority of unit tests, and it keeps the test cycle tight.
-
-That said, Robolectric is not Android. Some APIs are missing or behave differently than on a real device. One important detail: `#if os(Android)` evaluates to `false` under Robolectric, because the code is running on the host JVM. Skip defines the `ROBOLECTRIC` symbol in Robolectric builds, so if you need your code to take the Android path in all Android-like environments, use:
-
-```swift
-#if os(Android) || ROBOLECTRIC
-// Android-specific code that also runs under Robolectric
-#endif
-```
-
-### Instrumented Testing on Emulator/Device
-
-For higher fidelity, you can run your transpiled tests as [Android instrumented tests](https://developer.android.com/training/testing/instrumented-tests) on a real emulator or device. Set the `ANDROID_SERIAL` environment variable to the device ID (e.g., `emulator-5554`) and Skip will use `connectedDebugAndroidTest` instead of the local `testDebug` Gradle task:
-
-```shell
-ANDROID_SERIAL=emulator-5554 swift test
-```
-
-You can also set `ANDROID_SERIAL` in your Xcode scheme's Run action environment variables. To find available device IDs, run `adb devices`.
-
-![Configuring running tests on emulator in Xcode](https://assets.skip.dev/screens/xcode-testing-scheme-emulator.png)
-
-Instrumented tests run on a real Android runtime with the full framework available, so they are the most accurate representation of how your code will behave in production. The tradeoff is speed: deploying to an emulator or device and running the test APK takes significantly longer than a local Robolectric run.
-
-
-## Skip Fuse Testing
-
-Skip Fuse compiles your Swift natively for Android using the Swift Android SDK. Testing in Fuse mode works differently from Lite: instead of transpiling tests into JUnit, you cross-compile your Swift test target for Android and execute it on a device or emulator. This is done with the `skip android test` command, which has two distinct modes.
-
-### Command-Line Mode (default)
-
-```shell
-skip android test
-```
-
-This is the simpler path. It cross-compiles your package's test target as a standard executable (`PackageTests.xctest`), then uses `adb push` to copy the binary, its shared library dependencies, and any `.resources` sidecar directories to a staging folder on the device. The tests run directly via `adb shell`, just like running a command-line program on Linux. If the binary links Swift Testing, it automatically runs a second pass with `--testing-library swift-testing` to pick up `@Test` functions in addition to XCTest cases.
-
-Because the executable runs from a flat directory on the filesystem, `Bundle.module` and resource lookup work as expected: the `.resources` bundles are sitting right alongside the binary. This makes command-line mode the right choice for tests that load JSON fixtures, images, or other bundled resources.
-
-The downside is that the test process is a bare Linux executable. There is no Android application context, no JVM, and no JNI environment. If your tests need to call Android framework APIs (Context, AssetManager, content providers, etc.), they will not work in this mode.
-
-### APK Mode (`--apk`)
-
-```shell
-skip android test --apk
-```
-
-APK mode packages the tests into a real Android application. It builds the test target as a shared library (rather than an executable), then bundles it into an APK alongside a small native test harness. The harness uses Android's `NativeActivity` to bootstrap execution: C code handles the activity lifecycle, stdio-to-logcat redirection, and library loading, while a minimal Swift layer bridges into async to call the Swift Testing entry point (`swt_abiv0_getEntryPoint`, per the ST-0002 ABI). The APK is assembled using the standard Android build tools (`aapt2`, `zipalign`, `apksigner`), installed via `adb install`, and launched as a real Android activity.
-
-Test output streams back to the host through logcat. You can also pass `--event-stream-output-path <file>` to capture the raw JSON event records locally.
-
-Because the tests run inside a real Android app process, they get a full JNI environment with access to the entire Android framework. This is necessary for any code that interacts with Android-specific functionality.
-
-The tradeoff is that resource bundles do not work. The test shared library is loaded from inside the APK's `lib/` directory by the Android runtime, and there is no Foundation support for resolving `Bundle.module` resources from an APK's native library path. Tests that rely on loading bundled resources at runtime will fail to find them.
-
-### Choosing a Mode
-
-If your tests don't need Android APIs, the default command-line mode is simpler and supports resource loading. If your tests need the Android framework (JNI, Context, system services), use `--apk`. You can use both modes in a project by gating Android-dependent tests:
-
-```swift
-#if os(Android)
-func testAndroidSpecificFeature() {
-    // Only meaningful when run inside an Android app process
-}
-#endif
-```
+This harness is what connects Xcode and `swift test` to the Gradle pipeline: running it transpiles or compiles your tests for Android, runs them, and reports the results back as XCTest outcomes.
 
 ## Comparison
 
-| | Skip Lite (Robolectric) | Skip Lite (Instrumented) | Skip Fuse (CLI) | Skip Fuse (APK) |
-|---|---|---|---|---|
-| **Command** | `swift test` | `ANDROID_SERIAL=… swift test` | `skip android test` | `skip android test --apk` |
-| **Test framework** | XCTest + Swift Testing (transpiled to JUnit) | XCTest + Swift Testing (transpiled to JUnit) | XCTest + Swift Testing | Swift Testing only |
-| **Runs on** | Host JVM (macOS/Linux) | Android emulator/device | Android emulator/device via `adb shell` | Android emulator/device as installed APK |
-| **Android APIs** | Simulated via Robolectric | Full | Not available (no JVM/JNI) | Full (real app process with JNI) |
-| **Resource bundles** | Managed by Gradle | Managed by Gradle | Yes (sidecar `.resources` dirs) | No (no Foundation APK bundle support) |
-| **Xcode integration** | Yes (via `XCSkipTests`) | Yes (via `XCSkipTests`) | No (CLI only) | No (CLI only) |
-| **Speed** | Fastest | Slowest | Fast | Moderate |
-| **Fidelity** | Lowest (simulated Android) | Highest | Good (real device, no app context) | High (real device, real app process) |
+| | Robolectric (default) | Emulator / Device |
+|---|---|---|
+| **Command** | `skip test` | `ANDROID_SERIAL=… skip test` |
+| **Runs on** | Host JVM | Connected Android emulator/device |
+| **Android APIs** | Simulated via Robolectric | Full |
+| **Speed** | Fastest | Slower |
+| **Fidelity** | Good for unit tests | Highest |
 
-For most day-to-day development, Skip Lite with Robolectric is the fastest feedback loop. When you need to verify behavior on real Android, use instrumented testing (Lite) or APK mode (Fuse). For Fuse projects that don't need Android APIs, the default command-line mode gives you fast on-device testing with full resource support.
+Both Skip Lite and Skip Fuse modules use this same flow. For day-to-day work, Robolectric gives the tightest feedback loop; switch to an emulator or device when you need to verify behavior that depends on the real Android runtime.
 
-For an example of a repository that uses Skip Fuse bridge testing with GitHub CI actions running against an Android emulator, see [skip-fuse-samples](https://github.com/skiptools/skip-fuse-samples).
+For an example repository that runs Skip Fuse tests in GitHub CI against an Android emulator, see [skip-fuse-samples](https://github.com/skiptools/skip-fuse-samples).
 
 ## Non-Skip Packages
 
@@ -134,3 +118,10 @@ Testing of native Swift packages that compile for both iOS and Android and do no
 ## Performance Testing
 
 There is often a significant difference between Debug and Release build performance on Android devices. Always [run on a device](/docs/app-development/#running-on-device) **using a Release build** when testing real-world performance.
+
+## Direct on-device testing with `skip android test`
+
+`skip android test` cross-compiles a package's test target and runs it directly on a device or emulator without Gradle, in one of two modes:
+
+- **Command-line mode** (default) — `skip android test` — cross-compiles the test target as an executable, uses `adb push` to copy the binary, its libraries, and any `.resources` directories to the device, then runs it via `adb shell`, like a command-line program on Linux. Because the `.resources` sit beside the binary, `Bundle.module` resource lookup works — but there is no JVM or JNI, so Android framework APIs are unavailable.
+- **APK mode** — `skip android test --apk` — packages the tests into a real Android app (assembled with `aapt2`, `zipalign`, and `apksigner`), installs it with `adb install`, and runs it as an Android activity. This provides a full JNI environment and access to the entire Android framework, but resources loaded from the APK's native library directory are not resolved. Pass `--event-stream-output-path <file>` to capture the raw test event JSON locally.
