@@ -4,7 +4,7 @@
 # - Skip mode: SkipFuse — the Play Store package `org.appfair.app.Showcase`
 #   corresponds to the Fuse build.
 name: Skip Showcase
-rank: 4
+rank: 5
 developer: The App Fair Project
 tagline: Interactive SwiftUI catalog for iOS and Android
 description: |
