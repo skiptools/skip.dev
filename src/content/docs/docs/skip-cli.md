@@ -15,7 +15,7 @@ The `skip` CLI is installed using [Homebrew](https://brew.sh). Skip is distribut
 Once Homebrew is set up, Skip can be installed (and updated) by running the Terminal command:
 
 ```shell
-brew install skiptools/skip/skip
+brew install skip
 ```
 
 This will download and install the `skip` tool itself, as well as the Android SDK dependencies that are necessary for building and testing the Kotlin/Android side of your apps.
@@ -640,7 +640,7 @@ For continuous integration, a typical setup looks like:
 
 ```shell
 # Install Skip and the Android SDK
-brew install skiptools/skip/skip
+brew install skip
 skip android sdk install
 skip android emulator create
 

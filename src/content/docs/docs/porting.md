@@ -33,9 +33,7 @@ Does running `swift build` and `swift test` in the package directory work from t
 First, [install Skip and the native Android SDK](/docs/gettingstarted). Then try to build your Swift package with the Android toolchain. The very abbreviated quick start looks like:
 
 ```console
-$ brew install skiptools/skip
-
-$ brew install skiptools/skip/skip
+$ brew install skip
 
 …
 skip was successfully installed!

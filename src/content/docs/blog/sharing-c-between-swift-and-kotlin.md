@@ -22,7 +22,7 @@ There are, however, many cases where the absolute optimal performance is critica
 ## Swift and C
 
 :::note
-You can follow along with this project by installing Skip (`brew install skiptools/skip/skip`) and cloning the [https://github.com/skiptools/skip-c-demo.git](https://github.com/skiptools/skip-c-demo.git) repository and either opening it in Xcode and running the unit tests, or running them from the terminal with  `swift test`.
+You can follow along with this project by installing Skip (`brew install skip`) and cloning the [https://github.com/skiptools/skip-c-demo.git](https://github.com/skiptools/skip-c-demo.git) repository and either opening it in Xcode and running the unit tests, or running them from the terminal with  `swift test`.
 :::
 
 

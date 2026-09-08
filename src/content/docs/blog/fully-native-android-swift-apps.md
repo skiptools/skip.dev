@@ -29,7 +29,7 @@ First, create and launch an [Android emulator](https://developer.android.com/stu
 Next, open Terminal and type the following commands to install Skip and the native Swift-Android toolchain.
 
 ```
-$ brew install skiptools/skip/skip
+$ brew install skip
 $ skip upgrade
 $ skip android sdk install
 ```
