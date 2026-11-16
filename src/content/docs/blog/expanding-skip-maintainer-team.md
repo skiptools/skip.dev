@@ -6,7 +6,7 @@ tags: [skip, community, open-source, announcement, sustainability]
 layout: post
 permalink: /blog/expanding-skip-maintainer-team/
 author: the Skip Team
-draft: true
+draft: false
 ---
 
 We are pleased to announce the expansion of the Skip maintainer team. Please join us in welcoming [@piercifani](https://github.com/piercifani), [@dfabulich](https://github.com/dfabulich), [@fhasse95](https://github.com/fhasse95), [@GavynHolt](https://github.com/GavynHolt), [@gevartosky](https://github.com/gevartosky), [@IT-Guy007](https://github.com/IT-Guy007), and [@tifroz](https://github.com/tifroz) as maintainers, alongside the existing team, including Skip co-founder [@marcprux](https://github.com/marcprux).
