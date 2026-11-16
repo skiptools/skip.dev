@@ -275,6 +275,17 @@ This is the Module-level Gradle Build file. It defines the Android-specific buil
 
 This file contains R8/ProGuard rules for code shrinking and optimization. It ensures that the Kotlin code and its dependencies are properly minified for production.
 
+When upgrading an existing app to Skip 1.9.13 or later, ensure that this file includes the following rule alongside the other Skip bridge rules:
+
+```text
+# Async bridge JNI lookups reference kotlinx.coroutines.Job and Job.cancel by name.
+-keep interface kotlinx.coroutines.Job { void cancel(java.util.concurrent.CancellationException); }
+```
+
+Generated async bridges look up Kotlin methods using JNI signatures that include `kotlinx.coroutines.Job` as the return type. When the awaiting Swift task is cancelled, the bridge calls `Job.cancel` through JNI. If R8 renames or removes the interface or its `cancel` method, the native lookup fails and the app crashes. Keeping only the interface name is not enough: R8 still renames or removes `cancel`. Non-minified debug builds do not expose this issue, so verify the affected async calls in a minified release build.
+
+Upgrading Skip does not update an existing app's checked-in rules. For a separately maintained Android host app, add the rule to the ProGuard file configured for that app's minified builds.
+
 - Example: [https://github.com/skiptools/skipapp-ahoy/blob/main/Android/app/proguard-rules.pro](https://github.com/skiptools/skipapp-ahoy/blob/main/Android/app/proguard-rules.pro)
 - Reference: [Enable app optimization](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization)
 
