@@ -112,7 +112,6 @@ export default defineConfig({
         { icon: 'discourse', label: 'Forums', href: 'https://forums.skip.dev' },
         { icon: 'slack', label: 'Slack', href: '/slack/' },
         { icon: 'mastodon', label: 'Mastodon', href: 'https://mas.to/@skiptools' },
-        { icon: 'twitter', label: 'Twitter', href: 'https://x.com/skiptools' },
         { icon: 'github', label: 'GitHub', href: 'https://github.com/orgs/skiptools' },
       ],
       editLink: {
